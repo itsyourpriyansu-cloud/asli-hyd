@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Intro loader (modelled on realevate.agency's site preloader)
+   Cream stage (the page background) with a slowly drifting gold jaali lattice -> images open from the centre one after
+   another inside a border that takes one Asli logo colour per image, while "Hyderabad is ___"
+   rolls a word per image -> the stage wipes up and the final frame (the hero poster) grows
+   to fill the screen, handing over to the hero video.
+   Visible only while html.is-preloading (set by the inline head script).
+   ========================================================================== */
+.mn-pre { display: none; }
+
+html.is-preloading { overflow: hidden; }
+html.is-preloading body { overflow: hidden; }
+html.is-preloading .mn-header { opacity: 0; visibility: hidden; }
+
+html.is-preloading .mn-pre {
+  --pre-size: max(26rem, 22vw);
+  --word: clamp(2.6rem, 2.2vw, 3.6rem);
+  --slot: calc(var(--word) * 1.6);   /* tall rows so italic descenders never peek into the window */
+  /* From the logo's HYDERABAD lettering (E, Y, R, second A, H). */
+  --logo-plum: #900871;
+  --logo-orange: #f78320;
+  --logo-blue: #0063a4;
+  --logo-green: #00a750;
+  --logo-yellow: #fedf00;
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: block;
+  pointer-events: auto;          /* swallow clicks/scroll during the intro */
+  overflow: hidden;
+}
+
+.mn-pre__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--cream);
+  clip-path: inset(0% 0% 0% 0%);
+  will-change: clip-path;
+}
+/* The jaali lattice (same khatam SVG as the numbers card and skyline) in Asli gold, drifting very
+   slowly; a soft vignette keeps the centre around the image a touch clearer. Leaves with the stage wipe. */
+.mn-pre__bg::before,
+.mn-pre__bg::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.mn-pre__bg::before {
+  opacity: .22;   /* gold on cream is low-contrast, so a little more than the ink version */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 64px 64px repeat;
+  animation: mn-pre-drift 30s linear infinite;
+}
+.mn-pre__bg::after { background: radial-gradient(ellipse 34% 34% at 50% 50%, var(--cream) 0%, rgba(244, 238, 228, 0) 100%); }
+@keyframes mn-pre-drift { to { background-position: 64px 64px; } }
+
+.mn-pre__stage { position: absolute; inset: 0; z-index: 2; }
+/* Border around the image: opens with the first frame, then takes the next logo colour on each image beat. */
+.mn-pre__border {
+  position: absolute;
+  top: calc(50% - var(--pre-size) / 2 - 1rem);
+  left: calc(50% - var(--pre-size) / 2 - 1rem);
+  width: calc(var(--pre-size) + 2rem);
+  height: calc(var(--pre-size) + 2rem);
+  border: 2px solid var(--logo-plum);
+  clip-path: inset(50% 50% 50% 50%);
+  pointer-events: none;
+  will-change: clip-path, border-color;
+}
+.mn-pre__frames {
+  position: absolute;
+  top: calc(50% - var(--pre-size) / 2);
+  left: calc(50% - var(--pre-size) / 2);
+  width: var(--pre-size);
+  height: var(--pre-size);
+  overflow: hidden;
+}
+.mn-pre__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(50% 50% 50% 50%);
+  will-change: clip-path;
+}
+.mn-pre__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(1.5);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+/* Same treatment as .mn-hero__overlay, faded in during the morph so the hand-off is seamless. */
+.mn-pre__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    linear-gradient(to top, rgba(0,0,0,.5) 0%, rgba(0,0,0,.28) 22%, rgba(0,0,0,.08) 45%, transparent 60%),
+    rgba(0,0,0,.25);
+}
+
+.mn-pre__counter {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: max(6.5vh, 2.5rem);
+  transform: translateX(-50%);
+}
+.mn-pre__mask { height: var(--slot); overflow: hidden; clip-path: inset(0% 0% 0% 0%); }
+.mn-pre__line {
+  display: flex;
+  align-items: center;
+  gap: .3em;
+  height: var(--slot);
+  font-size: var(--word);
+  transform: translateY(100%);
+  will-change: transform;
+}
+/* "Hyderabad is" and the rolling word share one face and one size; only the colour differs
+   (the lead in ink, the word in the deeper Asli gold that reads on cream). Both sit on the same line box so baselines match. */
+.mn-pre__lead,
+.mn-pre__col span {
+  font-family: var(--serif);
+  font-style: normal;
+  font-weight: 300;
+  font-size: var(--word);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.mn-pre__lead { display: flex; align-items: center; height: var(--slot); color: var(--ink); }
+.mn-pre__window { display: block; height: var(--slot); overflow: hidden; }
+.mn-pre__col { display: flex; flex-direction: column; will-change: transform; }
+.mn-pre__col span {
+  display: flex;
+  align-items: center;
+  flex: 0 0 var(--slot);
+  height: var(--slot);
+  color: #a97835;
+}
+
+@media (prefers-reduced-motion: reduce) { .mn-pre__bg::before { animation: none; } }
+
+@media (max-width: 749px) {
+  html.is-preloading .mn-pre { --pre-size: 56vw; --word: 2.6rem; }
+  .mn-pre__counter { bottom: max(8vh, 2rem); }
+  .mn-pre__border { top: calc(50% - var(--pre-size) / 2 - .7rem); left: calc(50% - var(--pre-size) / 2 - .7rem); width: calc(var(--pre-size) + 1.4rem); height: calc(var(--pre-size) + 1.4rem); }
+}

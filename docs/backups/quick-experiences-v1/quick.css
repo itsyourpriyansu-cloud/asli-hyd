@@ -1,0 +1,207 @@
+/* ==========================================================================
+   8. Quick Experiences: list on the left, the chosen one in a Mughal arch on the right
+   ========================================================================== */
+.mn-quick {
+  --row: clamp(3.8rem, 5.6svh, 5.8rem);
+  --cap-w: clamp(19rem, 15vw, 27rem);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas: "head right" "list right";
+  column-gap: clamp(4rem, 5vw, 9rem);
+  height: 100svh;
+  min-height: 64rem;
+  padding: calc(var(--header-h) + clamp(1.2rem, 2.6svh, 3.6rem)) var(--gutter) clamp(3.2rem, 5svh, 6rem);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cream);
+  color: var(--ink);
+}
+/* The khatam jaali (same lattice as the numbers card), faint, behind the arch only. */
+.mn-quick::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 36%;
+  z-index: -1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
+  opacity: .16;
+  -webkit-mask-image: radial-gradient(ellipse 55% 60% at 45% 52%, #000 20%, transparent 78%);
+  mask-image: radial-gradient(ellipse 55% 60% at 45% 52%, #000 20%, transparent 78%);
+  pointer-events: none;
+}
+
+.mn-quick__head { grid-area: head; }
+.mn-quick__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(3.8rem, 3.3vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -.005em;
+}
+.mn-quick__title em { font-style: italic; color: var(--gold); }
+.mn-quick__intro { max-width: 44rem; margin-top: 1.6rem; font-size: 1.5rem; line-height: 2.3rem; color: var(--ink-70); }
+
+/* List: number · name · duration. The active row inks in over a soft gold wash, a gold rule runs
+   under it and "Book now" replaces the time. Rows are padded inside and the list is pulled out by
+   the same amount, so the text still lines up with the title. */
+.mn-quick__list {
+  --pad: 1.6rem;
+  grid-area: list;
+  align-self: end;
+  margin: 0 calc(var(--pad) * -1);
+  padding: clamp(2.4rem, 4svh, 4.8rem) 0 0;
+  list-style: none;
+}
+.mn-quick__list li + li { margin-top: 1px; }
+.mn-quick__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.8rem minmax(0, 1fr) auto;
+  align-items: center;
+  width: 100%;
+  height: var(--row);
+  padding: 0 var(--pad);
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  isolation: isolate;
+}
+/* Hairline between rows (inset to the text), and the gold rule that grows under the active one. */
+.mn-quick__item::before,
+.mn-quick__item::after {
+  content: "";
+  position: absolute;
+  left: var(--pad); right: var(--pad); bottom: -1px;
+  height: 1px;
+  background: rgba(46, 57, 55, .1);
+}
+.mn-quick__item::after {
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform .8s var(--ease);
+}
+.mn-quick__list li:first-child { position: relative; }
+.mn-quick__list li:first-child::before { content: ""; position: absolute; top: 0; left: var(--pad); right: var(--pad); height: 1px; background: rgba(46, 57, 55, .1); }
+.mn-quick__wash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(197, 154, 91, .14), rgba(197, 154, 91, .05) 60%, rgba(197, 154, 91, 0));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  opacity: 0;
+  transition: transform .9s var(--ease), opacity .5s var(--ease);
+  pointer-events: none;
+}
+.mn-quick__item:focus-visible { outline: 1px solid var(--gold); outline-offset: -1px; }
+.mn-quick__num {
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: .14em;
+  color: var(--gold);
+  opacity: .55;
+  transition: opacity .5s var(--ease);
+}
+.mn-quick__name {
+  overflow: hidden;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 1.5vw, 2.5rem);
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgba(46, 57, 55, .56);
+  transition: color .5s var(--ease), transform .7s var(--ease);
+}
+.mn-quick__end { display: grid; justify-items: end; overflow: hidden; padding-left: 2rem; }
+.mn-quick__dur, .mn-quick__go {
+  grid-area: 1 / 1;
+  font-size: 1.05rem;
+  line-height: 1.6rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform .6s var(--ease), opacity .4s var(--ease);
+}
+.mn-quick__dur { color: rgba(46, 57, 55, .5); }
+.mn-quick__go { font-weight: 500; color: #a97835; transform: translateY(110%); opacity: 0; }
+.mn-quick__item:hover .mn-quick__name { color: rgba(46, 57, 55, .85); transform: translateX(.4rem); }
+.mn-quick__item:hover .mn-quick__num { opacity: .9; }
+.mn-quick__item.is-active::after { transform: scaleX(1); }
+.mn-quick__item.is-active .mn-quick__wash { transform: none; opacity: 1; }
+.mn-quick__item.is-active .mn-quick__num { opacity: 1; }
+.mn-quick__item.is-active .mn-quick__name { color: var(--ink); transform: translateX(.8rem); }
+.mn-quick__item.is-active .mn-quick__dur { transform: translateY(-110%); opacity: 0; }
+.mn-quick__item.is-active .mn-quick__go { transform: none; opacity: 1; }
+
+/* Right: the arch takes whatever height it can while leaving room for the caption beside it. */
+.mn-quick__right {
+  grid-area: right;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(2.4rem, 2.6vw, 4.8rem);
+  min-height: 0;
+  container-type: size;
+}
+.mn-quick__visual {
+  position: relative;
+  flex: 0 0 auto;
+  height: min(100cqh, (100cqw - var(--cap-w) - 4.8rem) * 1.25);
+  aspect-ratio: 4 / 5;
+}
+.mn-quick__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #e9dfcf;
+  /* Same arch as the SVG frame, 12 units in. */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
+.mn-quick__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform-origin: 50% 60%;
+}
+.mn-quick__img.is-front { opacity: 1; }
+.mn-quick__arch { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.mn-quick__arch path { fill: none; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mn-quick__arch-outer { stroke: url(#mn-quick-sheen); stroke-width: 1.4; }
+.mn-quick__arch-inner { stroke: var(--gold-light); stroke-width: 1; opacity: .9; }
+
+.mn-quick__cap { flex: 1 1 0; min-width: 0; max-width: 34rem; padding-bottom: .4rem; }
+.mn-quick__cap > * { will-change: transform; }
+.mn-quick__cap-num { font-family: var(--serif); font-weight: 300; font-size: 5.6rem; line-height: 1; font-variant-numeric: lining-nums; color: var(--gold); }
+.mn-quick__cap-name { margin-top: 1.2rem; font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 1.9vw, 3.2rem); line-height: 1.1; }
+.mn-quick__cap-desc { margin-top: 1.4rem; font-size: 1.4rem; line-height: 2.2rem; color: var(--ink-70); }
+.mn-quick__cap-meta { margin-top: 1.6rem; font-size: 1.1rem; line-height: 1.6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-45); }
+.mn-quick__book { margin-top: 2.4rem; font-size: 1.3rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+
+@media (max-width: 1024px) {
+  .mn-quick {
+    --row: 5.2rem;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    padding: 8rem var(--gutter) 7.2rem;
+  }
+  .mn-quick::before { inset: 0; opacity: .1; }
+  .mn-quick__title { font-size: 4.4rem; }
+  .mn-quick__right { order: 1; flex-direction: column; align-items: stretch; gap: 2.4rem; margin-top: 3.2rem; container-type: normal; }
+  .mn-quick__visual { width: min(100%, 46rem); height: auto; }
+  .mn-quick__cap { max-width: 52rem; }
+  .mn-quick__cap-num { font-size: 4.4rem; }
+  .mn-quick__list { order: 2; padding-top: 4rem; }
+  .mn-quick__item { height: auto; min-height: var(--row); padding-block: 1rem; }
+  .mn-quick__name { font-size: 1.9rem; white-space: normal; }
+}
+

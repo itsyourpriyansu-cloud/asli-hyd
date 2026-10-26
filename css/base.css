@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  --cream: #f4eee4;
+  --ink: #2e3937;
+  --ink-70: rgba(46, 57, 55, .72);
+  --ink-45: rgba(46, 57, 55, .45);
+  --hairline: rgba(46, 57, 55, .22);
+  --muted: #707c7a;
+  --white: #fff;
+  --white-80: rgba(255, 255, 255, .82);
+  --tile: #f0eee9;
+  --footer-bg: #e8f3e5;
+  --gold: #c59a5b;        /* Asli accent, from aslihyd.in */
+  --gold-light: #d8b77d;
+  /* Rainbow accents, sampled from the HYDERABAD letters in the logo */
+  --rb-yellow: #ffde00;
+  --rb-orange: #f48220;
+  --rb-red: #ec1c24;
+  --rb-plum: #8f0970;
+  --rb-blue: #0063a4;
+  --rb-teal: #05b49c;
+  --rb-green: #00a651;
+  --rb-lime: #8bc53f;
+
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  --container: 168rem;
+  --gutter: 7rem;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --header-h: 8.8rem;
+}
+
+@media (max-width: 1024px) {
+  :root { --gutter: 2.4rem; }
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 62.5%;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: .02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, p, ul, figure { margin: 0; }
+ul { list-style: none; padding: 0; }
+img, video, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Keep the hero text hidden until the char sweep is ready (avoids a flash). */
+html.is-loading .mn-hero__content { opacity: 0; }
+
+/* ==========================================================================
+   Layout helpers
+   ========================================================================== */
+.mn-wrap {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.mn-wrap--tight { padding-inline: 4rem; }
+@media (max-width: 1024px) { .mn-wrap--tight { padding-inline: 2.4rem; } }
+
+.mn-sec { position: relative; }
+
+.mn-sr {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.mn-mark { width: 3rem; height: 2.8rem; color: currentColor; }
+.mn-mark--lg { width: 4.4rem; height: 4.2rem; }
+
+/* ==========================================================================
+   Type pieces
+   ========================================================================== */
+.mn-eyebrow {
+  font-family: var(--sans);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+
+/* Underlined text link: line retracts to the right on hover, returns from the left. */
+.mn-ulink {
+  position: relative;
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 1.6rem;
+  letter-spacing: .02em;
+  text-decoration: none;
+  color: inherit;
+}
+.mn-ulink::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  transition: transform .5s var(--ease);
+}
+@media (hover: hover) and (min-width: 750px) {
+  .mn-ulink:hover::after,
+  .mn-promo:hover .mn-promo__link::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.mn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1.8rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .4s var(--ease), color .4s var(--ease);
+}
+.mn-btn--dark { color: var(--ink); border-color: var(--ink); }
+.mn-btn--dark:hover { background: var(--ink); color: var(--cream); }
+
+/* ==========================================================================
+   Shared media bits
+   ========================================================================== */
+.mn-slideshow { position: absolute; inset: 0; }
+.mn-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+  will-change: opacity;
+}
+.mn-slide.is-active { opacity: 1; }
+.mn-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+video::-webkit-media-controls,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button { display: none !important; -webkit-appearance: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

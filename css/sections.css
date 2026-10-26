@@ -1,0 +1,1737 @@
+/* ==========================================================================
+   1. Hero
+   ========================================================================== */
+.mn-hero {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  isolation: isolate;
+  background: var(--ink);
+}
+.mn-hero__media { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.mn-hero__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  pointer-events: none;
+}
+.mn-hero__overlay {
+  position: absolute;
+  inset: 0;
+  /* Even dark tint over the whole video, plus a subtle black fade from the bottom
+     so the headline reads on bright frames. */
+  background:
+    linear-gradient(to top, rgba(0,0,0,.5) 0%, rgba(0,0,0,.28) 22%, rgba(0,0,0,.08) 45%, transparent 60%),
+    rgba(0,0,0,.25);
+}
+.mn-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  padding: 8rem 3.9rem 3.7rem;
+}
+.mn-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.4rem;
+  margin-top: auto;
+  max-width: 92rem;
+  color: var(--white);
+}
+.mn-hero__eyebrow {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.mn-hero__eyebrow em { font-style: italic; text-transform: none; }
+.mn-hero__heading {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(4.4rem, 6vw, 10rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+.mn-nowrap { white-space: nowrap; }
+/* Desktop: fixed 134px across the full width. One line from ~1860px; below that it
+   wraps rather than overflow, never splitting "Asli = Real". */
+@media (min-width: 1025px) {
+  .mn-hero__content { max-width: none; }
+  .mn-hero__heading { font-size: 134px; }
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-hero__inner { padding: 8.5rem 4rem 4rem; }
+  .mn-hero__heading { font-size: 8rem; }
+}
+@media (max-width: 749px) {
+  .mn-hero__inner { padding: 4.8rem 2rem 4rem; }
+  .mn-hero__content { gap: 2.1rem; }
+  .mn-hero__heading { font-size: min(7.2rem, 15vw); }
+}
+
+/* ==========================================================================
+   2. Statement
+   ========================================================================== */
+.mn-statement { padding-block: 160px 224px; background: var(--cream); }
+.mn-statement__inner { max-width: 139.2rem; margin-inline: auto; }
+.mn-statement__text {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 5vw, 7rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.mn-statement__text em { font-style: italic; }
+/* Hand-drawn wave under a highlighted word, in a logo colour (--wave).
+   Drawn as a masked strip because the letter split wraps each word in an inline-block,
+   which native text-decoration does not reach. --draw (0–1) is scrubbed in motion.js. */
+.mn-wave {
+  --draw: 1;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.mn-wave::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: .04em;
+  height: .13em;
+  background: var(--wave);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q5 .6 10 3 T20 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / .36em 100% repeat-x;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q5 .6 10 3 T20 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / .36em 100% repeat-x;
+  clip-path: inset(0 calc((1 - var(--draw)) * 100%) 0 0);
+  opacity: .85;
+  pointer-events: none;
+}
+/* Desktop sets one image per line; smaller screens wrap naturally. */
+@media (max-width: 1024px) { .mn-br-lg { display: none; } }
+/* Founder credit sits well clear of the statement so the quote breathes. */
+.mn-statement__by {
+  margin-top: 7.2rem;
+  font-size: 1.4rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-statement { padding-block: 15rem 21.4rem; }
+  .mn-statement .mn-wrap { padding-inline: 7.2rem; }
+  .mn-statement__text { font-size: 4.8rem; line-height: 1.2; }
+  .mn-statement__by { margin-top: 5.6rem; }
+}
+@media (max-width: 749px) {
+  .mn-statement { padding-block: 7.2rem; }
+  .mn-statement .mn-wrap { padding-inline: 2rem; }
+  .mn-statement__text { font-size: 3.2rem; }
+  .mn-statement__by { margin-top: 4rem; font-size: 1.3rem; }
+}
+
+/* ==========================================================================
+   3. Category tiles
+   ========================================================================== */
+.mn-cats__grid { display: grid; grid-template-columns: 1fr 1fr; }
+.mn-cats__tile { position: relative; aspect-ratio: 84 / 94; overflow: hidden; isolation: isolate; }
+.mn-cats__cover { position: absolute; inset: 0; z-index: 3; }
+.mn-cats__media { position: absolute; inset: 0; }
+.mn-cats__img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); }
+/* Colour reveal layer (js/cats-reveal.js), drawn over the sepia print and under the shade. */
+.mn-cats__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.mn-cats__content { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.mn-cats__tile.is-light .mn-cats__content { color: var(--white); }
+.mn-cats__tile.is-dark .mn-cats__content { color: var(--ink); }
+/* Soft halo so white type holds over the detailed archival prints. */
+.mn-cats__tile.is-light .mn-cats__content { text-shadow: 0 1px 18px rgba(0,0,0,.5), 0 0 2px rgba(0,0,0,.25); }
+/* Subtle shade for white text: light at the top for the title, deeper at the bottom for the line and link. */
+.mn-cats__tile.is-light .mn-cats__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0,0,0,.66), rgba(0,0,0,.34) 18%, rgba(0,0,0,.1) 36%, transparent 52%),
+    linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.12) 22%, transparent 36%);
+  pointer-events: none;
+  transition: opacity .9s var(--ease);
+}
+/* Once a tile floods with colour on click, lift the shade so the colour reads clean. */
+.mn-cats__tile.is-revealing .mn-cats__media::after { opacity: 0; }
+.mn-cats__title {
+  position: absolute;
+  left: 3.631vw;
+  top: 5.85%;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(4rem, 4.1667vw, 8rem);
+  line-height: .9;
+}
+/* Anchored above the link (which sits at top: 93.2%) so a longer line grows upward, not into it. */
+.mn-cats__desc {
+  position: absolute;
+  right: 1.786vw;
+  bottom: calc(6.8% + 1.6rem);
+  width: 21.6vw;
+  font-size: clamp(1.4rem, .9524vw, 1.7rem);
+  line-height: 1.5;
+}
+.mn-cats__link {
+  position: absolute;
+  left: calc(100% - 23.4vw);
+  top: 93.2%;
+  font-size: clamp(1.4rem, .9524vw, 1.7rem);
+  pointer-events: auto;
+}
+
+/* Desktop: statement and tiles each fill one screen so the grow-in lines up. */
+@media (min-width: 1025px) {
+  .mn-statement { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .mn-cats { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .mn-cats__grid { width: 100%; flex: 1 1 auto; }
+  .mn-cats__tile { aspect-ratio: auto; height: 100%; min-height: 0; }
+}
+
+/* Desktop: tiles widen toward the hovered one once the intro has played. */
+@media (min-width: 1025px) and (hover: hover) {
+  .mn-cats__grid {
+    transition: grid-template-columns 1.4s var(--ease);
+  }
+  .mn-cats__tile { aspect-ratio: auto; height: 100%; }
+  .mn-cats__img {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 54vw;
+    max-width: none;
+    transform: translateX(-50%);
+  }
+  .mn-cats.is-armed .mn-cats__grid:has(.mn-cats__tile:nth-child(1):hover) { grid-template-columns: 1.06fr .94fr; }
+  .mn-cats.is-armed .mn-cats__grid:has(.mn-cats__tile:nth-child(2):hover) { grid-template-columns: .94fr 1.06fr; }
+}
+@media (max-width: 1024px) {
+  .mn-cats__grid { grid-template-columns: 1fr; }
+  .mn-cats__content { display: flex; flex-direction: column; justify-content: space-between; }
+  .mn-cats__title, .mn-cats__desc, .mn-cats__link { position: static; width: auto; }
+  .mn-cats__desc, .mn-cats__link { font-size: 1.6rem; }
+  .mn-cats__link { align-self: flex-start; }
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-cats__tile { aspect-ratio: 834 / 768; }
+  .mn-cats__content { padding: 6rem 4rem 4rem 6rem; align-items: flex-end; }
+  .mn-cats__title { align-self: stretch; font-size: 6.4rem; }
+  .mn-cats__desc { width: 36.3rem; margin-top: auto; margin-bottom: 1.2rem; }
+  .mn-cats__link { align-self: auto; width: 36.3rem; }
+  .mn-cats__link::after { right: auto; width: 7.6rem; }
+}
+@media (max-width: 749px) {
+  .mn-cats__tile { aspect-ratio: 402 / 560; }
+  .mn-cats__content { padding: 3.2rem 2rem; }
+  .mn-cats__title { font-size: 4.8rem; }
+  .mn-cats__desc { margin-top: auto; margin-bottom: 1.2rem; }
+}
+
+/* ==========================================================================
+   4 + 9. Collection showcase
+   ========================================================================== */
+.mn-collection {
+  padding-top: var(--pad-top, 100px);
+  padding-bottom: var(--pad-bottom, 100px);
+  background: var(--cream);
+}
+.mn-collection__head { margin-bottom: 3.8rem; text-align: center; }
+.mn-collection__title {
+  margin-bottom: 1.5rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 3.4rem;
+  line-height: 1;
+  letter-spacing: .01em;
+}
+.mn-collection__layout {
+  display: grid;
+  grid-template-columns: 530fr 1065fr;
+  gap: 6px;
+  align-items: stretch;
+}
+.mn-collection__layout--right { grid-template-columns: 1065fr 530fr; }
+.mn-collection__layout--right .mn-promo { order: 2; }
+
+.mn-promo {
+  position: relative;
+  display: block;
+  min-height: 42rem;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--white);
+  text-decoration: none;
+}
+.mn-promo__media { position: absolute; inset: 0; z-index: 0; }
+.mn-promo__media img { transition: transform 1.4s var(--ease); }
+.mn-promo:hover .mn-promo__media img { transform: scale(1.04); }
+.mn-promo__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s var(--ease);
+}
+@media (hover: hover) { .mn-promo:hover .mn-promo__video { opacity: 1; } }
+.mn-promo__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6), transparent 32%); }
+.mn-promo__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 4rem 4rem 3rem;
+}
+.mn-promo__heading { font-family: var(--serif); font-weight: 300; font-size: 5rem; line-height: 1; }
+.mn-promo__link { align-self: flex-start; margin-top: 1.5rem; }
+
+.mn-collection__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+.mn-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--tile);
+  color: var(--ink);
+  text-decoration: none;
+}
+.mn-card__media { position: relative; display: grid; aspect-ratio: 351 / 410; overflow: hidden; background: var(--tile); }
+.mn-card__img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s var(--ease); }
+.mn-card__img--alt { opacity: 0; }
+.mn-card:hover .mn-card__img--alt, .mn-card:focus-visible .mn-card__img--alt { opacity: 1; }
+.mn-card:hover .mn-card__img:not(.mn-card__img--alt), .mn-card:focus-visible .mn-card__img:not(.mn-card__img--alt) { opacity: 0; }
+.mn-card__info {
+  position: absolute;
+  top: 1.7rem;
+  left: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  opacity: 0;
+  transform: translateY(-.4rem);
+  pointer-events: none;
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+.mn-card:hover .mn-card__info, .mn-card:focus-visible .mn-card__info { opacity: 1; transform: none; }
+.mn-card__title { font-size: 1.6rem; line-height: 2.4rem; }
+.mn-card__type { font-size: 1.4rem; line-height: 2.4rem; }
+
+@media (max-width: 1024px) {
+  .mn-collection__layout, .mn-collection__layout--right { grid-template-columns: 1fr; margin-inline: calc(50% - 50vw); }
+  .mn-collection__layout--right .mn-promo { order: 0; }
+  .mn-promo { min-height: 0; aspect-ratio: 834 / 512; }
+  .mn-promo__heading { font-size: 4.8rem; }
+  .mn-promo__link { margin-top: .6rem; }
+  .mn-collection__head { margin-bottom: 4rem; }
+  .mn-collection__title { font-size: 3.2rem; margin-bottom: 1.2rem; }
+  .mn-collection__grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .mn-collection__grid::-webkit-scrollbar { display: none; }
+  .mn-card { flex: 0 0 auto; width: 35rem; scroll-snap-align: start; }
+  .mn-card__info { opacity: 1; transform: none; top: 2.4rem; left: 2.4rem; right: 2.4rem; }
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-collection { padding-block: 10.4rem; }
+}
+@media (max-width: 749px) {
+  .mn-collection { padding-block: 7.2rem; }
+  .mn-promo { aspect-ratio: 402 / 512; }
+  .mn-card { width: 87vw; max-width: 35rem; }
+}
+
+/* ==========================================================================
+   3b. Conventions carousel (between section 3 and 4)
+   Desktop: the section pins and scrolling moves the cards diagonally
+   (next stack top-right -> centre -> previous stack bottom-left); see motion.js.
+   Tablet/phone and reduced motion: discrete slots set by class (components.js).
+   Slot geometry here mirrors the KEYS table in components.js.
+   ========================================================================== */
+.mn-conv {
+  --card-w: 26vw;
+  --side: .88;            /* side cards stay close in size to the current one */
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--ink);
+}
+.mn-conv__inner { position: relative; height: 100svh; min-height: 72rem; }
+
+/* Header: sits high, just under the fixed site header; no eyebrow. */
+.mn-conv__head {
+  position: absolute;
+  z-index: 6;
+  top: 8rem;
+  left: var(--gutter);
+  max-width: 30vw;
+}
+.mn-conv__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(4.8rem, 4.6vw, 8.4rem);
+  line-height: 1;
+  letter-spacing: -.005em;
+}
+.mn-conv__title em { font-style: italic; color: var(--gold); }
+.mn-conv__all { margin-top: 2.4rem; }
+
+/* Stage + cards: one width; cards move/scale between slots. */
+.mn-conv__stage { position: absolute; inset: 0; touch-action: pan-y; }
+.mn-conv__card {
+  --veil: .18;
+  position: absolute;
+  left: var(--x, 104vw);
+  top: var(--y, 0%);
+  z-index: var(--z, 1);
+  width: var(--card-w);
+  opacity: var(--o, 0);
+  transform: scale(var(--s, var(--side)));
+  transform-origin: 0 0;
+  transition: left .9s var(--ease), top .9s var(--ease), transform .9s var(--ease), opacity .6s var(--ease);
+}
+.mn-conv__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
+  background: var(--tile);
+}
+.mn-conv__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+/* Side cards stay solid; a light cream veil sets them back from the current one. */
+.mn-conv__media::after { content: ""; position: absolute; inset: 0; background: var(--cream); opacity: var(--veil); pointer-events: none; transition: opacity .6s var(--ease); }
+.mn-conv__card.is-current { --veil: 0; }
+.mn-conv__card.is-current .mn-conv__media:hover img { transform: scale(1.04); }
+.mn-conv__name {
+  margin-top: 2.4rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 2.2vw, 4rem);
+  line-height: 1.08;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
+}
+.mn-conv__name a { text-decoration: none; }
+.mn-conv__card.is-current .mn-conv__name { opacity: 1; transform: none; transition-delay: .35s; }
+.mn-conv__card:not(.is-current) { cursor: pointer; }
+
+/* Desktop slots (x = left edge in vw, y = top as % of the stage). */
+.mn-conv__card.is-current   { --x: 37vw;  --y: 34%; --s: 1;          --z: 10; --o: 1; }
+.mn-conv__card.is-next-1    { --x: 70vw;  --y: 10%; --s: var(--side); --z: 8;  --o: 1; }
+.mn-conv__card.is-next-2    { --x: 85vw;  --y: 5%;  --s: var(--side); --z: 6;  --o: 1; }
+.mn-conv__card.is-prev-1    { --x: 7vw;   --y: 56%; --s: var(--side); --z: 8;  --o: 1; }
+.mn-conv__card.is-prev-2    { --x: -7vw;  --y: 62%; --s: var(--side); --z: 6;  --o: 1; }
+.mn-conv__card.is-gone-next { --x: 104vw; --y: 0%;  --o: 0; --z: 1; }
+.mn-conv__card.is-gone-prev { --x: -30vw; --y: 70%; --o: 0; --z: 1; }
+
+/* Scroll-driven mode (desktop): JS writes transform/opacity/z per frame. */
+.mn-conv.is-scrub .mn-conv__card { left: 0; top: 0; transition: none; }
+.mn-conv.is-scrub .mn-conv__name { transform: none; transition: none; transition-delay: 0s; }
+.mn-conv.is-scrub .mn-conv__media::after { transition: none; }
+
+/* Controls under the current card; meta bottom-right. */
+.mn-conv__nav {
+  position: absolute;
+  z-index: 11;
+  left: calc(37vw + var(--card-w) / 2);
+  bottom: 7%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  transform: translateX(-50%);
+}
+.mn-conv__arrow {
+  display: grid;
+  place-items: center;
+  width: 4.6rem;
+  height: 4.6rem;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease), opacity .4s var(--ease);
+}
+.mn-conv__arrow svg { width: 2rem; height: 2rem; }
+.mn-conv__arrow:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+.mn-conv__arrow:disabled { opacity: .35; cursor: default; }
+.mn-conv__count { min-width: 6.4rem; font-size: 1.5rem; font-weight: 500; letter-spacing: .08em; text-align: center; font-variant-numeric: tabular-nums; }
+.mn-conv__of { color: var(--ink-45); }
+
+.mn-conv__meta {
+  position: absolute;
+  z-index: 11;
+  right: var(--gutter);
+  bottom: 7%;
+  max-width: 30rem;
+}
+.mn-conv__date { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1.2rem; font-size: 1.3rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.mn-conv__tag { font-size: 1.1rem; color: #a97835; }
+.mn-conv__venue { display: inline-flex; align-items: center; gap: .8rem; margin-top: 1rem; font-size: 1.8rem; }
+.mn-conv__venue svg { width: 1.8rem; height: 1.8rem; flex: 0 0 auto; }
+.mn-conv__meta.is-swapping { animation: mn-conv-swap .55s var(--ease); }
+@keyframes mn-conv-swap { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+
+.mn-conv.no-motion .mn-conv__card,
+.mn-conv.no-motion .mn-conv__name { transition: none; }
+.mn-conv.no-motion .mn-conv__meta.is-swapping { animation: none; }
+
+/* Tablet + phone: header on top, one row of cards with peeking neighbours, swipe/arrows. */
+@media (max-width: 1024px) {
+  .mn-conv { --card-w: 84vw; }
+  .mn-conv__inner { display: flex; flex-direction: column; height: auto; min-height: 0; padding: 6.4rem 0 6rem; }
+  .mn-conv__head { position: static; max-width: none; padding-inline: var(--gutter); }
+  .mn-conv__stage { position: relative; inset: auto; height: calc(var(--card-w) * 9 / 16 + 11rem); margin-top: 4rem; }
+  .mn-conv__card { transform: none; }
+  .mn-conv__card.is-current { --x: 8vw;  --y: 0; }
+  .mn-conv__card.is-next-1  { --x: 95vw; --y: 0; --o: .55; }
+  .mn-conv__card.is-prev-1  { --x: -79vw; --y: 0; --o: .55; }
+  .mn-conv__card.is-next-2, .mn-conv__card.is-gone-next { --x: 182vw; --y: 0; --o: 0; }
+  .mn-conv__card.is-prev-2, .mn-conv__card.is-gone-prev { --x: -166vw; --y: 0; --o: 0; }
+  .mn-conv__nav { position: static; transform: none; justify-content: center; margin-top: 1.2rem; }
+  .mn-conv__meta { position: static; max-width: none; margin-top: 3.2rem; padding-inline: 8vw; }
+}
+@media (max-width: 749px) {
+  .mn-conv__inner { padding: 4.8rem 0 4.8rem; }
+  .mn-conv__title { font-size: 4.4rem; }
+  .mn-conv__name { margin-top: 1.6rem; font-size: 2.6rem; }
+  .mn-conv__venue { font-size: 1.6rem; }
+}
+
+/* ==========================================================================
+   4. Hyderabad, Your Way: theme explorer (scoped to [data-themes])
+   Hover/focus/tap a card -> its state shows in the big panel with a looping video.
+   ========================================================================== */
+.mn-themes__eyebrow {
+  margin-bottom: 1.4rem;
+  font-size: 1.2rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #a97835; /* darker Asli gold: readable on cream */
+}
+
+/* Panel: the stacked states share one grid cell, so the panel never jumps in height. */
+[data-themes] .mn-promo__scrim {
+  background: linear-gradient(to top, rgba(0,0,0,.74), rgba(0,0,0,.36) 46%, rgba(0,0,0,.08) 78%, transparent);
+}
+.mn-themes__still,
+[data-themes] .mn-promo__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+}
+[data-themes] .mn-promo.has-still .mn-themes__still,
+[data-themes] .mn-promo.is-playing .mn-promo__video { opacity: 1; }
+/* The template fades the promo video in on hover; here only an active theme shows it. */
+[data-themes] .mn-promo:not(.is-playing) .mn-promo__video { opacity: 0; }
+
+/* Grid overrides the template's flex column; reset its justify-content: flex-end, which would act horizontally here. */
+.mn-themes__states { display: grid; grid-template-columns: minmax(0, 1fr); align-content: end; justify-content: stretch; }
+.mn-themes__state {
+  grid-area: 1 / 1;
+  align-self: end;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1.2rem);
+  transition: opacity .45s var(--ease), transform .45s var(--ease), visibility .45s;
+}
+.mn-themes__state.is-current { opacity: 1; visibility: visible; transform: none; }
+
+.mn-themes__routes { margin-top: 2.6rem; }
+.mn-themes__routes li + li { margin-top: .6rem; }
+/* Routes are links in section 4; the Originals list what the evening holds as plain text (span). */
+.mn-themes__routes a,
+.mn-themes__routes span {
+  position: relative;
+  padding-left: 2.2rem;
+  font-size: 1.4rem;
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: color .3s var(--ease);
+}
+.mn-themes__routes a::before,
+.mn-themes__routes span::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1.2rem; height: 1px;
+  background: var(--gold-light);
+}
+.mn-themes__routes a:hover { color: var(--gold-light); }
+.mn-themes__cta { gap: .8rem; min-height: 4.4rem; margin-top: 2.8rem; padding: 0 2.2rem; color: var(--white); }
+.mn-themes__cta::after { content: "\2192"; letter-spacing: 0; transition: transform .3s var(--ease); }
+.mn-themes__cta:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.mn-themes__cta:hover::after { transform: translateX(.3rem); }
+
+/* Cards: labels always visible (people scan six names), over a soft bottom fade. */
+[data-themes] .mn-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.58), rgba(0,0,0,.12) 38%, transparent 55%);
+  pointer-events: none;
+}
+[data-themes] .mn-card__info {
+  top: auto;
+  bottom: 2.2rem;
+  left: 2.2rem;
+  right: 2.2rem;
+  z-index: 1;
+  gap: .4rem;
+  color: var(--white);
+  opacity: 1;
+  transform: none;
+}
+.mn-card__num { font-size: 1.1rem; letter-spacing: .2em; color: var(--gold-light); }
+[data-themes] .mn-card__title { font-family: var(--serif); font-weight: 400; font-size: 2.8rem; line-height: 1.1; }
+[data-themes] .mn-card__type { font-size: 1.3rem; line-height: 1.5; color: var(--white-80); }
+/* Active theme: a thin gold rule along the card's foot. */
+[data-themes] .mn-card::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .5s var(--ease);
+}
+[data-themes] .mn-card.is-active::after { transform: scaleX(1); }
+
+/* Focus: while one card is hovered (or keyboard-focused), the other five dim back.
+   Keyed on a hovered card, not the grid, so crossing the gaps never flashes all six dark. */
+[data-themes] .mn-card__media { transition: filter .5s var(--ease); }
+[data-themes] .mn-card__info { transition: opacity .5s var(--ease), transform .4s var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  [data-themes] .mn-collection__grid:has(.mn-card:hover) .mn-card:not(:hover) .mn-card__media { filter: brightness(.42) saturate(.55); }
+  [data-themes] .mn-collection__grid:has(.mn-card:hover) .mn-card:not(:hover) .mn-card__info { opacity: .45; }
+}
+[data-themes] .mn-collection__grid:has(.mn-card:focus-visible) .mn-card:not(:focus-visible) .mn-card__media { filter: brightness(.42) saturate(.55); }
+[data-themes] .mn-collection__grid:has(.mn-card:focus-visible) .mn-card:not(:focus-visible) .mn-card__info { opacity: .45; }
+@media (prefers-reduced-motion: reduce) {
+  [data-themes] .mn-card__media, [data-themes] .mn-card__info { transition: none; }
+}
+/* Desktop: rows stretch to the panel's height, so let each image fill its card (no cream strip below). */
+@media (min-width: 1025px) {
+  [data-themes] .mn-collection__grid { grid-auto-rows: 1fr; }
+  [data-themes] .mn-card__media { width: 100%; height: 100%; aspect-ratio: auto; min-height: 30rem; }
+}
+
+@media (max-width: 1024px) {
+  [data-themes] .mn-promo { aspect-ratio: auto; min-height: 56rem; }
+  [data-themes] .mn-promo__heading { font-size: 4rem; }
+}
+@media (max-width: 749px) {
+  [data-themes] .mn-promo { min-height: 54rem; }
+  [data-themes] .mn-promo__content { padding: 3.2rem 2rem 2.8rem; }
+  [data-themes] .mn-promo__heading { font-size: 3.4rem; }
+}
+
+/* ==========================================================================
+   5–7, 10. Editorial blocks
+   ========================================================================== */
+.mn-ed { position: relative; background: var(--cream); }
+.mn-ed__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--pos, center);
+  transform: scale(var(--zoom, 1));
+  transform-origin: var(--pos, center);
+}
+.mn-ed__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, var(--overlay, .2)); }
+.mn-ed--scrim-bottom .mn-ed__scrim { background: linear-gradient(to top, rgba(0,0,0,var(--overlay, .25)), transparent 52%); }
+
+.mn-ed__heading {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 4.4vw, 6.4rem);
+  line-height: 1.04;
+  letter-spacing: -.01em;
+}
+.mn-ed__heading em { font-style: italic; }
+.mn-ed__body { margin-top: 2.4rem; font-size: 1.5rem; line-height: 1.7; }
+.mn-ed__link { margin-top: 2rem; }
+.mn-ed__btn { margin-top: 3.2rem; }
+
+/* Overlay variant: image fills, content sits on top. */
+.mn-ed--overlay { display: flex; min-height: 940px; isolation: isolate; }
+.mn-ed--overlay.mn-ed--fixed { min-height: 0; aspect-ratio: var(--aspect); }
+.mn-ed--overlay .mn-ed__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.mn-ed--overlay .mn-ed__frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: clamp(4rem, 6vw, 8rem) var(--gutter);
+}
+.mn-ed--steps .mn-ed__frame { padding: 0 clamp(2.4rem, 5.357vw, 9rem) 4rem; }
+.mn-ed__inner { display: flex; flex: 1 1 auto; align-items: center; }
+.mn-ed__inner--left { justify-content: flex-start; }
+.mn-ed__inner--right { justify-content: flex-end; }
+.mn-ed__inner--center { justify-content: center; text-align: center; }
+
+.mn-ed--light .mn-ed__content:not(.mn-ed__content--boxed) { color: var(--white); }
+
+/* Boxed white card */
+.mn-ed__content--boxed {
+  width: 52.6rem;
+  max-width: 100%;
+  min-height: 50.4rem;
+  padding: clamp(3.6rem, 3.4vw, 5.4rem) clamp(3.2rem, 3vw, 4.4rem);
+  background: var(--white);
+  background-clip: padding-box;
+  border: 6px solid rgba(255, 255, 255, .75);
+  box-shadow: 0 3rem 6rem rgba(10, 9, 8, .18);
+  color: var(--ink);
+  text-align: center;
+}
+.mn-ed__inner--left .mn-ed__content--boxed { margin-left: clamp(0rem, 3vw, 4.5rem); }
+.mn-ed__content--boxed .mn-ed__eyebrow { margin-bottom: 1.6rem; }
+.mn-ed__content--boxed .mn-ed__heading { font-size: clamp(3.4rem, 5.2vw, 5rem); line-height: 1.24; letter-spacing: 0; }
+.mn-ed__inner--left .mn-ed__content--boxed .mn-ed__heading em { display: block; }
+.mn-ed__content--boxed .mn-ed__body { margin-top: 4.9rem; font-size: 1.6rem; line-height: 1.5; }
+.mn-ed__content--boxed .mn-ed__btn { margin-top: 5.9rem; }
+
+/* Trusted with Hyderabad: card with three supporting figures, four headline figures along the bottom. */
+/* Heading in Asli gold, the italic half in ink. */
+.mn-ed--numbers .mn-ed__content--boxed .mn-ed__heading { color: var(--gold); }
+.mn-ed--numbers .mn-ed__content--boxed .mn-ed__heading em { color: var(--ink); }
+
+/* Mughal jaali behind the card: an eight-pointed khatam star lattice (as on Mughal and
+   Qutb Shahi screens and inlay), in fine gold line. Faded out behind the copy so it frames
+   the text instead of competing with it. */
+.mn-ed--numbers .mn-ed__content--boxed { position: relative; isolation: isolate; }
+.mn-ed--numbers .mn-ed__content--boxed::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  inset: 0;
+  opacity: .55;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
+  -webkit-mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 0%, rgba(0,0,0,.08) 45%, #000 100%);
+          mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 0%, rgba(0,0,0,.08) 45%, #000 100%);
+}
+.mn-fig {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-left: 2.4rem;
+  border-left: 1px solid rgba(255, 255, 255, .32);
+  text-shadow: 0 1px 20px rgba(0, 0, 0, .35);
+}
+.mn-fig__num {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(5.6rem, 5.6vw, 9.6rem);
+  line-height: .9;
+  letter-spacing: -.01em;
+  color: var(--gold-light);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.mn-fig__num [data-count] { display: inline-block; text-align: right; color: var(--white); }
+.mn-fig__plus { display: inline-block; }
+.mn-fig__label { max-width: 24rem; font-size: 1.5rem; line-height: 1.4; color: var(--white-80); }
+@media (max-width: 749px) {
+  .mn-ed__steps.mn-ed__figs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.8rem 1.6rem; }
+  .mn-fig { padding-left: 1.4rem; gap: .8rem; }
+  .mn-fig__num { font-size: 4.8rem; }
+  .mn-fig__label { font-size: 1.3rem; }
+}
+
+/* Centred statement with monogram */
+.mn-ed--mark .mn-ed__content { display: flex; flex-direction: column; align-items: center; max-width: 90rem; }
+.mn-ed--mark .mn-ed__heading { order: 1; font-size: 7rem; line-height: 7.4rem; letter-spacing: 0; }
+.mn-ed--mark .mn-ed__eyebrow {
+  order: 2;
+  margin-top: 1.6rem;
+  color: var(--white-80);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+}
+.mn-ed__monogram { order: 3; display: inline-flex; margin-top: 2.3rem; }
+
+/* Private Access: eyebrow above, then heading, a quiet line and the request link. */
+.mn-ed--access .mn-ed__scrim { background: radial-gradient(ellipse 70% 65% at 50% 50%, rgba(10,8,6,.62), rgba(10,8,6,.3) 75%); }
+.mn-ed--access .mn-ed__content { text-shadow: 0 1px 24px rgba(0,0,0,.4); }
+.mn-ed--access .mn-ed__eyebrow { order: 0; margin: 0 0 2.4rem; color: var(--gold-light); }
+.mn-ed--access .mn-ed__sub { order: 2; margin-top: 2rem; font-size: 1.7rem; letter-spacing: .02em; color: var(--white-80); }
+.mn-ed--access .mn-ed__link { order: 3; margin-top: 3.2rem; }
+
+/* Carved doors drawn in CSS: teak leaves, brass studs, a gold arch inlay split down the seam.
+   Hidden by default so the hall shows when motion is off; motion.js closes them, then swings them open. */
+.mn-doors { position: absolute; inset: 0; z-index: 1; perspective: 1800px; visibility: hidden; pointer-events: none; }
+.mn-doors__leaf {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 50%;
+  background:
+    radial-gradient(circle, rgba(226,192,130,.7) 0 1.6px, transparent 2.4px) 50% 50% / 5.6rem 5.6rem,
+    repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 2px, transparent 2px 9px),
+    linear-gradient(90deg, #2e2117, #4d3725 48%, #36271b);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.mn-doors__leaf--l { left: 0; box-shadow: inset -1px 0 0 rgba(0,0,0,.7); }
+.mn-doors__leaf--r { right: 0; box-shadow: inset 1px 0 0 rgba(0,0,0,.7); }
+/* Each leaf carries half of one arch, so closed they read as a single doorway. */
+.mn-doors__leaf::before,
+.mn-doors__leaf::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(216,183,125,.75);
+}
+.mn-doors__leaf--l::before { inset: 7% 0 7% 14%; border-right: 0; border-top-left-radius: 100% 30%; }
+.mn-doors__leaf--r::before { inset: 7% 14% 7% 0; border-left: 0; border-top-right-radius: 100% 30%; }
+.mn-doors__leaf--l::after { inset: calc(7% + 1.4rem) 0 calc(7% + 1.4rem) calc(14% + 1.4rem); border-right: 0; border-top-left-radius: 100% 30%; border-color: rgba(216,183,125,.4); }
+.mn-doors__leaf--r::after { inset: calc(7% + 1.4rem) calc(14% + 1.4rem) calc(7% + 1.4rem) 0; border-left: 0; border-top-right-radius: 100% 30%; border-color: rgba(216,183,125,.4); }
+.mn-doors__ring {
+  position: absolute;
+  top: 54%;
+  width: 3.2rem; height: 3.2rem;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
+.mn-doors__leaf--l .mn-doors__ring { right: 2.4rem; }
+.mn-doors__leaf--r .mn-doors__ring { left: 2.4rem; }
+/* Warm light through the seam as the doors part. */
+.mn-doors__light {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: #ffe2b0;
+  box-shadow: 0 0 30px 6px rgba(255, 205, 140, .55), 0 0 90px 24px rgba(255, 190, 120, .25);
+  opacity: 0;
+}
+@media (max-width: 749px) {
+  .mn-doors__leaf { background-size: 4rem 4rem, auto, auto; }
+  .mn-doors__ring { width: 2.4rem; height: 2.4rem; }
+  .mn-doors__leaf--l .mn-doors__ring { right: 1.4rem; }
+  .mn-doors__leaf--r .mn-doors__ring { left: 1.4rem; }
+}
+
+/* Steps row */
+.mn-ed__steps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(2.8rem, 4vw, 6.2rem);
+  margin-top: auto;
+  color: var(--white);
+}
+.mn-ed__steps--numbered { gap: clamp(3.2rem, 4.2vw, 6rem); }
+.mn-step { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; }
+.mn-step__head { display: flex; align-items: center; gap: 1.5rem; min-height: 3.3rem; }
+.mn-step__num {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 3.3rem;
+  height: 3.3rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  opacity: .7;
+}
+.mn-step__check { flex: 0 0 auto; width: 2.24rem; height: 2rem; overflow: visible; }
+.mn-step__title { font-family: var(--serif); font-weight: 400; font-size: 2.6rem; line-height: 1; letter-spacing: .01em; }
+.mn-step__desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 31.7rem;
+  max-width: 100%;
+  min-height: 4rem;
+  padding-left: 3.7rem;
+  font-size: 1.5rem;
+  line-height: 1.333;
+  opacity: .9;
+}
+.mn-ed__steps--numbered .mn-step__desc { width: 32.8rem; padding-left: 4.8rem; opacity: .72; }
+
+/* Split variant: image left, text right */
+.mn-ed--split { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+.mn-ed--split .mn-ed__media { position: relative; overflow: hidden; }
+.mn-ed--split.mn-ed--fixed .mn-ed__media { aspect-ratio: var(--aspect); align-self: start; }
+.mn-ed--split .mn-ed__frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-block: clamp(3.2rem, 5vw, 7rem);
+  padding-inline: clamp(3.2rem, 5.71vw, 9.6rem);
+}
+.mn-ed--split.mn-ed--bottom .mn-ed__frame { justify-content: flex-end; padding-bottom: clamp(4.8rem, 5.42vw, 9.1rem); }
+.mn-ed--split .mn-ed__content { max-width: 63.8rem; color: var(--ink); }
+.mn-ed--split .mn-ed__eyebrow { margin-bottom: 2.4rem; }
+.mn-ed--split .mn-ed__heading { font-size: 7rem; line-height: 7.4rem; letter-spacing: 0; }
+.mn-ed--split .mn-ed__body { margin-top: 1.8rem; font-size: 1.6rem; line-height: 1.5; }
+
+/* ==========================================================================
+   7. Rooted in Hyderabad: "400 years in one line"
+   Desktop: motion.js moves .mn-skyline into the sideways sweep (.mn-sweep) and opens each
+   landmark as the sweep carries it on screen. Smaller screens: an ink band at the top of the
+   section that draws itself once. No JS motion: everything shown, fully drawn.
+   ========================================================================== */
+.mn-skyline {
+  --line: var(--gold);
+  position: relative;
+  padding: 4.8rem var(--gutter) 4rem;
+  background: var(--ink);
+  color: var(--white);
+  overflow: hidden;
+}
+.mn-skyline::before {               /* faint jaali texture, same lattice as the numbers card */
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
+  pointer-events: none;
+}
+.mn-skyline__caption { position: relative; font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 2.2vw, 3.6rem); line-height: 1.1; color: var(--white); }
+.mn-skyline__caption em { font-style: italic; color: var(--gold-light); }
+.mn-skyline__svg { position: relative; display: block; width: 100%; max-width: 110rem; height: auto; margin: 3.2rem auto 0; overflow: visible; }
+/* Stroke widths are SVG units, not non-scaling-stroke: Chrome measures a non-scaling stroke's dashes in
+   screen pixels, which broke the pathLength="1" draw. --sw is set per context so the line lands near 1.5px. */
+.mn-skyline { --sw: 1.5; }
+.mn-skyline__line { fill: none; stroke: var(--line); stroke-width: var(--sw); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mn-skyline__detail { stroke-width: calc(var(--sw) * .7); }
+/* Timeline under the skyline: a hairline axis, a gold tick per landmark, the year as the
+   primary read (serif, gold) and the place as the secondary one (small caps).
+   Sizes are SVG user units; each context below sets them so on screen the year lands
+   around 16px and the name around 10.5px. Vertical spacing lives in the markup as em
+   offsets: tick -> year baseline 1.3em, year -> name 2em, name lines 1.3em. */
+.mn-skyline { --year: 16px; --name: 10.5px; }
+.mn-skyline__axis { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: calc(var(--sw) * .7); stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mn-skyline__dot { fill: var(--gold); }   /* rectangular tick on the axis */
+.mn-skyline__label text { text-anchor: middle; }
+.mn-skyline__year { font-family: var(--serif); font-weight: 400; font-size: var(--year); letter-spacing: .02em; fill: var(--gold-light); }
+.mn-skyline__name { font-family: var(--sans); font-weight: 500; font-size: var(--name); letter-spacing: .06em; text-transform: uppercase; fill: var(--white-80); }
+
+/* Inside the desktop sweep: fills the panel, centred vertically. */
+.mn-sweep { background: var(--ink); overflow: hidden; }
+.mn-sweep .mn-skyline {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: transparent;
+}
+.mn-sweep .mn-skyline__svg { margin-top: 4rem; }
+.mn-sweep .mn-skyline__caption { font-size: clamp(3.2rem, 2.8vw, 4.4rem); }
+.mn-sweep .mn-skyline { --year: 26px; --name: 16px; --sw: 2.3; padding: 0 5%; }
+/* Narrow desktops: the panel is smaller, so the type steps up to stay at timeline scale. */
+@media (min-width: 1025px) and (max-width: 1300px) { .mn-sweep .mn-skyline { --year: 30px; --name: 17.5px; --sw: 2.4; padding: 0 2%; } }
+
+/* Section copy: the heading is longer than the template's, so it steps down a size. */
+.mn-ed--rooted .mn-ed__heading { font-size: clamp(4rem, 3.6vw, 6rem); line-height: 1.08; }
+.mn-ed--rooted .mn-ed__heading em { font-style: italic; color: #a97835; }
+
+@media (min-width: 1025px) {
+  /* The band only shows on desktop when the sweep is not running (reduced motion). */
+  .mn-sec[data-sec="city"] > .mn-skyline { padding-block: 6.4rem 5.6rem; }
+}
+/* Smaller screens: keep the labels readable by giving the line a real width and letting the
+   strip glide sideways while it draws (motion.js); it can also be swiped. */
+@media (max-width: 1024px) {
+  .mn-skyline__track { position: relative; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); overflow-x: auto; scrollbar-width: none; }
+  .mn-skyline__track::-webkit-scrollbar { display: none; }
+  .mn-skyline__svg { width: 86rem; max-width: none; }
+  .mn-skyline { --year: 19px; --name: 12.5px; --sw: 1.8; }
+}
+@media (max-width: 749px) {
+  .mn-skyline { padding: 4rem 2rem 3.2rem; }
+  .mn-skyline__track { margin-inline: -2rem; padding-inline: 2rem; }
+  .mn-skyline__svg { margin-top: 2.4rem; }
+}
+
+/* Desktop: these sections fill the viewport so the stacked transitions line up. */
+@media (min-width: 1025px) {
+  .mn-ed { min-height: 100svh; }
+  .mn-ed--fixed { height: 100svh; aspect-ratio: auto !important; }
+  .mn-ed--split.mn-ed--fixed .mn-ed__media { aspect-ratio: auto; height: 100%; align-self: stretch; }
+}
+
+@media (max-width: 1024px) {
+  .mn-ed--split { grid-template-columns: 1fr; }
+  .mn-ed__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.2rem 4.2rem; }
+  .mn-step__desc, .mn-ed__steps--numbered .mn-step__desc { width: 100%; padding-left: 3.2rem; }
+  .mn-ed__content--boxed { width: 100%; min-height: 0; }
+  .mn-ed__inner--left .mn-ed__content--boxed { margin-left: 0; }
+  .mn-ed__img { object-position: var(--pos-m, center); transform: none; }
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-ed--steps { min-height: 0; aspect-ratio: 834 / 1194; }
+  .mn-ed--steps .mn-ed__frame { padding: 0 5.6rem 5.6rem; }
+  .mn-ed--steps .mn-ed__inner { align-items: flex-start; padding: 5.6rem 0; }
+  .mn-ed__content--boxed { padding: 3.2rem; }
+  .mn-ed__content--boxed .mn-ed__heading { font-size: 4.8rem; line-height: 5.6rem; }
+  .mn-ed__content--boxed .mn-ed__body { margin-top: 1.6rem; font-size: 1.4rem; line-height: 2.2rem; }
+  .mn-ed__content--boxed .mn-ed__btn { margin-top: 3.2rem; padding: 1rem 2rem; }
+  .mn-ed--overlay.mn-ed--fixed { aspect-ratio: 834 / 1194; }
+  .mn-ed--mark .mn-ed__heading { font-size: 6.4rem; line-height: 7.2rem; }
+  .mn-ed--split .mn-ed__frame { order: -1; padding: 10.4rem 7.2rem; }
+  .mn-ed--split.mn-ed--fixed .mn-ed__media { aspect-ratio: 834 / 655; }
+  .mn-ed--split .mn-ed__heading { font-size: 6.4rem; line-height: 6.4rem; }
+  .mn-ed--split .mn-ed__body { margin-top: 3rem; max-width: 47.8rem; }
+}
+@media (max-width: 749px) {
+  .mn-ed__steps { grid-template-columns: 1fr; gap: 1.6rem; }
+  .mn-step { gap: .2rem; }
+  .mn-step__head { cursor: pointer; }
+  /* Mobile: steps become an accordion. */
+  .mn-step__descwrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
+  .mn-step.is-open .mn-step__descwrap { grid-template-rows: 1fr; }
+  .mn-step__desc { min-height: 0; overflow: hidden; }
+  .mn-ed--steps { min-height: 88svh; }
+  .mn-ed--steps .mn-ed__frame { padding: 0 2rem 4rem; }
+  .mn-ed--steps .mn-ed__inner { align-items: flex-start; padding: 2rem 0 5.6rem; }
+  .mn-ed__content--boxed { padding: 2rem; }
+  .mn-ed__content--boxed .mn-ed__heading { font-size: 3.2rem; line-height: 3.6rem; }
+  .mn-ed__content--boxed .mn-ed__eyebrow { margin-bottom: .8rem; }
+  .mn-ed__content--boxed .mn-ed__body { margin-top: .8rem; font-size: 1.3rem; line-height: 2rem; }
+  .mn-ed__content--boxed .mn-ed__btn { margin-top: 2rem; padding: 1rem 2rem; }
+  .mn-ed--overlay { min-height: 84svh; }
+  .mn-ed--overlay.mn-ed--fixed { aspect-ratio: auto; min-height: 90svh; }
+  .mn-ed--mark .mn-ed__frame { padding-inline: 2rem; }
+  .mn-ed--mark .mn-ed__heading { font-size: 4.8rem; line-height: 5.6rem; }
+  .mn-ed--split .mn-ed__frame { order: -1; padding: 7.2rem 2rem; }
+  .mn-ed--split.mn-ed--fixed .mn-ed__media { aspect-ratio: auto; height: 100svh; }
+  .mn-ed--split .mn-ed__heading { font-size: 4.8rem; line-height: 4.8rem; }
+  .mn-ed--split .mn-ed__body { margin-top: 3rem; font-size: 1.4rem; line-height: 2.2rem; }
+}
+
+/* ==========================================================================
+   8. Quick Experiences: arch-topped cards in one rail (the earlier list + arch is in docs/backups/)
+   ========================================================================== */
+.mn-arcade {
+  --img-h: clamp(26rem, 46svh, 46rem);
+  --card-w: calc(var(--img-h) * .8);
+  --gap: clamp(2.4rem, 2.6vw, 4.4rem);
+  --gold-ink: #a97835;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  min-height: 64rem;
+  padding: calc(var(--header-h) + clamp(1.2rem, 2.6svh, 3.6rem)) 0 clamp(2.4rem, 4svh, 4.8rem);
+  /* clip, not hidden: focusing an off-screen card must not scroll the section sideways. */
+  overflow: clip;
+  isolation: isolate;
+  background: var(--cream);
+  color: var(--ink);
+}
+/* The khatam jaali (same lattice as the numbers card), faint, behind the rail. */
+.mn-arcade::before {
+  content: "";
+  position: absolute;
+  inset: 28% 0 0;
+  z-index: -1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
+  opacity: .14;
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 15%, transparent 78%);
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 15%, transparent 78%);
+  pointer-events: none;
+}
+
+.mn-arcade__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 3.2rem; padding-inline: var(--gutter); }
+.mn-arcade__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(3.8rem, 3.3vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -.005em;
+}
+.mn-arcade__title em { display: block; font-style: italic; color: var(--gold-ink); }
+
+/* Group buttons: jump to the first card of the group; the group in view is underlined in gold. */
+.mn-arcade__groups { display: flex; gap: clamp(2.4rem, 2.6vw, 4rem); padding-bottom: .6rem; }
+.mn-arcade__group {
+  position: relative;
+  padding: .8rem 0;
+  border: 0;
+  background: none;
+  font-family: var(--sans);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  cursor: pointer;
+  transition: color .4s var(--ease);
+}
+.mn-arcade__group::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform .6s var(--ease);
+}
+.mn-arcade__group:hover, .mn-arcade__group.is-active { color: var(--ink); }
+.mn-arcade__group.is-active::after { transform: scaleX(1); }
+.mn-arcade__group:focus-visible { outline: 1px solid var(--gold); outline-offset: .6rem; }
+.mn-arcade__count { margin-left: .4rem; font-family: var(--serif); font-size: 1.5rem; font-style: italic; letter-spacing: 0; color: var(--gold-ink); }
+
+/* Rail: scrolls natively (phones, tablets, reduced motion); on desktop motion.js moves the track instead. */
+.mn-arcade__rail {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  margin-top: clamp(1.6rem, 3.2svh, 4.4rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+.mn-arcade__rail::-webkit-scrollbar { display: none; }
+.mn-arcade__rail.is-driven { overflow: visible; scroll-snap-type: none; }
+.mn-arcade__track { display: flex; gap: var(--gap); width: max-content; margin: 0; padding: 1.2rem var(--gutter); list-style: none; }
+.mn-arcade__card { flex: 0 0 var(--card-w); width: var(--card-w); scroll-snap-align: start; }
+.mn-arcade__link { position: relative; display: block; color: inherit; text-decoration: none; }
+.mn-arcade__link:focus-visible { outline: none; }
+.mn-arcade__link:focus-visible .mn-arcade__name { text-decoration: underline 1px var(--gold); text-underline-offset: .5rem; }
+
+/* Photo in a Mughal arch, gold hairline outside it. */
+.mn-arcade__frame { position: relative; display: block; width: 100%; height: var(--img-h); }
+.mn-arcade__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: #e9dfcf;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
+.mn-arcade__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.mn-arcade__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 16, 12, .84), rgba(20, 16, 12, .38) 44%, rgba(20, 16, 12, 0) 66%);
+  opacity: 0;
+  transition: opacity .6s var(--ease);
+}
+.mn-arcade__arch { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.mn-arcade__arch path { fill: none; stroke: var(--gold); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .55; transition: opacity .5s var(--ease); }
+
+.mn-arcade__num { display: block; margin-top: clamp(1.4rem, 2.2svh, 2.4rem); font-family: var(--serif); font-size: 1.6rem; font-style: italic; line-height: 1; color: var(--gold-ink); }
+.mn-arcade__name {
+  display: block;
+  margin-top: .6rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, calc(var(--card-w) * .072), 2.6rem);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Duration and price; on hover "Book now" slides up in its place. */
+.mn-arcade__foot {
+  position: relative;
+  display: block;
+  height: 1.8rem;
+  margin-top: .8rem;
+  overflow: hidden;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.mn-arcade__meta, .mn-arcade__go { display: block; transition: transform .5s var(--ease), opacity .4s var(--ease); }
+.mn-arcade__meta { color: var(--ink-45); }
+.mn-arcade__go { position: absolute; inset: 0; font-weight: 500; color: var(--gold-ink); transform: translateY(110%); opacity: 0; }
+
+/* The description sits over the foot of the photo and rises in on hover or keyboard focus. */
+.mn-arcade__desc {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--img-h) * .93);
+  left: 11%;
+  right: 11%;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(calc(-100% + 1.2rem));
+  transition: opacity .5s var(--ease), transform .7s var(--ease);
+  pointer-events: none;
+}
+.mn-arcade__link:hover .mn-arcade__img, .mn-arcade__link:focus-visible .mn-arcade__img { transform: scale(1.05); }
+.mn-arcade__link:hover .mn-arcade__media::after, .mn-arcade__link:focus-visible .mn-arcade__media::after { opacity: 1; }
+.mn-arcade__link:hover .mn-arcade__desc, .mn-arcade__link:focus-visible .mn-arcade__desc { opacity: 1; transform: translateY(-100%); }
+.mn-arcade__link:hover .mn-arcade__arch path, .mn-arcade__link:focus-visible .mn-arcade__arch path { opacity: 1; }
+.mn-arcade__link:hover .mn-arcade__meta, .mn-arcade__link:focus-visible .mn-arcade__meta { transform: translateY(-110%); opacity: 0; }
+.mn-arcade__link:hover .mn-arcade__go, .mn-arcade__link:focus-visible .mn-arcade__go { transform: none; opacity: 1; }
+
+/* How far along the rail you are. */
+.mn-arcade__progress { position: relative; height: 1px; margin: clamp(1.6rem, 3svh, 3.2rem) var(--gutter) 0; background: rgba(46, 57, 55, .14); }
+.mn-arcade__progress::after { content: ""; position: absolute; inset: 0; background: var(--gold); transform: scaleX(var(--p, .4)); transform-origin: 0 50%; }
+
+/* Touch: no hover, so each card shows its description and Book now under the name. */
+@media (hover: none), (pointer: coarse) {
+  .mn-arcade__link { display: flex; flex-direction: column; align-items: flex-start; }
+  .mn-arcade__foot { display: contents; }
+  .mn-arcade__meta { order: 3; margin-top: .8rem; }
+  .mn-arcade__desc { order: 4; position: static; margin-top: 1.2rem; color: var(--ink-70); opacity: 1; transform: none; }
+  .mn-arcade__go { order: 5; position: static; margin-top: 1.6rem; padding-bottom: .4rem; border-bottom: 1px solid currentColor; transform: none; opacity: 1; }
+  .mn-arcade__link:hover .mn-arcade__img { transform: none; }
+  .mn-arcade__link:hover .mn-arcade__media::after { opacity: 0; }
+  .mn-arcade__link:hover .mn-arcade__meta { transform: none; opacity: 1; }
+  .mn-arcade__link:hover .mn-arcade__desc { transform: none; }
+}
+/* Large touch screens (tablets in landscape) get the desktop hold; shorter photos leave room for the text. */
+@media (min-width: 1025px) and (hover: none), (min-width: 1025px) and (pointer: coarse) {
+  .mn-arcade { --img-h: clamp(24rem, 36svh, 40rem); }
+}
+@media (max-width: 1024px) {
+  .mn-arcade {
+    --card-w: clamp(24rem, 36vw, 34rem);
+    --img-h: calc(var(--card-w) * 1.25);
+    height: auto;
+    min-height: 0;
+    padding: 9.6rem 0 6.4rem;
+  }
+  .mn-arcade__head { flex-direction: column; align-items: flex-start; gap: 2.4rem; }
+  .mn-arcade__rail { margin-top: 3.2rem; align-items: flex-start; }
+}
+@media (max-width: 749px) {
+  .mn-arcade { --card-w: 72vw; --gap: 1.6rem; padding: 8rem 0 5.6rem; }
+  .mn-arcade__title { font-size: 4.4rem; }
+  .mn-arcade__name { font-size: 2.2rem; white-space: normal; }
+}
+
+/* ==========================================================================
+   10. Trusted with Hyderabad: testimonials (in the materials slot)
+   Each guest has a backdrop, an arch portrait and a quote; the guests along the
+   bottom are tabs whose gold hairline fills while their quote is up.
+   ========================================================================== */
+.mn-ed--voices { --dur: 10s; --gold-ink: #a97835; }
+/* Darker than the other overlays so long quotes and white names stay calm and legible. */
+.mn-ed--voices .mn-ed__scrim {
+  background:
+    linear-gradient(to top, rgba(16, 12, 9, .84), rgba(16, 12, 9, 0) 36%),
+    linear-gradient(90deg, rgba(16, 12, 9, .5), rgba(16, 12, 9, .3) 55%, rgba(16, 12, 9, .52));
+}
+.mn-voices__bgs { position: absolute; inset: 0; }
+/* The incoming backdrop fades in and drifts; the outgoing one keeps its framing while it fades. */
+.mn-voices__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.4s var(--ease), transform 0s linear 1.4s;
+}
+.mn-voices__bg.is-active { opacity: 1; transform: scale(1); transition: opacity 1.4s var(--ease), transform 14s linear; }
+
+.mn-ed--voices .mn-voices__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(3.2rem, 4vw, 8rem);
+  padding: clamp(8.8rem, 11vh, 12rem) 0 clamp(2.8rem, 4.4vh, 5.6rem);
+}
+
+/* Portrait in the same Mughal arch as Quick Experiences: gold hairline outside, photo 12 units in. */
+.mn-voices__portrait {
+  position: relative;
+  justify-self: center;
+  height: min(58rem, 100svh - 33rem);
+  aspect-ratio: 4 / 5;
+}
+.mn-voices__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #2a221b;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500' preserveAspectRatio='none'%3E%3Cpath d='M12 488V190C12 114 161 56 200 12C239 56 388 114 388 190V488Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
+.mn-voices__face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transform-origin: 50% 40%;
+  transition: opacity 1s var(--ease), transform 1.8s var(--ease);
+}
+.mn-voices__face.is-active { opacity: 1; transform: none; }
+.mn-voices__arch { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.mn-voices__arch path { fill: none; stroke: var(--gold-light); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: 0; }
+
+/* Quote card: the boxed card, wider and left-aligned so a long quote reads easily. */
+.mn-ed--voices .mn-voices__card {
+  position: relative;
+  isolation: isolate;
+  width: clamp(52rem, 44vw, 66rem);
+  min-height: 0;
+  padding: clamp(3.2rem, 3.4vw, 5.2rem);
+  text-align: left;
+}
+/* The khatam jaali of the numbers card, faint in the top corner behind the heading. */
+.mn-voices__card::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  inset: 0;
+  opacity: .5;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") right top / 64px 64px repeat;
+  -webkit-mask: radial-gradient(circle at 100% 0, #000 0, rgba(0,0,0,.35) 16rem, transparent 30rem);
+          mask: radial-gradient(circle at 100% 0, #000 0, rgba(0,0,0,.35) 16rem, transparent 30rem);
+}
+.mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: clamp(3.4rem, 3vw, 4.4rem); line-height: 1.1; }
+.mn-voices__card .mn-ed__heading em { display: block; color: var(--gold-ink); }
+/* All quotes share one grid cell, so the card keeps the tallest one's height and never jumps. */
+.mn-ed--voices .mn-voices__quotes { display: grid; margin-top: clamp(2.4rem, 3.4vh, 3.6rem); font-size: inherit; line-height: inherit; }
+.mn-voices__mark { grid-area: 1 / 1; width: 3.4rem; height: 2.55rem; fill: var(--gold); }
+.mn-voices__quote {
+  grid-area: 2 / 1;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(1.2rem);
+  transition: opacity .5s var(--ease), transform .7s var(--ease), visibility 0s linear .5s;
+}
+.mn-voices__quote.is-active {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity .8s var(--ease) .2s, transform 1s var(--ease) .2s, visibility 0s;
+}
+.mn-voices__quote blockquote {
+  margin: 1.4rem 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 1.42vw, 2.2rem);
+  line-height: 1.48;
+  color: var(--ink);
+}
+.mn-voices__quote blockquote em { font-style: italic; color: var(--gold-ink); }
+.mn-voices__quote figcaption { display: flex; flex-direction: column; gap: .5rem; margin-top: clamp(1.8rem, 2.6vh, 2.8rem); }
+.mn-voices__quote figcaption::before { content: ""; width: 4.8rem; height: 1px; margin-bottom: 1.4rem; background: var(--gold); }
+.mn-voices__name { font-size: 1.3rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+.mn-voices__role { font-size: 1.35rem; line-height: 1.45; color: var(--ink-70); }
+
+/* Guests: one tab each, a hairline above that fills in gold while that guest is up. */
+.mn-ed__steps.mn-voices__list { gap: clamp(1.6rem, 2.4vw, 4rem); }
+.mn-voices__tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1.6rem;
+  padding: 2rem 0 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+/* Dim the contents, not the tab: the steps reveal (motion.js) sets the tab's own opacity. */
+.mn-voices__thumb, .mn-voices__who { opacity: .6; transition: opacity .4s var(--ease), box-shadow .4s var(--ease); }
+.mn-voices__tab:hover .mn-voices__thumb, .mn-voices__tab:hover .mn-voices__who,
+.mn-voices__tab.is-active .mn-voices__thumb, .mn-voices__tab.is-active .mn-voices__who { opacity: 1; }
+.mn-voices__tab:focus-visible { outline: 1px solid var(--gold-light); outline-offset: .8rem; }
+.mn-voices__thumb {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .35);
+}
+.mn-voices__tab.is-active .mn-voices__thumb { box-shadow: 0 0 0 1px var(--gold-light), 0 0 0 .5rem rgba(216, 183, 125, .16); }
+/* The portraits leave headroom for the arch; zoom the thumbnails onto the face. */
+.mn-voices__thumb img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.5); transform-origin: 50% 36%; }
+.mn-voices__who { display: flex; flex-direction: column; gap: .6rem; min-width: 0; }
+.mn-voices__tab .mn-step__title { font-size: clamp(2rem, 1.7vw, 2.6rem); text-shadow: 0 1px 16px rgba(0, 0, 0, .35); }
+.mn-voices__short { font-size: 1.3rem; line-height: 1.35; color: var(--white-80); }
+.mn-voices__bar { position: absolute; top: 0; left: 0; right: 0; height: 1px; overflow: hidden; background: rgba(255, 255, 255, .28); }
+.mn-voices__bar::after { content: ""; position: absolute; inset: 0; background: var(--gold-light); transform: scaleX(0); transform-origin: 0 50%; }
+.mn-voices__tab.is-active .mn-voices__bar::after { transform: scaleX(1); }
+/* While auto-advancing (components.js), the active hairline is the timer; its end moves to the next guest. */
+.mn-ed--voices.is-auto .mn-voices__tab.is-active .mn-voices__bar::after { animation: mn-voices-bar var(--dur) linear both; }
+.mn-ed--voices.is-paused .mn-voices__tab.is-active .mn-voices__bar::after { animation-play-state: paused; }
+@keyframes mn-voices-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Short desktop screens: tighten the card so it and the guests fit one viewport. */
+@media (min-width: 1025px) and (max-height: 820px) {
+  .mn-ed--voices .mn-voices__stage { padding: 10.4rem 0 2.4rem; }
+  .mn-ed--voices .mn-voices__card { padding: 2.8rem 3.6rem; }
+  .mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: 3.2rem; }
+  .mn-ed--voices .mn-voices__quotes { margin-top: 1.6rem; }
+  .mn-voices__quote blockquote { margin-top: 1rem; font-size: 1.7rem; line-height: 1.42; }
+  .mn-voices__quote figcaption { margin-top: 1.4rem; }
+  .mn-voices__quote figcaption::before { margin-bottom: 1rem; }
+  .mn-voices__thumb { width: 4.4rem; height: 4.4rem; }
+  .mn-voices__tab { padding-top: 1.6rem; gap: 1.2rem; }
+}
+@media (max-width: 1024px) {
+  .mn-ed--voices.mn-ed--steps { min-height: 0; aspect-ratio: auto; }
+  .mn-ed--voices .mn-voices__stage { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0; padding: 9.6rem 0 4.8rem; }
+  .mn-voices__portrait { position: relative; z-index: 2; width: min(56vw, 36rem); height: auto; }
+  /* The card tucks up under the arch's foot. */
+  .mn-ed--voices .mn-voices__card { width: min(100%, 64rem); margin-top: -6rem; padding: 9.2rem 4rem 4rem; }
+  .mn-ed__steps.mn-voices__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem 3.2rem; }
+}
+@media (max-width: 749px) {
+  .mn-ed--voices .mn-voices__stage { padding: 4.8rem 0 4rem; }
+  .mn-voices__portrait { width: min(64vw, 28rem); }
+  .mn-ed--voices .mn-voices__card { margin-top: -4.8rem; padding: 7.2rem 2.4rem 2.8rem; }
+  .mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: 3.2rem; line-height: 1.12; }
+  .mn-voices__quote blockquote { font-size: 1.8rem; }
+  .mn-ed__steps.mn-voices__list { gap: 2.4rem 1.6rem; }
+  .mn-voices__tab { grid-template-columns: minmax(0, 1fr); align-content: start; align-items: start; gap: 1.2rem; padding-top: 1.6rem; }
+  .mn-voices__thumb { width: 4.4rem; height: 4.4rem; }
+  .mn-voices__tab .mn-step__title { font-size: 2rem; }
+  .mn-voices__short { font-size: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mn-voices__bg, .mn-voices__bg.is-active { transform: none; }
+}
+
+/* ==========================================================================
+   12. Featured Brands of Hyderabad (in the logos slot)
+   Copy on the left, a 3x3 grid of white tiles on the right. Logos rest in ink so the nine read as
+   one set, and show their own colours on hover. Charminar and Chowmahalla line drawings sit faint
+   in the corners (motion.js draws them in).
+   ========================================================================== */
+.mn-brands {
+  --gold-ink: #a97835;
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(9.6rem, 9vw, 14rem);
+  background: var(--cream);
+  color: var(--ink);
+}
+.mn-brands__art { position: absolute; z-index: 0; height: auto; pointer-events: none; opacity: .4; }
+.mn-brands__art path { fill: none; stroke: var(--gold); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mn-brands__art--l { left: 1.5%; bottom: 3.2rem; width: clamp(12rem, 11vw, 18rem); }
+.mn-brands__art--r { right: 1.5%; top: 4rem; width: clamp(15rem, 14vw, 23rem); }
+.mn-brands__wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 34fr) minmax(0, 66fr);
+  align-items: center;
+  gap: clamp(4rem, 6vw, 10rem);
+}
+.mn-brands__title { font-family: var(--serif); font-weight: 300; font-size: clamp(3.8rem, 3.3vw, 6.4rem); line-height: 1.04; letter-spacing: -.005em; }
+.mn-brands__title em { display: block; font-style: italic; color: var(--gold-ink); }
+.mn-brands__sub { margin-top: 2.4rem; font-family: var(--serif); font-size: clamp(2rem, 1.6vw, 2.4rem); line-height: 1.3; }
+.mn-brands__body { max-width: 44rem; margin-top: 1.6rem; font-size: 1.5rem; line-height: 2.4rem; color: var(--ink-70); }
+.mn-brands__link { display: inline-block; margin-top: 3.2rem; }
+.mn-brands__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.2rem, 1.2vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.mn-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(2.4rem, 2.2vw, 3.6rem) 1.6rem clamp(2rem, 2vw, 3rem);
+  border: 1px solid rgba(46, 57, 55, .1);
+  background: var(--white);
+  text-align: center;
+  transition: border-color .5s var(--ease), box-shadow .5s var(--ease), transform .5s var(--ease);
+}
+.mn-brand:hover { border-color: rgba(197, 154, 91, .55); box-shadow: 0 1.6rem 3.2rem rgba(46, 57, 55, .08); transform: translateY(-.4rem); }
+.mn-brand__logo { position: relative; display: block; width: 100%; height: clamp(6rem, 5.6vw, 8.6rem); }
+/* Both versions are stacked and centred in the same box; each keeps its own proportions. */
+.mn-brand__logo img {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  max-width: 70%;
+  max-height: 100%;
+  margin: auto;
+  transition: opacity .5s var(--ease);
+}
+.mn-brand__colour { opacity: 0; }
+.mn-brand:hover .mn-brand__colour { opacity: 1; }
+.mn-brand:hover .mn-brand__ink { opacity: 0; }
+.mn-brand__name { margin-top: clamp(1.6rem, 1.6vw, 2.4rem); font-size: 1.15rem; font-weight: 500; line-height: 1.4; letter-spacing: .16em; text-transform: uppercase; }
+.mn-brand__cat { position: relative; margin-top: 1.2rem; padding-top: 1.1rem; font-family: var(--serif); font-size: 1.6rem; font-style: italic; line-height: 1.25; color: var(--gold-ink); }
+.mn-brand__cat::before { content: ""; position: absolute; top: 0; left: 50%; width: 2.4rem; height: 1px; margin-left: -1.2rem; background: var(--gold); }
+
+@media (max-width: 1024px) {
+  .mn-brands__wrap { grid-template-columns: minmax(0, 1fr); }
+  .mn-brands__head { max-width: 60rem; }
+  .mn-brands__art--l { display: none; }
+}
+@media (max-width: 749px) {
+  .mn-brands { padding-block: 7.2rem; }
+  .mn-brands__title { font-size: 4.4rem; }
+  .mn-brands__art--r { display: none; }
+  .mn-brands__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Nine tiles in two columns: the last one sits centred on its own row. */
+  .mn-brand:last-child { grid-column: 1 / -1; width: calc(50% - .6rem); justify-self: center; }
+  .mn-brand__cat { font-size: 1.5rem; }
+}
+
+/* ==========================================================================
+   13. Co-curated Experiences (in the worlds slot)
+   A bento grid: High Tea spans two columns and two rows, the other six fill 3x2 beside it.
+   Each card: photo, the partner's logo in white, the name; hover or focus brings up the line
+   and "Book experience". Phones: a swipe rail with everything shown.
+   ========================================================================== */
+.mn-cocur { --gold-ink: #a97835; padding-block: clamp(9.6rem, 9vw, 14rem); background: var(--cream); color: var(--ink); }
+.mn-cocur__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem 6rem;
+  margin-bottom: clamp(4rem, 4.4vw, 6.4rem);
+}
+.mn-cocur__title { font-family: var(--serif); font-weight: 300; font-size: clamp(3.8rem, 3.3vw, 6.4rem); line-height: 1.04; letter-spacing: -.005em; }
+.mn-cocur__title em { font-style: italic; color: var(--gold-ink); }
+.mn-cocur__intro { grid-column: 1; max-width: 58rem; font-size: 1.5rem; line-height: 2.4rem; color: var(--ink-70); }
+.mn-cocur__link { grid-column: 2; grid-row: 1 / span 2; align-self: end; justify-self: end; white-space: nowrap; }
+.mn-cocur__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(.8rem, .8vw, 1.2rem); margin: 0; padding: 0; list-style: none; }
+.mn-cc { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--ink); }
+.mn-cc--hero { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.mn-cc__link { position: absolute; inset: 0; display: block; color: var(--white); text-decoration: none; }
+.mn-cc__link:focus-visible { outline: 1px solid var(--gold-light); outline-offset: -.8rem; }
+.mn-cc__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+/* Shade at the foot for the name, and a lighter one at the top for the logo. */
+.mn-cc__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(18, 15, 12, .85), rgba(18, 15, 12, .25) 46%, rgba(18, 15, 12, 0) 64%),
+    linear-gradient(to bottom, rgba(18, 15, 12, .45), rgba(18, 15, 12, 0) 28%);
+}
+.mn-cc__partner { position: absolute; z-index: 1; top: clamp(1.6rem, 1.5vw, 2.4rem); left: clamp(1.6rem, 1.5vw, 2.4rem); display: flex; align-items: center; height: clamp(2.4rem, 2.2vw, 3.4rem); }
+.mn-cc__partner img { width: auto; height: 100%; max-width: 13rem; object-fit: contain; filter: brightness(0) invert(1); opacity: .94; }
+.mn-cc--hero .mn-cc__partner { height: clamp(3.8rem, 3.4vw, 5.4rem); }
+.mn-cc__body { position: absolute; z-index: 1; left: clamp(1.6rem, 1.5vw, 2.4rem); right: clamp(1.6rem, 1.5vw, 2.4rem); bottom: clamp(1.6rem, 1.5vw, 2.4rem); display: flex; flex-direction: column; }
+.mn-cc__num { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--gold-light); }
+.mn-cc__name { margin-top: .4rem; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 1.55vw, 2.6rem); line-height: 1.12; }
+.mn-cc--hero .mn-cc__name { font-size: clamp(3rem, 2.6vw, 4.4rem); }
+.mn-cc__with { margin-top: .6rem; font-size: 1.05rem; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
+.mn-cc__more { display: block; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s var(--ease), opacity .5s var(--ease); }
+.mn-cc__line { display: block; margin-top: 1.2rem; font-size: 1.4rem; line-height: 2rem; color: rgba(255, 255, 255, .9); }
+.mn-cc__go { display: block; margin-top: 1.2rem; font-size: 1.05rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-light); }
+.mn-cc__link:hover .mn-cc__img, .mn-cc__link:focus-visible .mn-cc__img { transform: scale(1.05); }
+/* A deeper shade while the line is up, so it reads over busy photos. */
+.mn-cc__link::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(18, 15, 12, .7), rgba(18, 15, 12, .15) 70%); opacity: 0; transition: opacity .6s var(--ease); pointer-events: none; }
+.mn-cc__link:hover::before, .mn-cc__link:focus-visible::before { opacity: 1; }
+.mn-cc__body, .mn-cc__partner { z-index: 2; }
+.mn-cc__link:hover .mn-cc__more, .mn-cc__link:focus-visible .mn-cc__more { max-height: 16rem; opacity: 1; }
+/* The big card has room: its line is always shown. */
+.mn-cc--hero .mn-cc__more { max-height: 16rem; opacity: 1; }
+.mn-cc--hero .mn-cc__line { max-width: 40rem; font-size: 1.6rem; line-height: 2.4rem; }
+
+@media (hover: none), (pointer: coarse) {
+  .mn-cc__more { max-height: 16rem; opacity: 1; }
+}
+@media (max-width: 1024px) {
+  .mn-cocur__head { grid-template-columns: minmax(0, 1fr); }
+  .mn-cocur__link { grid-column: 1; grid-row: auto; justify-self: start; }
+}
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-cocur__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mn-cc--hero { grid-row: auto; aspect-ratio: 16 / 10; }
+}
+@media (max-width: 749px) {
+  .mn-cocur { padding-block: 7.2rem; }
+  .mn-cocur__title { font-size: 4.4rem; }
+  /* A swipe rail: each card about three quarters of the screen wide, snapping to the gutter. */
+  .mn-cocur__grid {
+    display: flex;
+    gap: 1.2rem;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .mn-cocur__grid::-webkit-scrollbar { display: none; }
+  .mn-cc, .mn-cc--hero { flex: 0 0 76vw; aspect-ratio: 4 / 5; scroll-snap-align: start; }
+  .mn-cc--hero .mn-cc__name { font-size: 3rem; }
+  .mn-cc--hero .mn-cc__line { font-size: 1.4rem; line-height: 2rem; }
+}
+
+/* ==========================================================================
+   14. @aslihyderabad reels (in the social slot)
+   Eight 9:16 muted loops in a marquee (cloned once by components.js for a seamless loop; items
+   carry their own right margin so -50% lands exactly). Only the reels on screen play.
+   ========================================================================== */
+.mn-social { padding-block: clamp(9.6rem, 8vw, 12rem); overflow: hidden; background: var(--cream); color: var(--ink); }
+.mn-social__head { margin-bottom: clamp(4rem, 4vw, 6rem); text-align: center; }
+.mn-social__handle { margin-bottom: 1.2rem; font-family: var(--serif); font-weight: 300; font-size: clamp(3.8rem, 3.3vw, 6.4rem); line-height: 1; }
+.mn-social__marquee { width: 100%; overflow: hidden; }
+.mn-social__track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: mn-marquee 70s linear infinite;
+  will-change: transform;
+}
+.mn-social__marquee:hover .mn-social__track,
+.mn-social__marquee:focus-within .mn-social__track { animation-play-state: paused; }
+@keyframes mn-marquee { to { transform: translateX(-50%); } }
+.mn-reel {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(40rem, 34vw, 54rem);
+  aspect-ratio: 9 / 16;
+  margin-right: clamp(.8rem, .8vw, 1.2rem);
+  overflow: hidden;
+  background: var(--ink);
+}
+.mn-reel__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mn-reel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(18, 15, 12, .7), rgba(18, 15, 12, 0) 38%); pointer-events: none; }
+.mn-reel__icon { position: absolute; z-index: 1; top: 1.4rem; right: 1.4rem; width: 2.2rem; height: 2.2rem; color: var(--white); opacity: .9; }
+.mn-reel__icon svg { display: block; width: 100%; height: 100%; }
+.mn-reel__cap { position: absolute; z-index: 1; left: 1.8rem; right: 1.8rem; bottom: 1.8rem; font-family: var(--serif); font-size: 2rem; line-height: 1.2; color: var(--white); }
+@media (prefers-reduced-motion: reduce) {
+  .mn-social__track { animation: none; }
+  .mn-social__marquee { overflow-x: auto; }
+}
+@media (max-width: 749px) {
+  .mn-social { padding-block: 7.2rem; }
+  .mn-social__handle { font-size: 3.6rem; }
+  .mn-reel { height: 44rem; }
+  .mn-reel__cap { font-size: 1.8rem; }
+}
+
+/* ==========================================================================
+   15. Your Hyderabad starts here (in the heritage slot)
+   Full-bleed Taramati Baradari at night, the heading and Plan My Hyderabad centred, contact
+   details and the three planning steps along the foot (motion.js draws the steps in turn).
+   ========================================================================== */
+.mn-heritage {
+  position: relative;
+  display: flex;
+  aspect-ratio: 1680 / 940;
+  min-height: 64rem;
+  color: var(--white);
+  isolation: isolate;
+  overflow: hidden;
+}
+.mn-heritage__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #120e0b; }
+.mn-heritage__img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+/* A dark pool behind the heading: the lit arches are bright, and the gold italic must still read. */
+.mn-heritage__scrim { position: absolute; inset: 0; background: radial-gradient(ellipse 46% 30% at 50% 47%, rgba(14, 11, 9, .72), rgba(14, 11, 9, .2) 100%), rgba(14, 11, 9, .3); }
+.mn-heritage__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(14, 11, 9, .78), rgba(14, 11, 9, 0) 34%), linear-gradient(to bottom, rgba(14, 11, 9, .55), rgba(14, 11, 9, 0) 30%); }
+.mn-heritage__frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-block: clamp(4.8rem, 6vw, 8rem);
+}
+.mn-heritage__intro {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+  text-align: center;
+}
+.mn-heritage__heading {
+  max-width: 80rem;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(4.8rem, 5vw, 8rem);
+  line-height: 1.04;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, .35);
+}
+.mn-heritage__heading em { font-style: italic; color: var(--gold-light); }
+.mn-heritage__foot { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 6rem; }
+.mn-heritage__body { font-size: 1.5rem; line-height: 2.4rem; color: rgba(255, 255, 255, .85); }
+.mn-heritage__body a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .35); transition: border-color .3s var(--ease), color .3s var(--ease); }
+.mn-heritage__body a:hover { color: var(--white); border-color: var(--gold-light); }
+
+.mn-timeline {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 65.3rem;
+  min-height: 8.5rem;
+  margin-left: auto;
+}
+.mn-timeline__mile { position: relative; flex: 0 0 1.2rem; }
+.mn-timeline__dot { display: block; width: 1.2rem; height: 1.2rem; border: 1px solid var(--gold-light); border-radius: 50%; }
+.mn-timeline__line { flex: 1 1 auto; height: 1px; margin-top: .55rem; background: rgba(255, 255, 255, .6); }
+.mn-timeline__cap {
+  position: absolute;
+  top: 2.5rem;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 16rem;
+}
+.mn-timeline__year { font-family: var(--serif); font-size: 2.2rem; font-style: italic; line-height: 1; color: var(--gold-light); }
+.mn-timeline__label { margin-top: .6rem; font-size: 1.3rem; line-height: 2rem; white-space: nowrap; }
+/* Captions sit under their dot: centred in the middle, right-aligned at the end so nothing runs off the edge. */
+.mn-timeline__mile:not(:first-child):not(:last-child) .mn-timeline__cap { left: 50%; transform: translateX(-50%); align-items: center; text-align: center; }
+.mn-timeline__mile:last-child .mn-timeline__cap { left: auto; right: 0; align-items: flex-end; text-align: right; }
+
+@media (max-width: 1024px) {
+  .mn-heritage { aspect-ratio: auto; min-height: 88svh; }
+  .mn-heritage__frame { padding: 6.4rem 7.2rem 5.6rem; }
+  .mn-heritage__heading { font-size: 6.4rem; }
+  .mn-heritage__foot { grid-template-columns: 1fr; gap: 3.2rem; }
+  .mn-heritage__body { text-align: center; }
+  .mn-timeline { margin: 0 auto; }
+}
+@media (max-width: 749px) {
+  .mn-heritage__frame { padding-inline: 2rem; }
+  .mn-heritage__heading { font-size: 4.8rem; line-height: 1.1; }
+  .mn-heritage__body { font-size: 1.4rem; }
+  .mn-timeline { max-width: none; min-height: 6.8rem; }
+  .mn-timeline__cap { top: 2rem; }
+  .mn-timeline__label { font-size: 1.2rem; }
+}

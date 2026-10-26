@@ -1,0 +1,10 @@
+{
+  "name": "maison-nomen-local",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local study build of a luxury embroidery homepage: HTML, CSS, JS, GSAP + ScrollTrigger, Lenis.",
+  "scripts": {
+    "start": "node server.js",
+    "placeholders": "python tools/make_placeholders.py"
+  }
+}

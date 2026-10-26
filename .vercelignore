@@ -1,0 +1,6 @@
+# Kept in the GitHub repo, but not published on the website:
+# internal notes, client wireframe/audit, build tools and the local dev server.
+docs/
+tools/
+*.md
+server.js
