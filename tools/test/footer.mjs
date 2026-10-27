@@ -1,7 +1,8 @@
-// Footer + its "Hyderabad, at dusk" skyline band: walk to the end of the page at desktop, laptop and phone
-// sizes and check the footer content is all there (logo, contact, three link columns, legal row), the inlay
-// seam has unrolled, the three tiers have risen to rest, the lamps are lit, the ambient loops run on screen,
-// the band carries only the Envizon credit, and nothing scrolls sideways. Scrolling back lowers the tiers.
+// Footer, one screen tall, with "Hyderabad, at dusk" as its background: walk to the end of the page at desktop,
+// laptop and phone sizes and check the content is all there (logo, contact, social links, three link columns,
+// legal row and the design credit on the ground band), the desktop footer fits one viewport with the content clear of the
+// buildings, the inlay has unrolled, the three tiers have risen to rest, the lamps are lit, the ambient loops
+// run on screen, and nothing scrolls sideways. Scrolling back lowers the tiers.
 // Reduced motion: everything complete and still.
 //
 //   node tools/test/footer.mjs http://127.0.0.1:8655/ C:/abs/out
@@ -21,7 +22,9 @@ const state = `(()=>{
   return {
     logo: !!q('.mn-footer__logo img').naturalWidth, cols: f.querySelectorAll('.mn-footer__col-title').length,
     contact: f.querySelectorAll('.mn-footer__contact li').length, legal: !!q('.mn-footer__legal'),
-    credits: q('.mn-footer__credit').getAttribute('href'),
+    social: [...f.querySelectorAll('.mn-footer__social a')].map((a) => a.getAttribute('aria-label') + (a.querySelector('svg').getBoundingClientRect().width > 10 ? '' : '!')),
+    fh: Math.round(r.height), mainBottom: Math.round(Math.max(...[...f.querySelectorAll('.mn-footer__brand > *, .mn-footer__cols ul')].map((e) => e.getBoundingClientRect().bottom))),
+    builds: Math.round(sky.top + sky.height * .37),
     inlay: getComputedStyle(q('.mn-footer__inlay')).clipPath,
     edgeGap: Math.round(r.top - main.bottom), edgeH: Math.round(edge.height),
     far: ty('.mn-footer__tier--far'), mid: ty('.mn-footer__tier--mid'), near: ty('.mn-footer__tier--near'),
@@ -45,7 +48,10 @@ for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
   await sleep(3200);
   const s = await b.ev(state);
   await b.shot(`footer-${tag}`);
-  check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 4 && s.legal && s.credits === 'credits.html', `cols ${s.cols} contact ${s.contact}`);
+  check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 3 && s.legal,`cols ${s.cols} contact ${s.contact}`);
+  check(`${tag} social icons shown`, s.social.join() === 'Instagram,Facebook,LinkedIn,YouTube,WhatsApp', s.social.join());
+  if (w > 1024) check(`${tag} footer is one screen tall`, Math.abs(s.fh - s.vh) <= 2, `footer ${s.fh} / vh ${s.vh}`);
+  check(`${tag} content clear of the buildings`, s.mainBottom <= s.builds, `content ends ${s.mainBottom}, buildings from ${s.builds}`);
   check(`${tag} cusped edge meets the CTA`, s.edgeGap === 0 && s.edgeH > 10, `gap ${s.edgeGap} edge ${s.edgeH}px`);
   check(`${tag} inlay unrolled`, !/50%/.test(s.inlay), s.inlay);
   check(`${tag} tiers at rest`, Math.abs(s.far) < 1 && Math.abs(s.mid) < 1 && Math.abs(s.near) < 1, `far ${s.far} mid ${s.mid} near ${s.near}`);
@@ -54,7 +60,7 @@ for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
   check(`${tag} skyline band on screen, page ends on it`, s.sky.top >= 0 && s.sky.top + s.sky.h < s.vh && Math.abs(s.footBottom - s.vh) <= 2, `sky ${JSON.stringify(s.sky)} bottom ${s.footBottom}`);
   check(`${tag} no sideways scroll`, s.docW === s.vw, `docW ${s.docW} vw ${s.vw}`);
   check(`${tag} Envizon credit`, s.env.href === 'https://envizonstudio.com/' && s.env.target === '_blank' && /noopener/.test(s.env.rel) && s.env.text === 'Design by Envizon', JSON.stringify(s.env));
-  check(`${tag} band carries only the credit`, s.band === 'Design by Envizon', JSON.stringify(s.band));
+  check(`${tag} ground band: legal row and design credit`, s.band === '© 2026 Asli Hyderabad. All rights reserved.Privacy Policy · Terms & Conditions Design by Envizon', JSON.stringify(s.band));
   // Scroll back: the scrubbed rise reverses and the lamps go out.
   await b.walkTo(end - 420, 20, 30);
   await sleep(1600);
@@ -62,8 +68,6 @@ for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
   check(`${tag} scrolling back lowers the city`, back.far > 20 && back.far > back.mid && back.mid > back.near && !back.lit, `far ${back.far.toFixed(1)} mid ${back.mid.toFixed(1)} near ${back.near.toFixed(1)} lit ${back.lit}`);
   await b.shot(`footer-${tag}-back`);
 }
-const credits = await b.ev(`fetch('credits.html').then(r=>r.status)`);
-check('Photo credits page resolves', credits === 200, 'status ' + credits);
 check('console clean (sized runs)', b.logs.length === 0, b.logs.join(' | '));
 const logCount = b.logs.length;
 

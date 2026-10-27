@@ -1,12 +1,20 @@
 /* ==========================================================================
-   Footer: brand + contact on the left, three link columns on the right, opened by
-   a cusped cream edge and an inlay seam (css/motifs.css) and closed by the skyline.
+   Footer: one screen tall. A cusped cream edge and an inlay seam (css/motifs.css)
+   open it; brand, contact, social links and three link columns sit in the sky;
+   "Hyderabad, at dusk", the skyline, is the background along the foot, standing
+   on the ground band that carries the legal row and the design credit.
    ========================================================================== */
 .mn-footer {
+  --sky-h: clamp(28rem, 40vh, 25vw);   /* grows with the screen; never taller than 25vw, so no side is cropped */
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
   padding-top: 1.2rem;   /* padding, not the inlay's margin: a margin would collapse through and open a gap */
-  background: var(--footer-bg);
+  /* The sky warms towards the horizon, as in the reference skyline. */
+  background: linear-gradient(to bottom, var(--footer-bg) 0%, var(--footer-bg) 42%, var(--sky-glow) 100%);
   color: var(--ink);
 }
 .mn-footer__edge {
@@ -16,43 +24,63 @@
   bottom: 100%;
   color: var(--footer-bg);
 }
-.mn-footer > .mn-wrap {
-  padding-top: clamp(4.8rem, 6vw, 8rem);
-  padding-bottom: clamp(3.2rem, 4vw, 5rem);
+
+/* Content: grows to fill the screen; its bottom padding keeps it clear of the buildings
+   (the top third of the skyline is open sky, so the copy may sit over it). */
+.mn-footer__main {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 auto;
+  padding-top: clamp(4rem, 6vh, 7.2rem);
+  padding-bottom: calc(var(--sky-h) * .64);
 }
 .mn-footer__top {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: clamp(3.2rem, 6vw, 10rem);
-  padding-bottom: clamp(6rem, 8vw, 12rem);
 }
 
-.mn-footer__brand { max-width: 42rem; }
-.mn-footer__logo { display: inline-block; width: 17.8rem; }
+.mn-footer__brand { max-width: 40rem; }
+.mn-footer__logo { display: inline-block; width: 15.6rem; }
 .mn-footer__logo img { width: 100%; height: auto; }
 .mn-footer__line {
-  margin: 2.4rem 0 2.8rem;
+  margin: 1.8rem 0 2rem;
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(2.2rem, 1.9vw, 2.8rem);
+  font-size: clamp(1.9rem, 1.5vw, 2.4rem);
   line-height: 1.25;
 }
 .mn-footer__contact .mn-footer__a { color: var(--ink); }
 .mn-footer__contact a.mn-footer__a:hover { color: var(--muted); }
 
+/* Social links: fine gold rings, filled gold on hover. */
+.mn-footer__social { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.2rem; }
+.mn-footer__icon {
+  display: grid;
+  place-items: center;
+  width: 3.8rem;
+  height: 3.8rem;
+  border: 1px solid rgba(197, 154, 91, .6);
+  border-radius: 50%;
+  color: var(--ink);
+  transition: color .3s var(--ease), background-color .3s var(--ease), border-color .3s var(--ease);
+}
+.mn-footer__icon svg { width: 1.8rem; height: 1.8rem; }
+.mn-footer__icon:hover, .mn-footer__icon:focus-visible { color: var(--white); background-color: var(--gold); border-color: var(--gold); }
+
 .mn-footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 3vw, 4rem); }
 .mn-footer__col-title {
-  margin-bottom: 1rem;
+  margin-bottom: .8rem;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 2.2rem;
+  font-size: 2rem;
   line-height: 2.4rem;
   letter-spacing: .02em;
 }
 .mn-footer__a {
   display: block;
-  font-size: 1.6rem;
-  line-height: 2.6rem;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
   text-decoration: none;
   color: var(--muted);
   transition: color .3s var(--ease);
@@ -60,63 +88,25 @@
 a.mn-footer__a:hover { color: var(--ink); }
 .mn-footer__mail { text-decoration: underline; text-underline-offset: 2px; }
 
-.mn-footer__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  padding-top: 3.2rem;
-  border-top: 1px solid var(--hairline);
-}
-.mn-footer__legal, .mn-footer__credit { font-size: 1.25rem; color: var(--ink-45); }
-.mn-footer__credit { text-decoration: none; transition: color .3s var(--ease); }
-.mn-footer__credit:hover { color: var(--ink); }
-.mn-footer__links { display: flex; gap: 2.4rem; }
-.mn-footer__policies { margin-left: 1.6rem; }
-.mn-footer__policies a { color: var(--ink-70); text-underline-offset: 2px; }
-
-@media (max-width: 1024px) {
-  .mn-footer__top { grid-template-columns: 1fr; gap: 5.6rem; }
-  .mn-footer__brand { max-width: 56rem; }
-  .mn-footer__legal, .mn-footer__credit { font-size: 1.4rem; color: var(--muted); }
-  .mn-footer__policies { display: block; margin: .8rem 0 0; }
-  .mn-footer__policies a { color: var(--muted); }
-  .mn-footer__bottom { align-items: flex-end; }
-}
-@media (min-width: 750px) and (max-width: 1024px) {
-  .mn-footer > .mn-wrap { padding-block: 5.6rem 4rem; }
-  .mn-footer .mn-wrap { padding-inline: 6.4rem; }
-  .mn-footer__top { padding-bottom: 8rem; }
-}
-@media (max-width: 749px) {
-  .mn-footer > .mn-wrap { padding-block: 4rem 2.4rem; }
-  .mn-footer .mn-wrap { padding-inline: 2rem; }
-  .mn-footer__top { gap: 4.8rem; padding-bottom: 4.8rem; }
-  .mn-footer__logo { width: 14rem; }
-  .mn-footer__line { margin: 2rem 0 2.4rem; font-size: 2.2rem; }
-  .mn-footer__cols { grid-template-columns: repeat(2, 1fr); gap: 3.2rem 1.6rem; }
-  .mn-footer__col-title { margin-bottom: .6rem; font-size: 1.9rem; }
-  .mn-footer__a { font-size: 1.4rem; line-height: 2.4rem; }
-  .mn-footer__bottom { flex-direction: column; align-items: center; gap: 1.6rem; text-align: center; }
-  .mn-footer__credit { font-size: 1.2rem; }
-}
-
 /* ==========================================================================
-   "Hyderabad, at dusk": the skyline band under the footer. Three tiers (far /
-   mid / near) of silhouettes over a sun, on a ground band with the design credit.
-   motion.js raises the tiers on the last stretch of scroll; the ambient loops
-   run only while the footer is on screen (.is-on, components.js) and never with
-   reduced motion. Tablet and phone: the band pans from Golconda to the Thoranam.
+   "Hyderabad, at dusk": three tiers (far / mid / near) of silhouettes over a sun,
+   in date order from Golconda to the Durgam Cheruvu bridge. motion.js raises the
+   tiers as the footer reaches the end of the page; the ambient loops run only
+   while it is on screen (.is-on, components.js), never with reduced motion.
+   Tablet and phone: the skyline keeps a readable height and pans.
    ========================================================================== */
-/* The sky warms towards the horizon, as in the reference skyline. */
+.mn-footer__base { position: relative; }
 .mn-footer__scene {
-  --sky-h: 22vw;
-  position: relative;
-  background: linear-gradient(to bottom, var(--footer-bg) 0%, var(--footer-bg) 18%, var(--sky-glow) 100%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--sky-h);
   overflow: hidden;
+  pointer-events: none;
 }
-.mn-footer__pan { position: relative; }
-.mn-footer__sky { display: block; width: 100%; height: var(--sky-h); }
+.mn-footer__pan { position: relative; height: 100%; }
+.mn-footer__sky { display: block; width: 100%; height: 100%; }
 
 /* Tiers and sky. The lit openings show the glow through the stone. */
 .mn-footer__tier--far .mn-footer__mass { fill: var(--sky-far); }
@@ -125,28 +115,35 @@ a.mn-footer__a:hover { color: var(--ink); }
 .mn-footer__tier--far .mn-footer__lit { fill: var(--sky-glow); }
 .mn-footer__tier--mid .mn-footer__lit { fill: var(--sky-far); }
 .mn-footer__tier--near .mn-footer__lit { fill: var(--sky-glow); opacity: .92; }
+/* The Buddha's robe folds and step edges: catch the light, don't glow like windows. */
+.mn-footer__tier--near .mn-footer__lit--soft { opacity: .26; }
 .mn-footer__sun-disc { fill: #ebcf98; opacity: .55; }
 .mn-footer__bird { fill: none; stroke: var(--sky-near); stroke-width: 2.4; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 100%; }
 .mn-footer__water { fill: none; stroke: var(--sky-glow); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 22 12; opacity: .8; }
 .mn-footer__earth { fill: var(--sky-ground); }
-/* Lamps in Charminar and the clock tower come on once the city has risen (.is-lit, motion.js). */
+/* Lamps in Charminar, the clock tower and the bridge pylons come on once the city has risen (.is-lit, motion.js). */
 .mn-footer__lamps circle { fill: #f3c86e; opacity: 0; transition: opacity 1.2s var(--ease); }
 .mn-footer__lamps circle:nth-child(2n) { transition-delay: .25s; }
 .mn-footer__lamps circle:nth-child(3n) { transition-delay: .5s; }
 .mn-footer.is-lit .mn-footer__lamps circle { opacity: 1; }
 
-/* Ground band: only the design credit, centred. */
+/* Ground band: the legal row on the left, credits and the design credit on the right, in cream. */
 .mn-footer__ground { background: var(--sky-ground); color: rgba(244, 238, 228, .66); }
-.mn-footer__row { padding-block: 1.6rem 1.8rem; text-align: center; }
-.mn-footer__envizon {
-  position: relative;
-  color: inherit;
-  text-decoration: none;
-  transition: color .3s var(--ease);
-  font-size: 1.25rem;
-  letter-spacing: .04em;
+.mn-footer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 5.6rem;
+  padding-block: 1.4rem;
 }
-.mn-footer__envizon:hover { color: var(--cream); }
+.mn-footer__legal, .mn-footer__credit, .mn-footer__envizon { font-size: 1.25rem; letter-spacing: .03em; }
+.mn-footer__policies { margin-left: 1.6rem; }
+.mn-footer__policies a { color: inherit; text-underline-offset: 2px; }
+.mn-footer__links { display: flex; align-items: baseline; gap: 2.4rem; }
+.mn-footer__credit, .mn-footer__envizon { color: inherit; text-decoration: none; transition: color .3s var(--ease); }
+.mn-footer__policies a:hover, .mn-footer__credit:hover, .mn-footer__envizon:hover { color: var(--cream); }
+.mn-footer__envizon { position: relative; }
 .mn-footer__envizon em { font-family: var(--serif); font-size: 1.6rem; font-style: italic; letter-spacing: .02em; color: var(--gold-light); }
 /* Gold hairline that draws in from the left on hover. */
 .mn-footer__envizon::after {
@@ -163,7 +160,7 @@ a.mn-footer__a:hover { color: var(--ink); }
 }
 .mn-footer__envizon:hover::after, .mn-footer__envizon:focus-visible::after { transform: scaleX(1); }
 
-/* Ambient loops: birds drift and beat their wings, the lake shimmers. */
+/* Ambient loops: birds drift and beat their wings, the lakes shimmer. */
 @keyframes mn-foot-drift { from { transform: translateX(0); } to { transform: translateX(-60px); } }
 @keyframes mn-foot-flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.35); } }
 @keyframes mn-foot-water { to { stroke-dashoffset: -68; } }
@@ -177,14 +174,29 @@ a.mn-footer__a:hover { color: var(--ink); }
 .mn-footer.is-on .mn-footer__birds, .mn-footer.is-on .mn-footer__bird,
 .mn-footer.is-on .mn-footer__water, .mn-footer.is-on .mn-footer__pan { animation-play-state: running; }
 
-/* Tablet and phone: the skyline keeps a readable height, so it is wider than the screen and pans. */
 @media (max-width: 1024px) {
-  .mn-footer__scene { --sky-h: 30rem; }
+  .mn-footer { --sky-h: 30rem; }
+  .mn-footer__top { grid-template-columns: 1fr; gap: 4.8rem; }
+  .mn-footer__brand { max-width: 56rem; }
   .mn-footer__pan { width: calc(var(--sky-h) * 4); transform: translateX(calc((100vw - 100%) / 2)); animation: mn-foot-pan 48s ease-in-out infinite alternate; }
 }
+@media (min-width: 750px) and (max-width: 1024px) {
+  .mn-footer .mn-wrap { padding-inline: 6.4rem; }
+}
 @media (max-width: 749px) {
-  .mn-footer__scene { --sky-h: 22rem; }
-  .mn-footer__envizon { font-size: 1.3rem; }
+  .mn-footer { --sky-h: 22rem; }
+  .mn-footer .mn-wrap { padding-inline: 2rem; }
+  .mn-footer__main { padding-top: 4rem; }
+  .mn-footer__top { gap: 4rem; }
+  .mn-footer__logo { width: 14rem; }
+  .mn-footer__line { margin: 1.6rem 0 1.8rem; font-size: 2rem; }
+  .mn-footer__cols { grid-template-columns: repeat(2, 1fr); gap: 3.2rem 1.6rem; }
+  .mn-footer__col-title { margin-bottom: .6rem; font-size: 1.9rem; }
+  .mn-footer__a { font-size: 1.4rem; line-height: 2.4rem; }
+  .mn-footer__row { flex-direction: column; gap: 1.2rem; padding-block: 1.8rem 2.2rem; text-align: center; }
+  .mn-footer__policies { display: block; margin: .6rem 0 0; }
+  .mn-footer__links { flex-wrap: wrap; justify-content: center; gap: .8rem 2rem; }
+  .mn-footer__legal, .mn-footer__credit, .mn-footer__envizon { font-size: 1.3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

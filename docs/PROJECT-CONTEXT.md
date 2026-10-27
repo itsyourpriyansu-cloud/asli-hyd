@@ -71,8 +71,8 @@ The user directs the build one section at a time, usually with a screenshot plus
 | Visible # | Code comment | `data-sec` | Content now | Status |
 |---|---|---|---|---|
 | — | loader | `#mn-pre` | Intro loader: 5 Hyderabad images open one by one inside a logo-colour border; "Hyderabad is *Regal / Crafted / Inventive / Serene / Welcoming*"; cream background with a drifting gold jaali; morphs into the hero | done |
-| 1 | 1. HERO | `hero` | Drone video, "Experience **Asli = Real** Hyderabad", 134px desktop title, dark overlay + bottom gradient, **no CTA, no eyebrow** | done |
-| 2 | 2. STATEMENT | `statement` | "Irani chai at dawn, attar in the old bazaars, palaces that still remember the Nizams. This is Hyderabad, hosted the asli way." — Sahana. Letters ink from faint to full with the scroll; rainbow wavy underlines (Asli logo colours) draw under key words | done |
+| 1 | 1. HERO | `hero` | Drone video, "Experience **Asli = Real** Hyderabad" set in Cormorant Garamond Light, always three left-aligned lines ("Experience" / "Asli = Real" / "Hyderabad"), 96px on desktop, 80px tablet, min(72px, 15vw) phone; dark overlay + bottom gradient, **no CTA, no eyebrow** | done |
+| 2 | 2. STATEMENT | `statement` | "Irani chai at dawn, attar in the old bazaars, palaces that still remember the Nizams. This is Hyderabad, hosted the asli way." — Sahana. Letters ink from faint to full with the scroll; hand-drawn marker loops (`.mn-ring`, one Asli logo colour each) draw round the four key words as they ink; each svg's viewBox is matched to its word | done |
 | 3 | 3. TWO PATHS | `cats` | "Explore Hyderabad" / "Here for an Event" tiles: sepia Raja Deen Dayal Nizam-court photographs; a WebGL blob reveals the colourised version under the pointer (`js/cats-reveal.js`), and a click floods colour then follows the link | done |
 | 4 | 3b. CONVENTIONS | `conventions` | "In Hyderabad for a *Convention?*" A pinned, scroll-driven diagonal card carousel (modelled on hidokmeh Awards), data from aslihyd.in/conventions; past events (by `data-end`) hide themselves | done |
 | 5 | 4. HYDERABAD, YOUR WAY | `collection-a` (+`data-themes`) | **Card explorer**: 6 theme cards (Heritage, Culture, Cinema, Business, Wellness, Learning); hover/focus/tap brings a theme into the big left panel with a looping video, heading, hosted routes and a CTA; other cards dim | done |
@@ -86,7 +86,7 @@ The user directs the build one section at a time, usually with a screenshot plus
 | 13 | 13. CO-CURATED EXPERIENCES | `worlds` (`id="co-curated"`) | "Small experiences. *Big memories.*" A bento grid (5 cols × 2 rows, High Tea is 2×2): 7 of the wireframe's 15 signature experiences, each paired with a brand from section 12 (white partner logo top-left). Hover or focus shows the line and "Book experience"; phones get a swipe rail with everything shown | done |
 | 14 | 14. @ASLIHYDERABAD REELS | `social` | Eight 9:16 muted loops in a CSS marquee (cloned once by components.js); only on-screen reels play; marquee pauses on hover/focus; reduced motion or data-saver: posters, no marquee. The handle is a placeholder | done (handle + real reels to come) |
 | 15 | 15. YOUR HYDERABAD STARTS HERE | `heritage` (moved last, `id="plan"`) | Closing CTA over Taramati Baradari lit at night: heading, "Plan My Hyderabad", contact line, and a 3-step timeline (Tell us your dates · We shape the days · We host you) | done |
-| — | footer | `.mn-footer` | Cream cusped edge biting into the closing CTA, an inlay seam, then the Asli logo, line, phone/WhatsApp/email, 3 link columns, and a bottom row with **Photo credits** (`credits.html`) and Partner login. Below it, **"Hyderabad, at dusk"**: a skyline band in three depth tiers (Golconda, Qutb Shahi tombs, Mecca Masjid, Charminar against the sun, Chowmahalla clock tower, the Buddha on Hussain Sagar, HITEC, Durgam Cheruvu bridge, Assembly, Kala Thoranam) on a ground band carrying only **Design by Envizon** (envizonstudio.com). The tiers rise on the last stretch of scroll and the lamps come on; birds and the lake loop while on screen; tablets and phones pan the band | done |
+| — | footer | `.mn-footer` | **One screen tall** (desktop). A cream cusped edge bites into the closing CTA, then an inlay seam. Brand column (logo, line, phone, email, place, **social icons**: Instagram, Facebook, LinkedIn, YouTube as placeholders, WhatsApp live) and 3 link columns sit in the sky. **"Hyderabad, at dusk"**, the skyline in three depth tiers, is the background along the foot, in date order like section 8: Golconda, Qutb Shahi tombs, Charminar against the sun, Mecca Masjid, Chowmahalla + Khilwat clock tower, High Court, Assembly, the Buddha on Hussain Sagar (to scale), HITEC Cyber Towers, the Durgam Cheruvu extradosed bridge (two short pylons). It stands on the ground band: legal + Privacy/Terms left; Photo credits, Partner login and **Design by Envizon** (envizonstudio.com) right. The tiers rise as the skyline comes into view and the lamps come on; birds and the lakes loop on screen; tablets and phones pan the skyline | done (social account URLs needed) |
 | — | header | `[data-header]` | Asli logo, Experiences + Plan dropdowns, links; transparent over the hero, frosted after scroll | done |
 
 ### What is still missing from the wireframe
@@ -224,7 +224,7 @@ CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 192
 | `--gold` | `#c59a5b` | Asli accent, rules, arches, jaali stroke |
 | `--gold-light` | `#d8b77d` | gold on dark backgrounds |
 | dark gold | `#a97835` | gold text on cream (readable): italics in headings, eyebrows, "Book now" |
-| `--logo-*` (preloader) / `--rb-*` (base) | the Asli logo's rainbow letters | loader border, statement underlines, used sparingly |
+| `--logo-*` (preloader) / `--rb-*` (base) | the Asli logo's rainbow letters | loader border, statement loops, used sparingly |
 | `--muted` | `#707c7a` | credits, small print |
 
 - **Type:** Cormorant Garamond 300/400 for headings, with an *italic* second half in dark gold (for example "A little Hyderabad, *wherever you are.*"). Jost for UI and body. Uppercase labels use letter-spacing 0.14–0.2em. Section titles run about `clamp(3.8rem, 3.3vw, 6.4rem)`.
@@ -293,7 +293,7 @@ node tools/test/footer.mjs http://127.0.0.1:8655/ <ABS_OUT>
 
 1. **Written permission** from the 9 featured brands (logos and names) and the 3 named testimonial guests.
 2. **Brand list**: the client's wireframe named Anaganaga, Paista, Concu and Escape Estates; no official logos could be found (Paista and Escape Estates don't appear publicly; the only "Concu" found is Conçu, a cake boutique). The user approved swapping in Paradise, Karachi Bakery, Heartfulness and Shilparamam. The co-curated pairings follow the grid.
-3. **Instagram**: the real handle and URL (`@aslihyderabad` is a placeholder; "Follow on Instagram" is inert).
+3. **Instagram and other socials**: the real handles and URLs. `@aslihyderabad` is a placeholder and "Follow on Instagram" is inert; the footer's Instagram, Facebook, LinkedIn and YouTube icons are `href="#"` too (the live site lists no social accounts).
 4. **Real Asli reels** to replace the licensed stock (only the drone montage is Hyderabad footage).
 5. Prices for everything ("Price on request" for now).
 6. A clean hero drone master (watermark), and Hyderabad-shot footage for the explorers.

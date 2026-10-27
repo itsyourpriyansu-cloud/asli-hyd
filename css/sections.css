@@ -49,19 +49,23 @@
   text-transform: uppercase;
 }
 .mn-hero__eyebrow em { font-style: italic; text-transform: none; }
+/* Cormorant Garamond Light at the original sizes, always three left-aligned lines:
+   "Experience" / "Asli = Real" / "Hyderabad", each kept on one line. */
 .mn-hero__heading {
   font-family: var(--serif);
   font-weight: 300;
   font-size: clamp(4.4rem, 6vw, 10rem);
   line-height: 1;
   letter-spacing: 0;
+  text-align: left;
 }
+.mn-hero__line { display: block; white-space: nowrap; }
+/* The middle line carries the brand: gold italic, as in the headings elsewhere. */
+.mn-hero__line--accent { font-style: italic; color: var(--gold); }
 .mn-nowrap { white-space: nowrap; }
-/* Desktop: fixed 134px across the full width. One line from ~1860px; below that it
-   wraps rather than overflow, never splitting "Asli = Real". */
 @media (min-width: 1025px) {
   .mn-hero__content { max-width: none; }
-  .mn-hero__heading { font-size: 134px; }
+  .mn-hero__heading { font-size: 96px; }
 }
 @media (min-width: 750px) and (max-width: 1024px) {
   .mn-hero__inner { padding: 8.5rem 4rem 4rem; }
@@ -86,27 +90,38 @@
   letter-spacing: 0;
 }
 .mn-statement__text em { font-style: italic; }
-/* Hand-drawn wave under a highlighted word, in a logo colour (--wave).
-   Drawn as a masked strip because the letter split wraps each word in an inline-block,
-   which native text-decoration does not reach. --draw (0–1) is scrubbed in motion.js. */
-.mn-wave {
+/* Hand-drawn marker loop round a highlighted word, in a logo colour (--ring). One stroke that
+   starts top right, runs round anticlockwise and overshoots its start, like a pen circling a word.
+   Each svg's viewBox matches its word's shape (all em-based, so at every size) and keeps the line
+   even; non-scaling-stroke is avoided because it breaks the pathLength dash draw. --draw (0–1) is
+   scrubbed in motion.js; the flip mirrors alternate loops so they don't look stamped. */
+.mn-ring {
   --draw: 1;
   position: relative;
   display: inline-block;
+  margin-inline: .1em;        /* room for the loop, so it clears the neighbouring words */
   white-space: nowrap;
 }
-.mn-wave::after {
-  content: "";
+.mn-ring__loop {
   position: absolute;
-  left: 0; right: 0;
-  bottom: .04em;
-  height: .13em;
-  background: var(--wave);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q5 .6 10 3 T20 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / .36em 100% repeat-x;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q5 .6 10 3 T20 3' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / .36em 100% repeat-x;
-  clip-path: inset(0 calc((1 - var(--draw)) * 100%) 0 0);
-  opacity: .85;
+  top: .06em;
+  left: -.16em;
+  width: calc(100% + .32em);  /* an svg won't stretch between left and right, so size it */
+  max-width: none;            /* base.css caps svgs at their box; this one overhangs the word */
+  height: calc(100% - .02em);
+  overflow: visible;
   pointer-events: none;
+}
+.mn-ring--flip .mn-ring__loop { transform: scaleX(-1) rotate(1.5deg); }
+.mn-ring__loop path {
+  fill: none;
+  stroke: var(--ring);
+  stroke-width: 2;            /* viewBox units: the loop is 60 tall, about one em */
+  stroke-linecap: round;
+  /* The long gap and the 1.02 hide the round cap completely before the pen starts (no stray dot). */
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: calc((1 - var(--draw)) * 1.02);
+  opacity: .9;
 }
 /* Desktop sets one image per line; smaller screens wrap naturally. */
 @media (max-width: 1024px) { .mn-br-lg { display: none; } }

@@ -17,7 +17,7 @@ One ornament language for the homepage, pulled from the client's eight reference
 | 5 | Pietra-dura lotus vine | A mirror-symmetric gold scroll lattice with lotus blooms in stone colours | `.mn-m-vine` |
 | 6 | Motif sheet | A **vocabulary**: vertical stitch border, tree-of-life vine, sprig, stripe, wave scroll, arch-with-tree, diagonal buti lattice, multi-layer borders | The kit's taxonomy (borders / verticals / fills / centrepieces); `m-stitch`, `m-sprig`, `.mn-m-lattice` |
 | 7 | Inlay study plate | The **stone palette** (marble, lapis, carnelian, jasper, malachite, onyx); a horizontal inlay border; fine rules and plate labels | `--stone-*` tokens; `.mn-m-inlay` |
-| 8 | Brown skyline | **Three depth tiers** (pale back, mid, dark front) on a dark ground band; landmarks spaced with palms; birds; Kakatiya Kala Thoranam at the end | The footer skyline band |
+| 8 | Brown skyline | **Three depth tiers** (pale back, mid, dark front) on a dark ground band; landmarks spaced with palms; birds | The footer's background skyline. Its Kakatiya Kala Thoranam is left out: it stands in Warangal, not Hyderabad. The landmarks run in date order instead, like the section 8 timeline |
 
 ## 2. Rules
 
@@ -50,7 +50,7 @@ One ornament language for the homepage, pulled from the client's eight reference
 | Mask | `.mn-m-arch` | Cusped-arch mask for photos (400 × 500 box, like the pointed arch) |
 | Symbol | `m-arch-cusped`, `m-arch-ogee`, `m-niche`, `m-lotus`, `m-tendril`, `m-paisley`, `m-rosette`, `m-sprig`, `m-stitch` | `<svg class="mn-m-sym" viewBox="…"><use href="assets/img/motifs.svg#m-lotus"/></svg>`; colour from `color`, line from `stroke-width`; tween the `<use>`'s `stroke-dashoffset` to draw |
 
-Built so far with the kit: **the footer** (cusped edge, inlay seam, skyline band).
+Built so far with the kit: **the footer** (cusped edge, inlay seam, skyline background).
 
 ## 5. Proposed placements (not built; one section at a time, when named)
 

@@ -259,13 +259,13 @@
       scrollTrigger: { trigger: sec('statement'), start: 'top 50%', end: 'top 8%', scrub: .6 }
     });
     ink.fromTo(chars, { opacity: .14 }, { opacity: 1, ease: 'none', stagger: STEP }, 0);
-    // Each coloured wave draws left-to-right as its word finishes inking.
-    $$('.mn-wave', text).forEach(function (wave) {
-      var own = chars.filter(function (c) { return wave.contains(c); });
+    // Each coloured loop is drawn round its word, pen-like (slow start and finish), as the word inks.
+    $$('.mn-ring', text).forEach(function (ring) {
+      var own = chars.filter(function (c) { return ring.contains(c); });
       if (!own.length) return;
       var first = chars.indexOf(own[0]);
       var last = chars.indexOf(own[own.length - 1]);
-      ink.fromTo(wave, { '--draw': 0 }, { '--draw': 1, ease: 'none', duration: Math.max((last - first) * STEP, .3) + .3 }, first * STEP + .25);
+      ink.fromTo(ring, { '--draw': 0 }, { '--draw': 1, ease: 'power1.inOut', duration: Math.max((last - first) * STEP, .3) + .5 }, first * STEP + .25);
     });
   })();
 
@@ -752,9 +752,9 @@
     once(function () { return box.getBoundingClientRect().bottom <= vh() + 2; }, function () { seq.play(); });
   })();
 
-  /* Footer: the inlay seam unrolls from the centre as the footer arrives. The skyline band under it rises
-     tier by tier over the last stretch of scroll (far moves most, so the city stands up in depth) and then
-     lights its lamps; scrolling back lowers it again. */
+  /* Footer: the inlay seam unrolls from the centre as the footer arrives. The skyline along its foot rises
+     tier by tier over the last stretch of scroll, from the moment it comes into view to the end of the page
+     (far moves most, so the city stands up in depth), then lights its lamps; scrolling back lowers it. */
   (function () {
     var foot = $('.mn-footer');
     var scene = foot && $('.mn-footer__scene', foot);
