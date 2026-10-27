@@ -64,3 +64,13 @@ Eight 9:16 loops in `assets/video/reels/{name}.mp4`, each with a `{name}.jpg` po
 | Friends around the table | `friends.mp4` | `originals/welcome.mp4` (Coverr: Friends laughing in India) | Coverr License |
 
 **Authenticity:** only the montage was filmed in Hyderabad. The captions describe the moment, not a place, so none claims a location the footage isn't from. Real Asli reels should replace these.
+
+---
+
+# Section 1 Hero Video: Source
+
+| Slot | File | Source | Licence |
+|---|---|---|---|
+| Hero | `hero-hyderabad-2.mp4` (1280×720, 12.7 s, 5.9 MB) + poster `assets/img/hero-hyderabad-2.jpg` (its first frame, also the loader's final image) | Client-supplied `assets/video/hero 2.mp4`: a Hyderabad drone montage (Secretariat, Charminar, Golconda, Cyber Towers, Durgam Cheruvu, HITEC City). The file was stored sideways (720×1280), so it was rotated upright, cut from 5.2 s onward to drop the burned-in "HYDERABAD" title intro, re-encoded H.264 CRF 23 with `+faststart`, and its audio dropped | Client footage. Same creator as the earlier hero: **@Drone_Venkat** watermark and a DJI Air 3S logo are burned in, so get written permission or a clean master |
+
+The earlier hero (`hero-hyderabad.mp4`) stays in the repo: the Heritage theme clip and the "Hyderabad from above" reel were cut from it.
