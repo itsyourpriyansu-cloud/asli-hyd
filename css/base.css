@@ -11,9 +11,20 @@
   --white: #fff;
   --white-80: rgba(255, 255, 255, .82);
   --tile: #f0eee9;
-  --footer-bg: #e8f3e5;
+  --footer-bg: #f4eee4;
   --gold: #c59a5b;        /* Asli accent, from aslihyd.in */
   --gold-light: #d8b77d;
+  /* Inlay stones (css/motifs.css): small set dots only, never fields of colour */
+  --stone-lapis: #2c4a7e;
+  --stone-carnelian: #b4532f;
+  --stone-malachite: #2f6e52;
+  --stone-jasper: #d39a3a;
+  /* Footer skyline: three depth tiers over a dusk glow, the ground band below */
+  --sky-far: #e2cbab;
+  --sky-mid: #bf916a;
+  --sky-near: #7a4b36;
+  --sky-ground: #4d3024;
+  --sky-glow: #efdcc2;
   /* Rainbow accents, sampled from the HYDERABAD letters in the logo */
   --rb-yellow: #ffde00;
   --rb-orange: #f48220;

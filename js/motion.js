@@ -752,6 +752,36 @@
     once(function () { return box.getBoundingClientRect().bottom <= vh() + 2; }, function () { seq.play(); });
   })();
 
+  /* Footer: the inlay seam unrolls from the centre as the footer arrives. The skyline band under it rises
+     tier by tier over the last stretch of scroll (far moves most, so the city stands up in depth) and then
+     lights its lamps; scrolling back lowers it again. */
+  (function () {
+    var foot = $('.mn-footer');
+    var scene = foot && $('.mn-footer__scene', foot);
+    if (!scene) return;
+    var inlay = $('.mn-footer__inlay', foot);
+    gsap.set(inlay, { clipPath: 'inset(0 50% 0 50%)' });
+    once(function () { return foot.getBoundingClientRect().top < vh() * .85; }, function () {
+      gsap.to(inlay, { clipPath: 'inset(0 0% 0 0%)', duration: 1.6, ease: 'power2.inOut' });
+    });
+
+    // y is in SVG user units here, so the rise is the same at every screen size.
+    var rise = gsap.timeline()
+      .fromTo($('.mn-footer__tier--far', foot), { y: 90 }, { y: 0, ease: 'none' }, 0)
+      .fromTo($('.mn-footer__tier--mid', foot), { y: 55 }, { y: 0, ease: 'none' }, 0)
+      .fromTo($('.mn-footer__tier--near', foot), { y: 25 }, { y: 0, ease: 'none' }, 0)
+      .fromTo($('.mn-footer__sun', foot), { y: 70 }, { y: 0, ease: 'none' }, 0);
+    ScrollTrigger.create({
+      trigger: scene,
+      start: 'top bottom',
+      endTrigger: foot,
+      end: 'bottom bottom',
+      scrub: .8,
+      animation: rise,
+      onUpdate: function (st) { foot.classList.toggle('is-lit', st.progress > .92); }
+    });
+  })();
+
   /* Featured Brands (logos slot): the corner Charminar and Chowmahalla draw themselves, the copy rises,
      then the nine tiles rise row by row. */
   (function () {

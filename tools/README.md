@@ -23,6 +23,7 @@ Plain Node 22+ (built-in `fetch`/`WebSocket`) driving local Chrome over CDP. The
 | `skyline.mjs` | Section 8's "400 years in one line": on desktop the landmarks open strictly left to right, only once on screen, part-way (not popping), all open before the sweep leaves, and close again on scroll-back; reduced motion fully drawn; phone band draws once and glides to the bridge. Replaces `legacy/skyline-*.mjs`, which check the old single-path drawing. |
 | `finale.mjs` | Sections 12–15: every brand logo, card photo and partner logo loads; reveals finish; hover swaps a logo to colour and brings up a card's line (keyboard focus too); on-screen reels play and off-screen ones are paused; the marquee pauses on hover; the CTA timeline draws inside the screen; `#co-curated`, `#quick-experiences`, `#private-access` glide to their sections; reduced motion; phone; `credits.html` lists every new asset. |
 | `voices.mjs` | Section 11, testimonials (`materials` slot): arch drawn and everything fits one viewport at 1440×900 and 1280×720, the timer advances with all layers in step, hover pauses, click and arrow keys, reduced motion, phone tap, no horizontal scroll at phone and tablet. |
+| `footer.mjs` | The footer and its skyline band: content intact, the cusped edge meets the closing CTA, the inlay unrolls, the three tiers rise to rest and the lamps light at the end of the page, scrolling back lowers them, ambient loops run on screen, the band carries only the Envizon credit, no horizontal scroll (1440, 1280, phone), reduced motion complete and still. |
 | `legacy/*` | Earlier one-off suites, kept for reference: section 4 themes, the conventions carousel (+ swipe), the skyline (desktop sweep + mobile band), the preloader screencast (+ `preloader-summary.py`), the Two Paths colour bubble, the numbers card. They are standalone (own CDP code) and take `<url> <outDir>`. Their header comments are copy-pasted and not accurate; read the code. |
 
 ```
@@ -32,6 +33,7 @@ node tools/test/arcade.mjs http://127.0.0.1:8655/ C:/abs/out
 node tools/test/skyline.mjs http://127.0.0.1:8655/ C:/abs/out
 node tools/test/finale.mjs http://127.0.0.1:8655/ C:/abs/out
 node tools/test/voices.mjs http://127.0.0.1:8655/ C:/abs/out
+node tools/test/footer.mjs http://127.0.0.1:8655/ C:/abs/out
 ```
 
 Lessons baked into the harness:

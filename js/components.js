@@ -495,6 +495,14 @@
     }
   }
 
+  /* ---------- Footer skyline: run the ambient loops (birds, lake, phone pan) only while it is on screen ---------- */
+  var foot = document.querySelector('.mn-footer');
+  if (foot && !reduceMotion && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      foot.classList.toggle('is-on', entries[0].isIntersecting);
+    }).observe(foot);
+  }
+
   /* ---------- In-page links (#co-curated, #quick-experiences, #private-access…) ----------
      Glide there with Lenis instead of a native jump that fights the smooth scroll and the pins. */
   document.addEventListener('click', function (e) {

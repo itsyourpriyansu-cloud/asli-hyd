@@ -1,13 +1,24 @@
 /* ==========================================================================
-   Footer: brand + contact on the left, three link columns on the right.
+   Footer: brand + contact on the left, three link columns on the right, opened by
+   a cusped cream edge and an inlay seam (css/motifs.css) and closed by the skyline.
    ========================================================================== */
 .mn-footer {
   position: relative;
   z-index: 10;
-  padding-top: clamp(4.8rem, 6vw, 8rem);
-  padding-bottom: clamp(3.2rem, 4vw, 5rem);
+  padding-top: 1.2rem;   /* padding, not the inlay's margin: a margin would collapse through and open a gap */
   background: var(--footer-bg);
   color: var(--ink);
+}
+.mn-footer__edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  color: var(--footer-bg);
+}
+.mn-footer > .mn-wrap {
+  padding-top: clamp(4.8rem, 6vw, 8rem);
+  padding-bottom: clamp(3.2rem, 4vw, 5rem);
 }
 .mn-footer__top {
   display: grid;
@@ -73,12 +84,12 @@ a.mn-footer__a:hover { color: var(--ink); }
   .mn-footer__bottom { align-items: flex-end; }
 }
 @media (min-width: 750px) and (max-width: 1024px) {
-  .mn-footer { padding: 5.6rem 0 4rem; }
+  .mn-footer > .mn-wrap { padding-block: 5.6rem 4rem; }
   .mn-footer .mn-wrap { padding-inline: 6.4rem; }
   .mn-footer__top { padding-bottom: 8rem; }
 }
 @media (max-width: 749px) {
-  .mn-footer { padding: 4rem 0 2.4rem; }
+  .mn-footer > .mn-wrap { padding-block: 4rem 2.4rem; }
   .mn-footer .mn-wrap { padding-inline: 2rem; }
   .mn-footer__top { gap: 4.8rem; padding-bottom: 4.8rem; }
   .mn-footer__logo { width: 14rem; }
@@ -88,4 +99,95 @@ a.mn-footer__a:hover { color: var(--ink); }
   .mn-footer__a { font-size: 1.4rem; line-height: 2.4rem; }
   .mn-footer__bottom { flex-direction: column; align-items: center; gap: 1.6rem; text-align: center; }
   .mn-footer__credit { font-size: 1.2rem; }
+}
+
+/* ==========================================================================
+   "Hyderabad, at dusk": the skyline band under the footer. Three tiers (far /
+   mid / near) of silhouettes over a sun, on a ground band with the design credit.
+   motion.js raises the tiers on the last stretch of scroll; the ambient loops
+   run only while the footer is on screen (.is-on, components.js) and never with
+   reduced motion. Tablet and phone: the band pans from Golconda to the Thoranam.
+   ========================================================================== */
+/* The sky warms towards the horizon, as in the reference skyline. */
+.mn-footer__scene {
+  --sky-h: 22vw;
+  position: relative;
+  background: linear-gradient(to bottom, var(--footer-bg) 0%, var(--footer-bg) 18%, var(--sky-glow) 100%);
+  overflow: hidden;
+}
+.mn-footer__pan { position: relative; }
+.mn-footer__sky { display: block; width: 100%; height: var(--sky-h); }
+
+/* Tiers and sky. The lit openings show the glow through the stone. */
+.mn-footer__tier--far .mn-footer__mass { fill: var(--sky-far); }
+.mn-footer__tier--mid .mn-footer__mass { fill: var(--sky-mid); }
+.mn-footer__tier--near .mn-footer__mass { fill: var(--sky-near); }
+.mn-footer__tier--far .mn-footer__lit { fill: var(--sky-glow); }
+.mn-footer__tier--mid .mn-footer__lit { fill: var(--sky-far); }
+.mn-footer__tier--near .mn-footer__lit { fill: var(--sky-glow); opacity: .92; }
+.mn-footer__sun-disc { fill: #ebcf98; opacity: .55; }
+.mn-footer__bird { fill: none; stroke: var(--sky-near); stroke-width: 2.4; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 100%; }
+.mn-footer__water { fill: none; stroke: var(--sky-glow); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 22 12; opacity: .8; }
+.mn-footer__earth { fill: var(--sky-ground); }
+/* Lamps in Charminar and the clock tower come on once the city has risen (.is-lit, motion.js). */
+.mn-footer__lamps circle { fill: #f3c86e; opacity: 0; transition: opacity 1.2s var(--ease); }
+.mn-footer__lamps circle:nth-child(2n) { transition-delay: .25s; }
+.mn-footer__lamps circle:nth-child(3n) { transition-delay: .5s; }
+.mn-footer.is-lit .mn-footer__lamps circle { opacity: 1; }
+
+/* Ground band: only the design credit, centred. */
+.mn-footer__ground { background: var(--sky-ground); color: rgba(244, 238, 228, .66); }
+.mn-footer__row { padding-block: 1.6rem 1.8rem; text-align: center; }
+.mn-footer__envizon {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  transition: color .3s var(--ease);
+  font-size: 1.25rem;
+  letter-spacing: .04em;
+}
+.mn-footer__envizon:hover { color: var(--cream); }
+.mn-footer__envizon em { font-family: var(--serif); font-size: 1.6rem; font-style: italic; letter-spacing: .02em; color: var(--gold-light); }
+/* Gold hairline that draws in from the left on hover. */
+.mn-footer__envizon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -.3rem;
+  height: 1px;
+  background: var(--gold-light);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .5s var(--ease);
+}
+.mn-footer__envizon:hover::after, .mn-footer__envizon:focus-visible::after { transform: scaleX(1); }
+
+/* Ambient loops: birds drift and beat their wings, the lake shimmers. */
+@keyframes mn-foot-drift { from { transform: translateX(0); } to { transform: translateX(-60px); } }
+@keyframes mn-foot-flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.35); } }
+@keyframes mn-foot-water { to { stroke-dashoffset: -68; } }
+@keyframes mn-foot-pan { from { transform: translateX(0); } to { transform: translateX(calc(100vw - 100%)); } }
+.mn-footer__birds { animation: mn-foot-drift 22s ease-in-out infinite alternate; }
+.mn-footer__bird { animation: mn-foot-flap 1.1s ease-in-out infinite; }
+.mn-footer__birds g:nth-child(2n) .mn-footer__bird { animation-duration: 1.4s; animation-delay: -.5s; }
+.mn-footer__birds g:nth-child(3n) .mn-footer__bird { animation-duration: .9s; animation-delay: -.2s; }
+.mn-footer__water { animation: mn-foot-water 5s linear infinite; }
+.mn-footer__birds, .mn-footer__bird, .mn-footer__water, .mn-footer__pan { animation-play-state: paused; }
+.mn-footer.is-on .mn-footer__birds, .mn-footer.is-on .mn-footer__bird,
+.mn-footer.is-on .mn-footer__water, .mn-footer.is-on .mn-footer__pan { animation-play-state: running; }
+
+/* Tablet and phone: the skyline keeps a readable height, so it is wider than the screen and pans. */
+@media (max-width: 1024px) {
+  .mn-footer__scene { --sky-h: 30rem; }
+  .mn-footer__pan { width: calc(var(--sky-h) * 4); transform: translateX(calc((100vw - 100%) / 2)); animation: mn-foot-pan 48s ease-in-out infinite alternate; }
+}
+@media (max-width: 749px) {
+  .mn-footer__scene { --sky-h: 22rem; }
+  .mn-footer__envizon { font-size: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mn-footer__birds, .mn-footer__bird, .mn-footer__water, .mn-footer__pan { animation: none; }
+  .mn-footer__lamps circle { opacity: 1; transition: none; }
 }
