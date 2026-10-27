@@ -383,6 +383,18 @@
   color: var(--ink);
 }
 .mn-conv__inner { position: relative; height: 100svh; min-height: 72rem; }
+/* Khatam jaali (motifs.css) behind the stage, faint, and cleared round the heading and the
+   current card so it frames the content instead of sitting under it (MOTIFS.md rule 3). */
+.mn-conv__bg {
+  --m-o: .13;
+  z-index: 0;
+  -webkit-mask: radial-gradient(ellipse 30% 34% at 18% 22%, transparent 35%, #000 100%),
+                radial-gradient(ellipse 30% 40% at 50% 54%, transparent 40%, #000 100%);
+  -webkit-mask-composite: source-in;
+          mask: radial-gradient(ellipse 30% 34% at 18% 22%, transparent 35%, #000 100%),
+                radial-gradient(ellipse 30% 40% at 50% 54%, transparent 40%, #000 100%);
+          mask-composite: intersect;
+}
 
 /* Header: sits high, just under the fixed site header; no eyebrow. */
 .mn-conv__head {
@@ -520,6 +532,11 @@
   .mn-conv__card.is-prev-2, .mn-conv__card.is-gone-prev { --x: -166vw; --y: 0; --o: 0; }
   .mn-conv__nav { position: static; transform: none; justify-content: center; margin-top: 1.2rem; }
   .mn-conv__meta { position: static; max-width: none; margin-top: 3.2rem; padding-inline: 8vw; }
+  /* Stacked layout: keep the jaali to the outer edges, clear of the heading, card and meta. */
+  .mn-conv__bg {
+    -webkit-mask: radial-gradient(ellipse 62% 54% at 50% 50%, transparent 55%, #000 100%);
+            mask: radial-gradient(ellipse 62% 54% at 50% 50%, transparent 55%, #000 100%);
+  }
 }
 @media (max-width: 749px) {
   .mn-conv__inner { padding: 4.8rem 0 4.8rem; }
