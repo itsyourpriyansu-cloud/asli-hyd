@@ -223,165 +223,42 @@
     }
   });
 
-  /* ---------- Conventions carousel (section 3b) ----------
-     Two modes share one geometry:
-     - discrete: slot classes (tablet/phone, reduced motion), arrows/keys/swipe step one card;
-     - scrub: desktop scroll drives a continuous position f (0..n-1) via window.mnConv.scrub(),
-       wired up in motion.js; arrows/keys then scroll to the matching card. */
+  /* ---------- Conventions index (section 3b) ----------
+     Removes events past their data-end date and renumbers the rest. Desktop: hovering or
+     focusing a row puts it in focus and brings its photo up in the frame; the first upcoming
+     event is in focus to start. Rows are plain links, so touch and keyboard just follow them. */
   (function () {
     var wrap = document.querySelector('[data-conventions]');
     if (!wrap) return;
-    var stage = wrap.querySelector('[data-conv-stage]');
-    var meta = wrap.querySelector('[data-conv-meta]');
-    var live = wrap.querySelector('[data-conv-live]');
-    var prevBtn = wrap.querySelector('[data-conv-prev]');
-    var nextBtn = wrap.querySelector('[data-conv-next]');
-    var $ = function (sel) { return wrap.querySelector(sel); };
+    var items = Array.prototype.slice.call(wrap.querySelectorAll('.mn-conv__item'));
+    var shots = Array.prototype.slice.call(wrap.querySelectorAll('.mn-conv__shot'));
+    var cap = wrap.querySelector('[data-conv-cap]');
 
-    // Hide conventions that have already ended (compared by date only).
+    // Hide conventions that have already ended (compared by date only), with their photos.
     var today = new Date(); today.setHours(0, 0, 0, 0);
-    var cards = Array.prototype.slice.call(stage.querySelectorAll('.mn-conv__card')).filter(function (card) {
-      if (new Date(card.dataset.end + 'T00:00:00') < today) { card.remove(); return false; }
-      return true;
+    var live = [];
+    items.forEach(function (item, i) {
+      if (new Date(item.dataset.end + 'T00:00:00') < today) { item.remove(); if (shots[i]) shots[i].remove(); }
+      else live.push({ item: item, shot: shots[i] });
     });
-    if (!cards.length) { wrap.hidden = true; return; }
-    if (reduceMotion) wrap.classList.add('no-motion');
+    if (!live.length) { wrap.hidden = true; return; }
+    live.forEach(function (e, i) { e.item.querySelector('.mn-conv__num').textContent = (i < 9 ? '0' : '') + (i + 1); });
 
-    var n = cards.length;
-    var index = 0;
-    var scrubbing = false;
-    var pad = function (v) { return (v < 10 ? '0' : '') + v; };
-    var slots = ['is-current', 'is-next-1', 'is-next-2', 'is-prev-1', 'is-prev-2', 'is-gone-next', 'is-gone-prev'];
-    $('[data-conv-total]').textContent = pad(n);
-    if (n < 2) wrap.querySelector('.mn-conv__nav').hidden = true;
-
-    // Path for the scroll scrub: d = card offset from the current position.
-    // x = left edge as a fraction of stage width, y = top as a fraction of stage height (matches the CSS slots).
-    var KEYS = [
-      { d: -3, x: -.30, y: .70, s: .88, o: 0 },
-      { d: -2, x: -.07, y: .62, s: .88, o: 1 },
-      { d: -1, x: .07,  y: .56, s: .88, o: 1 },
-      { d: 0,  x: .37,  y: .34, s: 1,   o: 1 },
-      { d: 1,  x: .70,  y: .10, s: .88, o: 1 },
-      { d: 2,  x: .85,  y: .05, s: .88, o: 1 },
-      { d: 3,  x: 1.04, y: 0,   s: .88, o: 0 }
-    ];
-    var at = function (d) {
-      d = Math.max(-3, Math.min(3, d));
-      var i = Math.min(KEYS.length - 2, Math.floor(d + 3));
-      var a = KEYS[i], b = KEYS[i + 1], t = d - a.d;
-      return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, s: a.s + (b.s - a.s) * t, o: a.o + (b.o - a.o) * t };
-    };
-
-    var setMeta = function (announce) {
-      var card = cards[index];
-      $('[data-conv-index]').textContent = pad(index + 1);
-      $('[data-conv-date]').textContent = card.dataset.date;
-      $('[data-conv-tag]').hidden = !card.hasAttribute('data-tentative');
-      $('[data-conv-venue-text]').textContent = card.dataset.venue;
-      $('[data-conv-venue]').setAttribute('href', card.dataset.href);
-      meta.classList.remove('is-swapping'); void meta.offsetWidth; meta.classList.add('is-swapping');
-      cards.forEach(function (c, i) {
-        var on = i === index;
-        c.classList.toggle('is-current', on);
-        c.setAttribute('aria-hidden', String(!on));
-        c.inert = !on;
+    var active = -1;
+    var activate = function (i) {
+      if (i === active) return;
+      active = i;
+      live.forEach(function (e, k) {
+        e.item.classList.toggle('is-active', k === i);
+        if (e.shot) e.shot.classList.toggle('is-on', k === i);
       });
-      if (announce) live.textContent = card.querySelector('.mn-conv__name').textContent + ', ' + card.dataset.date + ', ' + card.dataset.venue;
+      if (cap && live[i].shot) cap.textContent = live[i].shot.alt;
     };
-
-    // Discrete mode: one slot class per card.
-    var render = function (announce) {
-      cards.forEach(function (card, i) {
-        var d = (i - index + n) % n;
-        var slot = d === 0 ? 'is-current'
-          : d === 1 ? 'is-next-1'
-          : d === 2 && n > 3 ? 'is-next-2'
-          : d === n - 1 ? 'is-prev-1'
-          : d === n - 2 && n > 4 ? 'is-prev-2'
-          : d < n / 2 ? 'is-gone-next' : 'is-gone-prev';
-        slots.forEach(function (s) { card.classList.toggle(s, s === slot); });
-      });
-      setMeta(announce);
-    };
-
-    // Scrub mode: continuous position f; no wrap-around (scroll runs 01 -> n).
-    var scrub = function (f) {
-      var W = stage.clientWidth, H = stage.clientHeight;
-      cards.forEach(function (card, i) {
-        var d = i - f, p = at(d), ad = Math.abs(d);
-        card.style.transform = 'translate3d(' + (p.x * W).toFixed(1) + 'px,' + (p.y * H).toFixed(1) + 'px,0) scale(' + p.s.toFixed(4) + ')';
-        card.style.opacity = p.o.toFixed(3);
-        card.style.zIndex = String(Math.round(10 - ad * 2));
-        card.style.setProperty('--veil', Math.min(.18, ad * .3).toFixed(3));
-        card.querySelector('.mn-conv__name').style.opacity = Math.max(0, 1 - ad * 2.4).toFixed(3);
-      });
-      var i = Math.round(f);
-      if (i !== index) { index = i; setMeta(false); }
-      prevBtn.disabled = f <= .01;
-      nextBtn.disabled = f >= n - 1.01;
-    };
-
-    var go = function (to, announce) {
-      if (scrubbing && api.scrollToIndex) {
-        to = Math.max(0, Math.min(n - 1, to));
-        api.scrollToIndex(to);
-        if (announce) { index = to; setMeta(true); }
-        return;
-      }
-      index = (to + n) % n;
-      render(announce);
-    };
-
-    var api = window.mnConv = {
-      count: n,
-      scrollToIndex: null,          // set by motion.js while scrubbing
-      scrub: scrub,
-      enterScrub: function () {
-        scrubbing = true;
-        wrap.classList.add('is-scrub');
-        slots.forEach(function (s) { cards.forEach(function (c) { if (s !== 'is-current') c.classList.remove(s); }); });
-      },
-      exitScrub: function () {
-        scrubbing = false;
-        api.scrollToIndex = null;
-        wrap.classList.remove('is-scrub');
-        prevBtn.disabled = nextBtn.disabled = false;
-        cards.forEach(function (c) {
-          c.style.transform = c.style.opacity = c.style.zIndex = '';
-          c.style.removeProperty('--veil');
-          c.querySelector('.mn-conv__name').style.opacity = '';
-        });
-        render(false);
-      }
-    };
-
-    prevBtn.addEventListener('click', function () { go(index - 1, true); });
-    nextBtn.addEventListener('click', function () { go(index + 1, true); });
-    // A side card brings itself to the centre instead of following its link.
-    cards.forEach(function (card, i) {
-      card.addEventListener('click', function (e) {
-        if (i === index) return;
-        e.preventDefault();
-        go(i, true);
-      }, true);
+    live.forEach(function (e, i) {
+      e.item.addEventListener('mouseenter', function () { activate(i); });
+      e.item.addEventListener('focusin', function () { activate(i); });
     });
-    wrap.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1, true); }
-      else if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1, true); }
-    });
-    // Swipe / drag (discrete mode only; on desktop the page scroll drives it).
-    var startX = null, startY = 0;
-    stage.addEventListener('pointerdown', function (e) { startX = e.clientX; startY = e.clientY; });
-    stage.addEventListener('pointerup', function (e) {
-      if (startX === null || scrubbing) { startX = null; return; }
-      var dx = e.clientX - startX, dy = e.clientY - startY;
-      startX = null;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1), true);
-    });
-    stage.addEventListener('pointercancel', function () { startX = null; });
-
-    render(false);
+    activate(0);
   })();
 
   /* ---------- Steps: accordion on phones ---------- */

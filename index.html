@@ -291,93 +291,130 @@
       </div>
     </section>
 
-    <!-- 3b. CONVENTIONS: upcoming events in Hyderabad (carousel). Data from aslihyd.in/conventions.
-       Events past their data-end date are hidden automatically. Images: delegate photos from aslihyd.in. -->
-    <section class="mn-sec mn-conv" data-sec="conventions" data-conventions aria-roledescription="carousel"
-      aria-label="Upcoming conventions in Hyderabad">
+    <!-- 3b. CONVENTIONS: an index of upcoming events in Hyderabad. Data from aslihyd.in/conventions.
+       Events past their data-end date are removed and the rest renumbered (components.js).
+       Desktop: the row in focus brings its photo up in the gold frame. Tablet/phone: each row
+       carries its own thumbnail. Images: delegate photos from aslihyd.in. -->
+    <section class="mn-sec mn-conv" data-sec="conventions" data-conventions aria-labelledby="mn-conv-title">
       <div class="mn-m-jaali mn-conv__bg" aria-hidden="true"></div>
-      <div class="mn-conv__inner">
+      <div class="mn-wrap mn-conv__inner">
         <header class="mn-conv__head">
-          <h2 class="mn-conv__title">In Hyderabad for a <em>Convention?</em></h2>
+          <h2 class="mn-conv__title" id="mn-conv-title">In Hyderabad for a <em>Convention?</em></h2>
           <a class="mn-ulink mn-conv__all" href="/conventions">All conventions</a>
         </header>
-
-        <div class="mn-conv__stage" data-conv-stage>
-          <article class="mn-conv__card" data-end="2026-10-25" data-date="23-25 Oct 2026"
-            data-venue="HICC &amp; Novotel, Hyderabad" data-tentative
-            data-href="/conventions/gansid-international-congress-2026">
-            <a class="mn-conv__media" href="/conventions/gansid-international-congress-2026"><img
-                src="assets/img/conventions/gansid-2026.jpg"
-                alt="Mecca Masjid minarets lit at night in Hyderabad's Old City" width="1200" height="675"
-                loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/gansid-international-congress-2026">GANSID International
-                Congress 2026</a></h3>
-          </article>
-          <article class="mn-conv__card" data-end="2026-10-30" data-date="28-30 Oct 2026" data-venue="Hyderabad"
-            data-href="/conventions/apac-summit-2026">
-            <a class="mn-conv__media" href="/conventions/apac-summit-2026"><img
-                src="assets/img/conventions/apac-summit-2026.jpg"
-                alt="A delegate group at Falaknuma Palace with their Asli Hyderabad host" width="1200" height="675"
-                loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/apac-summit-2026">APAC Summit 2026</a></h3>
-          </article>
-          <article class="mn-conv__card" data-end="2026-12-04" data-date="02-04 Dec 2026" data-venue="Hyderabad"
-            data-tentative data-href="/conventions/avar-2026-cyber-security-conference">
-            <a class="mn-conv__media" href="/conventions/avar-2026-cyber-security-conference"><img
-                src="assets/img/conventions/avar-2026.jpg" alt="Visitors in the courtyard of Chowmahalla Palace"
-                width="1200" height="675" loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/avar-2026-cyber-security-conference">AVAR 2026 Cyber
-                Security Conference</a></h3>
-          </article>
-          <article class="mn-conv__card" data-end="2026-12-09" data-date="07-09 Dec 2026"
-            data-venue="Bharat Future City, Hyderabad" data-tentative
-            data-href="/conventions/telangana-rising-global-summit-2026">
-            <a class="mn-conv__media" href="/conventions/telangana-rising-global-summit-2026"><img
-                src="assets/img/conventions/telangana-rising-2026.jpg" alt="A delegate group at the Qutb Shahi Tombs"
-                width="1200" height="675" loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/telangana-rising-global-summit-2026">Telangana Rising Global
-                Summit 2026</a></h3>
-          </article>
-          <article class="mn-conv__card" data-end="2027-01-14" data-date="10-14 Jan 2027" data-venue="HITEX, Hyderabad"
-            data-tentative data-href="/conventions/icca-global-summit-2027">
-            <a class="mn-conv__media" href="/conventions/icca-global-summit-2027"><img
-                src="assets/img/conventions/icca-global-summit-2027.jpg"
-                alt="Delegates exploring the ramparts of Golconda Fort" width="1200" height="675" loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/icca-global-summit-2027">ICCA Global Summit 2027</a></h3>
-          </article>
-          <article class="mn-conv__card" data-end="2027-02-17" data-date="15-17 Feb 2027" data-venue="HITEX, Hyderabad"
-            data-tentative data-href="/conventions/bioasia-2027">
-            <a class="mn-conv__media" href="/conventions/bioasia-2027"><img
-                src="assets/img/conventions/bioasia-2027.jpg"
-                alt="Delegates beneath the arches of a Qutb Shahi monument" width="1200" height="675"
-                loading="lazy"></a>
-            <h3 class="mn-conv__name"><a href="/conventions/bioasia-2027">BioAsia 2027</a></h3>
-          </article>
+        <div class="mn-conv__index">
+          <ol class="mn-conv__list" data-conv-list>
+            <li class="mn-conv__item" data-end="2026-10-25">
+              <a class="mn-conv__row" href="/conventions/gansid-international-congress-2026">
+                <span class="mn-conv__num" aria-hidden="true">01</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">GANSID International Congress 2026</span>
+                  <span class="mn-conv__meta"><span>23–25 Oct 2026</span><span>HICC &amp; Novotel, Hyderabad</span><span
+                      class="mn-conv__tag">Tentative dates</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/gansid-2026.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+            <li class="mn-conv__item" data-end="2026-10-30">
+              <a class="mn-conv__row" href="/conventions/apac-summit-2026">
+                <span class="mn-conv__num" aria-hidden="true">02</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">APAC Summit 2026</span>
+                  <span class="mn-conv__meta"><span>28–30 Oct 2026</span><span>Hyderabad</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/apac-summit-2026.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+            <li class="mn-conv__item" data-end="2026-12-04">
+              <a class="mn-conv__row" href="/conventions/avar-2026-cyber-security-conference">
+                <span class="mn-conv__num" aria-hidden="true">03</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">AVAR 2026 Cyber Security Conference</span>
+                  <span class="mn-conv__meta"><span>02–04 Dec 2026</span><span>Hyderabad</span><span
+                      class="mn-conv__tag">Tentative dates</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/avar-2026.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+            <li class="mn-conv__item" data-end="2026-12-09">
+              <a class="mn-conv__row" href="/conventions/telangana-rising-global-summit-2026">
+                <span class="mn-conv__num" aria-hidden="true">04</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">Telangana Rising Global Summit 2026</span>
+                  <span class="mn-conv__meta"><span>07–09 Dec 2026</span><span>Bharat Future City, Hyderabad</span><span
+                      class="mn-conv__tag">Tentative dates</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/telangana-rising-2026.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+            <li class="mn-conv__item" data-end="2027-01-14">
+              <a class="mn-conv__row" href="/conventions/icca-global-summit-2027">
+                <span class="mn-conv__num" aria-hidden="true">05</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">ICCA Global Summit 2027</span>
+                  <span class="mn-conv__meta"><span>10–14 Jan 2027</span><span>HITEX, Hyderabad</span><span
+                      class="mn-conv__tag">Tentative dates</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/icca-global-summit-2027.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+            <li class="mn-conv__item" data-end="2027-02-17">
+              <a class="mn-conv__row" href="/conventions/bioasia-2027">
+                <span class="mn-conv__num" aria-hidden="true">06</span>
+                <span class="mn-conv__text">
+                  <span class="mn-conv__name">BioAsia 2027</span>
+                  <span class="mn-conv__meta"><span>15–17 Feb 2027</span><span>HITEX, Hyderabad</span><span
+                      class="mn-conv__tag">Tentative dates</span></span>
+                </span>
+                <img class="mn-conv__thumb" src="assets/img/conventions/bioasia-2027.jpg" alt="" width="1200"
+                  height="675" loading="lazy">
+                <svg class="mn-conv__go" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.2" />
+                </svg>
+              </a>
+            </li>
+          </ol>
         </div>
 
-        <div class="mn-conv__nav">
-          <button type="button" class="mn-conv__arrow" data-conv-prev aria-label="Previous convention"><svg
-              viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 12H4m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.4" />
-            </svg></button>
-          <span class="mn-conv__count"><span data-conv-index>01</span> <span class="mn-conv__of">/ <span
-                data-conv-total>06</span></span></span>
-          <button type="button" class="mn-conv__arrow" data-conv-next aria-label="Next convention"><svg
-              viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 12h16m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" />
-            </svg></button>
-        </div>
-
-        <div class="mn-conv__meta" data-conv-meta>
-          <p class="mn-conv__date"><span data-conv-date>23-25 Oct 2026</span><span class="mn-conv__tag"
-              data-conv-tag>Tentative dates</span></p>
-          <a class="mn-ulink mn-conv__venue" href="/conventions/gansid-international-congress-2026"
-            data-conv-venue><span data-conv-venue-text>HICC &amp; Novotel, Hyderabad</span><svg viewBox="0 0 24 24"
-              aria-hidden="true">
-              <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.4" />
-            </svg></a>
-        </div>
-        <p class="mn-sr" aria-live="polite" data-conv-live></p>
+        <!-- Desktop preview: one photo per row, in the same order; the caption names the place. -->
+        <figure class="mn-conv__frame" aria-hidden="true">
+          <div class="mn-conv__shots">
+            <img class="mn-conv__shot" src="assets/img/conventions/gansid-2026.jpg"
+              alt="Mecca Masjid minarets lit at night in Hyderabad's Old City" width="1200" height="675" loading="lazy">
+            <img class="mn-conv__shot" src="assets/img/conventions/apac-summit-2026.jpg"
+              alt="A delegate group at Falaknuma Palace with their Asli Hyderabad host" width="1200" height="675"
+              loading="lazy">
+            <img class="mn-conv__shot" src="assets/img/conventions/avar-2026.jpg"
+              alt="Visitors in the courtyard of Chowmahalla Palace" width="1200" height="675" loading="lazy">
+            <img class="mn-conv__shot" src="assets/img/conventions/telangana-rising-2026.jpg"
+              alt="A delegate group at the Qutb Shahi Tombs" width="1200" height="675" loading="lazy">
+            <img class="mn-conv__shot" src="assets/img/conventions/icca-global-summit-2027.jpg"
+              alt="Delegates exploring the ramparts of Golconda Fort" width="1200" height="675" loading="lazy">
+            <img class="mn-conv__shot" src="assets/img/conventions/bioasia-2027.jpg"
+              alt="Delegates beneath the arches of a Qutb Shahi monument" width="1200" height="675" loading="lazy">
+          </div>
+          <figcaption class="mn-conv__cap" data-conv-cap></figcaption>
+        </figure>
       </div>
     </section>
 

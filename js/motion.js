@@ -269,6 +269,21 @@
     });
   })();
 
+  /* ---------- Conventions index: rows rise in one by one, the frame opens upward (all sizes) ---------- */
+  (function conventionsIntro() {
+    var conv = sec('conventions');
+    if (!conv || conv.hidden) return;
+    var rows = $$('.mn-conv__item', conv);
+    var shots = $('.mn-conv__shots', conv);
+    var tl = gsap.timeline({ paused: true })
+      .fromTo(rows, { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', stagger: .09 }, 0);
+    if (shots && getComputedStyle(shots.parentNode).display !== 'none') {
+      tl.fromTo(shots, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power3.inOut' }, .1);
+    }
+    // Refresh after the desktop pins above are measured, or the start lands too early.
+    ScrollTrigger.create({ trigger: conv, start: 'top 72%', once: true, refreshPriority: -1, onEnter: function () { tl.play(); } });
+  })();
+
   /* ---------- Breakpoint-specific choreography ---------- */
   var mm = gsap.matchMedia();
 
@@ -334,41 +349,6 @@
         start: function () { return pageTop(S.cats); },
         end: function () { return pageTop(S.cats) + Math.round(vh() * .55); },
         pin: true, pinSpacing: true, invalidateOnRefresh: true
-      });
-    })();
-
-    /* Conventions (3b): the section pins and scrolling carries the cards from 01 to the last,
-       diagonally (top-right -> centre -> bottom-left). Rests settle on the nearest card. */
-    (function () {
-      var conv = sec('conventions');
-      var api = window.mnConv;
-      if (!conv || !api || api.count < 2) return;
-      var n = api.count;
-      var dist = function () { return Math.round(vh() * .7 * (n - 1)); };
-      api.enterScrub();
-      var st = ScrollTrigger.create({
-        trigger: conv,
-        start: 'top top',
-        end: function () { return '+=' + dist(); },
-        pin: true, pinSpacing: true, invalidateOnRefresh: true,
-        onUpdate: function (self) { api.scrub(self.progress * (n - 1)); },
-        onRefresh: function (self) { api.scrub(self.progress * (n - 1)); }
-      });
-      api.scrub(0);
-      api.scrollToIndex = function (i) {
-        var y = st.start + (st.end - st.start) * i / (n - 1);
-        if (window.mnLenis) window.mnLenis.scrollTo(y, { duration: 1.1 });
-        else window.scrollTo({ top: y, behavior: 'smooth' });
-      };
-      var settle = function () {
-        if (!st.isActive) return;
-        var f = st.progress * (n - 1), i = Math.round(f);
-        if (Math.abs(f - i) > .02) api.scrollToIndex(i);
-      };
-      ScrollTrigger.addEventListener('scrollEnd', settle);
-      cleanups.push(function () {
-        ScrollTrigger.removeEventListener('scrollEnd', settle);
-        api.exitScrub();
       });
     })();
 

@@ -50,7 +50,7 @@ One ornament language for the homepage, pulled from the client's eight reference
 | Mask | `.mn-m-arch` | Cusped-arch mask for photos (400 × 500 box, like the pointed arch) |
 | Symbol | `m-arch-cusped`, `m-arch-ogee`, `m-niche`, `m-lotus`, `m-tendril`, `m-paisley`, `m-rosette`, `m-sprig`, `m-stitch` | `<svg class="mn-m-sym" viewBox="…"><use href="assets/img/motifs.svg#m-lotus"/></svg>`; colour from `color`, line from `stroke-width`; tween the `<use>`'s `stroke-dashoffset` to draw |
 
-Built so far with the kit: **the footer** (cusped edge, inlay seam, skyline background); **Conventions** (`.mn-m-jaali` at .13 behind the stage, masked clear round the heading and the current card).
+Built so far with the kit: **the footer** (cusped edge, inlay seam, skyline background); **Conventions** (`.mn-m-jaali` at .13, kept to the edges; a double gold-rule frame round the photo).
 
 ## 5. Proposed placements (not built; one section at a time, when named)
 
