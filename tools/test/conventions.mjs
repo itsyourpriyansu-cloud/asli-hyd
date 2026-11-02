@@ -1,7 +1,8 @@
-// Section 3b, Conventions index: past events (by data-end) removed and the rest numbered from 01; desktop (>=1200px) rows rise in on
-// entry, the first row is in focus with its photo and caption in the gold frame, hover and keyboard focus move it, the
-// frame sits beside the list and ends on the same line; below 1200px one column with a thumbnail per row; reduced motion
-// shows everything at once; no sideways scroll; clean console. Needs at least three upcoming events.
+// Section 3b, Conventions ("a world of its own"): past events (by data-end) removed and the rest numbered from 01;
+// desktop: the heading floats at mid-screen while the cards scroll behind it, its second line arrives part-way, the
+// even (right) cards travel against the odd ones, cards rise in as they arrive; hover and keyboard focus dim the
+// other cards and the heading; a click follows the card's link. Tablets and phones put the heading (both lines) on
+// top; 768px keeps two columns, phones get one; reduced motion shows everything at once; no sideways scroll; clean console.
 //
 //   node tools/test/conventions.mjs http://127.0.0.1:8655/ C:/abs/out
 import { launch, sleep } from './cdp.mjs';
@@ -11,65 +12,95 @@ if (!url || !out) { console.log('usage: node tools/test/conventions.mjs <url> <a
 const results = [];
 const check = (name, ok, info) => { results.push(!!ok); console.log((ok ? 'PASS ' : 'FAIL ') + name + (ok ? '' : '  ' + JSON.stringify(info).slice(0, 700))); };
 const S = `(()=>{const s=document.querySelector('[data-sec="conventions"]'),R=(e)=>{const r=e.getBoundingClientRect();return {l:Math.round(r.left),t:Math.round(r.top),r:Math.round(r.right),b:Math.round(r.bottom),w:Math.round(r.width),h:Math.round(r.height)}};
-  const items=[...s.querySelectorAll('.mn-conv__item')],shots=[...s.querySelectorAll('.mn-conv__shot')],frame=s.querySelector('.mn-conv__frame'),idx=s.querySelector('.mn-conv__index');
-  const fd=getComputedStyle(frame).display!=='none';
+  const items=[...s.querySelectorAll('.mn-conv__item')],head=s.querySelector('.mn-conv__head'),title=s.querySelector('.mn-conv__title'),more=s.querySelector('.mn-conv__more');
+  const op=(e)=>+getComputedStyle(e).opacity;
   return {nums:items.map(i=>i.querySelector('.mn-conv__num').textContent).join(' '),names:items.map(i=>i.querySelector('.mn-conv__name').textContent),
-    active:items.findIndex(i=>i.classList.contains('is-active')),on:shots.findIndex(x=>x.classList.contains('is-on')),nShots:shots.length,
-    cap:s.querySelector('[data-conv-cap]').textContent,alt:shots.map(x=>x.alt),frameShown:fd,frame:fd?R(frame):null,index:R(idx),
-    rowsOp:Math.min(...items.map(i=>+getComputedStyle(i).opacity)),thumbs:items.map(i=>{const t=i.querySelector('.mn-conv__thumb');return getComputedStyle(t).display!=='none'&&t.complete&&t.naturalWidth>0}),
-    shotLoaded:fd?shots.every(x=>x.complete&&x.naturalWidth>0):true,sec:R(s),rowsR:items.map(i=>R(i.querySelector('.mn-conv__row'))),
-    docW:document.documentElement.scrollWidth,vw:innerWidth,vh:innerHeight}})()`;
+    hrefs:items.map(i=>new URL(i.querySelector('a').href).pathname),items:items.map(R),itemOp:items.map(op),
+    cardOp:items.map(i=>op(i.querySelector('.mn-conv__card'))),imgs:items.map(i=>{const m=i.querySelector('img');return m.complete&&m.naturalWidth>0}),
+    title:R(title),headOp:op(head),headPos:getComputedStyle(head).position,moreOp:op(more),focusVis:!!s.querySelector(':focus-visible'),
+    sec:R(s),docW:document.documentElement.scrollWidth,vw:innerWidth,vh:innerHeight,path:location.pathname}})()`;
 // Every event in index.html with its last day; the page should list the ones not yet over, in order.
 const ALL = [['GANSID International Congress 2026', '2026-10-25'], ['APAC Summit 2026', '2026-10-30'], ['AVAR 2026 Cyber Security Conference', '2026-12-04'],
   ['Telangana Rising Global Summit 2026', '2026-12-09'], ['ICCA Global Summit 2027', '2027-01-14'], ['BioAsia 2027', '2027-02-17']];
 const today = new Date(); today.setHours(0, 0, 0, 0);
 const UP = ALL.filter(([, end]) => new Date(end + 'T00:00:00') >= today).map(([n]) => n);
 const NAMES = UP.join('|'), NUMS = UP.map((_, i) => String(i + 1).padStart(2, '0')).join(' '), K = UP.length;
+const near = (a, b, tol) => Math.abs(a - b) <= tol;
+const mid = (r) => r.t + r.h / 2;
+
 let b = await launch({ out, port: 9383 }); b.url = url;
-for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080], [1200, 800]]) {
+for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
   const tag = `${w}x${h}`;
   await b.load(w, h);
   const top = await b.pageTop('[data-sec="conventions"]');
   await b.walkTo(top - h * .9, 50, 25); await sleep(300);
   const pre = await b.ev(S);
-  await b.walkTo(top - 40, 40, 25); await sleep(2200);
-  let s = await b.ev(S);
-  await b.shot(`idx-${w}`);
-  check(`${tag} past events removed, ${K} upcoming numbered in order`, s.nums === NUMS && s.names.join('|') === NAMES && s.nShots === K, s.nums + ' / ' + s.names.join('|'));
-  check(`${tag} rows hidden before entry, shown after`, pre.rowsOp < .05 && s.rowsOp > .99, { pre: pre.rowsOp, post: s.rowsOp });
-  check(`${tag} first row in focus with its photo and caption`, s.active === 0 && s.on === 0 && s.cap === s.alt[0], s);
-  check(`${tag} frame shown, photos loaded`, s.frameShown && s.shotLoaded, s.frameShown);
-  check(`${tag} index and frame side by side, not overlapping`, s.frame && s.index.r <= s.frame.l - 40, { index: s.index, frame: s.frame });
-  check(`${tag} frame top lines up with the list, heights close`, s.frame && Math.abs(s.frame.t - s.index.t) <= 2 && Math.abs(s.frame.h - s.index.h) <= s.index.h * .15, { f: s.frame, i: s.index });
-  check(`${tag} no sideways scroll`, s.docW === s.vw, s);
-  console.log(`   ${tag} section ${s.sec.h}px tall (vh ${h}); frame ${s.frame.w}x${s.frame.h}; rows ${s.rowsR.map((r) => r.h).join('/')}`);
-  // Hover the third row.
-  const r3 = s.rowsR[2]; await b.hover(r3.l + 60, r3.t + r3.h / 2); await sleep(1700);
-  s = await b.ev(S); await b.shot(`idx-${w}-hover3`);
-  check(`${tag} hovering row 3 brings its photo and caption`, s.active === 2 && s.on === 2 && s.cap === s.alt[2], { a: s.active, on: s.on, cap: s.cap });
-  // Keyboard focus on the last row (mouse moved off the list first).
-  await b.hover(5, 5); await sleep(200);
-  await b.ev(`document.querySelectorAll('[data-sec="conventions"] .mn-conv__row')[${K - 1}].focus()`); await sleep(400);
+  check(`${tag} ${K} upcoming numbered in order, past ones removed`, pre.nums === NUMS && pre.names.join('|') === NAMES, pre.nums + ' / ' + pre.names.join('|'));
+  check(`${tag} cards and line 2 hidden before entry`, Math.max(...pre.cardOp) < .05 && pre.moreOp < .05, { c: pre.cardOp, m: pre.moreOp });
+
+  // Past the stage's top padding the heading is stuck: title and line 2 centred as a pair at mid-screen.
+  await b.walkTo(top + 200, 40, 25); await sleep(1600);
+  const a = await b.ev(S); await b.shot(`conv-${w}-a`);
+  check(`${tag} heading floats at mid-screen once in, line 2 not yet`, near(a.title.b, h / 2, h * .1) && a.moreOp < .05, { t: a.title, vh: h, m: a.moreOp });
+  check(`${tag} first row of cards risen in`, a.cardOp[0] > .99 && a.cardOp[1] > .99, a.cardOp);
+
+  // Past the line-2 trigger (45% of the stage at mid-screen), before the heading's sticky run ends.
+  const deep = top + (a.sec.h - h) * .55;
+  await b.walkTo(deep, 40, 25); await sleep(1600);
+  const c = await b.ev(S); await b.shot(`conv-${w}-b`);
+  check(`${tag} heading still at mid-screen deeper in, line 2 shown`, near(mid(c.title), mid(a.title), 4) && c.moreOp > .99, { a: a.title, c: c.title, m: c.moreOp });
+  // Parallax: the right card's offset to its left neighbour changes as the page scrolls.
+  const d0 = a.items[1].t - a.items[0].t, d1 = c.items[1].t - c.items[0].t;
+  check(`${tag} right column travels against the left`, d0 - d1 > 30 && a.items[1].l > a.items[0].r, { d0, d1 });
+  check(`${tag} photos loaded, no sideways scroll`, c.imgs.every(Boolean) && c.docW === c.vw, c);
+  console.log(`   ${tag} section ${a.sec.h}px tall; card ${a.items[0].w}x${a.items[0].h}; offset ${d0} -> ${d1}`);
+
+  // Hover a card that is on screen: the others and the heading step back.
+  const vis = c.items.findIndex((r) => r.t > 40 && r.t + r.h * .4 < h);
+  const r = c.items[vis];
+  await b.hover(r.l + r.w / 2, r.t + r.h * .3); await sleep(1000);
+  let s = await b.ev(S); await b.shot(`conv-${w}-hover`);
+  check(`${tag} hovering card ${vis + 1} dims the rest and the heading`, s.itemOp[vis] > .99 && s.itemOp.every((o, i) => i === vis || o < .45) && s.headOp < .2, { i: s.itemOp, h: s.headOp });
+  await b.hover(5, 5); await sleep(900);
   s = await b.ev(S);
-  check(`${tag} keyboard focus on the last row brings its photo`, s.active === K - 1 && s.on === K - 1, { a: s.active, on: s.on });
-  await b.hover(5, 5);
+  check(`${tag} leaving restores everything`, s.itemOp.every((o) => o > .99) && s.headOp > .99, { i: s.itemOp, h: s.headOp });
+
+  // Keyboard: Tab from the first card to the second.
+  await b.ev(`document.querySelector('[data-sec="conventions"] .mn-conv__card').focus()`);
+  await b.key('Tab', 'Tab', 9); await sleep(1000);
+  s = await b.ev(S);
+  check(`${tag} keyboard focus on card 2 dims the rest`, s.focusVis && s.itemOp[1] > .99 && s.itemOp[0] < .45 && s.headOp < .2, { f: s.focusVis, i: s.itemOp, h: s.headOp });
+  await b.ev('document.activeElement.blur()');
+
+  // Click follows the card's link (inner pages are placeholders and 404 locally).
+  const rc = await b.ensureVisible('[data-sec="conventions"] .mn-conv__media', vis);
+  await b.click(rc.cx, rc.cy); await sleep(1200);
+  const path = await b.ev('location.pathname');
+  check(`${tag} clicking card ${vis + 1} opens ${c.hrefs[vis]}`, path === c.hrefs[vis], path);
 }
 const logs = [...b.logs]; b.close();
+
 b = await launch({ out, port: 9384 }); b.url = url;
 await b.load(1440, 900, { reduce: true });
-await b.jump(await b.pageTop('[data-sec="conventions"]') - 40); await sleep(900);
-let s = await b.ev(S); await b.shot('idx-reduce');
-check('reduced motion: rows and photo shown at once', s.rowsOp > .99 && s.on === 0 && s.frameShown, s);
-for (const [w, h] of [[1025, 768], [768, 1024], [390, 844]]) {
-  await b.load(w, h, { touch: w < 1025 });
+await b.jump(await b.pageTop('[data-sec="conventions"]') + 200); await sleep(900);
+let s = await b.ev(S); await b.shot('conv-reduce');
+check('reduced motion: cards and both lines shown at once', s.cardOp.every((o) => o > .99) && s.moreOp > .99, s);
+for (const [w, h] of [[768, 1024], [390, 844]]) {
+  await b.load(w, h, { touch: true });
   const top = await b.pageTop('[data-sec="conventions"]');
-  await b.walkTo(top + 900, 80, 25); await sleep(2400);
-  s = await b.ev(S); await b.shot(`idx-${w}`);
-  check(`${w}x${h} one column, frame hidden, every row has its thumbnail`, !s.frameShown && s.thumbs.every(Boolean) && s.nums === NUMS, { f: s.frameShown, t: s.thumbs });
-  check(`${w}x${h} rows shown, no sideways scroll`, s.rowsOp > .99 && s.docW === s.vw, s);
-  console.log(`   ${w}x${h} section ${s.sec.h}px; rows ${s.rowsR.map((r) => r.h).join('/')}`);
+  await b.walkTo(top - 60, 50, 25); await sleep(1400);
+  s = await b.ev(S); await b.shot(`conv-${w}-a`);
+  const twoCols = s.items[1].l > s.items[0].r;
+  check(`${w}x${h} ${w < 750 ? 'one column' : 'two columns'}, heading static on top, line 2 shown`,
+    twoCols === w >= 750 && s.headPos === 'static' && s.moreOp > .99 && s.title.b < s.items[0].t, s);
+  await b.walkTo(top + s.sec.h - h, 80, 25); await sleep(1600);
+  s = await b.ev(S); await b.shot(`conv-${w}-b`);
+  check(`${w}x${h} all cards risen in, photos loaded, no sideways scroll`, s.cardOp.every((o) => o > .99) && s.imgs.every(Boolean) && s.docW === s.vw, s);
+  console.log(`   ${w}x${h} section ${s.sec.h}px; card ${s.items[0].w}x${s.items[0].h}`);
 }
 logs.push(...b.logs); b.close();
-check('console clean', logs.length === 0, logs);
+// The clicks land on placeholder inner pages, which 404 locally by design.
+const real = logs.filter((l) => !/404|Not Found/.test(l));
+check('console clean', real.length === 0, real);
 console.log(`\n${results.filter(Boolean).length}/${results.length} passed`);
 process.exit(results.every(Boolean) ? 0 : 1);

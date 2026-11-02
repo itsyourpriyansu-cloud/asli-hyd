@@ -269,23 +269,35 @@
     });
   })();
 
-  /* ---------- Conventions index: rows rise in one by one, the frame opens upward (all sizes) ---------- */
+  /* ---------- Conventions: each card rises in as it arrives; the heading's second line
+     joins it about halfway through, and leaves again on the way back (all sizes) ---------- */
   (function conventionsIntro() {
     var conv = sec('conventions');
     if (!conv || conv.hidden) return;
-    var rows = $$('.mn-conv__item', conv);
-    var shots = $('.mn-conv__shots', conv);
-    var tl = gsap.timeline({ paused: true })
-      .fromTo(rows, { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', stagger: .09 }, 0);
-    if (shots && getComputedStyle(shots.parentNode).display !== 'none') {
-      tl.fromTo(shots, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power3.inOut' }, .1);
-    }
-    // Refresh after the desktop pins above are measured, or the start lands too early.
-    ScrollTrigger.create({ trigger: conv, start: 'top 72%', once: true, refreshPriority: -1, onEnter: function () { tl.play(); } });
+    // The reveal moves the inner link: the <li> carries the column parallax and the CSS dimming.
+    $$('.mn-conv__card', conv).forEach(function (card) {
+      gsap.set(card, { y: 60, autoAlpha: 0 });
+      // Refresh after the desktop pins above are measured, or the start lands too early.
+      ScrollTrigger.create({ trigger: card, start: 'top 92%', once: true, refreshPriority: -1, onEnter: function () {
+        gsap.to(card, { y: 0, autoAlpha: 1, duration: 1.2, ease: 'power3.out' });
+      } });
+    });
+    ScrollTrigger.create({ trigger: $('.mn-conv__stage', conv), start: '45% center', refreshPriority: -1, toggleClass: { targets: conv, className: 'is-more' } });
   })();
 
   /* ---------- Breakpoint-specific choreography ---------- */
   var mm = gsap.matchMedia();
+
+  /* Conventions, two columns (>=750px): the right column travels at its own speed, so the cards slide
+     past each other behind the floating heading. The matchMedia context reverts it below 750px. */
+  mm.add('(min-width: 750px)', function () {
+    var conv = sec('conventions');
+    if (!conv || conv.hidden) return;
+    gsap.fromTo($$('.mn-conv__item:nth-child(even)', conv), { y: 160 }, {
+      y: -160, ease: 'none',
+      scrollTrigger: { trigger: conv, start: 'top bottom', end: 'bottom top', scrub: true, refreshPriority: -1 }
+    });
+  });
 
   mm.add('(min-width: 1025px)', function () {
     var cleanups = [];

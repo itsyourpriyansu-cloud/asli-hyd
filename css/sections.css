@@ -367,97 +367,121 @@
 }
 
 /* ==========================================================================
-   3b. Conventions: an editorial index (between section 3 and 4)
-   Numbered rows (name, dates, venue) on hairlines, the scannable "agenda" pattern
-   of event and hospitality sites. Desktop: the row in focus turns ink with a gold
-   rule and its photo rises in a double gold frame (passe-partout) on the right.
-   Tablet/phone: no frame; each row carries its own thumbnail. Rows rise in on
-   entry (motion.js); reduced motion shows everything at once.
+   3b. Conventions: "a world of its own" (between section 3 and 4)
+   An ink band after Velaa's third section. The heading floats mid-screen (sticky,
+   in the same grid cell as the cards) while two offset columns of convention
+   cards scroll up behind it; motion.js moves the right column at its own speed
+   and brings in the second line part-way. Each card is one link. Hover/focus
+   dims the other cards and the heading so the card reads clearly. Tablets and
+   phones: the heading sits on top; phones get one column. Reduced motion shows everything at once.
    ========================================================================== */
 .mn-conv {
   position: relative;
   z-index: 1;
-  overflow: hidden;
-  background: var(--cream);
-  color: var(--ink);
+  overflow: clip;           /* not hidden: a scroll container would stop the sticky heading */
+  background: var(--ink);
+  color: var(--cream);
 }
 /* Khatam jaali (motifs.css) behind, faint, and kept to the edges (MOTIFS.md rule 3). */
 .mn-conv__bg {
-  --m-o: .13;
+  --m-o: .08;
   z-index: 0;
   -webkit-mask: radial-gradient(ellipse 64% 60% at 50% 50%, transparent 50%, #000 100%);
           mask: radial-gradient(ellipse 64% 60% at 50% 50%, transparent 50%, #000 100%);
 }
-.mn-conv__inner {
+/* Heading and cards share one cell, so the heading can float over the cards. */
+.mn-conv__stage {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(4.8rem, 4.4vw, 7.2rem) clamp(6rem, 7vw, 12rem);
-  align-items: stretch;   /* the frame runs the full height of the list */
-  padding-block: clamp(9rem, 8.5vw, 14rem);
+  max-width: 132rem;
+  padding-top: clamp(6.4rem, 6.7vw, 12rem);
 }
-
-/* Heading row across both columns: title left, "All conventions" right; no eyebrow. */
+.mn-conv__head, .mn-conv__list { grid-area: 1 / 1; }
 .mn-conv__head {
-  grid-column: 1 / -1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  align-self: start;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2.4rem 4rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  height: 100vh;
+  text-align: center;
+  pointer-events: none;     /* never blocks a card under it */
+  text-shadow: 0 .1rem .6rem rgba(20, 26, 25, .35), 0 .2rem 3rem rgba(20, 26, 25, .7);
+  transition: opacity .6s var(--ease);
 }
-.mn-conv__title {
+.mn-conv__title, .mn-conv__more {
+  margin: 0;
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(4.8rem, 4.6vw, 8.4rem);
-  line-height: 1;
+  font-size: clamp(4.4rem, 4.4vw, 7.6rem);
+  line-height: 1.05;
   letter-spacing: -.005em;
 }
-.mn-conv__title em { font-style: italic; color: var(--gold); }
-.mn-conv__all { margin-bottom: .8rem; }
-
-/* The index. */
-.mn-conv__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline); }
-.mn-conv__row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 5.6rem minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: 2rem;
-  padding-block: 2.1rem;
-  border-bottom: 1px solid var(--hairline);
-  color: inherit;
-  text-decoration: none;
+.mn-conv__title em, .mn-conv__more em { font-style: italic; color: var(--gold-light); }
+.mn-conv__more {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(1.6rem);
+  transition: opacity 1s var(--ease), filter 1s var(--ease), transform 1s var(--ease);
 }
-/* Gold rule that draws along the row in focus. */
-.mn-conv__row::after {
+.mn-conv.is-more .mn-conv__more { opacity: 1; filter: none; transform: none; }
+
+/* Two columns; the even cards start lower (relative top, so motion.js keeps transform for the parallax). */
+.mn-conv__list {
+  --drop: clamp(8rem, 9vw, 16rem);
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(7.2rem, 7vw, 12rem) clamp(4.8rem, 6.7vw, 9.6rem);
+  margin: 0;
+  padding: 0 0 var(--drop);
+  list-style: none;
+}
+.mn-conv__item { transition: opacity .6s var(--ease); }
+.mn-conv__item:nth-child(even) { position: relative; top: var(--drop); }
+.mn-conv__card { display: block; color: inherit; text-decoration: none; }
+.mn-conv__media { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; background: #26302e; }
+.mn-conv__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.82);   /* keeps the cream heading readable over bright skies */
+  transition: filter .8s var(--ease), transform 1.6s var(--ease);
+}
+/* Fine gold inner frame that closes in on hover/focus. */
+.mn-conv__media::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform .9s var(--ease);
+  inset: 2.4rem;
+  border: 1px solid rgba(216, 183, 125, .85);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s var(--ease), inset .8s var(--ease);
+}
+.mn-conv__cap {
+  display: grid;
+  grid-template-columns: 4.8rem minmax(0, 1fr) auto;
+  column-gap: 1.6rem;
+  padding-top: 2rem;
 }
 .mn-conv__num {
-  align-self: start;
-  padding-top: .9rem;
+  padding-top: .8rem;
   font-size: 1.3rem;
   letter-spacing: .16em;
   font-variant-numeric: tabular-nums;
-  color: var(--ink-45);
-  transition: color .5s var(--ease);
+  color: var(--gold-light);
 }
-.mn-conv__text { display: block; transition: transform .7s var(--ease); }
 .mn-conv__name {
   display: block;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(2.4rem, 1.9vw, 3.4rem);
+  font-size: clamp(2.4rem, 1.9vw, 3.2rem);
   line-height: 1.12;
-  color: rgba(46, 57, 55, .62);
-  transition: color .5s var(--ease);
 }
 .mn-conv__meta {
   display: flex;
@@ -467,87 +491,57 @@
   font-size: 1.2rem;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: rgba(244, 238, 228, .62);
 }
-.mn-conv__tag { color: #a97835; }
+.mn-conv__tag { color: var(--gold-light); }
 .mn-conv__go {
   width: 2.2rem;
   height: 2.2rem;
-  color: var(--gold);
-  opacity: 0;
-  transform: translate(-.6rem, .6rem);
-  transition: opacity .5s var(--ease), transform .5s var(--ease);
+  margin-top: .6rem;
+  color: var(--gold-light);
+  transition: transform .5s var(--ease);
 }
-.mn-conv__thumb { display: none; }
-/* In focus (hover, keyboard, or the first row by default). */
-.mn-conv__item.is-active .mn-conv__row::after { transform: scaleX(1); }
-.mn-conv__item.is-active .mn-conv__num { color: #a97835; }
-.mn-conv__item.is-active .mn-conv__name { color: var(--ink); }
-.mn-conv__item.is-active .mn-conv__text { transform: translateX(.6rem); }
-.mn-conv__item.is-active .mn-conv__go { opacity: 1; transform: none; }
-.mn-conv__row:focus-visible { outline: 1px solid var(--gold); outline-offset: .4rem; }
+.mn-conv__foot { position: relative; padding: clamp(4.8rem, 4.4vw, 7.2rem) var(--gutter) clamp(8rem, 8.3vw, 12rem); text-align: center; }
+.mn-conv__all { color: var(--cream); }
 
-/* The frame: an outer gold rule, an inner one, then the photo; the caption names the place. */
-.mn-conv__frame {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 1.6rem;
-  border: 1px solid rgba(197, 154, 91, .6);
-}
-.mn-conv__frame::before {
-  content: "";
-  position: absolute;
-  inset: .7rem;
-  border: 1px solid rgba(197, 154, 91, .3);
-  pointer-events: none;
-}
-/* 3:2 at least; grows with the list so photo and index end on the same line. */
-.mn-conv__shots { position: relative; flex: 1 1 auto; aspect-ratio: 3 / 2; overflow: hidden; background: var(--tile); }
-.mn-conv__shot {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity .8s var(--ease), transform 1.6s var(--ease);
-}
-.mn-conv__shot.is-on { opacity: 1; transform: none; }
-.mn-conv__cap {
-  min-height: 2.4rem;
-  margin-top: 1.4rem;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.7rem;
-  line-height: 1.4;
-  color: var(--muted);
+/* In focus: the card lifts to full brightness, its frame closes in; the rest and the heading step back. */
+.mn-conv__card:focus-visible { outline: 1px solid var(--gold-light); outline-offset: .8rem; }
+.mn-conv__card:focus-visible .mn-conv__img { filter: none; transform: scale(1.04); }
+.mn-conv__card:focus-visible .mn-conv__media::after { opacity: 1; inset: 1.2rem; }
+.mn-conv__card:focus-visible .mn-conv__go { transform: translate(.4rem, -.4rem); }
+.mn-conv__list:has(.mn-conv__card:focus-visible) .mn-conv__item:not(:has(:focus-visible)) { opacity: .4; }
+.mn-conv:has(.mn-conv__card:focus-visible) .mn-conv__head { opacity: .15; }
+@media (hover: hover) {
+  .mn-conv__card:hover .mn-conv__img { filter: none; transform: scale(1.04); }
+  .mn-conv__card:hover .mn-conv__media::after { opacity: 1; inset: 1.2rem; }
+  .mn-conv__card:hover .mn-conv__go { transform: translate(.4rem, -.4rem); }
+  .mn-conv__list:has(.mn-conv__card:hover) .mn-conv__item:not(:hover) { opacity: .4; }
+  .mn-conv:has(.mn-conv__card:hover) .mn-conv__head { opacity: .15; }
 }
 
-/* Below 1200px (small laptops, tablet, phone) the second column is too narrow for a good photo:
-   one column, no frame; every row reads at full strength with its thumbnail. */
-@media (max-width: 1199px) {
-  .mn-conv__inner { grid-template-columns: minmax(0, 1fr); row-gap: 4rem; padding-block: 6.4rem 6.4rem; }
-  .mn-conv__head { display: block; }
-  .mn-conv__all { margin: 2.4rem 0 0; }
-  .mn-conv__frame { display: none; }
-  .mn-conv__row { grid-template-columns: 4rem minmax(0, 1fr) 16rem; column-gap: 1.6rem; padding-block: 1.8rem; }
-  .mn-conv__name { color: var(--ink); }
-  .mn-conv__item.is-active .mn-conv__row::after { transform: scaleX(0); }
-  .mn-conv__item.is-active .mn-conv__num { color: var(--ink-45); }
-  .mn-conv__item.is-active .mn-conv__text { transform: none; }
-  .mn-conv__go { display: none; }
-  .mn-conv__thumb { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid var(--hairline); }
+/* Tablets and phones: no hover to clear a floating heading off the captions, so it leads above the cards. */
+@media (max-width: 1024px) {
+  .mn-conv__stage { display: block; padding-top: 8rem; }
+  .mn-conv__head { position: static; height: auto; align-items: flex-start; text-align: left; gap: 1.2rem; padding-bottom: 5.6rem; text-shadow: none; }
+  .mn-conv__more { font-size: 3.2rem; opacity: 1; filter: none; transform: none; }
+  .mn-conv__img { filter: none; }
+  .mn-conv__cap { grid-template-columns: 3.6rem minmax(0, 1fr) auto; column-gap: 1.2rem; }
 }
+/* Phones: one column. */
 @media (max-width: 749px) {
-  .mn-conv__inner { row-gap: 3.2rem; padding-block: 4.8rem; }
-  .mn-conv__title { font-size: 4.4rem; }
-  .mn-conv__row { grid-template-columns: 2.8rem minmax(0, 1fr) 10.4rem; column-gap: 1.2rem; }
-  .mn-conv__num { padding-top: .5rem; font-size: 1.1rem; }
-  .mn-conv__name { font-size: 2.2rem; }
-  .mn-conv__meta { flex-direction: column; gap: .2rem; font-size: 1.05rem; }
+  .mn-conv__stage { padding-top: 6.4rem; }
+  .mn-conv__head { padding-bottom: 4rem; }
+  .mn-conv__title { font-size: 4rem; }
+  .mn-conv__more { font-size: 2.6rem; }
+  .mn-conv__list { grid-template-columns: minmax(0, 1fr); row-gap: 4.8rem; padding-bottom: 0; }
+  .mn-conv__item:nth-child(even) { top: 0; }
+  .mn-conv__cap { padding-top: 1.6rem; }
+  .mn-conv__name { font-size: 2.4rem; }
+  .mn-conv__meta { flex-direction: column; gap: .2rem; font-size: 1.1rem; }
+  .mn-conv__foot { padding-block: 4.8rem 6.4rem; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mn-conv__more { opacity: 1; filter: none; transform: none; }
 }
 
 /* ==========================================================================

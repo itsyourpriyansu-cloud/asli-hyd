@@ -223,42 +223,23 @@
     }
   });
 
-  /* ---------- Conventions index (section 3b) ----------
-     Removes events past their data-end date and renumbers the rest. Desktop: hovering or
-     focusing a row puts it in focus and brings its photo up in the frame; the first upcoming
-     event is in focus to start. Rows are plain links, so touch and keyboard just follow them. */
+  /* ---------- Conventions cards (section 3b) ----------
+     Removes events past their data-end date and renumbers the rest. Cards are plain links;
+     hover/focus dimming is CSS. */
   (function () {
     var wrap = document.querySelector('[data-conventions]');
     if (!wrap) return;
     var items = Array.prototype.slice.call(wrap.querySelectorAll('.mn-conv__item'));
-    var shots = Array.prototype.slice.call(wrap.querySelectorAll('.mn-conv__shot'));
-    var cap = wrap.querySelector('[data-conv-cap]');
 
-    // Hide conventions that have already ended (compared by date only), with their photos.
+    // Hide conventions that have already ended (compared by date only).
     var today = new Date(); today.setHours(0, 0, 0, 0);
-    var live = [];
-    items.forEach(function (item, i) {
-      if (new Date(item.dataset.end + 'T00:00:00') < today) { item.remove(); if (shots[i]) shots[i].remove(); }
-      else live.push({ item: item, shot: shots[i] });
+    var live = items.filter(function (item) {
+      if (new Date(item.dataset.end + 'T00:00:00') >= today) return true;
+      item.remove();
+      return false;
     });
     if (!live.length) { wrap.hidden = true; return; }
-    live.forEach(function (e, i) { e.item.querySelector('.mn-conv__num').textContent = (i < 9 ? '0' : '') + (i + 1); });
-
-    var active = -1;
-    var activate = function (i) {
-      if (i === active) return;
-      active = i;
-      live.forEach(function (e, k) {
-        e.item.classList.toggle('is-active', k === i);
-        if (e.shot) e.shot.classList.toggle('is-on', k === i);
-      });
-      if (cap && live[i].shot) cap.textContent = live[i].shot.alt;
-    };
-    live.forEach(function (e, i) {
-      e.item.addEventListener('mouseenter', function () { activate(i); });
-      e.item.addEventListener('focusin', function () { activate(i); });
-    });
-    activate(0);
+    live.forEach(function (item, i) { item.querySelector('.mn-conv__num').textContent = (i < 9 ? '0' : '') + (i + 1); });
   })();
 
   /* ---------- Steps: accordion on phones ---------- */
