@@ -34,7 +34,44 @@
   ],
   "whereLabel": "Meeting point",
   "where": "Shared after booking",
-  "cta": "Book this Sunday"
+  "cta": "Book this Sunday",
+  "schedule": [
+   {
+    "at": "6:30 AM",
+    "name": "Meet in the quiet",
+    "line": "A short welcome, while the shutters are still down."
+   },
+   {
+    "at": "7:00 AM",
+    "name": "Markets waking up",
+    "line": "Flowers, fruit and the first deliveries of the day."
+   },
+   {
+    "at": "7:45 AM",
+    "name": "Chai with the regulars",
+    "line": "Irani chai at the hour it matters most."
+   },
+   {
+    "at": "8:30 AM",
+    "name": "Breakfast",
+    "line": "An iconic Hyderabadi breakfast to end the walk."
+   }
+  ],
+  "why": [
+   {
+    "h": "The city with its guard down",
+    "p": "An hour most visitors, and many locals, never see."
+   },
+   {
+    "h": "Cool air, empty lanes",
+    "p": "The easiest and best light of the day."
+   },
+   {
+    "h": "Everyone is welcome",
+    "p": "Small groups of visitors and Hyderabadis together."
+   }
+  ],
+  "draft": "Schedule and Why only here are placeholder"
  },
  {
   "slug": "welcome-hyderabad",
@@ -72,7 +109,44 @@
   ],
   "whereLabel": "Venue",
   "where": "Selected Asli Hyderabad partner venue",
-  "cta": "Book this Saturday"
+  "cta": "Book this Saturday",
+  "schedule": [
+   {
+    "at": "11:00 AM",
+    "name": "A hosted welcome",
+    "line": "Meet the host and the people at your table."
+   },
+   {
+    "at": "11:30 AM",
+    "name": "Hyderabad in an hour",
+    "line": "How the city fits together, in plain words."
+   },
+   {
+    "at": "12:30 PM",
+    "name": "The Telugu table",
+    "line": "A long, generous lunch."
+   },
+   {
+    "at": "1:30 PM",
+    "name": "Your own shortlist",
+    "line": "Recommendations for the days you have left."
+   }
+  ],
+  "why": [
+   {
+    "h": "The best first day",
+    "p": "Land, then let someone explain the city properly."
+   },
+   {
+    "h": "New friends by lunch",
+    "p": "A table of curious people, some just arrived."
+   },
+   {
+    "h": "Advice you can use",
+    "p": "Your questions, answered by people who live here."
+   }
+  ],
+  "draft": "Schedule and Why only here are placeholder"
  },
  {
   "slug": "hyderabad-after-dark",
@@ -108,7 +182,44 @@
   ],
   "whereLabel": "Meeting point",
   "where": "Shared after booking",
-  "cta": "Book this Friday"
+  "cta": "Book this Friday",
+  "schedule": [
+   {
+    "at": "7:00 PM",
+    "name": "First stop",
+    "line": "Meet your host, with a drink in hand."
+   },
+   {
+    "at": "8:00 PM",
+    "name": "New neighbourhoods",
+    "line": "Rooftops, kitchens and the places locals pick."
+   },
+   {
+    "at": "9:00 PM",
+    "name": "Food and music",
+    "line": "A long table, a live set or both."
+   },
+   {
+    "at": "10:00 PM",
+    "name": "One for the road",
+    "line": "Where the evening could go next, if you still have energy."
+   }
+  ],
+  "why": [
+   {
+    "h": "A side the guidebooks skip",
+    "p": "The young, social city that comes out at night."
+   },
+   {
+    "h": "No planning, no queues",
+    "p": "Your host handles the doors and the driving."
+   },
+   {
+    "h": "Good company",
+    "p": "A small mixed group, easy to fall in with."
+   }
+  ],
+  "draft": "Schedule and Why only here are placeholder"
  },
  {
   "slug": "the-hyderabad-table",
@@ -144,7 +255,40 @@
   ],
   "whereLabel": "Next table",
   "where": "Venue, theme and date announced for each edition",
-  "cta": "Book the next table"
+  "cta": "Book the next table",
+  "schedule": [
+   {
+    "name": "A new setting",
+    "line": "A different venue chosen for each edition."
+   },
+   {
+    "name": "A theme for the evening",
+    "line": "One Hyderabad story, told through the meal."
+   },
+   {
+    "name": "A shared menu",
+    "line": "Curated courses, served at one long table."
+   },
+   {
+    "name": "A real conversation",
+    "line": "Hosted, so no one is left out."
+   }
+  ],
+  "why": [
+   {
+    "h": "Never the same twice",
+    "p": "New venue, new menu, new story each month."
+   },
+   {
+    "h": "Limited seats",
+    "p": "Small enough for one conversation."
+   },
+   {
+    "h": "A way into the city",
+    "p": "People you would not otherwise meet."
+   }
+  ],
+  "draft": "Schedule and Why only here are placeholder"
  },
  {
   "slug": "ramzan-nights",
@@ -179,7 +323,39 @@
   "whereLabel": "Meeting point",
   "where": "Shared after booking",
   "cta": "Join a Ramzan night",
-  "draft": "Details expanded from the homepage copy"
+  "draft": "Details expanded from the homepage copy. Schedule and Why only here are placeholder",
+  "schedule": [
+   {
+    "name": "After iftar",
+    "line": "Join the crowds as the fast is broken."
+   },
+   {
+    "name": "Into the lanes",
+    "line": "Laad Bazaar and the Charminar, lit up and alive."
+   },
+   {
+    "name": "Haleem and specials",
+    "line": "The dishes that only appear this month."
+   },
+   {
+    "name": "Stories of the season",
+    "line": "What this month means to the people around you."
+   }
+  ],
+  "why": [
+   {
+    "h": "One month a year",
+    "p": "The Old City at its most alive."
+   },
+   {
+    "h": "Hosted with care",
+    "p": "Respectful of the people and the occasion."
+   },
+   {
+    "h": "Haleem at its source",
+    "p": "Hyderabad’s great seasonal dish."
+   }
+  ]
  },
  {
   "slug": "festival-hyderabad",
@@ -213,6 +389,38 @@
   "whereLabel": "Dates",
   "where": "Set by the festival calendar each year",
   "cta": "See festival dates",
-  "draft": "Details expanded from the homepage copy"
+  "draft": "Details expanded from the homepage copy. Schedule and Why only here are placeholder",
+  "schedule": [
+   {
+    "name": "Find your festival",
+    "line": "Bonalu or Bathukamma, set by the calendar."
+   },
+   {
+    "name": "Join the procession",
+    "line": "A good place to stand, and someone to explain it."
+   },
+   {
+    "name": "With local families",
+    "line": "Welcomed in, with care and consent."
+   },
+   {
+    "name": "Food and folk music",
+    "line": "How the day ends."
+   }
+  ],
+  "why": [
+   {
+    "h": "Telangana’s own festivals",
+    "p": "Traditions found nowhere else."
+   },
+   {
+    "h": "Up close, not in the way",
+    "p": "Your host knows how to take part with respect."
+   },
+   {
+    "h": "Set by the calendar",
+    "p": "Tell us when you are visiting and we will see what is on."
+   }
+  ]
  }
 ]

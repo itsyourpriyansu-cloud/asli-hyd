@@ -4,118 +4,383 @@
   "thumb": "/assets/img/pages/gal/gallery-1-jpg-t.jpg",
   "cap": "Guests with an Asli host near the Charminar",
   "w": 720,
-  "h": 480
+  "h": 480,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/gallery-3-jpg.jpg",
   "thumb": "/assets/img/pages/gal/gallery-3-jpg-t.jpg",
   "cap": "A long table with Asli guests",
   "w": 720,
-  "h": 480
+  "h": 480,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/way-heritage-jpg.jpg",
   "thumb": "/assets/img/pages/gal/way-heritage-jpg-t.jpg",
   "cap": "Asli guests at Golconda Fort",
   "w": 720,
-  "h": 576
+  "h": 576,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/gallery-0-jpg.jpg",
   "thumb": "/assets/img/pages/gal/gallery-0-jpg-t.jpg",
   "cap": "Guests at the Qutb Shahi Tombs",
   "w": 720,
-  "h": 480
+  "h": 480,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/conv-icca-global-summit-2027-jpg.jpg",
   "thumb": "/assets/img/pages/gal/conv-icca-global-summit-2027-jpg-t.jpg",
   "cap": "Delegates at Golconda Fort",
   "w": 720,
-  "h": 405
+  "h": 405,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/tour-statue-of-equality-jpg.jpg",
   "thumb": "/assets/img/pages/gal/tour-statue-of-equality-jpg-t.jpg",
   "cap": "Guests at the Statue of Equality",
   "w": 720,
-  "h": 405
+  "h": 405,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/gallery-2-jpg.jpg",
   "thumb": "/assets/img/pages/gal/gallery-2-jpg-t.jpg",
   "cap": "Chai and conversation with Asli guests",
   "w": 720,
-  "h": 480
+  "h": 480,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/conv-apac-summit-2026-jpg.jpg",
   "thumb": "/assets/img/pages/gal/conv-apac-summit-2026-jpg-t.jpg",
   "cap": "Delegates at Chowmahalla Palace",
   "w": 720,
-  "h": 405
+  "h": 405,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/conv-telangana-rising-2026-jpg.jpg",
   "thumb": "/assets/img/pages/gal/conv-telangana-rising-2026-jpg-t.jpg",
   "cap": "Delegates at the Qutb Shahi Tombs",
   "w": 720,
-  "h": 405
+  "h": 405,
+  "tag": "people"
  },
  {
   "src": "/assets/img/pages/gal/way-culture-jpg.jpg",
   "thumb": "/assets/img/pages/gal/way-culture-jpg-t.jpg",
   "cap": "Choosing bangles in Laad Bazaar",
   "w": 720,
-  "h": 576
+  "h": 576,
+  "tag": "craft"
  },
  {
   "src": "/assets/img/pages/gal/g1_020.jpg",
   "thumb": "/assets/img/pages/gal/g1_020-t.jpg",
   "cap": "A minaret at the Qutb Shahi Tombs",
   "w": 720,
-  "h": 1080
+  "h": 1080,
+  "tag": "places"
  },
  {
   "src": "/assets/img/pages/gal/g1_040.jpg",
   "thumb": "/assets/img/pages/gal/g1_040-t.jpg",
   "cap": "The gate tower at Chowmahalla Palace",
   "w": 720,
-  "h": 1008
+  "h": 1008,
+  "tag": "places"
  },
  {
   "src": "/assets/img/pages/gal/g2_060.jpg",
   "thumb": "/assets/img/pages/gal/g2_060-t.jpg",
   "cap": "Tilework at the Badshahi Ashurkhana",
   "w": 720,
-  "h": 515
+  "h": 515,
+  "tag": "craft"
  },
  {
   "src": "/assets/img/pages/gal/g2_015.jpg",
   "thumb": "/assets/img/pages/gal/g2_015-t.jpg",
   "cap": "Pigeons over the Charminar and Mecca Masjid",
   "w": 720,
-  "h": 540
+  "h": 540,
+  "tag": "places"
  },
  {
   "src": "/assets/img/pages/gal/g5_048.jpg",
   "thumb": "/assets/img/pages/gal/g5_048-t.jpg",
   "cap": "Jagannath Temple, Banjara Hills",
   "w": 720,
-  "h": 960
+  "h": 960,
+  "tag": "places"
  },
  {
   "src": "/assets/img/pages/gal/g6_003.jpg",
   "thumb": "/assets/img/pages/gal/g6_003-t.jpg",
   "cap": "The Buddha Statue on a still morning",
   "w": 720,
-  "h": 1080
+  "h": 1080,
+  "tag": "places"
  },
  {
   "src": "/assets/img/pages/gal/g9_044.jpg",
   "thumb": "/assets/img/pages/gal/g9_044-t.jpg",
   "cap": "Colonnades at the Paigah Tombs",
   "w": 720,
-  "h": 480
+  "h": 480,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/tour-royal-heritage-trail-jpg.jpg",
+  "thumb": "/assets/img/pages/gal/tour-royal-heritage-trail-jpg-t.jpg",
+  "cap": "Asli guests at Taj Falaknuma Palace",
+  "w": 720,
+  "h": 405,
+  "tag": "people"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_016.jpg",
+  "thumb": "/assets/img/pages/gal/g3_016-t.jpg",
+  "cap": "Irani chai, the city’s favourite pause",
+  "w": 720,
+  "h": 480,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/g1_005.jpg",
+  "thumb": "/assets/img/pages/gal/g1_005-t.jpg",
+  "cap": "Stone arches at Golconda Fort",
+  "w": 720,
+  "h": 960,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g1_073.jpg",
+  "thumb": "/assets/img/pages/gal/g1_073-t.jpg",
+  "cap": "The viewing balcony at Taj Falaknuma",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g2_004.jpg",
+  "thumb": "/assets/img/pages/gal/g2_004-t.jpg",
+  "cap": "Laad Bazaar seen from the Charminar",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/gallery-4-jpg.jpg",
+  "thumb": "/assets/img/pages/gal/gallery-4-jpg-t.jpg",
+  "cap": "Asli guests at a Hyderabad bakery",
+  "w": 720,
+  "h": 480,
+  "tag": "people"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_017.jpg",
+  "thumb": "/assets/img/pages/gal/g3_017-t.jpg",
+  "cap": "Bun maska and Irani chai at Niloufer",
+  "w": 720,
+  "h": 540,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_007.jpg",
+  "thumb": "/assets/img/pages/gal/g3_007-t.jpg",
+  "cap": "Biryani with raita and mirchi ka salan",
+  "w": 720,
+  "h": 516,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_020.jpg",
+  "thumb": "/assets/img/pages/gal/g3_020-t.jpg",
+  "cap": "Hyderabadi haleem",
+  "w": 720,
+  "h": 480,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_036.jpg",
+  "thumb": "/assets/img/pages/gal/g3_036-t.jpg",
+  "cap": "Shaping lac bangles by hand",
+  "w": 720,
+  "h": 540,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_050.jpg",
+  "thumb": "/assets/img/pages/gal/g3_050-t.jpg",
+  "cap": "Bangles from Laad Bazaar",
+  "w": 720,
+  "h": 960,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g2_010.jpg",
+  "thumb": "/assets/img/pages/gal/g2_010-t.jpg",
+  "cap": "Strands of Hyderabad pearls",
+  "w": 720,
+  "h": 540,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g4_016.jpg",
+  "thumb": "/assets/img/pages/gal/g4_016-t.jpg",
+  "cap": "A potter at his wheel, Shilparamam",
+  "w": 720,
+  "h": 540,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/culture-pochampally-weaving-jpg.jpg",
+  "thumb": "/assets/img/pages/gal/culture-pochampally-weaving-jpg-t.jpg",
+  "cap": "Tying ikat threads before they reach the loom",
+  "w": 720,
+  "h": 469,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g9_022.jpg",
+  "thumb": "/assets/img/pages/gal/g9_022-t.jpg",
+  "cap": "A saree taking shape on the loom",
+  "w": 644,
+  "h": 1400,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g5_018.jpg",
+  "thumb": "/assets/img/pages/gal/g5_018-t.jpg",
+  "cap": "Carved elephants at the Statue of Equality complex",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g6_007.jpg",
+  "thumb": "/assets/img/pages/gal/g6_007-t.jpg",
+  "cap": "Buddha Statue on Hussain Sagar at sunset",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g6_075.jpg",
+  "thumb": "/assets/img/pages/gal/g6_075-t.jpg",
+  "cap": "Cyber Towers, HITEC City",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g5_060.jpg",
+  "thumb": "/assets/img/pages/gal/g5_060-t.jpg",
+  "cap": "Under the great canopy at Kanha",
+  "w": 720,
+  "h": 960,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g6_038.jpg",
+  "thumb": "/assets/img/pages/gal/g6_038-t.jpg",
+  "cap": "The cable bridge after dark",
+  "w": 720,
+  "h": 480,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g1_036.jpg",
+  "thumb": "/assets/img/pages/gal/g1_036-t.jpg",
+  "cap": "Qutb Shahi Tombs",
+  "w": 720,
+  "h": 960,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g2_056.jpg",
+  "thumb": "/assets/img/pages/gal/g2_056-t.jpg",
+  "cap": "Mosaic tile at the Badshahi Ashurkhana",
+  "w": 720,
+  "h": 1173,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g2_003.jpg",
+  "thumb": "/assets/img/pages/gal/g2_003-t.jpg",
+  "cap": "Pearl strands in Laad Bazaar",
+  "w": 720,
+  "h": 602,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_001.jpg",
+  "thumb": "/assets/img/pages/gal/g3_001-t.jpg",
+  "cap": "Hyderabadi chicken biryani",
+  "w": 720,
+  "h": 478,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/g3_014.jpg",
+  "thumb": "/assets/img/pages/gal/g3_014-t.jpg",
+  "cap": "Irani chai and Osmania biscuits",
+  "w": 720,
+  "h": 540,
+  "tag": "food"
+ },
+ {
+  "src": "/assets/img/pages/gal/culture-pearl-webp.jpg",
+  "thumb": "/assets/img/pages/gal/culture-pearl-webp-t.jpg",
+  "cap": "Stringing pearls by hand",
+  "w": 720,
+  "h": 987,
+  "tag": "craft"
+ },
+ {
+  "src": "/assets/img/pages/gal/cinema-baahubali-set-jpg.jpg",
+  "thumb": "/assets/img/pages/gal/cinema-baahubali-set-jpg-t.jpg",
+  "cap": "The Baahubali set",
+  "w": 720,
+  "h": 405,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/g7_017.jpg",
+  "thumb": "/assets/img/pages/gal/g7_017-t.jpg",
+  "cap": "On the lot at Ramoji Film City",
+  "w": 720,
+  "h": 540,
+  "tag": "places"
+ },
+ {
+  "src": "/assets/img/pages/gal/way-business-jpg.jpg",
+  "thumb": "/assets/img/pages/gal/way-business-jpg-t.jpg",
+  "cap": "Delegates on arrival at a Hyderabad convention",
+  "w": 720,
+  "h": 576,
+  "tag": "people"
+ },
+ {
+  "src": "/assets/img/pages/gal/g8_006.jpg",
+  "thumb": "/assets/img/pages/gal/g8_006-t.jpg",
+  "cap": "A plenary session at HICC",
+  "w": 720,
+  "h": 479,
+  "tag": "people"
+ },
+ {
+  "src": "/assets/img/pages/gal/g9_001.jpg",
+  "thumb": "/assets/img/pages/gal/g9_001-t.jpg",
+  "cap": "Ananthagiri Hills, a morning from the city",
+  "w": 720,
+  "h": 477,
+  "tag": "places"
  }
 ]

@@ -17,26 +17,41 @@
  {
   "name": "Meet Tollywood",
   "line": "A private interaction with a leading actor, director, producer or filmmaker from Telugu cinema.",
-  "show": true
+  "show": true,
+  "more": "Spend time with someone who makes Telugu cinema: on a set, in a studio or over a long lunch. Who you meet depends on who is working and willing.",
+  "suits": "Film lovers, media and entertainment guests",
+  "draft": "Longer description is placeholder"
  },
  {
   "name": "Inside Future City",
   "line": "A privately curated look at Hyderabad’s ambitious next-generation city, its vision, planning and development.",
-  "show": true
+  "show": true,
+  "more": "See the plans and the land for the city Hyderabad is planning next, with someone who can explain the thinking.",
+  "suits": "Investors, planners and business delegations",
+  "draft": "Longer description is placeholder"
  },
  {
   "name": "Inside Genome Valley",
   "line": "A specialist-led journey into Hyderabad’s globally significant pharma, biotech and life-sciences ecosystem.",
-  "show": true
+  "show": true,
+  "more": "Laboratories, manufacturers and the people who run them, chosen around your field.",
+  "suits": "Life sciences leaders and research delegations",
+  "draft": "Longer description is placeholder"
  },
  {
   "name": "Meet Hyderabad’s Founders",
   "line": "Private conversations with entrepreneurs and business leaders building some of Hyderabad’s most interesting companies.",
-  "show": true
+  "show": true,
+  "more": "What worked, what did not and what they would do again, told without a slide deck.",
+  "suits": "Founders, investors and senior leaders",
+  "draft": "Longer description is placeholder"
  },
  {
   "name": "Coffee with an Insider",
   "line": "One-to-one conversation with a carefully matched Hyderabad expert, from innovation and business to culture, design, food or the city itself.",
-  "show": true
+  "show": true,
+  "more": "Tell us what you are curious about, and we will find the one person in Hyderabad you should talk to.",
+  "suits": "Anyone with a good question",
+  "draft": "Longer description is placeholder"
  }
 ]

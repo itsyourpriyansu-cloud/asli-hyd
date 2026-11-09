@@ -1,7 +1,7 @@
 // Inner pages: every generated page at three sizes, then the interactions.
 //   node server.js 8671
 //   node tools/test/pages.mjs http://127.0.0.1:8671 C:/abs/out [--pages-only|--interactions-only]
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { launch, sleep } from './cdp.mjs';
@@ -33,8 +33,8 @@ const AUDIT = `(async () => {
     h1: document.querySelectorAll('h1').length,
     eyebrow: document.querySelectorAll('[class*="eyebrow"]').length,
     broken: [...document.images].filter((i) => i.getAttribute('src') && i.complete && !i.naturalWidth).map((i) => i.currentSrc || i.src),
-    blankEm: [...document.querySelectorAll('main li, main p, main h2, main h3')].filter((e) => !e.textContent.trim() && !e.querySelector('img,svg,video') && !e.matches('[role="status"]')).length,
-    smallTargets: [...document.querySelectorAll('main .mn-pg-tabs button, main .mn-pg-chips a, main .mn-pg-submit, main .mn-pg-book__cta, main .mn-pg-optcards a')].filter((e) => { const r = e.getBoundingClientRect(); return r.height && r.height < 44; }).length,
+    blankEm: [...document.querySelectorAll('main li, main p, main h2, main h3')].filter((e) => !e.textContent.trim() && !e.querySelector('img,svg,video') && !e.matches('[role="status"]') && !e.closest('[hidden]')).length,
+    smallTargets: [...document.querySelectorAll('main .mn-pg-tabs button, main .mn-pg-chips a, main .mn-pg-submit, main .mn-pg-book__cta, main .mn-pg-optcards a, main .mn-pg-btn, main .mn-pg-actions .mn-ulink, main .mn-pg-after .mn-ulink, main .mn-pg-crumbs a, main .mn-pg-faq summary, main .mn-pg-access__ask')].filter((e) => { const r = e.getBoundingClientRect(); return r.height && r.height < 43.9; }).map((e) => (e.className || e.tagName) + ' "' + e.textContent.trim().slice(0, 24) + '" ' + e.getBoundingClientRect().height),
   };
 })()`;
 
@@ -53,7 +53,7 @@ async function pages() {
       ok(a.eyebrow === 0, `${where} has an eyebrow`);
       ok(!a.broken.length, `${where} broken images ${a.broken.slice(0, 3)}`);
       ok(a.blankEm === 0, `${where} ${a.blankEm} empty text elements`);
-      ok(a.smallTargets === 0, `${where} ${a.smallTargets} targets under 44px`);
+      ok(!a.smallTargets.length, `${where} targets under 44px: ${a.smallTargets.join(', ')}`);
     }
   }
   b.close();
@@ -62,14 +62,14 @@ async function pages() {
 async function interactions() {
   const b = await launch({ out: OUT, port: 9372 });
   const go = (url, w = 1440, h = 900, o = {}) => b.load(w, h, { url: BASE + url, ...o });
-  const shown = `[...document.querySelectorAll('[data-tour-themes]')].filter((c) => !c.hidden).length`;
+  const shown = `[...document.querySelectorAll('[data-tags]')].filter((c) => !c.hidden).length`;
 
   await go('/tours');
   ok(await b.ev(shown) === 15, 'tours: all 15 listed');
   await b.ev(`document.querySelector('[data-filter="evening"]').click()`); await sleep(200);
   ok(await b.ev(shown) === 1, 'tours: Evening shows one');
   ok(await b.ev(`document.querySelector('[data-filter-status]').textContent`) === '1 tour shown', 'tours: status announced');
-  ok(await b.ev(`getComputedStyle(document.querySelector('[data-tour-themes]:not([hidden])')).opacity`) === '1', 'tours: filtered card is visible');
+  ok(await b.ev(`getComputedStyle(document.querySelector('[data-tags]:not([hidden])')).opacity`) === '1', 'tours: filtered card is visible');
   await b.ev(`document.querySelector('[data-filter="all"]').click()`); await sleep(200);
   ok(await b.ev(shown) === 15, 'tours: All restores');
   ok(!await b.ev(`document.documentElement.classList.contains('mn-arch')`), 'hero: arch mask removed after opening');
@@ -161,6 +161,85 @@ async function interactions() {
   ok(!await b.ev(`document.querySelector('[data-lb]').open`), 'lightbox: Esc closes');
   ok(await b.ev(`document.activeElement === document.querySelector('[data-full]')`), 'lightbox: focus returns to the photo');
 
+  // The gallery filter narrows the photos, and the lightbox arrows stay inside it.
+  await go('/gallery');
+  ok(await b.ev(shown) === 48, 'gallery: all 48 photos');
+  await b.ev(`document.querySelector('[data-filter="food"]').click()`); await sleep(200);
+  ok(await b.ev(shown) === 6, 'gallery: Food shows six');
+  ok(await b.ev(`document.querySelector('[data-filter-status]').textContent`) === '6 photos shown', 'gallery: status says photos');
+  ok(await b.ev(`[...document.querySelectorAll('[data-tags][hidden]')].every((l) => !l.offsetHeight)`), 'gallery: filtered photos take no space');
+  await b.walkTo(await b.pageTop('[data-tags]:not([hidden])') - 200, 30); await sleep(1300);
+  await b.ev(`document.querySelector('[data-tags]:not([hidden]) [data-full]').click()`); await sleep(300);
+  const lbFirst = await b.ev(`document.querySelector('[data-lb-img]').src`);
+  for (let i = 0; i < 6; i++) { await b.key('ArrowRight', 'ArrowRight', 39); await sleep(60); }
+  ok(await b.ev(`document.querySelector('[data-lb-img]').src`) === lbFirst, 'gallery: arrows loop inside the filter');
+  await b.key('Escape', 'Escape', 27); await sleep(300);
+
+  // Every template's hero has the action it promises, and its in-page link has somewhere to land.
+  for (const [url, label, href, anchor] of [
+    ['/tours/old-hyderabad', 'Book this tour', '/book-now?experience=old-hyderabad', '#route'],
+    ['/experiences/heritage', 'See the routes', '#routes', ''],
+    ['/experiences/quick/perini-dance', 'Book now', '/book-now?experience=perini-dance', '#unfolds'],
+    ['/experiences/co-curated/high-tea-hyderabad', 'Book experience', '/book-now?experience=high-tea-hyderabad', '#unfolds'],
+    ['/conventions/bioasia-2027', 'Plan my conference week', '/book-now?experience=bioasia-2027', '#week'],
+    ['/originals/hyderabad-at-dawn', 'Book this Sunday', '/book-now?experience=hyderabad-at-dawn', '#schedule'],
+    ['/services/custom-hyderabad-itinerary', 'Plan now', '/book-now?experience=custom-hyderabad-itinerary', '#options'],
+    ['/partners/ramoji', 'See the experience', '/experiences/co-curated/behind-the-screen', ''],
+    ['/private-access', 'Request Access', '/contact?topic=Private%20Access%20request#enquire', '#encounters'],
+  ]) {
+    await go(url);
+    const h = await b.ev(`(() => { const a = document.querySelector('.mn-pg-actions .mn-pg-btn'); const l = document.querySelector('.mn-pg-actions .mn-ulink'); return { t: a.textContent.replace('→', '').trim(), h: a.getAttribute('href'), l: l ? l.getAttribute('href') : '' }; })()`);
+    ok(h.t === label && h.h === href, `hero ${url}: ${h.t} -> ${h.h}`);
+    if (anchor) ok(h.l === anchor && await b.ev(`!!document.querySelector(${JSON.stringify(anchor)})`), `hero ${url}: link ${h.l}`);
+  }
+
+  // An FAQ opens from the keyboard, and the page below it re-measures.
+  await go('/tours/old-hyderabad');
+  await b.walkTo(await b.pageTop('.mn-pg-faq') - 200, 40); await sleep(1300);
+  await b.ev(`document.querySelector('.mn-pg-faq summary').focus()`);
+  const before2 = await b.ev('document.documentElement.scrollHeight');
+  await b.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' });
+  await b.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+  await sleep(300);
+  ok(await b.ev(`document.querySelector('.mn-pg-faq details').open`), 'faq: Enter opens it');
+  ok(await b.ev('document.documentElement.scrollHeight') > before2, 'faq: page grows');
+
+  // The card above the form follows the prefill and the dropdown.
+  await go('/book-now?experience=old-hyderabad');
+  ok(await b.ev(`!document.querySelector('[data-summary]').hidden && document.querySelector('[data-summary-name]').textContent === 'Old Hyderabad'`), 'book summary: shows the prefilled experience');
+  ok(await b.ev(`document.querySelector('[data-summary-img]').naturalWidth >= 0 && document.querySelector('[data-summary-img]').getAttribute('src').includes('old-hyderabad')`), 'book summary: its photo');
+  await b.ev(`(() => { const p = document.querySelector('#experience'); p.value = 'perini-dance'; p.dispatchEvent(new Event('change')); })()`); await sleep(150);
+  ok(await b.ev(`document.querySelector('[data-summary-name]').textContent`) === 'Perini Dance', 'book summary: follows the dropdown');
+  await b.ev(`(() => { const p = document.querySelector('#experience'); p.value = ''; p.dispatchEvent(new Event('change')); })()`); await sleep(150);
+  ok(await b.ev(`document.querySelector('[data-summary]').hidden`), 'book summary: hides on Help me choose');
+  await go('/book-now');
+  ok(await b.ev(`document.querySelector('[data-summary]').hidden`), 'book summary: hidden with no choice');
+
+  // A convention's button names the event all the way into the request.
+  await go('/book-now?experience=bioasia-2027');
+  await b.walkTo(await b.pageTop('[data-enquiry]') - 200, 30); await sleep(1300);
+  await b.ev(`window.__open = []; window.open = (u) => { window.__open.push(u); return null; }; (() => { const f = document.querySelector('[data-enquiry]'); f.name.value = 'Test Guest'; f.email.value = 'guest@example.com'; f.phone.value = '+91 90000 00000'; f.requestSubmit(); })()`);
+  await sleep(300);
+  ok(decodeURIComponent(((await b.ev('window.__open[0]')) || '').split('text=')[1] || '').includes('Experience: BioAsia 2027'), 'convention: event reaches the WhatsApp text');
+
+  // Each Private Access encounter asks for itself.
+  await go('/private-access');
+  const ask = await b.ev(`document.querySelector('.mn-pg-access__ask').getAttribute('href')`);
+  ok(ask === '/contact?topic=Private%20Access%3A%20Meet%20Tollywood#enquire', `private access link: ${ask}`);
+  await go(ask); await sleep(500);
+  ok(await b.ev(`document.querySelector('#message').value`) === 'Private Access: Meet Tollywood', 'private access: prefilled');
+
+  // Ended events stop promising a conference week.
+  await go('/conventions/gansid-international-congress-2026');
+  ok((await b.ev(`document.querySelector('.mn-pg-actions .mn-pg-btn').textContent`)).includes('Plan a Hyderabad visit'), 'ended event: button changes');
+  await go('/conventions/bioasia-2027');
+  ok((await b.ev(`document.querySelector('.mn-pg-actions .mn-pg-btn').textContent`)).includes('Plan my conference week'), 'coming event: button stays');
+
+  // The twelve convention pages are not clones: each has its own picks.
+  const picksOf = (slug) => readFileSync(join(ROOT, 'conventions', slug, 'index.html'), 'utf8').match(/Picked for[\s\S]*?<\/ul>/)[0];
+  const convs = readdirSync(join(ROOT, 'conventions'), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
+  ok(convs.length === 12 && new Set(convs.map(picksOf)).size === 12, 'conventions: twelve different pages');
+
   // Conventions list has no finished events.
   await go('/conventions');
   ok(await b.ev(`[...document.querySelectorAll('.mn-conv__item')].every((i) => new Date(i.dataset.end + 'T00:00:00') >= new Date(new Date().toDateString()))`), 'conventions: past events dropped');
@@ -179,9 +258,15 @@ async function interactions() {
   // Phone: bar hides over the footer; drawer opens.
   await go('/tours/old-hyderabad', 390, 844, { touch: true });
   ok(await b.ev(`getComputedStyle(document.querySelector('[data-bookbar]')).position`) === 'fixed', 'phone: booking bar is fixed');
-  ok(!await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar showing at the top');
+  ok(await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar waits while the hero button is on screen');
+  await b.jump(await b.pageTop('.mn-pg-why')); await sleep(1100);
+  ok(!await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar appears past the hero');
   await b.jump(await b.ev('document.documentElement.scrollHeight')); await sleep(1100);
   ok(await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar leaves over the footer');
+  await b.jump(await b.pageTop('.mn-pg-end')); await sleep(1100);
+  ok(await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar leaves over the closing band');
+  await b.jump(await b.pageTop('.mn-pg-voice')); await sleep(1100);
+  ok(!await b.ev(`document.querySelector('[data-bookbar]').classList.contains('is-away')`), 'phone: bar returns above the closing band');
   await b.jump(0); await sleep(700);
   await b.ev(`document.querySelector('[data-menu-toggle]').click()`); await sleep(700);
   ok(await b.ev(`(() => { const d = document.querySelector('.mn-header__drawer'); const r = d.getBoundingClientRect(); return r.left >= 0 && r.width > 200 && getComputedStyle(d).visibility !== 'hidden'; })()`), 'phone: drawer opens');

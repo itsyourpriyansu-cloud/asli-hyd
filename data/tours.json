@@ -10,16 +10,9 @@
   "summary": "Chowmahalla Palace, Charminar, Mecca Masjid and the lanes of Laad Bazaar, with traditional Hyderabadi tea along the way.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Step into the Hyderabad shaped by royal patronage, architecture, trade and cultural exchange. Journey through Chowmahalla Palace, Charminar, Mecca Masjid and Badshahi Ashurkhana, walk through the historic lanes of Laad Bazaar and experience traditional Hyderabadi tea along the way."
-  ],
-  "highlights": [
-   "Chowmahalla Palace",
-   "Mecca Masjid",
-   "Badshahi Ashurkhana",
-   "Traditional Hyderabadi Tea Experience"
   ],
   "included": [
    "Expert destination host & heritage storytelling",
@@ -64,7 +57,60 @@
     "h": 480
    }
   ],
-  "alt": "The courtyard pool at Chowmahalla Palace"
+  "alt": "The courtyard pool at Chowmahalla Palace",
+  "stops": [
+   {
+    "at": "9:30 AM",
+    "name": "Chowmahalla Palace",
+    "line": "Courtyards, durbar hall and the vintage cars of the Asaf Jahi court."
+   },
+   {
+    "at": "11:30 AM",
+    "name": "Mecca Masjid",
+    "line": "One of the city’s oldest and largest mosques, a short walk from the Charminar."
+   },
+   {
+    "at": "12:15 PM",
+    "name": "Badshahi Ashurkhana",
+    "line": "A quiet stop for the mosaic tile that has outlasted four centuries."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Traditional Hyderabadi Tea Experience",
+    "line": "Tea and something small, with time to ask everything you saved up."
+   }
+  ],
+  "bestTime": "Morning, from 9:30 AM",
+  "why": [
+   {
+    "h": "A palace, then the bazaar",
+    "p": "The formal world of the Nizams and the busy lanes that served it, seen in one morning."
+   },
+   {
+    "h": "The tilework most visitors miss",
+    "p": "Badshahi Ashurkhana is small, easy to walk past and among the finest interiors in the city."
+   },
+   {
+    "h": "Tea at the right moment",
+    "p": "A pause for Hyderabadi tea, placed where your feet will want it."
+   }
+  ],
+  "excluded": [
+   "Camera fees at monuments",
+   "Shopping and personal expenses",
+   "Meals beyond the tea stop"
+  ],
+  "faq": [
+   {
+    "q": "Can we do this with young children?",
+    "a": "Yes. We shorten the walking and add pauses. Tell us their ages when you book."
+   },
+   {
+    "q": "Is there a dress code?",
+    "a": "Shoulders and knees should be covered at the mosque and the Ashurkhana. Scarves are easy to find nearby if you need one."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "the-nizams-legacy-a-journey-through-425-years",
@@ -77,19 +123,10 @@
   "summary": "Explore Golconda Fort and the Qutb Shahi Tombs through stories of royalty, architecture and diamonds.",
   "duration": "8–9 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Step into the world of the Qutb Shahi rulers on a journey through the historic Kingdom of Golconda. Explore the commanding Golconda Fort, renowned for its ingenious acoustics, defensive architecture, royal chambers and sweeping views across Hyderabad.",
    "Continue to the Qutb Shahi Tombs, where domes, arches and landscaped surroundings preserve the legacy of the dynasty that shaped the region’s culture and architecture. Along the way, discover stories of royal intrigue, flourishing trade and the legendary diamonds that made Golconda famous across the world."
-  ],
-  "highlights": [
-   "Golconda Fort",
-   "Qutb Shahi Tombs",
-   "Chowmahalla Palace",
-   "Charminar",
-   "Salar Jung Museum",
-   "Royal Hi-Tea at Taj Falaknuma"
   ],
   "included": [
    "Expert destination host & heritage storytelling",
@@ -136,7 +173,70 @@
     "h": 540
    }
   ],
-  "alt": "The chandeliered durbar hall at Chowmahalla Palace"
+  "alt": "The chandeliered durbar hall at Chowmahalla Palace",
+  "stops": [
+   {
+    "at": "8:30 AM",
+    "name": "Golconda Fort",
+    "line": "Start at the top of the Qutb Shahi kingdom, before the heat arrives."
+   },
+   {
+    "at": "11:00 AM",
+    "name": "Qutb Shahi Tombs",
+    "line": "Domes and gardens where the dynasty laid its kings to rest."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Chowmahalla Palace",
+    "line": "The seat of the Asaf Jahi rulers, room by room."
+   },
+   {
+    "at": "2:30 PM",
+    "name": "Charminar",
+    "line": "The monument that marks the old centre, with the bazaar at its feet."
+   },
+   {
+    "at": "3:15 PM",
+    "name": "Salar Jung Museum",
+    "line": "A short, chosen walk through one of India’s great private collections."
+   },
+   {
+    "at": "5:00 PM",
+    "name": "Royal Hi-Tea at Taj Falaknuma",
+    "line": "High above the old city, with tea served as the light goes."
+   }
+  ],
+  "bestTime": "Full day, from 8:30 AM",
+  "why": [
+   {
+    "h": "Four centuries in order",
+    "p": "Fort, tombs, palace and museum in the sequence the city built them, so the story adds up."
+   },
+   {
+    "h": "A proper finish",
+    "p": "The day ends with hi-tea on the hill at Taj Falaknuma, once a palace of the Nizams."
+   },
+   {
+    "h": "One host all day",
+    "p": "The same person from the first rampart to the last cup, so nothing gets told twice."
+   }
+  ],
+  "excluded": [
+   "Camera fees at monuments",
+   "Lunch, unless added to your plan",
+   "Shopping and personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Is a full day too much in summer?",
+    "a": "From April to June we start earlier and keep the outdoor stops short. Your host will pace the day with you."
+   },
+   {
+    "q": "What if a site is closed on our date?",
+    "a": "Some monuments close on set days. We check your date first and rework the order or swap a stop."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "old-hyderabad",
@@ -149,19 +249,11 @@
   "summary": "Explore Old Hyderabad’s living heritage through Charminar, Laad Bazaar and enduring local traditions.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Discover the sights, sounds and enduring traditions of Old Hyderabad on an immersive journey through its historic heart. Begin at the Charminar, the city’s most recognisable landmark and a lasting symbol of Hyderabad’s origins.",
    "Continue through the lively lanes of Laad Bazaar, known for its traditional bangles, pearls, textiles and wedding accessories. As you explore the surrounding Old City, encounter historic streets, local businesses, architectural details and cultural practices that have been preserved across generations.",
    "More than a sightseeing tour, this experience reveals Old Hyderabad as a living neighbourhood where heritage remains part of everyday life."
-  ],
-  "highlights": [
-   "Charminar",
-   "Laad Bazaar",
-   "Historic lanes of the Old City",
-   "Traditional crafts and local marketplaces",
-   "Stories of Hyderabad’s living cultural heritage"
   ],
   "included": [
    "Expert destination host and heritage storytelling",
@@ -200,7 +292,65 @@
     "h": 540
    }
   ],
-  "alt": "The Charminar lit up at night above the crowded bazaar"
+  "alt": "The Charminar lit up at night above the crowded bazaar",
+  "stops": [
+   {
+    "at": "10:30 AM",
+    "name": "Charminar",
+    "line": "The city’s founding monument, and the best place to begin its story."
+   },
+   {
+    "at": "11:15 AM",
+    "name": "Laad Bazaar",
+    "line": "Bangles, bridal wear and a wall of colour on both sides of the lane."
+   },
+   {
+    "at": "12:00 PM",
+    "name": "Historic lanes of the Old City",
+    "line": "Side streets, old doorways and the neighbourhoods behind the main road."
+   },
+   {
+    "at": "12:45 PM",
+    "name": "Traditional crafts and local marketplaces",
+    "line": "Time with the makers and traders who keep these markets going."
+   },
+   {
+    "at": "1:30 PM",
+    "name": "Stories of Hyderabad’s living cultural heritage",
+    "line": "A last cup and the stories that tie the morning together."
+   }
+  ],
+  "bestTime": "Late morning or late afternoon",
+  "why": [
+   {
+    "h": "Walked, not driven past",
+    "p": "The Old City only makes sense on foot, at the speed of the people who live there."
+   },
+   {
+    "h": "Shops that know your host",
+    "p": "You stop where a host is greeted by name, not where tour buses pull up."
+   },
+   {
+    "h": "History that is still open",
+    "p": "The bangle makers, attar sellers and pearl stringers are the heritage, and they are working today."
+   }
+  ],
+  "excluded": [
+   "Camera fees at monuments",
+   "Shopping and personal expenses",
+   "Lunch"
+  ],
+  "faq": [
+   {
+    "q": "How crowded does it get?",
+    "a": "Laad Bazaar is busy, especially at weekends and festivals. Tell us if you prefer a quieter hour and we will plan around it."
+   },
+   {
+    "q": "Can we shop along the way?",
+    "a": "Yes, and your host can help you compare. There is never any pressure to buy."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "hyderabad-food-trail",
@@ -213,20 +363,11 @@
   "summary": "Savour Hyderabad’s Deccani flavours through traditional Irani cafés, lively food markets and local eateries.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Discover Hyderabad through the food traditions that have evolved across royal kitchens, local markets, family recipes and Irani cafés. This carefully curated culinary journey introduces you to the flavours, ingredients and communities behind the city’s celebrated food culture.",
    "Visit traditional cafés and trusted local establishments, explore the atmosphere of Hyderabad’s food markets and sample a selection of regional favourites. Along the way, learn how Persian, Turkish, Mughal, Telugu and Marathwada influences contributed to the distinctive character of Deccani cuisine.",
    "More than a tasting experience, Hyderabad on a Plate reveals how food continues to connect the city’s history, neighbourhoods and everyday life."
-  ],
-  "highlights": [
-   "Traditional Bakery Experience at Subhan Bakery",
-   "Heritage Walk through Mozamjahi Market",
-   "Charminar Orientation",
-   "Authentic Irani Chai at Nimrah Café",
-   "Curated Old Hyderabad Street Food Trail",
-   "Signature Hyderabadi Lunch"
   ],
   "included": [
    "Destination host & culinary-cultural storytelling",
@@ -274,7 +415,69 @@
     "h": 480
    }
   ],
-  "alt": "A table of Hyderabadi dishes from above"
+  "alt": "A table of Hyderabadi dishes from above",
+  "stops": [
+   {
+    "at": "9:00 AM",
+    "name": "Traditional Bakery Experience at Subhan Bakery",
+    "line": "Warm from the oven, and the smell reaches you first."
+   },
+   {
+    "at": "9:45 AM",
+    "name": "Heritage Walk through Mozamjahi Market",
+    "line": "An old market of fruit, flowers and a fine stone clock front."
+   },
+   {
+    "at": "10:45 AM",
+    "name": "Charminar Orientation",
+    "line": "Your bearings for the Old City, before the serious eating starts."
+   },
+   {
+    "at": "11:15 AM",
+    "name": "Authentic Irani Chai at Nimrah Café",
+    "line": "The chai that made the corner famous, with Osmania biscuits."
+   },
+   {
+    "at": "11:45 AM",
+    "name": "Curated Old Hyderabad Street Food Trail",
+    "line": "A chosen handful of street stalls, picked for quality and for your stomach."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Signature Hyderabadi Lunch",
+    "line": "A sit-down Hyderabadi meal, with dessert to close."
+   }
+  ],
+  "bestTime": "Morning, from 9:00 AM",
+  "why": [
+   {
+    "h": "Pace built for eating",
+    "p": "Small tastes spread across the morning, so you still want lunch when it comes."
+   },
+   {
+    "h": "Bakery to biryani",
+    "p": "From the first bun of the day to a proper Hyderabadi lunch and dessert."
+   },
+   {
+    "h": "Food with a backstory",
+    "p": "Every stop explains how Persian, Mughlai and Telugu kitchens ended up on one table."
+   }
+  ],
+  "excluded": [
+   "Extra dishes you order along the way",
+   "Shopping and personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Can you do a vegetarian version?",
+    "a": "Yes. We change the route for vegetarian, Jain or halal needs. Tell us when you book."
+   },
+   {
+    "q": "Is the street food safe?",
+    "a": "Your host picks vendors they eat with themselves and keeps tastes small. Bottled water is included."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "hyderabad-through-its-crafts",
@@ -287,17 +490,9 @@
   "summary": "Charminar, Laad Bazaar and its lanes, with curated encounters around lac bangles, pearls, attar and handicrafts.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "Late Afternoon / Evening",
   "minGuests": 1,
   "about": [
    "Explore the living craft traditions of Hyderabad through Charminar, Laad Bazaar and its historic lanes, with curated encounters around lac bangles,earls, attar and traditional handicrafts."
-  ],
-  "highlights": [
-   "Laad Bazaar Heritage Walk",
-   "Lac Bangle Discovery",
-   "Traditional Pearl Experience",
-   "Attar Discovery",
-   "Local Artisan Interactions"
   ],
   "included": [
    "Destination host & curated storytelling",
@@ -337,7 +532,64 @@
    }
   ],
   "alt": "An Asli host with guests in Laad Bazaar",
-  "draft": "Card summary written, the rest is the old site"
+  "draft": "Card summary written, the rest is the old site. Stop notes, timings, Why it’s special, Not included and FAQ are placeholder",
+  "stops": [
+   {
+    "at": "4:00 PM",
+    "name": "Laad Bazaar Heritage Walk",
+    "line": "The lane that has dressed Hyderabad’s brides for generations."
+   },
+   {
+    "at": "4:45 PM",
+    "name": "Lac Bangle Discovery",
+    "line": "Watch lac warmed, rolled and set with glass by hand."
+   },
+   {
+    "at": "5:30 PM",
+    "name": "Traditional Pearl Experience",
+    "line": "How pearls are sorted, graded and strung in the city that made its name on them."
+   },
+   {
+    "at": "6:15 PM",
+    "name": "Attar Discovery",
+    "line": "Rose, oud and jasmine, tried on the wrist the old way."
+   },
+   {
+    "at": "6:45 PM",
+    "name": "Local Artisan Interactions",
+    "line": "Conversation with the makers, and time to buy from them directly."
+   }
+  ],
+  "bestTime": "Late afternoon into evening",
+  "why": [
+   {
+    "h": "See it made, then choose",
+    "p": "You watch the craft first, so you can tell good work when you are buying it."
+   },
+   {
+    "h": "Three trades, one walk",
+    "p": "Lac, pearls and attar are neighbours here, and each has its own story."
+   },
+   {
+    "h": "Time set aside to shop",
+    "p": "Shopping is on the schedule, not squeezed in at the end."
+   }
+  ],
+  "excluded": [
+   "Pearls, attar and anything else you buy",
+   "Dinner",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "How do I know the pearls are genuine?",
+    "a": "Your host will show you how to check, and takes you to traders they know. Ask for a certificate on larger purchases."
+   },
+   {
+    "q": "Can we arrange shipping?",
+    "a": "Many shops can ship abroad. Your host can help you ask, and terms are agreed with the shop."
+   }
+  ]
  },
  {
   "slug": "village-life",
@@ -350,19 +602,11 @@
   "summary": "Explore folk culture, traditional crafts and rural heritage in Shilparamam’s village-inspired surroundings.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 2,
   "about": [
    "Step away from Hyderabad’s modern cityscape and enter the village-inspired surroundings of Shilparamam, an arts and crafts destination dedicated to India’s regional traditions.",
    "Explore the Village Museum, traditional architectural settings and craft bazaars while discovering handmade textiles, pottery, woodwork, jewellery and decorative arts from across the country. Learn about the skills, materials and cultural traditions represented by participating artisans and craft communities.",
    "Depending on the programme and season, the experience may also include craft exhibitions, demonstrations, cultural events or folk performances. Shilparamam officially features a Village Museum and hosts seasonal craft fairs and exhibitions, making each visit slightly different."
-  ],
-  "highlights": [
-   "Shilparamam arts and crafts village",
-   "Village Museum and rural-style settings",
-   "Traditional handicrafts and artisan stalls",
-   "Regional folk culture and artistic traditions",
-   "Seasonal exhibitions or cultural performances, when available"
   ],
   "included": [
    "Expert destination host and cultural storytelling",
@@ -401,7 +645,65 @@
     "h": 540
    }
   ],
-  "alt": "Visitors in the gardens of the Shilparamam crafts village"
+  "alt": "Visitors in the gardens of the Shilparamam crafts village",
+  "stops": [
+   {
+    "at": "10:00 AM",
+    "name": "Shilparamam arts and crafts village",
+    "line": "An open-air crafts village set around lawns and a lake."
+   },
+   {
+    "at": "10:45 AM",
+    "name": "Village Museum and rural-style settings",
+    "line": "Recreated village houses that show how rural families lived."
+   },
+   {
+    "at": "11:30 AM",
+    "name": "Traditional handicrafts and artisan stalls",
+    "line": "Stalls where the person selling the work is often the person who made it."
+   },
+   {
+    "at": "12:15 PM",
+    "name": "Regional folk culture and artistic traditions",
+    "line": "Music, costume and the traditions of the Deccan countryside."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Seasonal exhibitions or cultural performances, when available",
+    "line": "If something is on during your visit, we make sure you see it."
+   }
+  ],
+  "bestTime": "Morning or late afternoon",
+  "why": [
+   {
+    "h": "The countryside, close to town",
+    "p": "Rural India’s crafts and homes, without leaving the city."
+   },
+   {
+    "h": "Makers from many states",
+    "p": "Weavers, potters and painters work and sell on site."
+   },
+   {
+    "h": "Easy for all ages",
+    "p": "Flat paths and shaded stops make this a good family outing."
+   }
+  ],
+  "excluded": [
+   "Craft purchases",
+   "Meals beyond refreshments",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Is this suitable for children?",
+    "a": "Very. There is room to run and plenty of hands-on stalls."
+   },
+   {
+    "q": "Are performances guaranteed?",
+    "a": "They depend on the season and the venue’s calendar. We check your date in advance."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "the-pochampally-weaving-artisan-journey",
@@ -414,20 +716,11 @@
   "summary": "Discover Pochampally’s ikat traditions through local weavers, vibrant yarns and traditional looms.",
   "duration": "8–9 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Travel from Hyderabad to the renowned weaving settlement of Pochampally, where textile traditions remain closely connected to village life and family-run workshops.",
    "Meet members of the weaving community and follow the intricate journey of ikat from design preparation and yarn tying to dyeing, alignment and weaving. Unlike printed textiles, an ikat pattern is created by resist-dyeing selected sections of yarn before the threads reach the loom. The dyed warp and weft must then be aligned with remarkable precision to reveal the intended design.",
    "Observe traditional looms in operation, learn how skills are passed between generations and explore the distinctive geometric language of Pochampally textiles. The full-day format allows additional time for deeper interaction, more stages of the weaving process and a relaxed local lunch."
-  ],
-  "highlights": [
-   "Visit to the Pochampally weaving village",
-   "Interaction with local weavers",
-   "Traditional handlooms in operation",
-   "Introduction to ikat tying, dyeing and weaving",
-   "Exploration of Pochampally textile patterns",
-   "Opportunity to purchase directly from selected local producers"
   ],
   "included": [
    "Destination host & craft interpretation",
@@ -477,7 +770,70 @@
     "h": 540
    }
   ],
-  "alt": "A weaver working at a handloom"
+  "alt": "A weaver working at a handloom",
+  "stops": [
+   {
+    "at": "10:00 AM",
+    "name": "Visit to the Pochampally weaving village",
+    "line": "About two hours from the city, through the Telangana countryside."
+   },
+   {
+    "at": "10:30 AM",
+    "name": "Interaction with local weavers",
+    "line": "Families who have worked this craft for generations, in their own homes."
+   },
+   {
+    "at": "11:30 AM",
+    "name": "Traditional handlooms in operation",
+    "line": "The rhythm of the shuttle, and how long one length of cloth really takes."
+   },
+   {
+    "at": "12:30 PM",
+    "name": "Introduction to ikat tying, dyeing and weaving",
+    "line": "Why the pattern is dyed into the thread before any of it is woven."
+   },
+   {
+    "at": "2:00 PM",
+    "name": "Exploration of Pochampally textile patterns",
+    "line": "Learn to read the geometry that makes Pochampally recognisable."
+   },
+   {
+    "at": "3:00 PM",
+    "name": "Opportunity to purchase directly from selected local producers",
+    "line": "Choose directly from selected local producers before heading back."
+   }
+  ],
+  "bestTime": "Full day, from 8:30 AM",
+  "why": [
+   {
+    "h": "From thread to saree",
+    "p": "Every stage in one village: tying, dyeing, setting the loom and weaving."
+   },
+   {
+    "h": "Time with weavers at home",
+    "p": "Scheduled visits, so families are expecting you and have time to talk."
+   },
+   {
+    "h": "Buy from the source",
+    "p": "Your money goes straight to the producer, with no showroom in between."
+   }
+  ],
+  "excluded": [
+   "Textile purchases",
+   "Lunch, where not part of your package",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Can I try the loom?",
+    "a": "Usually yes, for a few passes, with a weaver beside you."
+   },
+   {
+    "q": "Do weavers take cards?",
+    "a": "Some do. Your host will tell you in advance so you can carry cash or UPI."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "statue-of-equality",
@@ -490,19 +846,11 @@
   "summary": "Explore the Statue of Equality and Sri Ramanujacharya’s legacy through grand architecture and spiritual heritage.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 2,
   "about": [
    "Journey to Muchintal on the outskirts of Hyderabad to explore the Statue of Equality, a monumental tribute to the 11th-century philosopher and social reformer Sri Ramanujacharya.",
    "Admire the 216-foot statue and explore the surrounding complex, where traditional architectural forms, intricate ornamentation and representations of the 108 Divya Desams create an impressive cultural and spiritual landscape.",
    "Through engaging storytelling, discover Ramanujacharya’s life, philosophy and advocacy of equality while learning about the symbolism and craftsmanship incorporated throughout the site. Depending on the selected timing and venue programme, the experience may also include the illuminated monument, musical fountain or laser presentation."
-  ],
-  "highlights": [
-   "The 216-foot Statue of Equality",
-   "Architectural representations of the 108 Divya Desams",
-   "The life and philosophy of Sri Ramanujacharya",
-   "Traditional temple-inspired architecture and craftsmanship",
-   "Evening illumination or scheduled presentations, when available"
   ],
   "included": [
    "Expert destination host and cultural storytelling",
@@ -543,7 +891,65 @@
     "h": 540
    }
   ],
-  "alt": "The Statue of Equality and its temples lit at night"
+  "alt": "The Statue of Equality and its temples lit at night",
+  "stops": [
+   {
+    "at": "3:30 PM",
+    "name": "The 216-foot Statue of Equality",
+    "line": "Take it in from the approach, then up close."
+   },
+   {
+    "at": "4:15 PM",
+    "name": "Architectural representations of the 108 Divya Desams",
+    "line": "Shrines representing 108 sacred Vaishnava temples, set around the statue."
+   },
+   {
+    "at": "5:00 PM",
+    "name": "The life and philosophy of Sri Ramanujacharya",
+    "line": "The saint’s life, and the idea the monument was built to carry."
+   },
+   {
+    "at": "5:45 PM",
+    "name": "Traditional temple-inspired architecture and craftsmanship",
+    "line": "Stone, carving and the craft traditions of South Indian temple building."
+   },
+   {
+    "at": "6:30 PM",
+    "name": "Evening illumination or scheduled presentations, when available",
+    "line": "Lights or a presentation, when the schedule allows."
+   }
+  ],
+  "bestTime": "Afternoon into evening",
+  "why": [
+   {
+    "h": "Scale you have to stand under",
+    "p": "At 216 feet, the statue changes how you see the whole landscape."
+   },
+   {
+    "h": "A philosophy, explained",
+    "p": "Your host makes Ramanujacharya’s ideas on equality easy to follow."
+   },
+   {
+    "h": "Stay for the lights",
+    "p": "The evening illumination is the moment to be there, when it is scheduled."
+   }
+  ],
+  "excluded": [
+   "Offerings and personal donations",
+   "Meals",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Is there a dress code?",
+    "a": "Modest clothing is expected, and footwear is left outside the sacred areas."
+   },
+   {
+    "q": "Is it wheelchair friendly?",
+    "a": "Much of the site is accessible, though some areas have steps. Tell us your needs and we will plan the route."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "the-hyderabad-spiritual-circuit",
@@ -556,19 +962,10 @@
   "summary": "A quieter, more contemplative Hyderabad, where faith, architecture and everyday life have evolved together.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "5:00 AM",
   "minGuests": 1,
   "about": [
    "Experience a quieter, more contemplative side of Hyderabad — a city where faith, architecture and everyday life have evolved together for centuries. Journey through some of the city’s significant temples and sacred spaces, including Birla Mandir, Jagannath Temple and TTD Temple, accompanied by thoughtful spiritual and cultural interpretation.",
    "The experience is designed not simply as a temple visit, but as an opportunity to understand the traditions, rituals and living practices that shape Hyderabad’s spiritual landscape. Time is woven into the journey for personal prayer and reflection, with a traditional lunch offering a pause to experience the city through its vegetarian culinary traditions."
-  ],
-  "highlights": [
-   "Birla Mandir",
-   "Jagannath Temple",
-   "TTD Temple",
-   "Spiritual & Cultural Interpretation",
-   "Personal Prayer & Reflection",
-   "Traditional Lunch"
   ],
   "included": [
    "Destination host & curated spiritual-cultural storytelling",
@@ -609,7 +1006,68 @@
    }
   ],
   "alt": "A white domed shrine under a grey sky",
-  "draft": "Card summary written, the rest is the old site"
+  "draft": "Card summary written, the rest is the old site. Stop notes, timings, Why it’s special, Not included and FAQ are placeholder",
+  "stops": [
+   {
+    "at": "5:00 AM",
+    "name": "Birla Mandir",
+    "line": "White marble on Naubat Pahad, with the city spread out below."
+   },
+   {
+    "at": "6:15 AM",
+    "name": "Jagannath Temple",
+    "line": "Sandstone carving, in the style of the temple at Puri."
+   },
+   {
+    "at": "7:15 AM",
+    "name": "TTD Temple",
+    "line": "A serene stop in the Tirumala tradition."
+   },
+   {
+    "at": "8:15 AM",
+    "name": "Spiritual & Cultural Interpretation",
+    "line": "Your host connects the rituals, the deities and the people who come."
+   },
+   {
+    "at": "8:45 AM",
+    "name": "Personal Prayer & Reflection",
+    "line": "Unhurried time, at the place that means most to you."
+   },
+   {
+    "at": "9:30 AM",
+    "name": "Traditional Lunch",
+    "line": "A simple, traditional meal to close the morning."
+   }
+  ],
+  "bestTime": "Early morning, from 5:00 AM",
+  "why": [
+   {
+    "h": "Before the city wakes",
+    "p": "An early start means quieter temples and cooler stone underfoot."
+   },
+   {
+    "h": "Several traditions, one morning",
+    "p": "Three very different temples, with the context to understand each one."
+   },
+   {
+    "h": "Room for your own prayer",
+    "p": "Time for reflection is built in, not rushed."
+   }
+  ],
+  "excluded": [
+   "Offerings and personal donations",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Do I need to be religious to join?",
+    "a": "No. Guests of every faith and none are welcome, and your host will guide you on etiquette."
+   },
+   {
+    "q": "What should I wear?",
+    "a": "Modest, comfortable clothes that are easy to sit in. Footwear stays outside the temples."
+   }
+  ]
  },
  {
   "slug": "the-hyderabad-sacred-journey",
@@ -622,20 +1080,11 @@
   "summary": "A contemplative Hyderabad, where sacred traditions and moments of stillness sit alongside the modern city.",
   "duration": "8–9 hours",
   "format": "Private · Small Group · Group",
-  "time": "5:00 AM",
   "minGuests": 1,
   "about": [
    "Discover a more contemplative Hyderabad — where sacred traditions, timeless architecture and moments of stillness exist alongside the rhythm of the modern city. This full-day journey moves through the city’s spiritual landscape, bringing together temples, places of worship, cultural traditions and tranquil waterside experiences.",
    "Visit Birla Mandir, TTD Temple, Jagannath Temple and ISKCON Temple, with curated storytelling that offers context to the traditions and spaces you encounter. Along the way, experience a traditional vegetarian lunch and, where included, temple prasadam. The journey continues towards Hussain Sagar, where a boat ride and lakeside experience offer a slower, more reflective dimension to the day.",
    "Designed as more than a circuit of temples, this is an invitation to experience Hyderabad through faith, ritual, architecture, culture and reflection."
-  ],
-  "highlights": [
-   "Birla Mandir",
-   "TTD Temple",
-   "Jagannath Temple",
-   "ISKCON Temple",
-   "Traditional Vegetarian Lunch & Prasadam",
-   "Buddha Statue Boat Ride & Hussain Sagar"
   ],
   "included": [
    "Destination host & curated spiritual-cultural storytelling",
@@ -678,7 +1127,68 @@
    }
   ],
   "alt": "A group of Asli guests on the steps of Mecca Masjid",
-  "draft": "Card summary written, the rest is the old site"
+  "draft": "Card summary written, the rest is the old site. Stop notes, timings, Why it’s special, Not included and FAQ are placeholder",
+  "stops": [
+   {
+    "at": "5:00 AM",
+    "name": "Birla Mandir",
+    "line": "Marble and morning light above the city."
+   },
+   {
+    "at": "7:00 AM",
+    "name": "TTD Temple",
+    "line": "Quiet devotion in the Tirumala tradition."
+   },
+   {
+    "at": "8:30 AM",
+    "name": "Jagannath Temple",
+    "line": "Carved sandstone and an unhurried darshan."
+   },
+   {
+    "at": "11:00 AM",
+    "name": "ISKCON Temple",
+    "line": "Chanting, colour and a very different energy."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Traditional Vegetarian Lunch & Prasadam",
+    "line": "A vegetarian lunch and prasadam, shared and unhurried."
+   },
+   {
+    "at": "3:30 PM",
+    "name": "Buddha Statue Boat Ride & Hussain Sagar",
+    "line": "Out across the lake to the monolithic Buddha."
+   }
+  ],
+  "bestTime": "Full day, from 5:00 AM",
+  "why": [
+   {
+    "h": "A full day of stillness",
+    "p": "Four temples at an easy pace, with long pauses in between."
+   },
+   {
+    "h": "A meal with meaning",
+    "p": "Vegetarian lunch and prasadam, as part of the journey."
+   },
+   {
+    "h": "Ends on the water",
+    "p": "A boat across Hussain Sagar to the Buddha, as the day settles."
+   }
+  ],
+  "excluded": [
+   "Offerings and personal donations",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Is a 5:00 AM start essential?",
+    "a": "It is what makes the day peaceful, but we can begin later if you need to."
+   },
+   {
+    "q": "Can elderly guests manage this?",
+    "a": "Yes, with planning. We add rests and tell you where there are steps."
+   }
+  ]
  },
  {
   "slug": "the-ramoji-film-city-experience",
@@ -691,20 +1201,10 @@
   "summary": "Step behind the screen at Ramoji Film City: iconic sets, expansive backlots, themed gardens and live shows.",
   "duration": "8–9 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Step behind the screen and into the world of Indian cinema. Spend a day exploring Ramoji Film City through its iconic sets, expansive backlots, themed gardens and immersive attractions, with curated orientation that brings the magic of filmmaking to life.",
    "From the grandeur of the Baahubali movie set and guided studio tour to live entertainment, stunt shows, Movie Magic experiences, butterfly and bird parks, the experience moves seamlessly between cinema, entertainment and discovery. A curated day designed for families, film enthusiasts, corporate groups and international visitors to experience one of Hyderabad’s most distinctive entertainment destinations."
-  ],
-  "highlights": [
-   "Guided Studio Tour",
-   "Iconic Film Sets & Backlot",
-   "Baahubali Movie Set",
-   "Live Entertainment & Stunt Shows",
-   "Movie Magic Experiences",
-   "Butterfly & Bird Parks",
-   "Themed Gardens & Landscapes"
   ],
   "included": [
    "Destination host & curated cinema orientation",
@@ -753,7 +1253,74 @@
    }
   ],
   "alt": "A group of Asli guests at Ramoji Film City",
-  "draft": "Card summary written, the rest is the old site"
+  "draft": "Card summary written, the rest is the old site. Stop notes, timings, Why it’s special, Not included and FAQ are placeholder",
+  "stops": [
+   {
+    "at": "10:00 AM",
+    "name": "Guided Studio Tour",
+    "line": "Your orientation to a working studio the size of a small town."
+   },
+   {
+    "at": "11:00 AM",
+    "name": "Iconic Film Sets & Backlot",
+    "line": "Streets, palaces and railway stations built for the screen."
+   },
+   {
+    "at": "12:15 PM",
+    "name": "Baahubali Movie Set",
+    "line": "Walk through the sets of one of India’s biggest films."
+   },
+   {
+    "at": "1:30 PM",
+    "name": "Live Entertainment & Stunt Shows",
+    "line": "Scheduled action shows, timed into the day."
+   },
+   {
+    "at": "2:30 PM",
+    "name": "Movie Magic Experiences",
+    "line": "How sound, effects and camera tricks build a scene."
+   },
+   {
+    "at": "3:30 PM",
+    "name": "Butterfly & Bird Parks",
+    "line": "A change of pace, and a favourite with families."
+   },
+   {
+    "at": "4:15 PM",
+    "name": "Themed Gardens & Landscapes",
+    "line": "Fountains and landscaped lawns before the drive back."
+   }
+  ],
+  "bestTime": "Full day, from 9:00 AM",
+  "why": [
+   {
+    "h": "The world’s largest film city",
+    "p": "Listed by Guinness World Records, and far too big to work out alone."
+   },
+   {
+    "h": "A plan for a huge day",
+    "p": "Your host knows what to see first and where the queues build."
+   },
+   {
+    "h": "See how it’s done",
+    "p": "Stunts, sets and movie tricks, explained as well as shown."
+   }
+  ],
+  "excluded": [
+   "Lunch, unless in your package",
+   "Rides or premium add-ons at the park",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Can we watch a real shoot?",
+    "a": "Sometimes, but filming is unpredictable and sets can close without notice."
+   },
+   {
+    "q": "Is it good for children?",
+    "a": "It is one of the best family days in the city. Expect plenty of walking, broken up by rides between zones."
+   }
+  ]
  },
  {
   "slug": "the-modern-hyderabad-innovation-circuit",
@@ -767,22 +1334,12 @@
   "summary": "Explore Hyderabad’s technology and startup culture through HITEC City, T-Hub and T-Works.",
   "duration": "8–9 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 1,
   "about": [
    "Discover Hyderabad beyond its historic landmarks on a journey through the city’s rapidly evolving technology and innovation district.",
    "Travel through HITEC City and learn how Hyderabad developed into a major centre for information technology, global business and entrepreneurship. Continue to T-Hub, where startups, investors, corporations, mentors and academic institutions come together within a distinctive modern innovation campus.",
    "The experience also introduces T-Works, a Government of Telangana-supported prototyping centre where innovators can transform ideas into physical products using facilities for 3D printing, electronics, woodworking, metalworking, textiles and digital fabrication.",
    "Subject to prior confirmation, the tour may include guided access, conversations with ecosystem representatives or a closer look at selected innovation and prototyping spaces."
-  ],
-  "highlights": [
-   "T-Hub Visit",
-   "WE Hub & Women Entrepreneurship Ecosystem",
-   "Financial District & Knowledge City",
-   "Durgam Cheruvu Lakefront",
-   "Shilparamam Arts & Crafts Village",
-   "Curated Business Lunch",
-   "Modern Retail & Urban Development"
   ],
   "included": [
    "Destination host & business-innovation storytelling",
@@ -824,7 +1381,74 @@
     "h": 540
    }
   ],
-  "alt": "The Durgam Cheruvu cable bridge and the skyline at dusk"
+  "alt": "The Durgam Cheruvu cable bridge and the skyline at dusk",
+  "stops": [
+   {
+    "at": "9:30 AM",
+    "name": "T-Hub Visit",
+    "line": "Inside one of India’s best-known startup incubators."
+   },
+   {
+    "at": "11:00 AM",
+    "name": "WE Hub & Women Entrepreneurship Ecosystem",
+    "line": "How the state backs women founders."
+   },
+   {
+    "at": "12:15 PM",
+    "name": "Financial District & Knowledge City",
+    "line": "A drive through the district that changed the city’s skyline."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "Durgam Cheruvu Lakefront",
+    "line": "A walk by the lake, under the cable bridge."
+   },
+   {
+    "at": "2:30 PM",
+    "name": "Shilparamam Arts & Crafts Village",
+    "line": "Hand-made India, in the middle of the IT corridor."
+   },
+   {
+    "at": "4:00 PM",
+    "name": "Curated Business Lunch",
+    "line": "Lunch with a little of the city’s business talk."
+   },
+   {
+    "at": "5:00 PM",
+    "name": "Modern Retail & Urban Development",
+    "line": "New malls, towers and the neighbourhoods growing around them."
+   }
+  ],
+  "bestTime": "Weekdays, from 9:30 AM",
+  "why": [
+   {
+    "h": "Doors arranged for you",
+    "p": "Institutional visits are set up in advance, on working days."
+   },
+   {
+    "h": "The city’s new story",
+    "p": "How one of India’s fastest-growing tech cities took shape."
+   },
+   {
+    "h": "Made for business guests",
+    "p": "Room for your sector, your questions and useful introductions."
+   }
+  ],
+  "excluded": [
+   "Personal expenses",
+   "Meetings beyond those in your confirmed plan"
+  ],
+  "faq": [
+   {
+    "q": "Can you tailor this to my industry?",
+    "a": "Yes. Tell us your sector and we will reshape the visits around it."
+   },
+   {
+    "q": "Can it run at weekends?",
+    "a": "The drive and lakefront can, but institutional visits need working days."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "young-innovators",
@@ -838,17 +1462,10 @@
   "summary": "A hands-on half day for students inside Hyderabad’s maker and startup spaces.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 2,
   "about": [
    "A half day for students and young professionals who would rather build something than hear about it. Visit the spaces where Hyderabad’s next generation of makers and founders work, and see how an idea becomes a prototype and a prototype becomes a company.",
    "The route centres on T-Works, the Government of Telangana’s prototyping centre, and T-Hub, the city’s startup campus, with time set aside to make something by hand and to put questions to the people doing this work every day."
-  ],
-  "highlights": [
-   "Introduction to T-Works and its workshops",
-   "A hands-on making session",
-   "T-Hub and the startup ecosystem",
-   "A conversation with a founder or mentor"
   ],
   "included": [
    "Expert destination host",
@@ -887,7 +1504,58 @@
    }
   ],
   "alt": "Students and guests in discussion in a library",
-  "draft": "Whole page written: not on the old site"
+  "draft": "Whole page written: not on the old site. Stop notes, timings, Why it’s special, Not included and FAQ are placeholder",
+  "stops": [
+   {
+    "at": "10:00 AM",
+    "name": "Introduction to T-Works and its workshops",
+    "line": "How one of India’s largest prototyping centres works."
+   },
+   {
+    "at": "10:45 AM",
+    "name": "A hands-on making session",
+    "line": "A short project with the tools and the people who use them."
+   },
+   {
+    "at": "12:00 PM",
+    "name": "T-Hub and the startup ecosystem",
+    "line": "Where ideas become companies in Hyderabad."
+   },
+   {
+    "at": "1:00 PM",
+    "name": "A conversation with a founder or mentor",
+    "line": "Questions, answers and honest advice from someone who has done it."
+   }
+  ],
+  "bestTime": "Weekdays, from 10:00 AM",
+  "why": [
+   {
+    "h": "Making, not watching",
+    "p": "Students get their hands on the tools, not just a guided look."
+   },
+   {
+    "h": "Real founders",
+    "p": "A conversation that makes a startup feel possible."
+   },
+   {
+    "h": "Built for schools",
+    "p": "Coordination, transport and timings are handled for teachers."
+   }
+  ],
+  "excluded": [
+   "Lunch, unless added",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "What ages is this for?",
+    "a": "It works best for students aged about 12 to 18. We adapt the session for each group."
+   },
+   {
+    "q": "How many students can come?",
+    "a": "It depends on the workshop’s capacity on your date. Tell us your numbers when you enquire."
+   }
+  ]
  },
  {
   "slug": "kanha-retreat",
@@ -900,21 +1568,12 @@
   "summary": "Unwind at Kanha Shanti Vanam with Heartfulness, nature and quiet reflection.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 2,
   "about": [
    "Travel from Hyderabad to Kanha Shanti Vanam for an unhurried experience centred on meditation, nature and mindful awareness.",
    "Discover the campus’s meditation spaces and green surroundings while being introduced to the principles of Heartfulness. Subject to advance arrangement, join a guided relaxation or introductory meditation session with a Heartfulness trainer, allowing time to experience the practice and ask questions.",
    "Continue with a gentle walk through visitor-accessible gardens and pathways, observing the natural surroundings and learning about Kanha’s environmental initiatives. Quiet pauses along the way offer opportunities for personal reflection.",
    "The half-day format provides an introduction to the setting and practice. The full-day option allows a slower pace, additional time in nature and a vegetarian lunch, with the final programme tailored to confirmed campus access and session availability."
-  ],
-  "highlights": [
-   "Visit to Kanha Shanti Vanam",
-   "Introduction to Heartfulness and its meditation practice",
-   "Guided relaxation or meditation, when arranged",
-   "Gentle walks through green surroundings",
-   "Introduction to Kanha’s environmental initiatives",
-   "Time for quiet reflection and personal exploration"
   ],
   "included": [
    "Expert destination host and visit coordination",
@@ -958,7 +1617,70 @@
     "h": 540
    }
   ],
-  "alt": "Kanha Shanti Vanam’s meditation hall lit at dusk"
+  "alt": "Kanha Shanti Vanam’s meditation hall lit at dusk",
+  "stops": [
+   {
+    "at": "9:00 AM",
+    "name": "Visit to Kanha Shanti Vanam",
+    "line": "Arrive at one of the world’s largest meditation campuses."
+   },
+   {
+    "at": "9:30 AM",
+    "name": "Introduction to Heartfulness and its meditation practice",
+    "line": "A simple introduction to the Heartfulness practice."
+   },
+   {
+    "at": "10:15 AM",
+    "name": "Guided relaxation or meditation, when arranged",
+    "line": "A guided session, when one can be arranged."
+   },
+   {
+    "at": "11:00 AM",
+    "name": "Gentle walks through green surroundings",
+    "line": "Shaded paths through the nurseries and gardens."
+   },
+   {
+    "at": "11:45 AM",
+    "name": "Introduction to Kanha’s environmental initiatives",
+    "line": "How the campus grows trees and manages water."
+   },
+   {
+    "at": "12:30 PM",
+    "name": "Time for quiet reflection and personal exploration",
+    "line": "Time alone, before the drive back."
+   }
+  ],
+  "bestTime": "Morning, from 8:00 AM",
+  "why": [
+   {
+    "h": "A half day that feels longer",
+    "p": "Quiet, shade and open space, an easy drive from the city."
+   },
+   {
+    "h": "No experience needed",
+    "p": "A gentle first meeting with meditation, whatever your background."
+   },
+   {
+    "h": "A forest made by hand",
+    "p": "See how a dry landscape was turned green."
+   }
+  ],
+  "excluded": [
+   "Personal donations",
+   "Lunch with the half-day format",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Do I need to meditate?",
+    "a": "No. You can simply walk and sit. The session is an invitation."
+   },
+   {
+    "q": "Is the site alcohol and smoke free?",
+    "a": "Yes. Please keep to the campus guidelines, which your host will share."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  },
  {
   "slug": "hyderabad-by-night",
@@ -971,21 +1693,12 @@
   "summary": "Experience Hussain Sagar, the Buddha Statue and Hyderabad’s waterfront lights on a scenic evening outing.",
   "duration": "4–5 hours",
   "format": "Private · Small Group · Group",
-  "time": "On request",
   "minGuests": 2,
   "about": [
    "Discover Hyderabad as daylight softens and the waterfront takes on its evening atmosphere. Begin around Hussain Sagar, where open lake views provide a scenic introduction to the city after dark.",
    "Admire the Buddha Statue rising from the lake and explore its place in Hyderabad’s urban landscape. Subject to operating schedules and weather, an optional boat ride from Lumbini Park offers a closer perspective of the monument and the surrounding waterfront.",
    "Continue along the Tank Bund and Necklace Road area, combining a scenic drive with selected walking and photography stops. Hear how Hyderabad’s public spaces, leisure culture and changing skyline reflect the life of a growing city.",
    "Pause for refreshments and enjoy time beside the water as lights and reflections transform the scene, bringing the evening to a relaxed close."
-  ],
-  "highlights": [
-   "Evening views across Hussain Sagar",
-   "The iconic Buddha Statue",
-   "Tank Bund and Necklace Road waterfront",
-   "Sunset-to-night photography opportunities",
-   "Stories of contemporary Hyderabad and its urban life",
-   "Optional lake boating, subject to availability"
   ],
   "included": [
    "Expert destination host and city storytelling",
@@ -1029,6 +1742,69 @@
     "h": 480
    }
   ],
-  "alt": "The Buddha Statue lit on Hussain Sagar at dusk"
+  "alt": "The Buddha Statue lit on Hussain Sagar at dusk",
+  "stops": [
+   {
+    "at": "5:00 PM",
+    "name": "Evening views across Hussain Sagar",
+    "line": "The lake at the centre of the city, as the light changes."
+   },
+   {
+    "at": "5:45 PM",
+    "name": "The iconic Buddha Statue",
+    "line": "The monolithic Buddha standing on the water."
+   },
+   {
+    "at": "6:30 PM",
+    "name": "Tank Bund and Necklace Road waterfront",
+    "line": "The waterfront where the city comes to walk."
+   },
+   {
+    "at": "7:15 PM",
+    "name": "Sunset-to-night photography opportunities",
+    "line": "Stops chosen for the skyline and the reflections."
+   },
+   {
+    "at": "8:00 PM",
+    "name": "Stories of contemporary Hyderabad and its urban life",
+    "line": "How the twin cities live now, from someone who lives here."
+   },
+   {
+    "at": "8:30 PM",
+    "name": "Optional lake boating, subject to availability",
+    "line": "Out on the water, if boats are running."
+   }
+  ],
+  "bestTime": "Sunset, from 5:00 PM",
+  "why": [
+   {
+    "h": "The golden hour on the lake",
+    "p": "We time the start so sunset meets you at Hussain Sagar."
+   },
+   {
+    "h": "A city built for evenings",
+    "p": "Hyderabad comes outdoors after dark, and you join it."
+   },
+   {
+    "h": "Photographs worth keeping",
+    "p": "Your host knows the angles and the waiting spots."
+   }
+  ],
+  "excluded": [
+   "Dinner",
+   "Boat tickets where not in your confirmed plan",
+   "Personal expenses"
+  ],
+  "faq": [
+   {
+    "q": "Is it safe in the evening?",
+    "a": "Yes. These are busy public places, and your host and car stay with you."
+   },
+   {
+    "q": "Can we end with dinner?",
+    "a": "Gladly. Tell us what you feel like and we will book it."
+   }
+  ],
+  "draft": "Stop notes, timings, Why it’s special, Not included and FAQ are placeholder"
  }
 ]

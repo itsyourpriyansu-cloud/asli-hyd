@@ -1,0 +1,85 @@
+{
+  "faq": {
+    "tour": [
+      { "q": "Is this private, or will we join other guests?", "a": "Most guests book privately. Small-group departures are possible on some dates. Tell us what you prefer when you enquire." },
+      { "q": "How do pickup and drop work?", "a": "We collect you from your hotel or home within Hyderabad city limits and bring you back. Other pickup points can be arranged." }
+    ],
+    "cocurated": [
+      { "q": "Can I book this on its own?", "a": "Yes. Book it as a single experience or add it to a longer Asli Hyderabad itinerary." },
+      { "q": "How many people can join?", "a": "It depends on the venue and the date. Tell us your numbers and we will confirm what works." },
+      { "q": "Can you arrange transport?", "a": "Yes. Add a chauffeur or transfer when you enquire and we will build it into your plan." },
+      { "q": "How is the price worked out?", "a": "Our team confirms the price for your date and group before anything is booked." }
+    ],
+    "quick": [
+      { "q": "Can you bring this to our venue?", "a": "Yes, this is made for hotels, conferences, restaurants, corporate gatherings and private celebrations." },
+      { "q": "How much space and set-up do you need?", "a": "It varies by group size. Share your venue and headcount and we will send what we need." },
+      { "q": "How much notice do you need?", "a": "The more the better, especially in wedding and conference season. Tell us your date and we will check straight away." },
+      { "q": "Can we combine more than one?", "a": "Yes. Several experiences can run side by side or across an event." }
+    ],
+    "original": [
+      { "q": "Do I need to book in advance?", "a": "Yes. Originals run with limited places, so please book ahead." },
+      { "q": "Can I come on my own?", "a": "Yes. Originals are hosted so solo guests feel at home from the first minute." },
+      { "q": "Can you run a private edition?", "a": "Often, for groups. Tell us your date and numbers." },
+      { "q": "What if I have dietary needs?", "a": "Tell us when you book and we will plan around them." }
+    ],
+    "service": [
+      { "q": "How far ahead should I book?", "a": "A few days is usually enough, and sooner is better in peak season. We will always try for short-notice requests." },
+      { "q": "Can I add this to a tour or experience?", "a": "Yes. Mention it in your request and we will put everything into one plan." },
+      { "q": "How is the price worked out?", "a": "Our team confirms it for your date, duration and needs before anything is booked." }
+    ],
+    "convention": [
+      { "q": "Can you plan around my session times?", "a": "Yes. Share your conference schedule and we will shape what fits between sessions." },
+      { "q": "Are these official conference tours?", "a": "No. Asli Hyderabad is independent of the organiser and curates experiences for visiting delegates." },
+      { "q": "Can you pick me up from the venue?", "a": "Yes. We can collect you from the convention venue or your hotel." },
+      { "q": "Can you host a whole delegation?", "a": "Yes, from a few colleagues to large groups. Tell us your numbers and dates." }
+    ],
+    "contact": [
+      { "q": "How soon will I hear back?", "a": "We usually reply within one working day." },
+      { "q": "Do you work with companies and conference organisers?", "a": "Yes. We shape delegate programmes, incentive days and hosted experiences for groups." },
+      { "q": "Is my request booked once I send it?", "a": "No. It starts a conversation. Nothing is booked until our team has confirmed the details with you." }
+    ]
+  },
+  "how": {
+    "tours": [
+      { "h": "Choose a route", "p": "Pick a tour as it stands, or tell us what to change." },
+      { "h": "We shape the day", "p": "Your date, pickup, pace and any food or access needs, confirmed by our team." },
+      { "h": "We host you", "p": "A local host and a comfortable car, from the first stop to your door." }
+    ],
+    "cocurated": [
+      { "h": "Pick an experience", "p": "Fifteen ways in, made with the people and places that know them best." },
+      { "h": "Tell us when", "p": "Share your date and group, and we confirm the venue, timing and price." },
+      { "h": "Just arrive", "p": "Your host handles the rest. All you do is show up." }
+    ],
+    "quick": [
+      { "h": "Tell us about your event", "p": "Venue, date, headcount and the mood you are after." },
+      { "h": "We shape the format", "p": "Space, set-up, timing and performers, planned around you." },
+      { "h": "We set up and host", "p": "We arrive early, run it and leave the room as we found it." }
+    ],
+    "originals": [
+      { "h": "Pick your date", "p": "Each Original runs to its own calendar." },
+      { "h": "Book your place", "p": "Places are limited. We confirm yours and share the details." },
+      { "h": "Come as you are", "p": "A host greets you, and the city does the rest." }
+    ],
+    "services": [
+      { "h": "Choose what you need", "p": "One service or several, for one day or your whole stay." },
+      { "h": "We confirm the details", "p": "Timing, people and price, all agreed before anything is booked." },
+      { "h": "We take care of it", "p": "One point of contact, from start to finish." }
+    ],
+    "booking": [
+      { "h": "You send your request", "p": "It opens in WhatsApp, ready to send." },
+      { "h": "We reply with a plan", "p": "Usually within one working day, with options and a price." },
+      { "h": "You confirm, we host", "p": "Nothing is booked until you are happy with it." }
+    ],
+    "access": [
+      { "h": "Tell us who or what", "p": "Share who you would like to meet or see, and why it matters to you." },
+      { "h": "We ask on your behalf", "p": "Each host decides personally. We share what you have told us." },
+      { "h": "We agree the details", "p": "Date, length, group size and any conditions the host sets." },
+      { "h": "You are hosted", "p": "An Asli host stays with you, and the conversation stays private." }
+    ]
+  },
+  "logistics": [
+    { "h": "Timed to your sessions", "p": "Early starts, lunch-break tastes and evenings after the last talk." },
+    { "h": "From the door of the venue", "p": "We can collect you at the convention centre or your hotel and bring you back on time." },
+    { "h": "One or one hundred", "p": "From a few colleagues to a full delegation, with hosts to match." }
+  ]
+}

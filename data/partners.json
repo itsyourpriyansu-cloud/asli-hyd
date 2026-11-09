@@ -19,7 +19,8 @@
    "old-hyderabad"
   ],
   "draft": "Written from public sources",
-  "url": "https://www.tajhotels.com/en-in/taj/taj-falaknuma-palace-hyderabad"
+  "url": "https://www.tajhotels.com/en-in/taj/taj-falaknuma-palace-hyderabad",
+  "where": "Falaknuma, Hyderabad"
  },
  {
   "name": "Café Niloufer",
@@ -41,7 +42,8 @@
    "hyderabad-by-night"
   ],
   "draft": "Written from public sources",
-  "url": "https://cafeniloufer.com/"
+  "url": "https://cafeniloufer.com/",
+  "where": "Lakdikapul and across the city"
  },
  {
   "name": "Goyaz",
@@ -63,7 +65,8 @@
    "the-pochampally-weaving-artisan-journey"
   ],
   "draft": "Written from public sources; the photo is general, not of this brand",
-  "url": "https://goyazjewellery.com/"
+  "url": "https://goyazjewellery.com/",
+  "where": "Hyderabad"
  },
  {
   "name": "Ramoji Film City",
@@ -85,7 +88,8 @@
    "hyderabad-by-night"
   ],
   "draft": "Written from public sources",
-  "url": "https://www.ramojifilmcity.com/"
+  "url": "https://www.ramojifilmcity.com/",
+  "where": "On the edge of Hyderabad"
  },
  {
   "name": "Paradise",
@@ -107,7 +111,8 @@
    "hyderabad-by-night"
   ],
   "draft": "Written from public sources; the photo is general, not of this brand",
-  "url": "https://www.paradisefoodcourt.in/"
+  "url": "https://www.paradisefoodcourt.in/",
+  "where": "Secunderabad and beyond"
  },
  {
   "name": "HICC",
@@ -132,7 +137,8 @@
    "hyderabad-by-night"
   ],
   "draft": "Written from public sources",
-  "url": "https://hicc.com/"
+  "url": "https://hicc.com/",
+  "where": "HITEC City"
  },
  {
   "name": "Heartfulness",
@@ -154,7 +160,8 @@
    "the-hyderabad-sacred-journey"
   ],
   "draft": "Written from public sources",
-  "url": "https://heartfulness.org/kanha/"
+  "url": "https://heartfulness.org/kanha/",
+  "where": "Kanha Shanti Vanam"
  },
  {
   "name": "Karachi Bakery",
@@ -179,7 +186,8 @@
    "hyderabad-by-night"
   ],
   "draft": "Written from public sources; the photo is general, not of this brand",
-  "url": "https://www.karachibakery.com/"
+  "url": "https://www.karachibakery.com/",
+  "where": "Moazzam Jahi Market and beyond"
  },
  {
   "name": "Shilparamam",
@@ -201,6 +209,7 @@
    "the-pochampally-weaving-artisan-journey"
   ],
   "draft": "Written from public sources",
-  "url": "https://shilparamam.in/"
+  "url": "https://shilparamam.in/",
+  "where": "Madhapur"
  }
 ]

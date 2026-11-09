@@ -2,7 +2,9 @@
 
 | File | Source | Author | Licence | Changes |
 |---|---|---|---|---|
-| rooted-golconda.jpg | [DURBAR HALL OF GOLCONDA FORT.jpg](https://commons.wikimedia.org/wiki/File:DURBAR_HALL_OF_GOLCONDA_FORT.jpg) | Sourav Karmakar | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | Cropped to 4:5 (1600×2000), warm graduated sky, light contrast and vignette |
+| rooted-qutb-shahi.jpg | [Tomb of Subhan Kuli 01.jpg](https://commons.wikimedia.org/wiki/File:Tomb_of_Subhan_Kuli_01.jpg) | Bernard Gagnon | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | Cropped to 4:5 (1600×2000) |
+| rooted-charminar.jpg | [Charminar Hyderabad 111.jpg](https://commons.wikimedia.org/wiki/File:Charminar_Hyderabad_111.jpg) | Joydeep | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | Cropped to 4:5 (1600×2000) |
+| rooted-hitec-city.jpg | [Cable Bridge View from Dr.B.R. Ambedkar Open University Hyderabad Telangana.jpg](https://commons.wikimedia.org/wiki/File:Cable_Bridge_View_from_Dr.B.R._Ambedkar_Open_University_Hyderabad_Telangana.jpg) | Kavali Chandrakanth KCK | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | Cropped to 4:5 (1600×2000) |
 
 Quick Experiences photos are listed in `quick/SOURCES.md`.
 

@@ -487,21 +487,22 @@
   /* ---------- Inner pages: tour tabs ---------- */
   document.querySelectorAll('[data-filter-root]').forEach(function (root) {
     var buttons = root.querySelectorAll('[data-filter]');
-    var cards = root.querySelectorAll('[data-tour-themes]');
+    var cards = root.querySelectorAll('[data-tags]');
     var status = root.querySelector('[data-filter-status]');
+    var noun = root.dataset.filterNoun || 'tour';
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var key = btn.dataset.filter, shown = 0;
         buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
         cards.forEach(function (card) {
-          var on = key === 'all' || card.dataset.tourThemes.split(' ').indexOf(key) > -1;
+          var on = key === 'all' || card.dataset.tags.split(' ').indexOf(key) > -1;
           card.hidden = !on;
           if (!on) return;
           shown++;
           // A card still waiting for its scroll reveal has to show as soon as the filter brings it up.
           card.style.opacity = card.style.visibility = card.style.transform = '';
         });
-        status.textContent = shown + (shown === 1 ? ' tour' : ' tours') + ' shown';
+        status.textContent = shown + ' ' + noun + (shown === 1 ? '' : 's') + ' shown';
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
       });
     });
@@ -514,14 +515,16 @@
     var lbImg = lb.querySelector('[data-lb-img]');
     var lbCap = lb.querySelector('[data-lb-cap]');
     var lbAt = 0;
+    var lbSet = shots;
     var lbShow = function (i) {
-      lbAt = (i + shots.length) % shots.length;
-      lbImg.src = shots[lbAt].dataset.full;
-      lbImg.alt = lbCap.textContent = shots[lbAt].dataset.cap;
+      lbAt = (i + lbSet.length) % lbSet.length;
+      lbImg.src = lbSet[lbAt].dataset.full;
+      lbImg.alt = lbCap.textContent = lbSet[lbAt].dataset.cap;
     };
-    shots.forEach(function (shot, i) {
+    shots.forEach(function (shot) {
       shot.addEventListener('click', function () {
-        lbShow(i);
+        lbSet = shots.filter(function (s) { return !s.closest('[hidden]'); }); // the arrows stay inside the current filter
+        lbShow(lbSet.indexOf(shot));
         lb.showModal();
         if (window.mnLenis) window.mnLenis.stop();
       });
@@ -552,6 +555,13 @@
     if (new Date(note.dataset.ended + 'T00:00:00') >= new Date(new Date().toDateString())) return;
     note.hidden = false;
     note.parentNode.querySelector('[data-tentative]').hidden = true;
+    var heroBtn = document.querySelector('[data-ended-label]');
+    if (heroBtn) heroBtn.firstChild.nodeValue = heroBtn.dataset.endedLabel + ' ';
+  });
+
+  /* ---------- Inner pages: an opened question changes the page height, so triggers below it must re-measure ---------- */
+  document.querySelectorAll('.mn-pg-faq details').forEach(function (d) {
+    d.addEventListener('toggle', function () { if (window.ScrollTrigger) window.ScrollTrigger.refresh(); });
   });
 
   /* ---------- Inner pages: enquiry forms send through WhatsApp, with an email fallback ---------- */
@@ -566,6 +576,23 @@
     }
     if (message && params.get('topic')) message.value = params.get('topic');
     if (form.elements.notes && params.get('option')) form.elements.notes.value = 'Option: ' + params.get('option');
+
+    // The card above the form shows what is being requested, from the option's own data.
+    var summary = picker && form.parentNode.querySelector('[data-summary]');
+    if (summary) {
+      var showSummary = function () {
+        var chosen = picker.options[picker.selectedIndex];
+        summary.hidden = !chosen.value;
+        if (chosen.value) {
+          summary.querySelector('[data-summary-img]').src = chosen.dataset.img;
+          summary.querySelector('[data-summary-name]').textContent = chosen.text;
+          summary.querySelector('[data-summary-meta]').textContent = chosen.dataset.meta;
+        }
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      };
+      picker.addEventListener('change', showSummary);
+      showSummary();
+    }
 
     // Fires only once the browser's own required/type validation has passed.
     form.addEventListener('submit', function (e) {
@@ -591,8 +618,12 @@
   var bookBar = document.querySelector('[data-bookbar]');
   var pageFoot = document.querySelector('.mn-footer');
   if (bookBar && pageFoot && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      bookBar.classList.toggle('is-away', entries[0].isIntersecting);
-    }).observe(pageFoot);
+    var barCovers = new Set(); // the hero and the closing band have their own button, so two never stack
+    var barWatch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { barCovers[e.isIntersecting ? 'add' : 'delete'](e.target); });
+      bookBar.classList.toggle('is-away', barCovers.size > 0);
+    });
+    barWatch.observe(pageFoot);
+    document.querySelectorAll('.mn-pg-end, [data-hero], .mn-pg-port').forEach(function (el) { barWatch.observe(el); });
   }
 })();

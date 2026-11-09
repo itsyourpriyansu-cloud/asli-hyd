@@ -1,0 +1,34 @@
+{
+  "numbers": [
+    { "n": 45, "label": "Conferences & events supported" },
+    { "n": 275, "label": "Curated destination experiences delivered" },
+    { "n": 30, "label": "Experience partners & local businesses" },
+    { "n": 55, "label": "Cities & countries represented" }
+  ],
+  "quotes": [
+    {
+      "name": "Zev Siegl",
+      "role": "Co-founder, Starbucks Coffee Company · Entrepreneur, Educator & Global Business Leader",
+      "img": "zev-siegl",
+      "html": "My visit to Hyderabad became much more meaningful because of the thoughtfully curated experiences by Asli Hyderabad. Rather than simply showing the city, the team <em>helped me understand its history, culture and people</em> in an authentic and seamless way. It’s an impressive model that has the potential to enhance how business travellers and conference delegates experience Indian cities."
+    },
+    {
+      "name": "Nick Ut",
+      "role": "Pulitzer Prize-winning Photojournalist · Renowned for his coverage of the Vietnam War",
+      "img": "nick-ut",
+      "html": "I experienced Asli Hyderabad’s services during my visit to the Hyderabad Photography Festival. The team was professional, thoughtful and highly responsive, taking excellent care of every aspect of my visit. Their <em>local knowledge, attention to detail and warm hospitality</em> made my experience in Hyderabad truly enjoyable."
+    },
+    {
+      "name": "Barbara Davidson",
+      "role": "Pulitzer Prize-winning Photojournalist & Documentary Photographer",
+      "img": "barbara-davidson",
+      "html": "During my visit to Hyderabad, Asli Hyderabad made every part of the experience seamless and memorable. From thoughtful planning to flawless coordination, the team demonstrated genuine hospitality, professionalism and a deep understanding of the city’s culture. It allowed me to focus on my work while experiencing <em>the true spirit of Hyderabad.</em>"
+    },
+    {
+      "name": "Isabelle Duceller",
+      "role": "Chief Executive Officer, BioGaia, Sweden",
+      "img": "isabelle-duceller",
+      "html": "During my visit to Hyderabad, I experienced Asli Hyderabad’s thoughtful and professional hospitality. The team understood my requirements, coordinated every detail seamlessly and introduced me to the city with <em>genuine warmth and local insight.</em> Their support made my time in Hyderabad both effortless and memorable."
+    }
+  ]
+}

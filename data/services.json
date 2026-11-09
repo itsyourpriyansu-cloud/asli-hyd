@@ -47,7 +47,13 @@
    "private-city-host",
    "airport-meet-assist"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "Will the same driver stay with me?",
+    "a": "Yes, for the booked period, wherever that is possible."
+   }
+  ]
  },
  {
   "slug": "private-city-host",
@@ -93,7 +99,13 @@
    "personal-photographer",
    "custom-hyderabad-itinerary"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "How is a host different from a guide?",
+    "a": "A guide explains places. A host looks after your whole day, including the parts between places."
+   }
+  ]
  },
  {
   "slug": "language-guide-interpreter",
@@ -139,7 +151,13 @@
    "custom-hyderabad-itinerary",
    "personal-shopper"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "Which languages can you cover?",
+    "a": "Tell us the language you need and we will confirm who is available."
+   }
+  ]
  },
  {
   "slug": "airport-meet-assist",
@@ -184,7 +202,13 @@
    "personal-chauffeur",
    "custom-hyderabad-itinerary"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "What if my flight is delayed?",
+    "a": "Share your flight number and we will track it and adjust."
+   }
+  ]
  },
  {
   "slug": "executive-car-transfers",
@@ -235,7 +259,13 @@
    "personal-chauffeur",
    "private-city-host"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "Can you handle a group?",
+    "a": "Yes. Tell us your numbers and luggage, and we will suggest the right vehicles."
+   }
+  ]
  },
  {
   "slug": "personal-shopper",
@@ -275,7 +305,13 @@
    "personal-chauffeur",
    "personal-photographer"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "Do you take commission from shops?",
+    "a": "Your shopper is there for you. Ask them anything about where and why they recommend."
+   }
+  ]
  },
  {
   "slug": "personal-photographer",
@@ -321,7 +357,13 @@
    "personal-shopper",
    "custom-hyderabad-itinerary"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "When do I get the photographs?",
+    "a": "The delivery time is agreed when you book."
+   }
+  ]
  },
  {
   "slug": "custom-hyderabad-itinerary",
@@ -369,6 +411,12 @@
    "personal-chauffeur",
    "language-guide-interpreter"
   ],
-  "draft": "Old site text, restructured"
+  "draft": "Old site text, restructured. FAQ is placeholder",
+  "faq": [
+   {
+    "q": "How much notice do you need?",
+    "a": "A few days for a simple plan, and more for multi-day trips or special access."
+   }
+  ]
  }
 ]

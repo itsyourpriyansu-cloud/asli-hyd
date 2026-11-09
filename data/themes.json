@@ -50,7 +50,31 @@
     "w": 720,
     "h": 540
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "Stories before dates",
+    "p": "Hosts who make four centuries easy to follow."
+   },
+   {
+    "h": "The famous and the hidden",
+    "p": "Golconda, and the courtyards around the corner."
+   },
+   {
+    "h": "Comfortably paced",
+    "p": "Early starts, shade and well-placed pauses."
+   }
+  ],
+  "small": {
+   "cc": [
+    "an-evening-at-the-palace",
+    "high-tea-hyderabad"
+   ],
+   "quick": [
+    "deccani-calligraphy"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  },
  {
   "slug": "culture",
@@ -96,7 +120,31 @@
     "w": 720,
     "h": 987
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "Taste and touch",
+    "p": "Food to eat and crafts to try, not only to look at."
+   },
+   {
+    "h": "People before places",
+    "p": "Makers, cooks and traders who love to talk."
+   },
+   {
+    "h": "Bring an appetite",
+    "p": "Most routes involve eating, generously."
+   }
+  ],
+  "small": {
+   "cc": [
+    "the-great-hyderabad-tasting",
+    "chai-time-hyderabad"
+   ],
+   "quick": [
+    "lac-bangle-making"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  },
  {
   "slug": "cinema",
@@ -135,7 +183,31 @@
     "w": 720,
     "h": 488
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "A working industry",
+    "p": "Studios that are busy making films right now."
+   },
+   {
+    "h": "Behind the camera",
+    "p": "Costume, sound, stunts and the craft of a scene."
+   },
+   {
+    "h": "Great for families",
+    "p": "Big sets, live shows and plenty to do."
+   }
+  ],
+  "small": {
+   "cc": [
+    "behind-the-screen"
+   ],
+   "quick": [
+    "telangana-folk-performance",
+    "perini-dance"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  },
  {
   "slug": "business",
@@ -181,7 +253,31 @@
     "w": 720,
     "h": 542
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "Doors arranged",
+    "p": "Visits to institutions, set up in advance."
+   },
+   {
+    "h": "Built around your sector",
+    "p": "Tell us your field, and we shape the day."
+   },
+   {
+    "h": "Useful conversations",
+    "p": "Founders, operators and ecosystem voices."
+   }
+  ],
+  "small": {
+   "cc": [
+    "coffee-with-hyderabads-insiders",
+    "coffee-with-hyderabad"
+   ],
+   "quick": [
+    "hyderabad-pearl-bar"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  },
  {
   "slug": "wellness",
@@ -220,7 +316,31 @@
     "w": 720,
     "h": 477
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "Green and quiet",
+    "p": "Forests, lakes and calm, close to the city."
+   },
+   {
+    "h": "No experience needed",
+    "p": "Gentle sessions, explained simply."
+   },
+   {
+    "h": "Easy to add",
+    "p": "A half day that fits around a work trip."
+   }
+  ],
+  "small": {
+   "cc": [
+    "reset-in-hyderabad",
+    "a-day-in-the-deccan"
+   ],
+   "quick": [
+    "deccan-music-sufi-evening"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  },
  {
   "slug": "learning",
@@ -259,6 +379,30 @@
     "w": 720,
     "h": 540
    }
-  ]
+  ],
+  "expect": [
+   {
+    "h": "Hands on",
+    "p": "Students make, ask and try things for themselves."
+   },
+   {
+    "h": "Real institutions",
+    "p": "Campuses, labs and working places."
+   },
+   {
+    "h": "Handled for teachers",
+    "p": "Transport, timings and coordination are taken care of."
+   }
+  ],
+  "small": {
+   "cc": [
+    "made-in-hyderabad",
+    "inside-hyderabad-design"
+   ],
+   "quick": [
+    "bidri-art-workshop"
+   ]
+  },
+  "draft": "What to expect and the cross-links are placeholder"
  }
 ]

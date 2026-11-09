@@ -12,7 +12,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const data = (n) => JSON.parse(rd(join(ROOT, 'data', n + '.json'), 'utf8'));
 const tours = data('tours'), themes = data('themes'), conventions = data('conventions'), originals = data('originals');
 const services = data('services'), offers = data('offers'), partners = data('partners'), privateAccess = data('private-access');
-const gallery = data('gallery'), legal = data('legal');
+const gallery = data('gallery'), legal = data('legal'), proof = data('proof'), { faq: FAQ, how: HOW, logistics: LOGISTICS } = data('faq');
 const tourBy = Object.fromEntries(tours.map((t) => [t.slug, t]));
 
 const SITE = 'https://aslihyd.in';
@@ -107,18 +107,46 @@ ${FOOTER}
 
 /* ---------- Pieces ---------- */
 const img = (group, name) => `/assets/img/pages/${group}/${name}`;
-function hero({ title, sub = '', group, name, alt = '', video, poster, pos, tall }) {
+const WHATSAPP = 'https://wa.me/919392149872';
+// One solid button, and any second action as an underline link: [label, href].
+const actions = (cta, link) => (cta || link ? `<div class="mn-pg-actions">${cta ? `<a class="mn-pg-btn mn-pg-btn--gold" href="${cta[1]}"${cta[2] ? ` data-ended-label="${esc(cta[2])}"` : ''}>${esc(cta[0])} ${ARROW}</a>` : ''}${link ? `<a class="mn-ulink" href="${link[1]}">${esc(link[0])}</a>` : ''}</div>` : '');
+function hero({ title, sub = '', group, name, alt = '', video, poster, pos, tall, size, cta, link }) {
   const style = pos ? ` style="object-position:${pos}"` : '';
   const media = video
     ? `<img class="mn-pg-hero__img" src="${poster}" alt="${esc(alt)}" width="1920" height="1080" fetchpriority="high"${style}><video class="mn-pg-hero__video" data-hero-video data-src="${video}" muted loop playsinline preload="none" aria-hidden="true"${style}></video>`
     : `<img class="mn-pg-hero__img" src="${img(group, name)}.jpg" srcset="${img(group, name)}-1000.jpg 1000w, ${img(group, name)}.jpg 1920w" sizes="100vw" alt="${esc(alt)}" width="1920" height="1200" fetchpriority="high"${style}>`;
-  return `    <section class="mn-pg-hero${tall ? ' mn-pg-hero--tall' : ''}" data-hero>
+  return `    <section class="mn-pg-hero${tall ? ' mn-pg-hero--tall' : ''}${size ? ` mn-pg-hero--${size}` : ''}" data-hero>
       <div class="mn-pg-hero__media" data-hero-media>${media}</div>
       <div class="mn-wrap mn-pg-hero__body" data-hero-body>
         <h1 class="mn-pg-hero__title">${title}</h1>
         ${sub ? `<p class="mn-pg-hero__sub">${esc(sub)}</p>` : ''}
+        ${actions(cta, link)}
       </div>
     </section>`;
+}
+const crumbs = (...trail) => `    <nav class="mn-pg-crumbs" aria-label="Breadcrumb"><div class="mn-wrap"><ol role="list"><li><a href="/">Home</a></li>${trail.map(([n, h]) => `<li>${h ? `<a href="${h}">${esc(n)}</a>` : `<span aria-current="page">${esc(n)}</span>`}</li>`).join('')}</ol></div></nav>`;
+const whyBlock = (a, b, items) => `<section class="mn-pg-block">${head2(a, b)}<ul class="mn-pg-why" role="list">${items.map((x) => `<li data-rise-item><svg class="mn-m-sym mn-pg-why__sym" viewBox="0 0 40 32" aria-hidden="true" focusable="false"><use href="/assets/img/motifs.svg#m-lotus"/></svg><h3 class="mn-pg-why__h">${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`).join('')}</ul></section>`;
+const after = (html) => `<div class="mn-pg-after" data-rise>${html}</div>`;
+const ulink = (label, href) => `<a class="mn-ulink" href="${href}">${esc(label)}</a>`;
+const faqBlock = (items, ask, a = 'Good', b = 'questions') => `<section class="mn-pg-block">${head2(a, b)}<div class="mn-pg-faq" data-rise>${items.map((x) => `<details><summary>${esc(x.q)}</summary><p>${esc(x.a)}</p></details>`).join('')}</div>${ask ? after(ulink('Ask a question', topic(ask))) : ''}</section>`;
+const faqSec = (items, ask) => `<section class="mn-pg-sec"><div class="mn-wrap mn-pg-narrow">${faqBlock(items, ask)}</div></section>`;
+const howSteps = (a, b, steps, more = '') => `<section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">${head2(a, b)}<ol class="mn-pg-week mn-pg-week--${steps.length}" role="list">${steps.map((x) => `<li class="mn-pg-week__stop" data-rise-item><h3 class="mn-pg-h3">${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`).join('')}</ol>${more}</div></section>`;
+const proofStrip = () => `<dl class="mn-pg-proof" data-rise>${proof.numbers.map((x) => `<div><dt>${esc(x.label)}</dt><dd>${x.n}+</dd></div>`).join('')}</dl>`;
+// One real guest, in rotation: the quotes are verbatim and never written for a page.
+function voice(i) {
+  const v = proof.quotes[i % proof.quotes.length];
+  return `    <section class="mn-pg-voice"><div class="mn-m-jaali mn-pg-voice__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-voice__in" data-rise>
+      <span class="mn-pg-voice__face"><img src="/assets/img/voices/${v.img}.jpg" alt="" width="800" height="1000" loading="lazy" decoding="async"></span>
+      <figure><blockquote><p>${v.html}</p></blockquote><figcaption><strong>${esc(v.name)}</strong> ${esc(v.role)}</figcaption></figure>
+    </div></section>`;
+}
+function endBand({ a = 'Your Hyderabad', b = 'starts here.', line = 'Tell us your dates and what you love. We will shape the days and host you through them.', cta = ['Plan my Hyderabad', '/book-now'] } = {}) {
+  return `    <section class="mn-pg-end"><div class="mn-m-jaali mn-pg-end__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-end__in" data-rise>
+      <svg class="mn-m-sym mn-pg-end__sym" viewBox="0 0 40 32" aria-hidden="true" focusable="false"><use href="/assets/img/motifs.svg#m-lotus"/></svg>
+      <h2 class="mn-pg-h2 mn-pg-h2--lg">${esc(a)} <em>${esc(b)}</em></h2>
+      <p class="mn-pg-lead">${esc(line)}</p>
+      <div class="mn-pg-actions"><a class="mn-pg-btn mn-pg-btn--gold" href="${cta[1]}">${esc(cta[0])} ${ARROW}</a><a class="mn-ulink" href="${WHATSAPP}" target="_blank" rel="noopener">Message us on WhatsApp<span class="mn-sr"> (opens in a new tab)</span></a></div>
+    </div></section>`;
 }
 const archSvg = '<svg class="mn-arcade__arch" viewBox="0 0 400 500" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M2 498V190C2 104 157 46 200 2C243 46 398 104 398 190V498Z"/></svg>';
 function archCard({ href, src, alt, name, line, meta, attrs = '', id = '', go }) {
@@ -131,10 +159,10 @@ function archCard({ href, src, alt, name, line, meta, attrs = '', id = '', go })
 }
 const tourCard = (t) => archCard({
   href: `/tours/${t.slug}`, src: img('tours', t.slug + '-card.jpg'), alt: t.alt || t.name, name: t.name, line: t.summary,
-  meta: `${t.duration} · ${priceOf(t)}`, attrs: ` data-tour-themes="${t.themes.join(' ')}"`,
+  meta: t.duration, go: 'Explore', attrs: ` data-tags="${t.themes.join(' ')}"`,
 });
 // Experience and brand pages: their photos are portrait, too small to fill the screen, so they sit in an arch on ink.
-function portraitHero({ title, sub, src, alt, logo }) {
+function portraitHero({ title, sub, src, alt, logo, cta, link }) {
   return `    <section class="mn-pg-port">
       <div class="mn-m-jaali mn-pg-port__bg" aria-hidden="true"></div>
       <div class="mn-wrap mn-pg-port__in">
@@ -142,24 +170,32 @@ function portraitHero({ title, sub, src, alt, logo }) {
           ${logo ? `<span class="mn-pg-port__logo"><img src="/assets/img/brands/${logo}-ink.png" alt="" decoding="async"></span>` : ''}
           <h1 class="mn-pg-hero__title mn-pg-port__title">${title}</h1>
           ${sub ? `<p class="mn-pg-hero__sub">${esc(sub)}</p>` : ''}
+          ${actions(cta, link)}
         </div>
         <div class="mn-pg-card__frame mn-pg-port__frame"><span class="mn-arcade__media"><img class="mn-arcade__img" src="${src}" alt="${esc(alt)}" width="720" height="900" fetchpriority="high"></span>${archSvg}</div>
       </div>
     </section>`;
 }
 const facts = (rows) => `<dl class="mn-pg-facts mn-pg-facts--${rows.length}" data-rise>${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
-const route = (a, b, stops) => `<section class="mn-pg-block" data-route>${head2(a, b)}
-          <div class="mn-pg-routewrap"><span class="mn-pg-route__line" data-route-line aria-hidden="true"></span><ol class="mn-pg-route" role="list">${stops.map((h, i) => `<li class="mn-pg-route__stop" data-stop><span class="mn-pg-route__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="mn-pg-route__name">${esc(h)}</span></li>`).join('')}</ol></div>
+// A stop is a plain name, or { at, name, line }. Timed routes say the clock is only a guide.
+const ILLUSTRATIVE = 'Timings are illustrative. Your host confirms the final plan.';
+const route = (a, b, stops, more = '', id = '') => `<section class="mn-pg-block"${id ? ` id="${id}"` : ''} data-route>${head2(a, b)}
+          <div class="mn-pg-routewrap"><span class="mn-pg-route__line" data-route-line aria-hidden="true"></span><ol class="mn-pg-route" role="list">${stops.map((h, i) => {
+            const s = typeof h === 'string' ? { name: h } : h;
+            return `<li class="mn-pg-route__stop" data-stop><span class="mn-pg-route__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="mn-pg-route__body">${s.at ? `<span class="mn-pg-route__at">${esc(s.at)}</span>` : ''}<span class="mn-pg-route__name">${esc(s.name)}</span>${s.line ? `<span class="mn-pg-route__note">${esc(s.line)}</span>` : ''}</span></li>`;
+          }).join('')}</ol></div>${more}
         </section>`;
-function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, related, relatedHead, allHref, allLabel }) {
+function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, related, relatedHead, allHref, allLabel, crumb, faqs, ask, closing }) {
   page(path, {
     title: it.name, desc: it.line, og: src,
-    body: `${portraitHero({ title: halves(it.name), sub, src, alt: it.name, logo })}
+    body: `${portraitHero({ title: halves(it.name), sub, src, alt: it.name, logo, cta: [bookLabel, book(it.slug)], link: ['How it unfolds', '#unfolds'] })}
+${crumbs(crumb, [it.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         ${facts(factRows)}
-        <section class="mn-pg-block">${head2('About this', 'experience')}<div class="mn-pg-prose" data-rise>${paras(it.about)}</div></section>
-        ${route('How it', 'unfolds', it.steps)}
+        <section class="mn-pg-block">${head2('About this', 'experience')}<div class="mn-pg-prose mn-pg-prose--open" data-rise>${paras(it.about)}</div></section>
+        ${whyBlock('Why guests', 'love it', it.why)}
+        ${route('How it', 'unfolds', it.stops, '', 'unfolds')}
         <section class="mn-pg-block mn-pg-cols" data-rise>
           <div><h2 class="mn-pg-h3">What’s <em>included</em></h2><ul class="mn-pg-list mn-pg-list--tick" role="list">${li(it.included)}</ul></div>
           <div><h2 class="mn-pg-h3">Good <em>to know</em></h2><ul class="mn-pg-list" role="list">${li(it.good)}</ul></div>
@@ -168,20 +204,23 @@ function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, 
           <div><h2 class="mn-pg-h3">Best <em>for</em></h2><ul class="mn-pg-list" role="list">${li(it.best)}</ul></div>
           ${where ? `<div><h2 class="mn-pg-h3">Where <em>it works</em></h2><ul class="mn-pg-list" role="list">${li(where)}</ul></div>` : ''}
         </section>
+        ${faqBlock(faqs, ask)}
       </div>
-      ${bookCard({ price: priceOf(it), meta: 'Final availability confirmed by our team', href: book(it.slug), label: bookLabel })}
+      ${bookCard({ price: priceOf(it), meta: 'Hosted by Asli Hyderabad. Date, timing and venue confirmed when you book.', href: book(it.slug), label: bookLabel })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2(relatedHead[0], relatedHead[1])}<a class="mn-ulink" href="${allHref}">${allLabel}</a></div>
       <ul class="mn-pg-cards" role="list">${related.join('')}</ul>
-    </div></section>`,
+    </div></section>
+${endBand(closing)}`,
   });
 }
 // Three neighbours in the list, wrapping round, so every page links on.
 const nextThree = (arr, it) => [1, 2, 3].map((n) => arr[(arr.indexOf(it) + n) % arr.length]);
-function galleryGrid(items) {
+function galleryGrid(items, { mosaic } = {}) {
   if (!items.length) return '';
-  return `<ul class="mn-pg-gal" role="list">${items.map((g) => `<li data-rise-item><button type="button" class="mn-pg-gal__btn" data-full="${g.src}" data-cap="${esc(g.cap)}"><img src="${g.thumb || g.src}" alt="${esc(g.cap)}" width="${g.w || 1000}" height="${g.h || 750}" loading="lazy" decoding="async"><span class="mn-pg-gal__cap">${esc(g.cap)}</span></button></li>`).join('')}</ul>`;
+  const shown = mosaic ? items.slice(0, 5) : items; // the mosaic is laid out for 3 to 5 photos
+  return `<ul class="mn-pg-gal${mosaic ? ` mn-pg-gal--mosaic mn-pg-gal--n${shown.length}` : ''}" role="list">${shown.map((g, i) => `<li data-rise-item${g.tag ? ` data-tags="${g.tag}"` : ''}><button type="button" class="mn-pg-gal__btn" data-full="${g.src}" data-cap="${esc(g.cap)}"><img src="${mosaic && i === 0 ? g.src : g.thumb || g.src}" alt="${esc(g.cap)}" width="${g.w || 1000}" height="${g.h || 750}" loading="lazy" decoding="async"><span class="mn-pg-gal__cap">${esc(g.cap)}</span></button></li>`).join('')}</ul>`;
 }
 function bookCard({ price = PRICE, meta, href, label }) {
   return `<aside class="mn-pg-book" data-bookbar><div class="mn-pg-book__card">
@@ -202,53 +241,44 @@ function chips(about) {
 const THEME_TABS = [['all', 'All'], ...themes.map((t) => [t.slug, t.name]), ['evening', 'Evening']];
 page('/tours', {
   title: 'Tours', desc: 'Hosted routes through Hyderabad’s heritage, culture, cinema, business, wellness and learning.', og: img('heroes', 'tours.jpg'),
-  body: `${hero({ title: 'Hyderabad, <em>hosted.</em>', sub: 'A selected set of hosted routes through heritage, culture, business, cinema, wellness and learning.', group: 'heroes', name: 'tours', alt: 'Guests with an Asli Hyderabad host at a Hyderabad landmark' })}
+  body: `${hero({ title: 'Hyderabad, <em>hosted.</em>', sub: 'A selected set of hosted routes through heritage, culture, business, cinema, wellness and learning.', group: 'heroes', name: 'tours', alt: 'Guests with an Asli Hyderabad host at a Hyderabad landmark', size: 'mid' })}
     <section class="mn-pg-sec"><div class="mn-wrap" data-filter-root>
       <div class="mn-pg-tabs" role="group" aria-label="Filter tours by theme" data-rise>${THEME_TABS.map(([k, n], i) => `<button type="button" data-filter="${k}" aria-pressed="${i === 0}">${esc(n)}</button>`).join('')}</div>
       <p class="mn-sr" role="status" data-filter-status></p>
       <ul class="mn-pg-cards" role="list">${tours.map(tourCard).join('')}</ul>
-    </div></section>`,
+    </div></section>
+${voice(0)}
+${howSteps('How hosting', 'works', HOW.tours, after(ulink('Build a custom itinerary', '/services/custom-hyderabad-itinerary')) + proofStrip())}
+${endBand({ a: 'Can’t find', b: 'your day?', line: 'Tell us what you love, how long you have and who you are with. We will build it.', cta: ['Build it with us', '/services/custom-hyderabad-itinerary'] })}`,
 });
 for (const t of tours) {
   const related = [...tours.filter((o) => o !== t && o.themes.some((x) => t.themes.includes(x))), ...tours.filter((o) => o !== t && !o.themes.some((x) => t.themes.includes(x)))].slice(0, 3);
   page(`/tours/${t.slug}`, {
     title: t.name, desc: t.summary, og: img('tours', t.slug + '.jpg'),
-    body: `${hero({ title: halves(t.name), sub: t.tagline, group: 'tours', name: t.slug, alt: t.alt || t.name, pos: t.pos })}
+    body: `${hero({ title: halves(t.name), sub: t.tagline, group: 'tours', name: t.slug, alt: t.alt || t.name, pos: t.pos, cta: ['Book this tour', book(t.slug)], link: ['See the route', '#route'] })}
+${crumbs(['Tours', '/tours'], [t.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
-        ${facts([['Duration', t.duration], ['Format', t.format], ['Time', t.time], ['Minimum guests', t.minGuests], ['Price', priceOf(t)]])}
-        <section class="mn-pg-block">${head2('About this', 'experience')}<div class="mn-pg-prose" data-rise>${paras(t.about)}</div></section>
-        ${route('The', 'route', t.highlights)}
+        ${facts([['Duration', t.duration], ['Format', t.format], ['Best time', t.bestTime], ['Group', `From ${t.minGuests} guest${t.minGuests > 1 ? 's' : ''}`]])}
+        <section class="mn-pg-block">${head2('About this', 'experience')}<div class="mn-pg-prose mn-pg-prose--open" data-rise>${paras(t.about)}</div></section>
+        ${whyBlock('Why it’s', 'special', t.why)}
+        ${route('The', 'route', t.stops, after(`<p class="mn-pg-note">${ILLUSTRATIVE}</p>${ulink('Customise this route', topic(`Customise a tour: ${t.name}`))}`), 'route')}
         <section class="mn-pg-block mn-pg-cols" data-rise>
           <div><h2 class="mn-pg-h3">What’s <em>included</em></h2><ul class="mn-pg-list mn-pg-list--tick" role="list">${li(t.included)}</ul></div>
-          <div><h2 class="mn-pg-h3">Good <em>to know</em></h2><ul class="mn-pg-list" role="list">${li(t.good)}</ul></div>
+          <div><h2 class="mn-pg-h3">Not <em>included</em></h2><ul class="mn-pg-list" role="list">${li(t.excluded)}</ul></div>
         </section>
-        ${t.gallery.length ? `<section class="mn-pg-block">${head2('Along', 'the way')}${galleryGrid(t.gallery)}</section>` : ''}
+        <section class="mn-pg-block" data-rise><h2 class="mn-pg-h3">Good <em>to know</em></h2><ul class="mn-pg-list mn-pg-list--two" role="list">${li(t.good)}</ul></section>
+        <section class="mn-pg-block">${head2('Along', 'the way')}${galleryGrid(t.gallery, { mosaic: true })}${after(ulink('See the full gallery', '/gallery'))}</section>
+        ${faqBlock([...t.faq, ...FAQ.tour], `Question about ${t.name}`)}
       </div>
       ${bookCard({ price: priceOf(t), meta: `${t.duration} · per person, final availability confirmed by our team`, href: book(t.slug), label: 'Book this tour' })}
     </div>
+${voice(tours.indexOf(t))}
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('You may', 'also like')}<a class="mn-ulink" href="/tours">All tours</a></div>
       <ul class="mn-pg-cards" role="list">${related.map(tourCard).join('')}</ul>
-    </div></section>`,
-  });
-}
-
-/* ---------- Themes ---------- */
-for (const t of themes) {
-  const list = tours.filter((x) => x.themes.includes(t.slug));
-  page(`/experiences/${t.slug}`, {
-    title: `${t.name} Experiences`, desc: t.short, og: `/assets/video/themes/${t.slug}.jpg`,
-    body: `${hero({ title: `${esc(t.name)}<em>.</em>`, sub: t.tagline, video: `/assets/video/themes/${t.slug}.mp4`, poster: `/assets/video/themes/${t.slug}.jpg`, alt: t.short })}
-    <section class="mn-pg-sec mn-pg-intro"><div class="mn-m-jaali mn-pg-intro__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-intro__in" data-rise>
-      <h2 class="mn-pg-h2 mn-pg-h2--lg">${esc(t.headA)} <em>${esc(t.headB)}</em></h2>
-      <p class="mn-pg-lead">${esc(t.intro)}</p>
     </div></section>
-    ${t.gallery.length ? `<section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">${galleryGrid(t.gallery)}</div></section>` : ''}
-    <section class="mn-pg-sec"><div class="mn-wrap">
-      <div class="mn-pg-headrow">${head2('Hosted', 'routes')}<a class="mn-ulink" href="${topic(`Customise a ${t.name} experience`)}">Customise an experience</a></div>
-      <ul class="mn-pg-cards" role="list">${list.map(tourCard).join('')}</ul>
-    </div></section>`,
+${endBand({ a: 'Want it', b: 'your way?', line: 'Keep this route, change a stop or start from scratch. Tell us your dates and we will shape it with you.' })}`,
   });
 }
 
@@ -256,7 +286,7 @@ for (const t of themes) {
 const ccSrc = (c) => (c.photo ? `/assets/img/co-curated/${c.photo}.jpg` : img('co-curated', c.slug + '.jpg'));
 page('/experiences/co-curated', {
   title: 'Co-curated Experiences', desc: 'Fifteen short, immersive experiences crafted with our Featured Brands.', og: img('heroes', 'co-curated.jpg'),
-  body: `${hero({ title: 'Small experiences. <em>Big memories.</em>', sub: 'Fifteen short, immersive experiences crafted with our Featured Brands, made for curious travellers and memorable moments.', group: 'heroes', name: 'co-curated', alt: 'The long dining table at Taj Falaknuma Palace' })}
+  body: `${hero({ title: 'Small experiences. <em>Big memories.</em>', sub: 'Fifteen short, immersive experiences crafted with our Featured Brands, made for curious travellers and memorable moments.', group: 'heroes', name: 'co-curated', alt: 'The long dining table at Taj Falaknuma Palace', size: 'mid' })}
     <section class="mn-pg-sec"><div class="mn-wrap">
       <ul class="mn-pg-offers" role="list">${offers.cocurated.map((c) => `<li class="mn-cc" id="${c.slug}" data-rise-item><a class="mn-cc__link" href="/experiences/co-curated/${c.slug}">
           <img class="mn-cc__img" src="${ccSrc(c)}" alt="" width="720" height="900" loading="lazy" decoding="async">
@@ -265,7 +295,9 @@ page('/experiences/co-curated', {
             <span class="mn-cc__more"><span class="mn-cc__line">${esc(c.line)}</span><span class="mn-cc__go">Explore ${ARROW}</span></span></span>
         </a></li>`).join('')}</ul>
       <p class="mn-pg-note" data-rise>Book any experience on its own or <a class="mn-pg-inlink" href="/services/custom-hyderabad-itinerary">add it to your Asli Hyderabad itinerary</a>.</p>
-    </div></section>`,
+    </div></section>
+${howSteps('How to', 'book', HOW.cocurated)}
+${endBand({ a: 'Make it', b: 'a memory.', line: 'Pick one for an afternoon, or weave several through your stay.' })}`,
 });
 const ccCard = (c) => archCard({ href: `/experiences/co-curated/${c.slug}`, src: ccSrc(c), alt: '', name: c.name, line: c.line, meta: `${c.partner ? 'With ' + c.partner : c.kind}`, go: 'Explore' });
 for (const c of offers.cocurated) {
@@ -274,17 +306,24 @@ for (const c of offers.cocurated) {
     factRows: [['Format', c.kind], ...(c.partner ? [['With', c.partner]] : []), ['Timing', 'Confirmed when you book'], ['Price', priceOf(c)]],
     bookLabel: 'Book experience', related: nextThree(offers.cocurated, c).map(ccCard),
     relatedHead: ['More small', 'experiences'], allHref: '/experiences/co-curated', allLabel: 'All 15 experiences',
+    crumb: ['Co-curated Experiences', '/experiences/co-curated'], faqs: FAQ.cocurated, ask: `Question about ${c.name}`,
+    closing: { a: 'Add it to', b: 'your stay.', line: 'Book it on its own, or let us weave it into a longer Hyderabad plan.', cta: ['Plan my Hyderabad', '/book-now'] },
   });
 }
 const quickSrc = (q) => (q.photo ? `/assets/img/quick/${q.photo}.jpg` : img('quick', q.slug + '.jpg'));
 const QUICK_GROUPS = [['workshops', 'Hands-on', 'workshops'], ['performances', 'Live', 'performances'], ['bars', 'Bars', 'and tables']];
-const quickCard = (q, id = '') => archCard({ href: `/experiences/quick/${q.slug}`, id, src: quickSrc(q), alt: '', name: q.name, line: q.line, meta: `${q.len} · ${priceOf(q)}`, go: 'Explore' });
+const quickCard = (q, id = '') => archCard({ href: `/experiences/quick/${q.slug}`, id, src: quickSrc(q), alt: '', name: q.name, line: q.line, meta: q.len, go: 'Explore' });
 page('/experiences/quick', {
   title: 'Quick Experiences', desc: 'Short-format cultural experiences for hotels, restaurants, conferences, events, corporate gatherings and private celebrations.', og: img('heroes', 'quick.jpg'),
-  body: `${hero({ title: 'A little Hyderabad, <em>wherever you are.</em>', sub: 'Short-format cultural experiences for hotels, restaurants, conferences, events, corporate gatherings and private celebrations.', group: 'heroes', name: 'quick', alt: 'A craftsperson at work in Hyderabad' })}
+  body: `${hero({ title: 'A little Hyderabad, <em>wherever you are.</em>', sub: 'Short-format cultural experiences for hotels, restaurants, conferences, events, corporate gatherings and private celebrations.', group: 'heroes', name: 'quick', alt: 'A craftsperson at work in Hyderabad', size: 'mid' })}
     ${QUICK_GROUPS.map(([g, a, b]) => `<section class="mn-pg-sec"><div class="mn-wrap">${head2(a, b)}
       <ul class="mn-pg-cards" role="list">${offers.quick.filter((q) => q.group === g).map((q) => quickCard(q, q.slug)).join('')}</ul>
-    </div></section>`).join('\n')}`,
+    </div></section>`).join('\n')}
+    <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap mn-pg-narrow">${head2('Where', 'it works', 'We bring the makers, performers and set-up to you.')}
+      <ul class="mn-pg-list mn-pg-list--two" role="list" data-rise>${li(offers.quickWhere)}</ul>${after(ulink('Bring it to your event', topic('Quick Experiences for an event')))}
+    </div></section>
+${howSteps('How to', 'book', HOW.quick)}
+${endBand({ a: 'Bring Hyderabad', b: 'to your event.', line: 'Tell us your venue, date and headcount. We will shape the rest.', cta: ['Plan it with us', topic('Quick Experiences for an event')] })}`,
 });
 const QUICK_FORMAT = { workshops: 'Hands-on workshop', performances: 'Live performance', bars: 'Event activation' };
 for (const q of offers.quick) {
@@ -294,13 +333,41 @@ for (const q of offers.quick) {
     factRows: [['Duration', q.len], ['Format', QUICK_FORMAT[q.group]], ['Price', priceOf(q)]],
     bookLabel: 'Book now', where: offers.quickWhere, related: nextThree(sameGroup, q).map((x) => quickCard(x)),
     relatedHead: ['More quick', 'experiences'], allHref: '/experiences/quick', allLabel: 'All quick experiences',
+    crumb: ['Quick Experiences', '/experiences/quick'], faqs: FAQ.quick, ask: `Question about ${q.name}`,
+    closing: { a: 'Bring Hyderabad', b: 'to your event.', line: 'Tell us your venue, date and headcount, and we will shape the rest.', cta: ['Plan it with us', topic(`Quick Experience for an event: ${q.name}`)] },
+  });
+}
+
+/* ---------- Themes ---------- */
+for (const t of themes) {
+  const list = tours.filter((x) => x.themes.includes(t.slug));
+  page(`/experiences/${t.slug}`, {
+    title: `${t.name} Experiences`, desc: t.short, og: `/assets/video/themes/${t.slug}.jpg`,
+    body: `${hero({ title: `${esc(t.name)}<em>.</em>`, sub: t.tagline, video: `/assets/video/themes/${t.slug}.mp4`, poster: `/assets/video/themes/${t.slug}.jpg`, alt: t.short, cta: ['See the routes', '#routes'] })}
+${crumbs(['Tours', '/tours'], [t.name])}
+    <section class="mn-pg-sec mn-pg-intro"><div class="mn-m-jaali mn-pg-intro__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-intro__in" data-rise>
+      <h2 class="mn-pg-h2 mn-pg-h2--lg">${esc(t.headA)} <em>${esc(t.headB)}</em></h2>
+      <p class="mn-pg-lead">${esc(t.intro)}</p>
+    </div></section>
+    <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">${whyBlock('What', 'to expect', t.expect)}</div></section>
+    <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">${galleryGrid(t.gallery, { mosaic: true })}${after(ulink('See the full gallery', '/gallery'))}</div></section>
+${voice(themes.indexOf(t) + 1)}
+    <section class="mn-pg-sec mn-pg-sec--tint" id="routes"><div class="mn-wrap">
+      <div class="mn-pg-headrow">${head2('Hosted', 'routes')}<a class="mn-ulink" href="/tours">All tours</a></div>
+      <ul class="mn-pg-cards" role="list">${list.map(tourCard).join('')}</ul>
+    </div></section>
+    <section class="mn-pg-sec"><div class="mn-wrap">
+      <div class="mn-pg-headrow">${head2('Small', 'experiences')}<a class="mn-ulink" href="/experiences/co-curated">All small experiences</a></div>
+      <ul class="mn-pg-cards" role="list">${[...t.small.cc.map((s) => ccCard(offers.cocurated.find((c) => c.slug === s))), ...t.small.quick.map((s) => quickCard(offers.quick.find((q) => q.slug === s)))].join('')}</ul>
+    </div></section>
+${endBand({ a: `Customise a ${t.name}`, b: 'day.', line: 'Start from any route here, add a small experience and tell us your pace.', cta: ['Plan it with us', topic(`Customise a ${t.name} day`)] })}`,
   });
 }
 
 /* ---------- Conventions ---------- */
 page('/conventions', {
   title: 'Conventions', desc: 'In Hyderabad for a convention? Find your event and discover the city around it.', og: img('heroes', 'conventions.jpg'),
-  body: `${hero({ title: 'In Hyderabad <em>for a convention?</em>', sub: 'Find your event. Discover Hyderabad around it.', group: 'heroes', name: 'conventions', alt: 'A full plenary hall at the Hyderabad International Convention Centre' })}
+  body: `${hero({ title: 'In Hyderabad <em>for a convention?</em>', sub: 'Find your event. Discover Hyderabad around it.', group: 'heroes', name: 'conventions', alt: 'A full plenary hall at the Hyderabad International Convention Centre', size: 'mid' })}
     <section class="mn-pg-sec"><div class="mn-wrap" data-conventions>
       <ol class="mn-pg-events" role="list">${conventions.map((c) => `<li class="mn-conv__item" data-end="${c.end}" data-rise-item><a class="mn-conv__card" href="/conventions/${c.slug}">
           <img class="mn-conv__img" src="/assets/img/conventions/${c.card}.jpg" alt="" width="960" height="1200" loading="lazy">
@@ -311,7 +378,9 @@ page('/conventions', {
         </a></li>`).join('')}</ol>
       <p class="mn-pg-note" data-rise>${DISCLAIMER}</p>
     </div></section>
-    ${chips('')}`,
+    <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">${head2('Bringing', 'a delegation?', 'We shape city programmes around your sessions, for a few colleagues or a full conference.')}${after(ulink('Plan a delegate programme', `${topic('Delegate programme')}#enquire`))}${proofStrip()}</div></section>
+    ${chips('')}
+${endBand({ a: 'Make the most', b: 'of the trip.', line: 'Tell us your event and your free hours. We will fit Hyderabad around them.', cta: ['Plan my conference week', '/book-now'] })}`,
 });
 const shortQuick = ['lac-bangle-making', 'pearl-jewellery-making', 'deccani-calligraphy', 'perini-dance', 'telangana-folk-performance', 'cheriyal-mask-making'].map((s) => offers.quick.find((q) => q.slug === s));
 const row = (href, name, meta) => `<li><a href="${href}"><span>${esc(name)}</span><small>${esc(meta)}</small></a></li>`;
@@ -325,38 +394,52 @@ for (const c of conventions) {
   ];
   page(`/conventions/${c.slug}`, {
     title: c.name, desc: `${c.dates}, ${c.venue}. Delegate experiences before, during and after the conference.`, og: img('conventions', c.slug + '.jpg'),
-    body: `${hero({ title: halves(c.name), sub: `${c.dates} · ${c.venue}`, group: 'conventions', name: c.slug, alt: '' })}
+    body: `${hero({ title: halves(c.name), sub: `${c.dates} · ${c.venue}`, group: 'conventions', name: c.slug, alt: '', cta: ['Plan my conference week', book(c.slug), 'Plan a Hyderabad visit'], link: ['See the week', '#week'] })}
+${crumbs(['Conventions', '/conventions'], [c.name])}
     <section class="mn-pg-sec mn-pg-intro"><div class="mn-m-jaali mn-pg-intro__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-intro__in" data-rise>
       <p class="mn-pg-lead">${esc(c.desc)}</p>
       <p class="mn-pg-note" data-tentative>Tentative dates. ${DISCLAIMER}</p>
       <p class="mn-pg-note" data-ended="${c.end}" hidden>This event has ended. The plans below still work for any visit to Hyderabad.</p>
     </div></section>
     <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">
+      ${head2('Picked for', 'your field', c.sector)}
+      <ul class="mn-pg-cards" role="list">${c.picks.map((x) => tourCard({ ...tourBy[x.tour], summary: x.why })).join('')}</ul>
+      ${c.extra ? after(ulink(c.extra[0], `${topic(c.extra[1])}#enquire`)) : ''}
+    </div></section>
+${voice(conventions.indexOf(c))}
+    <section class="mn-pg-sec mn-pg-sec--tint" id="week"><div class="mn-wrap">
       ${head2('Your conference', 'week', 'Delegate experiences shaped around your conference: before, during, after.')}
       <ol class="mn-pg-week" role="list">${stops.map(([a, b, line, rows]) => `<li class="mn-pg-week__stop" data-rise-item><h3 class="mn-pg-h3">${a} <em>${b}</em></h3><p>${line}</p><ul class="mn-pg-rows" role="list">${rows.join('')}</ul></li>`).join('')}</ol>
     </div></section>
-    ${chips(c.name)}`,
+    <section class="mn-pg-sec"><div class="mn-wrap">${whyBlock('Easy around', 'your sessions', LOGISTICS)}</div></section>
+    ${chips(c.name)}
+${faqSec(FAQ.convention, `Question about ${c.name}`)}
+${endBand({ a: 'Bringing', b: 'colleagues?', line: 'We host delegations of any size, with a programme built around your sessions.', cta: ['Plan a group programme', `${topic(`Group programme: ${c.name}`)}#enquire`] })}`,
   });
 }
 
 /* ---------- Originals ---------- */
 page('/originals', {
   title: 'Asli Originals', desc: 'Only in Hyderabad. Only with Asli. Signature experiences running on a regular calendar.', og: '/assets/video/originals/table.jpg',
-  body: `${hero({ title: 'Only in Hyderabad. <em>Only with Asli.</em>', sub: 'Signature experiences created by Asli Hyderabad. Running on a regular calendar.', video: '/assets/video/originals/table.mp4', poster: '/assets/video/originals/table.jpg', alt: 'A long table set for dinner' })}
+  body: `${hero({ title: 'Only in Hyderabad. <em>Only with Asli.</em>', sub: 'Signature experiences created by Asli Hyderabad. Running on a regular calendar.', video: '/assets/video/originals/table.mp4', poster: '/assets/video/originals/table.jpg', alt: 'A long table set for dinner', size: 'mid' })}
     <section class="mn-pg-cal" aria-label="The Originals calendar"><div class="mn-wrap"><ol class="mn-pg-cal__row" role="list" data-rise>${originals.map((o) => `<li><a href="/originals/${o.slug}"><span class="mn-pg-cal__day">${esc(o.day)}</span><span class="mn-pg-cal__slot">${esc(o.slot)}</span><span class="mn-pg-cal__name">${esc(o.name)}</span></a></li>`).join('')}</ol></div></section>
     <section class="mn-pg-sec"><div class="mn-wrap mn-pg-alts">${originals.map((o) => `<article class="mn-pg-alt" data-rise-item>
         <a class="mn-pg-alt__media" href="/originals/${o.slug}" tabindex="-1" aria-hidden="true"><img src="/assets/img/originals/${o.key}.jpg" alt="" width="720" height="840" loading="lazy" decoding="async"></a>
-        <div class="mn-pg-alt__text"><h2 class="mn-pg-h2">${halves(o.name)}</h2><p class="mn-pg-alt__when">${esc(o.short)}</p><p class="mn-pg-lead">${esc(o.tagline)}</p><a class="mn-ulink" href="/originals/${o.slug}">Explore <span class="mn-sr">${esc(o.name)}</span></a></div>
-      </article>`).join('')}</div></section>`,
+        <div class="mn-pg-alt__text"><h2 class="mn-pg-h2">${halves(o.name)}</h2><p class="mn-pg-alt__when">${esc(o.short)}</p><p class="mn-pg-lead">${esc(o.tagline)}</p><div class="mn-pg-actions"><a class="mn-ulink" href="/originals/${o.slug}">Explore <span class="mn-sr">${esc(o.name)}</span></a><a class="mn-ulink" href="${book(o.slug)}">${esc(o.cta)}<span class="mn-sr">: ${esc(o.name)}</span></a></div></div>
+      </article>`).join('')}</div></section>
+${howSteps('How an Original', 'works', HOW.originals)}
+${endBand({ a: 'Join us', b: 'this week.', line: 'A Sunday walk, a Saturday table or a Friday night out. Pick your Original.' })}`,
 });
 for (const o of originals) {
   page(`/originals/${o.slug}`, {
     title: o.name, desc: `${o.tagline} ${o.intro}`.slice(0, 155), og: `/assets/video/originals/${o.key}.jpg`,
-    body: `${hero({ title: halves(o.name), sub: o.tagline, video: `/assets/video/originals/${o.key}.mp4`, poster: `/assets/video/originals/${o.key}.jpg`, alt: o.name })}
+    body: `${hero({ title: halves(o.name), sub: o.tagline, video: `/assets/video/originals/${o.key}.mp4`, poster: `/assets/video/originals/${o.key}.jpg`, alt: o.name, cta: [o.cta, book(o.slug)], link: ['See the schedule', '#schedule'] })}
+${crumbs(['Asli Originals', '/originals'], [o.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         <p class="mn-pg-when" data-rise>${esc(o.when)} <em>${esc(o.time)}</em></p>
         <div class="mn-pg-prose mn-pg-prose--lg" data-rise><p>${esc(o.intro)}</p></div>
+        ${route('How the', 'time goes', o.schedule, o.schedule[0].at ? after(`<p class="mn-pg-note">${ILLUSTRATIVE}</p>`) : '', 'schedule')}
         <section class="mn-pg-block mn-pg-cols" data-rise>
           <div><h2 class="mn-pg-h3">The <em>experience</em></h2><ul class="mn-pg-list mn-pg-list--tick" role="list">${li(o.experience)}</ul></div>
           <div><h2 class="mn-pg-h3">Best <em>for</em></h2><ul class="mn-pg-list" role="list">${li(o.best)}</ul></div>
@@ -365,9 +448,16 @@ for (const o of originals) {
           <div><h2 class="mn-pg-h3">What’s <em>included</em></h2><ul class="mn-pg-list mn-pg-list--tick" role="list">${li(o.includes)}</ul></div>
           <div><h2 class="mn-pg-h3">${esc(o.whereLabel.split(' ')[0])} <em>${esc(o.whereLabel.split(' ').slice(1).join(' ') || 'details')}</em></h2><p class="mn-pg-para">${esc(o.where)}</p></div>
         </section>
+        ${whyBlock('Why only', 'here', o.why)}
+        ${faqBlock(FAQ.original, `Question about ${o.name}`)}
       </div>
       ${bookCard({ price: priceOf(o), meta: `${o.len} · per person`, href: book(o.slug), label: o.cta })}
-    </div>`,
+    </div>
+    <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
+      <div class="mn-pg-headrow">${head2('More', 'Originals')}<a class="mn-ulink" href="/originals">All Originals</a></div>
+      <ul class="mn-pg-cards" role="list">${nextThree(originals, o).map((x) => archCard({ href: `/originals/${x.slug}`, src: `/assets/img/originals/${x.key}.jpg`, alt: '', name: x.name, line: x.tagline, meta: x.short, go: 'Explore' })).join('')}</ul>
+    </div></section>
+${endBand({ a: 'Save', b: 'your place.', line: 'Originals run with limited places. Tell us when you are in town.', cta: [o.cta, book(o.slug)] })}`,
   });
 }
 
@@ -384,18 +474,21 @@ const svcRow = (s, i) => `<li data-rise-item><a class="mn-pg-svc__row" href="/se
 const serviceBy = Object.fromEntries(services.map((s) => [s.slug, s]));
 page('/services', {
   title: 'Add-ons & Services', desc: 'Everything you need to experience Hyderabad, seamlessly.', og: img('heroes', 'services.jpg'),
-  body: `${hero({ title: 'Add-ons <em>&amp; services.</em>', sub: 'Everything you need to experience Hyderabad, seamlessly.', group: 'heroes', name: 'services', alt: 'A chauffeured car waiting in Hyderabad' })}
+  body: `${hero({ title: 'Add-ons <em>&amp; services.</em>', sub: 'Everything you need to experience Hyderabad, seamlessly.', group: 'heroes', name: 'services', alt: 'A chauffeured car waiting in Hyderabad', size: 'mid' })}
     <section class="mn-pg-sec"><div class="mn-wrap"><ol class="mn-pg-svc" role="list">${services.map(svcRow).join('')}</ol></div></section>
-    <section class="mn-pg-sec mn-pg-need"><div class="mn-wrap">${head2('Need', 'something else?', NEED)}<a class="mn-ulink" href="${topic('Something else')}" data-rise>Ask Asli</a></div></section>`,
+${howSteps('How add-ons', 'work', HOW.services)}
+    <section class="mn-pg-sec"><div class="mn-wrap">${head2('Need', 'something else?', NEED)}<a class="mn-ulink" href="${topic('Something else')}" data-rise>Ask Asli</a></div></section>
+${endBand({ a: 'One plan,', b: 'one point of contact.', line: 'Add what you need to any tour or experience, and we will handle the rest.' })}`,
 });
 for (const s of services) {
   page(`/services/${s.slug}`, {
     title: s.name, desc: s.intro.slice(0, 155), og: img('services', s.slug + '.jpg'),
-    body: `${hero({ title: halves(s.name), sub: s.tagline, group: 'services', name: s.slug, alt: s.name })}
+    body: `${hero({ title: halves(s.name), sub: s.tagline, group: 'services', name: s.slug, alt: s.name, cta: [s.cta, book(s.slug)], link: ['See the options', '#options'] })}
+${crumbs(['Add-ons & Services', '/services'], [s.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
-        <section class="mn-pg-block mn-pg-block--first">${head2('About this', 'service')}<div class="mn-pg-prose" data-rise><p>${esc(s.intro)}</p></div></section>
-        <section class="mn-pg-block" data-rise><h2 class="mn-pg-h3">Choose <em>your option</em></h2>
+        <section class="mn-pg-block mn-pg-block--first">${head2('About this', 'service')}<div class="mn-pg-prose mn-pg-prose--open" data-rise><p>${esc(s.intro)}</p></div></section>
+        <section class="mn-pg-block" id="options" data-rise><h2 class="mn-pg-h3">Choose <em>your option</em></h2>
           <ul class="mn-pg-optcards" role="list">${s.options.map((o) => `<li><a href="${book(s.slug)}&amp;option=${encodeURIComponent(o.name)}"><span class="mn-pg-optcards__name">${esc(o.name)}</span><span class="mn-pg-optcards__line">${esc(o.line)}</span><span class="mn-pg-optcards__go">${esc(s.cta)} ${ARROW}</span></a></li>`).join('')}</ul>
         </section>
         ${route('How it', 'works', s.how)}
@@ -404,20 +497,22 @@ for (const s of services) {
           <div><h2 class="mn-pg-h3">Confirmed <em>before booking</em></h2><ul class="mn-pg-list mn-pg-list--tick" role="list">${li(s.confirmed)}</ul></div>
         </section>
         <section class="mn-pg-block" data-rise><h2 class="mn-pg-h3">Arranged <em>separately</em></h2><ul class="mn-pg-list" role="list">${li(s.separate)}</ul></section>
+        ${faqBlock([...s.faq, ...FAQ.service], `Question about ${s.name}`)}
       </div>
       ${bookCard({ price: priceOf(s), meta: optionNames(s), href: book(s.slug), label: s.cta })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('Goes well', 'with')}<a class="mn-ulink" href="/services">All services</a></div>
       <ol class="mn-pg-svc" role="list">${s.related.map((r, i) => svcRow(serviceBy[r], i)).join('')}</ol>
-    </div></section>`,
+    </div></section>
+${endBand({ a: 'Add it to', b: 'your plan.', line: 'Tell us your dates and what you need, and we will put it all together.' })}`,
   });
 }
 
 /* ---------- Partners, Private Access, Gallery ---------- */
 page('/partners', {
   title: 'Featured Brands', desc: 'Handpicked names that represent the best of Hyderabad.', og: img('heroes', 'partners.jpg'),
-  body: `${hero({ title: 'Featured brands <em>of Hyderabad.</em>', sub: 'Handpicked names that represent the best of Hyderabad.', group: 'heroes', name: 'partners', alt: 'Taj Falaknuma Palace' })}
+  body: `${hero({ title: 'Featured brands <em>of Hyderabad.</em>', sub: 'Handpicked names that represent the best of Hyderabad.', group: 'heroes', name: 'partners', alt: 'Taj Falaknuma Palace', size: 'mid' })}
     <section class="mn-pg-sec"><div class="mn-wrap">
       <p class="mn-pg-lead mn-pg-lead--c" data-rise>A select circle of brands chosen by Asli Hyderabad for their distinctive character, quality and connection to the city. Together, we create special experiences and help our guests discover Hyderabad at its best.</p>
       <ul class="mn-brands__grid mn-pg-brands" role="list">${partners.map((p) => `<li class="mn-brand" data-rise-item>
@@ -426,17 +521,21 @@ page('/partners', {
           <span class="mn-brand__cat">${esc(p.cat)}</span>
           <a class="mn-pg-brandabout" href="/partners/${p.slug}">About<span class="mn-sr"> ${esc(p.name)}</span></a>
         </li>`).join('')}</ul>
-    </div></section>`,
+    </div></section>
+    <section class="mn-pg-sec mn-pg-need"><div class="mn-wrap">${head2('Become a', 'Featured Brand', 'Run something distinctly Hyderabadi? We would like to hear from you.')}${after(ulink('Partner with us', `${topic('Become a Featured Brand')}#enquire`))}</div></section>
+${endBand({ a: 'Taste them', b: 'with Asli.', line: 'Our small experiences are made with the brands that know this city best.', cta: ['See the experiences', '/experiences/co-curated'] })}`,
 });
 for (const p of partners) {
   const exp = offers.cocurated.find((c) => c.slug === p.exp);
   const cta = exp ? { href: `/experiences/co-curated/${exp.slug}`, label: 'See the experience', meta: exp.name } : { href: p.ctaHref, label: p.ctaLabel, meta: p.ctaMeta };
   page(`/partners/${p.slug}`, {
     title: p.name, desc: p.about[0].slice(0, 155), og: p.photo,
-    body: `${portraitHero({ title: halves(p.name), sub: p.cat, src: p.photo, alt: p.alt, logo: p.logo })}
+    body: `${portraitHero({ title: halves(p.name), sub: p.cat, src: p.photo, alt: p.alt, logo: p.logo, cta: [cta.label, cta.href] })}
+${crumbs(['Featured Brands', '/partners'], [p.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
-        <section class="mn-pg-block mn-pg-block--first">${head2('About', p.name)}<div class="mn-pg-prose" data-rise>${paras(p.about)}</div><p class="mn-pg-brandsite" data-rise><a class="mn-ulink" href="${p.url}" target="_blank" rel="noopener">Visit official website<span class="mn-sr"> (opens in a new tab)</span></a></p></section>
+        ${facts([['Category', p.cat], ['Based in', p.where], ['With Asli', exp ? exp.name : cta.meta]])}
+        <section class="mn-pg-block">${head2('About', p.name)}<div class="mn-pg-prose" data-rise>${paras(p.about)}</div><p class="mn-pg-brandsite" data-rise><a class="mn-ulink" href="${p.url}" target="_blank" rel="noopener">Visit official website<span class="mn-sr"> (opens in a new tab)</span></a></p></section>
         ${exp ? `<section class="mn-pg-block">${head2('With', 'Asli Hyderabad')}<ul class="mn-pg-cards mn-pg-cards--one" role="list">${ccCard(exp)}</ul></section>` : ''}
       </div>
       <aside class="mn-pg-book" data-bookbar><div class="mn-pg-book__card">
@@ -447,25 +546,32 @@ for (const p of partners) {
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('Keep', 'exploring')}<a class="mn-ulink" href="/partners">All featured brands</a></div>
       <ul class="mn-pg-cards" role="list">${p.tours.map((s) => tourCard(tourBy[s])).join('')}</ul>
-    </div></section>`,
+    </div></section>
+${endBand()}`,
   });
 }
 page('/private-access', {
   title: 'Private Access', cls: 'mn-pg--ink', desc: 'Rare encounters. Remarkable people. Hyderabad, behind closed doors.', og: img('heroes', 'private-access.jpg'),
-  body: `${hero({ title: 'Hyderabad, <em>behind closed doors.</em>', sub: 'Rare encounters. Remarkable people.', group: 'heroes', name: 'private-access', alt: 'The chandeliered durbar hall at Chowmahalla Palace' })}
-    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-access">
-      <ol class="mn-pg-access__list" role="list">${privateAccess.filter((p) => p.show).map((p, i) => `<li data-rise-item><span class="mn-pg-access__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h2 class="mn-pg-h2">${halves(p.name)}</h2><p>${esc(p.line)}</p></div></li>`).join('')}</ol>
+  body: `${hero({ title: 'Hyderabad, <em>behind closed doors.</em>', sub: 'Rare encounters. Remarkable people.', group: 'heroes', name: 'private-access', alt: 'The chandeliered durbar hall at Chowmahalla Palace', cta: ['Request Access', `${topic('Private Access request')}#enquire`], link: ['See the encounters', '#encounters'] })}
+    <section class="mn-pg-sec" id="encounters"><div class="mn-wrap mn-pg-access">
+      <ol class="mn-pg-access__list" role="list">${privateAccess.filter((p) => p.show).map((p, i) => `<li data-rise-item><span class="mn-pg-access__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h2 class="mn-pg-h2">${halves(p.name)}</h2><p>${esc(p.line)}</p><p>${esc(p.more)}</p><p class="mn-pg-access__suits">Best for: ${esc(p.suits)}</p><a class="mn-ulink mn-pg-access__ask" href="${topic(`Private Access: ${p.name}`)}#enquire">Request this<span class="mn-sr">: ${esc(p.name)}</span></a></div></li>`).join('')}</ol>
       <div class="mn-pg-access__foot" data-rise>
         <p class="mn-pg-access__by">By request only</p>
         <p>Every Private Access experience is individually curated and subject to host availability, permissions and confirmation. Including film and studio access, and documentary and editorial access.</p>
-        <a class="mn-btn mn-pg-access__cta" href="${topic('Private Access request')}">Request Access</a>
+        <a class="mn-btn mn-pg-access__cta" href="${topic('Private Access request')}#enquire">Request Access</a>
       </div>
-    </div></section>`,
+    </div></section>
+${howSteps('How access', 'works', HOW.access)}`,
 });
 page('/gallery', {
   title: 'Gallery', desc: 'Hyderabad through our lens: guests, delegates, places and everyday moments.', og: img('heroes', 'gallery.jpg'),
-  body: `${hero({ title: 'Experience Asli, <em>in pictures.</em>', sub: 'Hyderabad through our lens.', group: 'heroes', name: 'gallery', alt: 'Guests choosing bangles in a Laad Bazaar shop' })}
-    <section class="mn-pg-sec"><div class="mn-wrap">${galleryGrid(gallery)}</div></section>`,
+  body: `${hero({ title: 'Experience Asli, <em>in pictures.</em>', sub: 'Hyderabad through our lens.', group: 'heroes', name: 'gallery', alt: 'Guests choosing bangles in a Laad Bazaar shop', size: 'mid' })}
+    <section class="mn-pg-sec"><div class="mn-wrap" data-filter-root data-filter-noun="photo">
+      <div class="mn-pg-tabs" role="group" aria-label="Filter photos" data-rise>${[['all', 'All'], ['people', 'People'], ['places', 'Places'], ['food', 'Food'], ['craft', 'Craft']].map(([k, n], i) => `<button type="button" data-filter="${k}" aria-pressed="${i === 0}">${n}</button>`).join('')}</div>
+      <p class="mn-sr" role="status" data-filter-status></p>
+      ${galleryGrid(gallery)}
+    </div></section>
+${endBand({ a: 'Be in', b: 'the next one.', line: 'Every photograph here began with someone asking what they should do in Hyderabad.' })}`,
 });
 
 /* ---------- Forms ---------- */
@@ -478,16 +584,19 @@ const CONTACT_ASIDE = `<ul class="mn-pg-contact" role="list">
           <li><span>Email</span><a href="mailto:sahana@aslihyd.in">sahana@aslihyd.in</a></li>
           <li><span>Location</span>Hyderabad, Telangana, India</li>
         </ul>`;
-const optgroup = (label, items) => `<optgroup label="${esc(label)}">${items.map(([v, n]) => `<option value="${v}">${esc(n)}</option>`).join('')}</optgroup>`;
-const EXPERIENCES = optgroup('Tours', tours.map((t) => [t.slug, t.name])) + optgroup('Asli Originals', originals.map((o) => [o.slug, o.name]))
-  + optgroup('Co-curated Experiences', offers.cocurated.map((c) => [c.slug, c.name])) + optgroup('Quick Experiences', offers.quick.map((q) => [q.slug, q.name]))
-  + optgroup('Add-ons & Services', services.map((s) => [s.slug, s.name]));
+const optgroup = (label, items) => `<optgroup label="${esc(label)}">${items.map(([v, n, pic, meta]) => `<option value="${v}" data-img="${pic}" data-meta="${esc(meta)}">${esc(n)}</option>`).join('')}</optgroup>`;
+const EXPERIENCES = optgroup('Tours', tours.map((t) => [t.slug, t.name, img('tours', t.slug + '-card.jpg'), t.duration])) + optgroup('Asli Originals', originals.map((o) => [o.slug, o.name, `/assets/img/originals/${o.key}.jpg`, o.short]))
+  + optgroup('Co-curated Experiences', offers.cocurated.map((c) => [c.slug, c.name, ccSrc(c), c.partner ? `With ${c.partner}` : c.kind])) + optgroup('Quick Experiences', offers.quick.map((q) => [q.slug, q.name, quickSrc(q), q.len]))
+  + optgroup('Conventions', conventions.map((c) => [c.slug, c.name, `/assets/img/conventions/${c.card}.jpg`, c.dates]))
+  + optgroup('Add-ons & Services', services.map((s) => [s.slug, s.name, img('services', s.slug + '-1000.jpg'), optionNames(s)]));
 page('/book-now', {
   title: 'Plan My Hyderabad', desc: 'Tell us which experience interests you and our team will help plan the right departure.', og: img('heroes', 'book-now.jpg'),
-  body: `${hero({ title: 'Let’s curate <em>your Hyderabad.</em>', sub: 'Tell us which experience interests you and our team will help plan the right departure.', group: 'heroes', name: 'book-now', alt: 'The Charminar skyline at dusk' })}
-    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-formwrap">
-      <div data-rise><h2 class="mn-pg-h2">Talk to <em>the Asli team.</em></h2><p class="mn-pg-lead">Dates still open? Tell us what you have in mind and we will shape the days with you.</p>${CONTACT_ASIDE}</div>
-      <div data-rise><form class="mn-pg-form" data-enquiry="Plan My Hyderabad request">
+  body: `${hero({ title: 'Let’s curate <em>your Hyderabad.</em>', sub: 'Tell us which experience interests you and our team will help plan the right departure.', group: 'heroes', name: 'book-now', alt: 'The Charminar skyline at dusk', size: 'short' })}
+    <section class="mn-pg-sec mn-pg-sec--tight"><div class="mn-wrap mn-pg-formwrap mn-pg-formwrap--first">
+      <div><div data-rise><h2 class="mn-pg-h2">Dates <em>still open?</em></h2><p class="mn-pg-lead">Tell us what you have in mind and we will shape the days with you.</p>${CONTACT_ASIDE}</div>
+        ${route('What happens', 'next', HOW.booking.map((x) => ({ name: x.h, line: x.p })))}</div>
+      <div data-rise><aside class="mn-pg-summary" data-summary hidden aria-live="polite"><img data-summary-img alt="" width="720" height="900"><div><p class="mn-pg-summary__name" data-summary-name></p><p class="mn-pg-summary__meta" data-summary-meta></p></div></aside>
+        <form class="mn-pg-form" data-enquiry="Plan My Hyderabad request">
         ${field('experience', 'Experience', `<select id="experience" name="experience"><option value="">Help me choose</option>${EXPERIENCES}</select>`, ' mn-pg-field--full')}
         ${field('name', 'Your name', input('name', 'text', 'required autocomplete="name"'))}
         ${field('email', 'Email', input('email', 'email', 'required autocomplete="email"'))}
@@ -501,8 +610,9 @@ page('/book-now', {
 });
 page('/contact', {
   title: 'Contact', desc: 'Tell us what you have in mind: an experience, a conference programme or a private group visit.', og: img('heroes', 'contact.jpg'),
-  body: `${hero({ title: 'Let’s plan <em>something memorable.</em>', sub: 'Tell us what you have in mind: an experience, a conference programme or a private group visit, and our local team will be in touch.', group: 'heroes', name: 'contact', alt: 'The Charminar skyline at dusk' })}
-    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-formwrap">
+  body: `${hero({ title: 'Let’s plan <em>something memorable.</em>', sub: 'Tell us what you have in mind: an experience, a conference programme or a private group visit, and our local team will be in touch.', group: 'heroes', name: 'contact', alt: 'The Charminar skyline at dusk', size: 'short' })}
+    <section class="mn-pg-sec mn-pg-sec--tight"><div class="mn-wrap"><ul class="mn-pg-optcards mn-pg-optcards--routes" role="list" data-rise>${[['Book an experience', 'Tours, Originals and small experiences.', '/book-now', 'Start'], ['Bring a delegation', 'Programmes around your conference.', `${topic('Delegation enquiry')}#enquire`, 'Enquire'], ['Partner with us', 'Brands, venues and makers.', `${topic('Partnership enquiry')}#enquire`, 'Enquire'], ['Press and more', 'Everything else.', `${topic('Press or other enquiry')}#enquire`, 'Enquire']].map(([n, l, h, go]) => `<li><a href="${h}"><span class="mn-pg-optcards__name">${n}</span><span class="mn-pg-optcards__line">${l}</span><span class="mn-pg-optcards__go">${go} ${ARROW}</span></a></li>`).join('')}</ul></div></section>
+    <section class="mn-pg-sec mn-pg-sec--flush" id="enquire"><div class="mn-wrap mn-pg-formwrap">
       <div data-rise><h2 class="mn-pg-h2">Talk to <em>the Asli team.</em></h2><p class="mn-pg-lead">For destination experiences, partnerships and tailored Hyderabad programmes.</p>${CONTACT_ASIDE}</div>
       <div data-rise><h2 class="mn-pg-h3">Send <em>an enquiry</em></h2><p class="mn-pg-para">We usually reply with the right next steps within one working day.</p><form class="mn-pg-form" data-enquiry="Website enquiry">
         ${field('name', 'Your name', input('name', 'text', 'required autocomplete="name"'))}
@@ -511,7 +621,8 @@ page('/contact', {
         ${field('message', 'Message', '<textarea id="message" name="message" rows="5" required></textarea>', ' mn-pg-field--full')}
         <button class="mn-pg-submit" type="submit">Send enquiry ${ARROW}</button>
       </form>${SENT}</div>
-    </div></section>`,
+    </div></section>
+${faqSec(FAQ.contact)}`,
 });
 for (const [slug, l] of Object.entries(legal)) {
   page(`/${slug}`, {
@@ -523,7 +634,7 @@ for (const [slug, l] of Object.entries(legal)) {
 page('/404', {
   title: 'Page not found', desc: 'This lane does not go anywhere.', og: img('heroes', '404.jpg'),
   body: `${hero({ title: 'This lane <em>doesn’t go anywhere.</em>', sub: 'The page you were looking for has moved, or never existed.', group: 'heroes', name: '404', alt: 'A busy bazaar street in Old Hyderabad', tall: true })}
-    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-lost" data-rise><a class="mn-ulink" href="/">Back to the homepage</a><a class="mn-ulink" href="/tours">See all tours</a></div></section>`,
+    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-lost" data-rise><a class="mn-ulink" href="/">Back to the homepage</a><a class="mn-ulink" href="/tours">See all tours</a><a class="mn-ulink" href="/experiences/co-curated">Small experiences</a><a class="mn-ulink" href="/contact">Contact us</a></div></section>`,
 });
 
 /* ---------- Write ---------- */
@@ -543,6 +654,8 @@ const DRAFT_GROUPS = [
   ['Conventions', 'data/conventions.json', conventions, (r) => `/conventions/${r.slug}`],
   ['Services', 'data/services.json', services, (r) => `/services/${r.slug}`],
   ['Featured brands', 'data/partners.json', partners, (r) => `/partners/${r.slug}`],
+  ['Themes', 'data/themes.json', themes, (r) => `/experiences/${r.slug}`],
+  ['Private Access', 'data/private-access.json', privateAccess, () => '/private-access'],
   ['Legal', 'data/legal.json', Object.entries(legal).map(([slug, l]) => ({ ...l, slug, name: `${l.titleA} ${l.titleB}` })), (r) => `/${r.slug}`],
 ];
 const unpriced = [tours, offers.cocurated, offers.quick, originals, services].flat().filter((r) => !r.price).length;
@@ -561,6 +674,8 @@ ${DRAFT_GROUPS.map(([label, file, rows, url]) => {
 - [ ] Before and After lines on convention pages, and the 404 page: \`tools/build-pages.mjs\`
 - [ ] Theme and gallery captions: \`data/themes.json\`, \`data/gallery.json\`
 - [ ] "Hyderabad, hosted." title on \`/tours\`: \`tools/build-pages.mjs\`
+- [ ] FAQ answers, How it works steps and delegate logistics: \`data/faq.json\`
+- [ ] Closing band headlines on every page: \`tools/build-pages.mjs\`
 `);
 
 /* ---------- Self-check: every internal reference on every page must resolve ---------- */
@@ -569,10 +684,16 @@ const homeLocal = home.replace(/\b(src|href|poster|data-[a-z-]+)="assets\//g, '$
 const all = [...written, ['/', homeLocal]];
 const idsOf = (h) => new Set([...h.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
 const pageHtml = new Map(all);
+const NO_END_BAND = new Set(['/private-access', '/book-now', '/contact', '/privacy', '/terms', '/404']); // these end in their own form or request
 for (const [p, html] of all) {
   const noComments = html.replace(/<!--[\s\S]*?-->/g, '');
   if (/\bhref="#"/.test(noComments)) problems.push(`${p}: a link goes nowhere (href="#")`);
-  const refs = [...noComments.matchAll(/\b(?:src|href|poster|data-src|data-full|data-color|data-video|data-poster)="([^"]+)"/g)].map((m) => m[1]);
+  if (p !== '/') {
+    if (/\bundefined\b/.test(noComments.replace(/<script[\s\S]*?<\/script>/g, ''))) problems.push(`${p}: a template printed "undefined"`);
+    if (!NO_END_BAND.has(p) && !noComments.includes('class="mn-pg-end"')) problems.push(`${p}: no closing band`);
+    for (const m of noComments.matchAll(/\bhref="#([^"]+)"/g)) if (!idsOf(html).has(m[1])) problems.push(`${p}: missing anchor #${m[1]}`);
+  }
+  const refs = [...noComments.matchAll(/\b(?:src|href|poster|data-src|data-full|data-color|data-video|data-poster|data-img)="([^"]+)"/g)].map((m) => m[1]);
   for (const srcset of noComments.matchAll(/\bsrcset="([^"]+)"/g)) refs.push(...srcset[1].split(',').map((s) => s.trim().split(' ')[0]));
   for (const raw of refs) {
     if (!raw.startsWith('/')) continue;

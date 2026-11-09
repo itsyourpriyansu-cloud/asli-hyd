@@ -19,7 +19,23 @@
    "the-nizams-legacy-a-journey-through-425-years",
    "the-ramoji-film-city-experience",
    "the-royal-hyderabad-heritage-trail"
-  ]
+  ],
+  "sector": "For clinicians, researchers and global health leaders.",
+  "picks": [
+   {
+    "tour": "kanha-retreat",
+    "why": "A quiet half day to reset after an intense congress."
+   },
+   {
+    "tour": "old-hyderabad",
+    "why": "The living city, in the hours between sessions."
+   },
+   {
+    "tour": "hyderabad-food-trail",
+    "why": "A morning of tastes, easy to fit before you fly."
+   }
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "apac-summit-2026",
@@ -41,7 +57,23 @@
    "the-nizams-legacy-a-journey-through-425-years",
    "the-ramoji-film-city-experience",
    "the-royal-hyderabad-heritage-trail"
-  ]
+  ],
+  "sector": "For people who work on community and social change.",
+  "picks": [
+   {
+    "tour": "village-life",
+    "why": "Rural crafts and the livelihoods behind them."
+   },
+   {
+    "tour": "the-pochampally-weaving-artisan-journey",
+    "why": "A weaving community, met in its own homes."
+   },
+   {
+    "tour": "old-hyderabad",
+    "why": "How one neighbourhood sustains generations of trades."
+   }
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "nde-2026",
@@ -68,7 +100,22 @@
    300,
    200
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For inspection engineers and aerospace specialists.",
+  "picks": [
+   {
+    "tour": "the-nizams-legacy-a-journey-through-425-years",
+    "why": "Four centuries of structures that have stood the test."
+   },
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "The city’s engineering and startup ecosystem."
+   },
+   {
+    "tour": "hyderabad-by-night",
+    "why": "An easy evening after a day on the exhibition floor."
+   }
+  ]
  },
  {
   "slug": "avar-2026-cyber-security-conference",
@@ -94,7 +141,23 @@
   "logo": [
    261,
    200
-  ]
+  ],
+  "sector": "For security researchers and technology leaders.",
+  "picks": [
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "Inside the tech district that hosts your industry."
+   },
+   {
+    "tour": "hyderabad-by-night",
+    "why": "The lake and the skyline, once the talks end."
+   },
+   {
+    "tour": "hyderabad-food-trail",
+    "why": "Biryani and chai, for conference-weary delegates."
+   }
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "telangana-rising-global-summit-2026",
@@ -120,7 +183,23 @@
   "logo": [
    212,
    200
-  ]
+  ],
+  "sector": "For investors and industry leaders.",
+  "picks": [
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "See the ecosystem you are being asked to back."
+   },
+   {
+    "tour": "the-royal-hyderabad-heritage-trail",
+    "why": "The depth of history behind the new city."
+   },
+   {
+    "tour": "hyderabad-food-trail",
+    "why": "The best way to end a day of meetings."
+   }
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "photonics-2026",
@@ -147,7 +226,22 @@
    352,
    73
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For researchers working with light.",
+  "picks": [
+   {
+    "tour": "hyderabad-by-night",
+    "why": "The city’s lights, reflected on Hussain Sagar."
+   },
+   {
+    "tour": "statue-of-equality",
+    "why": "A monument best seen under its evening illumination."
+   },
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "Where research meets industry in Hyderabad."
+   }
+  ]
  },
  {
   "slug": "structural-engineering-convention-2026",
@@ -174,7 +268,22 @@
    202,
    200
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For structural engineers and researchers.",
+  "picks": [
+   {
+    "tour": "the-nizams-legacy-a-journey-through-425-years",
+    "why": "Domes, ramparts and Golconda’s remarkable acoustics."
+   },
+   {
+    "tour": "statue-of-equality",
+    "why": "A 216-foot statue and its temple complex, up close."
+   },
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "The Durgam Cheruvu cable bridge and the new skyline."
+   }
+  ]
  },
  {
   "slug": "icca-global-summit-2027",
@@ -200,7 +309,23 @@
   "logo": [
    249,
    59
-  ]
+  ],
+  "sector": "For leaders in packaging and manufacturing.",
+  "picks": [
+   {
+    "tour": "the-pochampally-weaving-artisan-journey",
+    "why": "Materials and process, in a very different industry."
+   },
+   {
+    "tour": "hyderabad-through-its-crafts",
+    "why": "A city with centuries of making and trading."
+   },
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "The business side of modern Hyderabad."
+   }
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "bioasia-2027",
@@ -226,7 +351,27 @@
   "logo": [
    400,
    196
-  ]
+  ],
+  "sector": "For life sciences and health-tech leaders.",
+  "picks": [
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "The startup and research ecosystem around your sector."
+   },
+   {
+    "tour": "kanha-retreat",
+    "why": "Space to think, after three days of meetings."
+   },
+   {
+    "tour": "hyderabad-food-trail",
+    "why": "A good way to take international guests out."
+   }
+  ],
+  "extra": [
+   "Inside Genome Valley, by request",
+   "Private Access: Inside Genome Valley"
+  ],
+  "draft": "Picks for your field are placeholder"
  },
  {
   "slug": "ieee-apscon-2027",
@@ -253,7 +398,22 @@
    303,
    200
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For the sensors and applied research community.",
+  "picks": [
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "Prototyping, startups and applied research."
+   },
+   {
+    "tour": "hyderabad-by-night",
+    "why": "An easy evening out with fellow delegates."
+   },
+   {
+    "tour": "old-hyderabad",
+    "why": "A complete change from the conference hall."
+   }
+  ]
  },
  {
   "slug": "vaccines-world-summit-2027",
@@ -280,7 +440,26 @@
    400,
    105
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For vaccine researchers and manufacturers.",
+  "picks": [
+   {
+    "tour": "the-modern-hyderabad-innovation-circuit",
+    "why": "The business city around the labs."
+   },
+   {
+    "tour": "kanha-retreat",
+    "why": "A calm half day, an easy drive from town."
+   },
+   {
+    "tour": "old-hyderabad",
+    "why": "History on foot, between sessions."
+   }
+  ],
+  "extra": [
+   "Inside Genome Valley, by request",
+   "Private Access: Inside Genome Valley"
+  ]
  },
  {
   "slug": "hyderabad-jewellery-pearl-gem-fair-2027",
@@ -307,6 +486,21 @@
    114,
    103
   ],
-  "draft": "Description written from the organiser’s public listing"
+  "draft": "Description written from the organiser’s public listing",
+  "sector": "For jewellers, gem traders and buyers.",
+  "picks": [
+   {
+    "tour": "hyderabad-through-its-crafts",
+    "why": "Pearl, lac and attar at the source."
+   },
+   {
+    "tour": "old-hyderabad",
+    "why": "The market lanes that built the city’s trade."
+   },
+   {
+    "tour": "the-pochampally-weaving-artisan-journey",
+    "why": "Another great craft of the region, at home."
+   }
+  ]
  }
 ]
