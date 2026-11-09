@@ -1,6 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
+  "redirects": [
+    { "source": "/tours/:slug/book", "destination": "/book-now?experience=:slug", "permanent": true },
+    { "source": "/conventions/global-bio-india-2026", "destination": "/conventions", "permanent": true },
+    { "source": "/conventions/hyderabad-tech-summit-2026", "destination": "/conventions", "permanent": true },
+    { "source": "/conventions/india-sustainability-conclave-2026", "destination": "/conventions", "permanent": true },
+    { "source": "/conventions/world-pharma-summit-2026", "destination": "/conventions", "permanent": true },
+    { "source": "/partners/telugu-experiece", "destination": "/partners", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/fonts/(.*)",

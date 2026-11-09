@@ -1,0 +1,264 @@
+[
+ {
+  "slug": "heritage",
+  "name": "Heritage",
+  "tagline": "Walk through centuries.",
+  "short": "Forts, palaces, old quarters and stories that shaped Hyderabad.",
+  "headA": "Hyderabad,",
+  "headB": "through the centuries.",
+  "intro": "Hyderabad carries more than four centuries of history, built upon the older world of Golconda. Shaped by the Qutb Shahis and later the Asaf Jahi Nizams, the city grew through global trade, extraordinary architecture, royal patronage and a remarkable confluence of cultures. Its heritage lives beyond its monuments - in palaces, old neighbourhoods, bazaars, places of faith, collections, cuisine and everyday traditions. From Golconda and the Qutb Shahi Tombs to Charminar and the palaces of the Nizams, Hyderabad is a city where history is not simply preserved; it is still lived.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/g1_025.jpg",
+    "thumb": "/assets/img/pages/gal/g1_025-t.jpg",
+    "cap": "Tomb of Sultan Quli Qutb Shah",
+    "w": 720,
+    "h": 513
+   },
+   {
+    "src": "/assets/img/pages/gal/g1_036.jpg",
+    "thumb": "/assets/img/pages/gal/g1_036-t.jpg",
+    "cap": "Qutb Shahi Tombs",
+    "w": 720,
+    "h": 960
+   },
+   {
+    "src": "/assets/img/pages/gal/g1_041.jpg",
+    "thumb": "/assets/img/pages/gal/g1_041-t.jpg",
+    "cap": "Chowmahalla Palace",
+    "w": 720,
+    "h": 480
+   },
+   {
+    "src": "/assets/img/pages/gal/g9_031.jpg",
+    "thumb": "/assets/img/pages/gal/g9_031-t.jpg",
+    "cap": "Paigah Tombs",
+    "w": 720,
+    "h": 480
+   },
+   {
+    "src": "/assets/img/pages/gal/g2_056.jpg",
+    "thumb": "/assets/img/pages/gal/g2_056-t.jpg",
+    "cap": "Mosaic tile at the Badshahi Ashurkhana",
+    "w": 720,
+    "h": 1173
+   },
+   {
+    "src": "/assets/img/pages/gal/g1_010.jpg",
+    "thumb": "/assets/img/pages/gal/g1_010-t.jpg",
+    "cap": "Carved arches at Golconda Fort",
+    "w": 720,
+    "h": 540
+   }
+  ]
+ },
+ {
+  "slug": "culture",
+  "name": "Culture",
+  "tagline": "Taste. Make. Celebrate.",
+  "short": "Food, crafts, bazaars and traditions that make Hyderabad unmistakably its own.",
+  "headA": "Hyderabad,",
+  "headB": "lived every day.",
+  "intro": "Hyderabad’s culture is found as much around a table or inside a bustling bazaar as it is in its celebrated traditions. Centuries of Deccani, Telugu, Persian and other influences have shaped a distinctive way of life — expressed through food, language, textiles, jewellery, craft, music, festivals and hospitality. From biryani, Irani chai and traditional Telugu flavours to bangles, pearls, handloom, intricate craft and vibrant markets, this is a city best understood through its people, makers and everyday rituals.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/g2_003.jpg",
+    "thumb": "/assets/img/pages/gal/g2_003-t.jpg",
+    "cap": "Pearl strands in Laad Bazaar",
+    "w": 720,
+    "h": 602
+   },
+   {
+    "src": "/assets/img/pages/gal/g3_001.jpg",
+    "thumb": "/assets/img/pages/gal/g3_001-t.jpg",
+    "cap": "Hyderabadi chicken biryani",
+    "w": 720,
+    "h": 478
+   },
+   {
+    "src": "/assets/img/pages/gal/g3_014.jpg",
+    "thumb": "/assets/img/pages/gal/g3_014-t.jpg",
+    "cap": "Irani chai and Osmania biscuits",
+    "w": 720,
+    "h": 540
+   },
+   {
+    "src": "/assets/img/pages/gal/g4_013.jpg",
+    "thumb": "/assets/img/pages/gal/g4_013-t.jpg",
+    "cap": "A festival figure lit up at Shilparamam",
+    "w": 720,
+    "h": 960
+   },
+   {
+    "src": "/assets/img/pages/gal/culture-pearl-webp.jpg",
+    "thumb": "/assets/img/pages/gal/culture-pearl-webp-t.jpg",
+    "cap": "Stringing pearls by hand",
+    "w": 720,
+    "h": 987
+   }
+  ]
+ },
+ {
+  "slug": "cinema",
+  "name": "Cinema",
+  "tagline": "Step behind the screen.",
+  "short": "Studios, sets, filmmaking and the world of Telugu cinema.",
+  "headA": "Hyderabad,",
+  "headB": "behind the screen.",
+  "intro": "Hyderabad is one of India’s great centres of cinema — home to the Telugu film industry, major studios, production houses and generations of celebrated filmmakers, actors and technicians. From expansive film sets and sound stages to post-production, visual effects, costume, music and the craft behind filmmaking, the city offers a fascinating look at how stories move from imagination to screen. Cinema here is more than entertainment; it is an industry, a culture and an important part of Hyderabad’s contemporary identity.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/cinema-ramoji-film-city-webp.jpg",
+    "thumb": "/assets/img/pages/gal/cinema-ramoji-film-city-webp-t.jpg",
+    "cap": "Ramoji Film City",
+    "w": 720,
+    "h": 405
+   },
+   {
+    "src": "/assets/img/pages/gal/cinema-baahubali-set-jpg.jpg",
+    "thumb": "/assets/img/pages/gal/cinema-baahubali-set-jpg-t.jpg",
+    "cap": "The Baahubali set",
+    "w": 720,
+    "h": 405
+   },
+   {
+    "src": "/assets/img/pages/gal/g7_017.jpg",
+    "thumb": "/assets/img/pages/gal/g7_017-t.jpg",
+    "cap": "On the lot at Ramoji Film City",
+    "w": 720,
+    "h": 540
+   },
+   {
+    "src": "/assets/img/pages/gal/cinema-film-school-jpg.jpg",
+    "thumb": "/assets/img/pages/gal/cinema-film-school-jpg-t.jpg",
+    "cap": "Ramanaidu Film School",
+    "w": 720,
+    "h": 488
+   }
+  ]
+ },
+ {
+  "slug": "business",
+  "name": "Business",
+  "tagline": "Meet the city that builds.",
+  "short": "Innovation, enterprise, industry and institutions shaping modern Hyderabad.",
+  "headA": "Hyderabad,",
+  "headB": "built for what’s next.",
+  "intro": "Hyderabad has evolved into one of India’s leading centres for technology, life sciences, pharmaceuticals, startups, aerospace and global business. Home to major international companies, research institutions, innovation ecosystems and a new generation of entrepreneurs, the city brings together enterprise, talent and technology at remarkable scale. From global capability centres and Genome Valley to T-Hub and emerging innovation districts, Hyderabad offers business visitors a window into the industries, institutions and ideas shaping its next chapter.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/way-business-jpg.jpg",
+    "thumb": "/assets/img/pages/gal/way-business-jpg-t.jpg",
+    "cap": "Delegates on arrival at a Hyderabad convention",
+    "w": 720,
+    "h": 576
+   },
+   {
+    "src": "/assets/img/pages/gal/g8_006.jpg",
+    "thumb": "/assets/img/pages/gal/g8_006-t.jpg",
+    "cap": "A plenary session at HICC",
+    "w": 720,
+    "h": 479
+   },
+   {
+    "src": "/assets/img/pages/gal/g8_025.jpg",
+    "thumb": "/assets/img/pages/gal/g8_025-t.jpg",
+    "cap": "HITEX Exhibition Centre",
+    "w": 720,
+    "h": 540
+   },
+   {
+    "src": "/assets/img/pages/gal/g6_073.jpg",
+    "thumb": "/assets/img/pages/gal/g6_073-t.jpg",
+    "cap": "Cyber Towers, HITEC City",
+    "w": 720,
+    "h": 540
+   },
+   {
+    "src": "/assets/img/pages/gal/g7_055.jpg",
+    "thumb": "/assets/img/pages/gal/g7_055-t.jpg",
+    "cap": "Indian School of Business",
+    "w": 720,
+    "h": 542
+   }
+  ]
+ },
+ {
+  "slug": "wellness",
+  "name": "Wellness",
+  "tagline": "Slow down. Restore.",
+  "short": "Wellness, nature, movement and restorative ways to experience the city.",
+  "headA": "Hyderabad,",
+  "headB": "at a slower pace.",
+  "intro": "Beyond its energy and urban rhythm, Hyderabad offers many ways to pause, restore and reconnect. The city brings together yoga, meditation, traditional wellness practices, contemporary wellbeing, nature and restorative spaces — from quiet mornings and lakeside landscapes to specialised wellness centres and retreats beyond the city. Whether it is a few restorative hours between meetings or a more immersive wellbeing experience, Hyderabad offers a gentler way to experience the city.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/way-wellness-jpeg.jpg",
+    "thumb": "/assets/img/pages/gal/way-wellness-jpeg-t.jpg",
+    "cap": "A quiet moment of practice",
+    "w": 720,
+    "h": 1081
+   },
+   {
+    "src": "/assets/img/pages/gal/g5_066.jpg",
+    "thumb": "/assets/img/pages/gal/g5_066-t.jpg",
+    "cap": "Kanha Shanti Vanam",
+    "w": 720,
+    "h": 540
+   },
+   {
+    "src": "/assets/img/pages/gal/g5_069.jpg",
+    "thumb": "/assets/img/pages/gal/g5_069-t.jpg",
+    "cap": "The green nurseries at Kanha",
+    "w": 720,
+    "h": 405
+   },
+   {
+    "src": "/assets/img/pages/gal/g9_001.jpg",
+    "thumb": "/assets/img/pages/gal/g9_001-t.jpg",
+    "cap": "Ananthagiri Hills, a morning from the city",
+    "w": 720,
+    "h": 477
+   }
+  ]
+ },
+ {
+  "slug": "learning",
+  "name": "Learning",
+  "tagline": "See. Meet. Understand.",
+  "short": "Curated learning journeys through Hyderabad’s institutions, industries and ideas.",
+  "headA": "Hyderabad,",
+  "headB": "for the curious.",
+  "intro": "Hyderabad is home to some of India’s leading institutions, research centres, universities, laboratories and centres of excellence. Its strengths span science, technology, life sciences, agriculture, design, entrepreneurship, heritage and the creative industries — making the city a rich environment for learning beyond the classroom. From institutional visits and industry exposure to expert interactions and hands-on experiences, Hyderabad offers students, educators and professional groups an opportunity to see knowledge, research and innovation in action.",
+  "gallery": [
+   {
+    "src": "/assets/img/pages/gal/g7_025.jpg",
+    "thumb": "/assets/img/pages/gal/g7_025-t.jpg",
+    "cap": "Arts College, Osmania University",
+    "w": 720,
+    "h": 697
+   },
+   {
+    "src": "/assets/img/pages/gal/g7_033.jpg",
+    "thumb": "/assets/img/pages/gal/g7_033-t.jpg",
+    "cap": "Through a window at Osmania University",
+    "w": 720,
+    "h": 480
+   },
+   {
+    "src": "/assets/img/pages/gal/g7_037.jpg",
+    "thumb": "/assets/img/pages/gal/g7_037-t.jpg",
+    "cap": "Inner courtyard, Osmania Arts College",
+    "w": 720,
+    "h": 480
+   },
+   {
+    "src": "/assets/img/pages/gal/g7_064.jpg",
+    "thumb": "/assets/img/pages/gal/g7_064-t.jpg",
+    "cap": "Research fields at ICRISAT",
+    "w": 720,
+    "h": 540
+   }
+  ]
+ }
+]

@@ -1,0 +1,206 @@
+[
+ {
+  "name": "Taj Falaknuma Palace",
+  "cat": "Heritage Hospitality",
+  "logo": "taj-falaknuma",
+  "w": 410,
+  "h": 360,
+  "exp": "high-tea-hyderabad",
+  "slug": "taj-falaknuma",
+  "about": [
+   "Built in 1893 on a hill above the old city, Falaknuma was the work of Nawab Vikar-ul-Umra and later a palace of the Nizams of Hyderabad. Its name is usually translated as “mirror of the sky”.",
+   "After a long restoration it opened as a Taj hotel in 2010, and it remains one of the most complete pictures of how Hyderabad’s nobility lived and received its guests."
+  ],
+  "photo": "/assets/img/pages/gal/g1_073.jpg",
+  "alt": "The viewing balcony at Taj Falaknuma",
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "old-hyderabad"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://www.tajhotels.com/en-in/taj/taj-falaknuma-palace-hyderabad"
+ },
+ {
+  "name": "Café Niloufer",
+  "cat": "Heritage Chai & Café",
+  "logo": "niloufer",
+  "w": 358,
+  "h": 212,
+  "exp": "chai-time-hyderabad",
+  "slug": "niloufer",
+  "about": [
+   "Café Niloufer began in 1978 with the idea of a chai that tasted of Hyderabad, and grew from one outlet at Lakdikapul into a city institution.",
+   "Irani chai and Osmania biscuits at Niloufer are, for many visitors and most residents, what a Hyderabad morning is meant to taste like."
+  ],
+  "photo": "/assets/img/pages/gal/g3_017.jpg",
+  "alt": "Bun maska and Irani chai at Niloufer",
+  "tours": [
+   "hyderabad-food-trail",
+   "old-hyderabad",
+   "hyderabad-by-night"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://cafeniloufer.com/"
+ },
+ {
+  "name": "Goyaz",
+  "cat": "Fine Jewellery",
+  "logo": "goyaz",
+  "w": 602,
+  "h": 145,
+  "exp": "the-hyderabad-pearl-experience",
+  "slug": "goyaz",
+  "about": [
+   "Goyaz is a Hyderabad-born jewellery brand known for handcrafted, gold-plated silver pieces, made with bridal and occasion wear in mind.",
+   "Its work brings a contemporary eye to a city whose relationship with jewellery goes back centuries."
+  ],
+  "photo": "/assets/img/pages/gal/g2_010.jpg",
+  "alt": "Strands of Hyderabad pearls",
+  "tours": [
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "the-pochampally-weaving-artisan-journey"
+  ],
+  "draft": "Written from public sources; the photo is general, not of this brand",
+  "url": "https://goyazjewellery.com/"
+ },
+ {
+  "name": "Ramoji Film City",
+  "cat": "Film & Entertainment",
+  "logo": "ramoji",
+  "w": 432,
+  "h": 165,
+  "exp": "behind-the-screen",
+  "slug": "ramoji",
+  "about": [
+   "Opened in 1996 on the edge of Hyderabad, Ramoji Film City is listed by Guinness World Records as the largest film studio complex in the world.",
+   "Its streets, gardens and sets have stood in for places all over the world, and it remains a working part of Indian cinema."
+  ],
+  "photo": "/assets/img/pages/gal/g7_002.jpg",
+  "alt": "Themed gardens at Ramoji Film City",
+  "tours": [
+   "the-ramoji-film-city-experience",
+   "the-modern-hyderabad-innovation-circuit",
+   "hyderabad-by-night"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://www.ramojifilmcity.com/"
+ },
+ {
+  "name": "Paradise",
+  "cat": "Iconic Hyderabadi Biryani",
+  "logo": "paradise",
+  "w": 233,
+  "h": 81,
+  "exp": "the-great-hyderabad-tasting",
+  "slug": "paradise",
+  "about": [
+   "Paradise began in 1953 as a small canteen inside a cinema in Secunderabad. Its biryani went on to become one of the most recognised tastes of the city.",
+   "For many first-time visitors, this is the name that comes up before they have even landed."
+  ],
+  "photo": "/assets/img/pages/gal/g3_007.jpg",
+  "alt": "Biryani with raita and mirchi ka salan",
+  "tours": [
+   "hyderabad-food-trail",
+   "old-hyderabad",
+   "hyderabad-by-night"
+  ],
+  "draft": "Written from public sources; the photo is general, not of this brand",
+  "url": "https://www.paradisefoodcourt.in/"
+ },
+ {
+  "name": "HICC",
+  "cat": "Conventions & Events",
+  "logo": "hicc",
+  "w": 618,
+  "h": 360,
+  "exp": "",
+  "ctaLabel": "Find your event",
+  "ctaHref": "/conventions",
+  "ctaMeta": "Delegate experiences",
+  "slug": "hicc",
+  "about": [
+   "The Hyderabad International Convention Centre is one of the city’s main venues for international conferences and events, in the HITEC City business district.",
+   "If you are here for a conference, there is a good chance you will spend time here. We plan the rest of the city around it."
+  ],
+  "photo": "/assets/img/pages/gal/g8_006.jpg",
+  "alt": "A plenary session at HICC",
+  "tours": [
+   "the-modern-hyderabad-innovation-circuit",
+   "the-royal-hyderabad-heritage-trail",
+   "hyderabad-by-night"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://hicc.com/"
+ },
+ {
+  "name": "Heartfulness",
+  "cat": "Meditation & Wellness",
+  "logo": "heartfulness",
+  "w": 720,
+  "h": 225,
+  "exp": "reset-in-hyderabad",
+  "slug": "heartfulness",
+  "about": [
+   "Kanha Shanti Vanam, outside Hyderabad, is the global headquarters of the Heartfulness Institute. Its meditation centre, inaugurated in 2020, is among the largest in the world.",
+   "Heartfulness offers its practices of meditation free of charge, and the campus is known for its calm and its green nurseries."
+  ],
+  "photo": "/assets/img/pages/gal/g5_060.jpg",
+  "alt": "Under the great canopy at Kanha",
+  "tours": [
+   "kanha-retreat",
+   "the-hyderabad-spiritual-circuit",
+   "the-hyderabad-sacred-journey"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://heartfulness.org/kanha/"
+ },
+ {
+  "name": "Karachi Bakery",
+  "cat": "Heritage Bakery",
+  "logo": "karachi-bakery",
+  "w": 179,
+  "h": 124,
+  "exp": "",
+  "ctaLabel": "Book the Food Trail",
+  "ctaHref": "/book-now?experience=hyderabad-food-trail",
+  "ctaMeta": "The Hyderabad Food Trail",
+  "slug": "karachi-bakery",
+  "about": [
+   "Karachi Bakery opened in 1953 at Moazzam Jahi Market, started by a family who came to Hyderabad after Partition.",
+   "Its fruit biscuits have become one of the most carried-home tastes of the city, packed into suitcases at the airport every day."
+  ],
+  "photo": "/assets/img/pages/gal/g3_014.jpg",
+  "alt": "Irani chai and Osmania biscuits",
+  "tours": [
+   "hyderabad-food-trail",
+   "old-hyderabad",
+   "hyderabad-by-night"
+  ],
+  "draft": "Written from public sources; the photo is general, not of this brand",
+  "url": "https://www.karachibakery.com/"
+ },
+ {
+  "name": "Shilparamam",
+  "cat": "Arts, Crafts & Culture",
+  "logo": "shilparamam",
+  "w": 270,
+  "h": 103,
+  "exp": "made-in-hyderabad",
+  "slug": "shilparamam",
+  "about": [
+   "Set up in 1992 at Madhapur, Shilparamam is a crafts village where artisans from across India work, sell and keep their traditions in view.",
+   "Its rural museum and stalls make it one of the easiest places in the city to meet makers face to face."
+  ],
+  "photo": "/assets/img/pages/gal/g4_002.jpg",
+  "alt": "Craft stalls at Shilparamam after dark",
+  "tours": [
+   "village-life",
+   "hyderabad-through-its-crafts",
+   "the-pochampally-weaving-artisan-journey"
+  ],
+  "draft": "Written from public sources",
+  "url": "https://shilparamam.in/"
+ }
+]

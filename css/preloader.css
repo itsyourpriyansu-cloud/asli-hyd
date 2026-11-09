@@ -135,7 +135,7 @@ html.is-preloading .mn-pre {
   align-items: center;
   flex: 0 0 var(--slot);
   height: var(--slot);
-  color: #a97835;
+  color: var(--gold-ink);
 }
 
 @media (prefers-reduced-motion: reduce) { .mn-pre__bg::before { animation: none; } }

@@ -70,10 +70,10 @@ page = f'''<!doctype html>
   .cr {{ max-width: 112rem; margin: 0 auto; padding: 6.4rem var(--gutter) 9.6rem; color: var(--ink); }}
   .cr__home img {{ width: 15rem; height: auto; }}
   .cr__title {{ margin-top: 4.8rem; font-family: var(--serif); font-weight: 300; font-size: clamp(3.8rem, 4vw, 6rem); line-height: 1.05; }}
-  .cr__title em {{ font-style: italic; color: #a97835; }}
+  .cr__title em {{ font-style: italic; color: #8a5f22; }}
   .cr__intro {{ max-width: 64rem; margin-top: 1.6rem; font-size: 1.5rem; line-height: 2.4rem; color: var(--ink-70); }}
-  .cr h2 {{ margin-top: 6.4rem; padding-top: 2.4rem; border-top: 1px solid rgba(46, 57, 55, .14); font-family: var(--serif); font-weight: 400; font-size: 3rem; }}
-  .cr h3 {{ margin-top: 4rem; font-family: var(--serif); font-weight: 400; font-size: 2.2rem; color: #a97835; }}
+  .cr h2 {{ margin-top: 6.4rem; padding-top: 2.4rem; border-top: 1px solid rgba(42, 36, 32, .14); font-family: var(--serif); font-weight: 400; font-size: 3rem; }}
+  .cr h3 {{ margin-top: 4rem; font-family: var(--serif); font-weight: 400; font-size: 2.2rem; color: #8a5f22; }}
   .cr p {{ max-width: 80rem; margin-top: 1.2rem; font-size: 1.4rem; line-height: 2.2rem; color: var(--ink-70); }}
   .cr p.cr-item {{ margin-top: .6rem; padding-left: 1.6rem; position: relative; }}
   .cr p.cr-item::before {{ content: ""; position: absolute; left: 0; top: 1rem; width: .6rem; height: 1px; background: var(--gold); }}
@@ -81,7 +81,7 @@ page = f'''<!doctype html>
   .cr code {{ font-size: .9em; color: var(--ink); }}
   .cr-table {{ margin-top: 1.6rem; overflow-x: auto; }}
   .cr table {{ width: 100%; border-collapse: collapse; font-size: 1.3rem; line-height: 1.9rem; }}
-  .cr th, .cr td {{ padding: .9rem 1.2rem .9rem 0; border-bottom: 1px solid rgba(46, 57, 55, .1); text-align: left; vertical-align: top; }}
+  .cr th, .cr td {{ padding: .9rem 1.2rem .9rem 0; border-bottom: 1px solid rgba(42, 36, 32, .1); text-align: left; vertical-align: top; }}
   .cr th {{ font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-45); }}
 </style>
 </head>

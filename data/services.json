@@ -1,0 +1,374 @@
+[
+ {
+  "slug": "personal-chauffeur",
+  "name": "Personal Chauffeur",
+  "tagline": "Private Transport · Chauffeur Services",
+  "cta": "Book now",
+  "intro": "Enjoy the freedom to plan your day while a dedicated chauffeur takes care of driving and navigation. Whether you are exploring Hyderabad, visiting several appointments or heading out for dinner, this service helps bring your journeys together in one convenient booking.",
+  "options": [
+   {
+    "name": "4 hours",
+    "line": "For a shorter outing."
+   },
+   {
+    "name": "8 hours",
+    "line": "For a fuller itinerary."
+   },
+   {
+    "name": "Full day",
+    "line": "For an extended schedule."
+   }
+  ],
+  "how": [
+   "Share your pickup location, planned stops and travel requirements",
+   "The service is arranged around your plans",
+   "Your confirmation sets out the vehicle, area and hours",
+   "Your chauffeur takes care of driving and navigation"
+  ],
+  "share": [
+   "Preferred pickup location",
+   "Planned stops",
+   "Travel requirements"
+  ],
+  "confirmed": [
+   "Vehicle arrangements",
+   "Service area",
+   "Included hours and any distance allowance",
+   "Full-day hours"
+  ],
+  "separate": [
+   "Additional time",
+   "Additional distance",
+   "Parking",
+   "Tolls"
+  ],
+  "related": [
+   "executive-car-transfers",
+   "private-city-host",
+   "airport-meet-assist"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "private-city-host",
+  "name": "Private City Host",
+  "tagline": "Personalised Experiences · City Hosting",
+  "cta": "Book now",
+  "intro": "Get to know Hyderabad through the places, stories and everyday details that make it distinctive. Your private city host accompanies you along an agreed itinerary, offering context, answering questions and helping you feel more familiar with the city.",
+  "options": [
+   {
+    "name": "Half day",
+    "line": "A focused introduction to a neighbourhood or theme."
+   },
+   {
+    "name": "Full day",
+    "line": "More of the city at a comfortable pace."
+   }
+  ],
+  "how": [
+   "Share what interests you",
+   "The route is planned around your time, walking preferences and opening hours",
+   "Your host meets you at the agreed point",
+   "Explore with context, conversation and space for photographs"
+  ],
+  "share": [
+   "Interests: heritage, architecture, neighbourhood life, markets, food culture or contemporary Hyderabad",
+   "Time available",
+   "Walking preferences"
+  ],
+  "confirmed": [
+   "Host’s availability",
+   "Language",
+   "Meeting point",
+   "Service hours"
+  ],
+  "separate": [
+   "Transportation",
+   "Attraction tickets",
+   "Meals",
+   "Separately arranged activities"
+  ],
+  "related": [
+   "language-guide-interpreter",
+   "personal-photographer",
+   "custom-hyderabad-itinerary"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "language-guide-interpreter",
+  "name": "Language Guide / Interpreter",
+  "tagline": "Language Assistance · Guided Visits · Interpretation",
+  "cta": "Book now",
+  "intro": "Make your time in Hyderabad more engaging with language support tailored to your plans. Whether you want to understand the stories behind a landmark, speak with an artisan or take part in a meeting, this service helps you ask questions, follow explanations and share your thoughts.",
+  "options": [
+   {
+    "name": "Half day",
+    "line": "For a focused visit."
+   },
+   {
+    "name": "Full day",
+    "line": "For a longer itinerary."
+   }
+  ],
+  "how": [
+   "Tell us the languages required and the purpose of your visit",
+   "A language guide or interpreter is arranged to suit",
+   "Share your stops, group size and any specialist topics so they can prepare",
+   "Ask questions, follow explanations and share your thoughts"
+  ],
+  "share": [
+   "Languages required",
+   "Purpose of your visit: sightseeing, or conversations and meetings",
+   "Planned stops and group size",
+   "Any specialist topics"
+  ],
+  "confirmed": [
+   "Available languages",
+   "Service hours",
+   "Meeting arrangements",
+   "Inclusions"
+  ],
+  "separate": [
+   "Specialist interpreting (separate enquiry)",
+   "Document translation (separate enquiry)",
+   "Conference equipment (separate enquiry)"
+  ],
+  "related": [
+   "private-city-host",
+   "custom-hyderabad-itinerary",
+   "personal-shopper"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "airport-meet-assist",
+  "name": "Airport Meet & Assist",
+  "tagline": "Airport Services · Arrival & Departure Assistance",
+  "cta": "Book now",
+  "intro": "Enjoy a more comfortable airport experience at Hyderabad’s Rajiv Gandhi International Airport, with assistance arranged around your journey. A representative meets you at the confirmed meeting point and helps you navigate the next steps.",
+  "options": [
+   {
+    "name": "Arrival",
+    "line": "A welcome to Hyderabad and help connecting with your onward arrangements. May include guidance through the terminal, baggage coordination and meeting your pre-booked driver."
+   },
+   {
+    "name": "Departure",
+    "line": "Support from the agreed airport meeting point. May include guidance towards airline check-in, baggage assistance and onward escort through permitted areas."
+   }
+  ],
+  "how": [
+   "Share your flight number, travel date and passenger count",
+   "Your package and meeting point are confirmed",
+   "A representative meets you at Rajiv Gandhi International Airport",
+   "You are helped through the next steps of your journey"
+  ],
+  "share": [
+   "Flight number",
+   "Travel date",
+   "Passenger count",
+   "Any assistance requirements"
+  ],
+  "confirmed": [
+   "Meeting point",
+   "Service coverage",
+   "Baggage allowance",
+   "Any additional arrangements"
+  ],
+  "separate": [
+   "Airport transfers, lounge access, porter services and priority processing are included only when stated in your package",
+   "All assistance remains subject to airport procedures and access permissions"
+  ],
+  "related": [
+   "executive-car-transfers",
+   "personal-chauffeur",
+   "custom-hyderabad-itinerary"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "executive-car-transfers",
+  "name": "Executive Car & Transfers",
+  "tagline": "Private Transport · Executive Cars · Airport Transfers",
+  "cta": "Book now",
+  "intro": "Bring comfort and convenience to your Hyderabad visit with a private car and chauffeur reserved for your journey. Whether travelling between the airport and your hotel, attending meetings or planning several stops, choose an arrangement that suits your schedule.",
+  "options": [
+   {
+    "name": "Airport",
+    "line": "Between Rajiv Gandhi International Airport and your confirmed pickup or drop-off address."
+   },
+   {
+    "name": "Point-to-point",
+    "line": "A pre-arranged journey between two agreed locations, ideal for hotel, office, restaurant or event travel. Additional stops can be requested."
+   },
+   {
+    "name": "Full day",
+    "line": "A car and chauffeur at your disposal within the agreed hours and distance allowance."
+   }
+  ],
+  "how": [
+   "Choose the arrangement that suits your schedule",
+   "Share your flight details and luggage needs, where relevant",
+   "Vehicle and pickup details are confirmed in your quotation",
+   "A private car and chauffeur are reserved for your journey"
+  ],
+  "share": [
+   "Flight details for airport transfers",
+   "Luggage requirements",
+   "Pickup and drop-off locations",
+   "Any additional stops"
+  ],
+  "confirmed": [
+   "Vehicle category",
+   "Passenger and luggage capacity",
+   "Pickup instructions",
+   "Fare inclusions"
+  ],
+  "separate": [
+   "Waiting time",
+   "Extra hours",
+   "Additional distance",
+   "Tolls and parking"
+  ],
+  "related": [
+   "airport-meet-assist",
+   "personal-chauffeur",
+   "private-city-host"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "personal-shopper",
+  "name": "Personal Shopper",
+  "tagline": "Shopping Assistance · Personalised Retail Experiences",
+  "cta": "Book now",
+  "intro": "Make time for shopping that feels personal, with an accompanied experience planned around what you would like to find. Whether you are looking for a thoughtful gift, traditional accessories, clothing or something to remember Hyderabad by, your personal shopper helps you navigate the choices.",
+  "options": [
+   {
+    "name": "3–4 hours",
+    "line": "An accompanied outing through selected markets, boutiques or specialist stores, with time to browse and compare."
+   }
+  ],
+  "how": [
+   "Share your shopping list, preferred styles and approximate budget",
+   "A focused route is proposed",
+   "Your shopper accompanies you and helps you navigate the choices",
+   "Ask about sizes, materials, prices and delivery with help from your shopper"
+  ],
+  "share": [
+   "Your shopping list",
+   "Preferred styles",
+   "Approximate budget",
+   "Interests: bangles, pearl jewellery, handloom textiles, contemporary fashion or handcrafted gifts"
+  ],
+  "confirmed": [
+   "Meeting point",
+   "Shopping area",
+   "Transportation arrangements"
+  ],
+  "separate": [
+   "Purchases are paid for separately",
+   "Alterations, shipping and returns are subject to each retailer’s terms"
+  ],
+  "related": [
+   "private-city-host",
+   "personal-chauffeur",
+   "personal-photographer"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "personal-photographer",
+  "name": "Personal Photographer",
+  "tagline": "Photography · Travel Portraits · Personalised Experiences",
+  "cta": "Book now",
+  "intro": "Bring home photographs that capture both your time together and the character of Hyderabad. Your personal photographer helps you feel comfortable in front of the camera, offering gentle direction while leaving room for spontaneous moments.",
+  "options": [
+   {
+    "name": "1 hour",
+    "line": "Portraits at one agreed location."
+   },
+   {
+    "name": "Half day",
+    "line": "More varied coverage along a planned route."
+   }
+  ],
+  "how": [
+   "Share your preferred style, group size and any special occasion",
+   "Locations and timing are planned around light, distance and your pace",
+   "Gentle direction, with room for spontaneous moments",
+   "Your edited photographs are delivered as confirmed"
+  ],
+  "share": [
+   "Preferred style",
+   "Group size",
+   "Any special occasion"
+  ],
+  "confirmed": [
+   "Session hours",
+   "Number of edited photographs",
+   "Delivery timeline and file format",
+   "Image-use terms"
+  ],
+  "separate": [
+   "Transport",
+   "Location fees and permits",
+   "Any additional services",
+   "Outdoor plans may change for weather or venue restrictions"
+  ],
+  "related": [
+   "private-city-host",
+   "personal-shopper",
+   "custom-hyderabad-itinerary"
+  ],
+  "draft": "Old site text, restructured"
+ },
+ {
+  "slug": "custom-hyderabad-itinerary",
+  "name": "Custom Hyderabad Itinerary",
+  "tagline": "Personalised Travel Planning · Custom Itineraries",
+  "cta": "Plan now",
+  "intro": "Make the most of your time in Hyderabad with a personalised itinerary that brings together the experiences that interest you most. From heritage and food culture to shopping, contemporary neighbourhoods and quieter escapes, your plan begins with what you enjoy.",
+  "options": [
+   {
+    "name": "Half day",
+    "line": "A focused introduction to a neighbourhood or theme."
+   },
+   {
+    "name": "Full day",
+    "line": "A broader exploration of the city."
+   },
+   {
+    "name": "Multi-day",
+    "line": "Activities spread across your stay, with time to relax."
+   }
+  ],
+  "how": [
+   "Share your dates, where you are staying, your group and must-see places",
+   "Your plan is organised around a practical route",
+   "You receive suggested stops, approximate timings and what needs reserving",
+   "Your quotation confirms the service, revisions and bookings"
+  ],
+  "share": [
+   "Travel dates and accommodation location",
+   "Group details and budget",
+   "Must-see places",
+   "Dietary preferences, mobility requirements and family needs"
+  ],
+  "confirmed": [
+   "The planning service",
+   "Included revisions",
+   "Any booked arrangements"
+  ],
+  "separate": [
+   "Hosts, transport, dining and other add-ons, with costs confirmed separately",
+   "Activities and reservations remain subject to availability until confirmed"
+  ],
+  "related": [
+   "private-city-host",
+   "personal-chauffeur",
+   "language-guide-interpreter"
+  ],
+  "draft": "Old site text, restructured"
+ }
+]

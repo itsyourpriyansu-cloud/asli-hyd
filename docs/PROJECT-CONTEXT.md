@@ -17,6 +17,7 @@ Last updated: 27 Oct 2026, after the motif kit and the footer's skyline band (se
   - [`VIDEO-SOURCES.md`](../VIDEO-SOURCES.md), [`assets/img/SOURCES.md`](../assets/img/SOURCES.md), [`assets/img/quick/SOURCES.md`](../assets/img/quick/SOURCES.md): every third-party clip and photo, with licence.
   - [`SITE-OUTLINE.md`](../SITE-OUTLINE.md): the **template-era** asset brief. All of its sections are now outdated: every template slot has been rebuilt. Keep it for history only.
   - [`docs/plans/`](plans/): the approved plans from earlier steps (history and rationale).
+  - [`CONTENT-FLOW.md`](CONTENT-FLOW.md): the homepage's story top to bottom: acts, copy, link map, journeys, wireframe vs built.
 
 ## 2. How the user works (follow this exactly)
 
@@ -48,7 +49,7 @@ The user directs the build one section at a time, usually with a screenshot plus
 
 ### Standing preferences (learned from feedback)
 
-- **Minimal eyebrows and CTAs.** The user repeatedly removed eyebrows and extra buttons (hero: no CTA, no eyebrow; the section 9 panel: schedule eyebrow removed). Do not add an eyebrow, kicker or second CTA unless the wireframe or the user asks for it. Section headers that already have one (sections 4 and 9) keep it.
+- **No eyebrows anywhere, minimal CTAs.** On 7 Nov 2026 the user removed every eyebrow on the site (`.mn-eyebrow` and the per-section eyebrow rules are deleted; `tools/test/conventions.mjs` fails if any `[class*="eyebrow"]` returns). Do not add an eyebrow, kicker or second CTA.
 - **Premium, Hyderabadi, editorial.**
   - Use the cream/ink/gold system.
   - Use Cormorant Garamond for display and Jost for UI.
@@ -73,9 +74,9 @@ The user directs the build one section at a time, usually with a screenshot plus
 | — | loader | `#mn-pre` | Intro loader: 5 Hyderabad images open one by one inside a logo-colour border; "Hyderabad is *Regal / Crafted / Inventive / Serene / Welcoming*"; cream background with a drifting gold jaali; morphs into the hero | done |
 | 1 | 1. HERO | `hero` | Drone video, "Experience **Asli = Real** Hyderabad" set in Cormorant Garamond Light, always three left-aligned lines ("Experience" / "Asli = Real" / "Hyderabad"), 96px on desktop, 80px tablet, min(72px, 15vw) phone; dark overlay + bottom gradient, **no CTA, no eyebrow** | done |
 | 2 | 2. STATEMENT | `statement` | "Irani chai at dawn, attar in the old bazaars, palaces that still remember the Nizams. This is Hyderabad, hosted the asli way." — Sahana. Letters ink from faint to full with the scroll; hand-drawn marker loops (`.mn-ring`, one Asli logo colour each) draw round the four key words as they ink; each svg's viewBox is matched to its word | done |
-| 3 | 3. TWO PATHS | `cats` | "Explore Hyderabad" / "Here for an Event" tiles: sepia Raja Deen Dayal Nizam-court photographs; a WebGL blob reveals the colourised version under the pointer (`js/cats-reveal.js`), and a click floods colour then follows the link | done |
-| 4 | 3b. CONVENTIONS | `conventions` | After Velaa's "world of its own" (velaaprivateisland.com, 3rd section). An ink band. Desktop: "In Hyderabad for a *Convention?*" floats at mid-screen (CSS sticky, `overflow: clip` on the section), and "Find your event. *Discover Hyderabad around it.*" (the live site's sub-line) joins it at 45% (`is-more`). Behind it, two offset columns of 4:5 convention cards scroll past; the even ones run ±160px against the odd (≥750px). Each card is one link (photo, number, name, dates · venue · tentative tag, ↗). Hover/focus: the photo brightens, zooms and gets a gold inner frame; the other cards dim to .4 and the heading to .15 (CSS `:has`). ≤1024px: the heading sits on top; phones get one column. Cards rise in one by one. Past events (by `data-end`) are removed and the rest renumbered. Photos: 960×1200 crops of the client's `assets/site-photos/conv-*.jpg`. Plan: `docs/plans/2026-11-02-conventions-velaa.md`. Test: `tools/test/conventions.mjs` | done |
-| 5 | 4. HYDERABAD, YOUR WAY | `collection-a` (+`data-themes`) | **Card explorer**: 6 theme cards (Heritage, Culture, Cinema, Business, Wellness, Learning); hover/focus/tap brings a theme into the big left panel with a looping video, heading, hosted routes and a CTA; other cards dim | done |
+| 3 | 3. TWO PATHS | `cats` | "Explore Hyderabad" / "Here for an Event" tiles: sepia Raja Deen Dayal Nizam-court photographs; a WebGL blob reveals the colourised version under the pointer (`js/cats-reveal.js`), and a click floods colour then follows the link. The line and CTA sit in an outlined glass card bottom right (`.mn-cats__card`: hairline, blur, gold divider, caps link with →; border turns gold on hover/focus). New generated imagery is planned (Old City at dawn / palace delegate dinner; prompts in `GEMINI-IMAGE-PROMPTS.md`, sepia derived from the colour file by ffmpeg). Plan: `docs/plans/2026-11-07-two-paths-imagery-cta-card.md` | card done, images awaited |
+| 4 | 3b. CONVENTIONS | `conventions` | **One-screen scroll rail** (version 2, 7 Nov; the Velaa ink band and the first card rail are retired). The section is exactly 100svh: a cream band with the khatam jaali (`.mn-m-jaali`, 14% as behind Quick Experiences) across it, faded only at the top and bottom. Header left, no eyebrow: "In Hyderabad / for a *Convention?*", "Find your event. *Discover Hyderabad around it.*" (each on one line on desktop). Right, level with the sub-line: the underline link "All conventions" (`.mn-ulink`, as "All tours" in section 5); on phones it sits under the heading. **No art** (the user removed the Charminar and the arch on 7 Nov). `--below-head` (about 54px at 900 tall) is the room between the heading and the cards. The rail fills the rest of the screen, so the 2:3 cards take their size from its height (about 416×624 at 1440×900, 315×472 at 1280×720), 1.2rem apart. Each card is one link: photo, a small date and a "Tentative" tag at the top, then name, pin + venue and a faint outline "Explore Convention →" button that turns cream only on hover/focus. **No serial numbers, no pill.** Desktop: motion.js pins the section and the page scroll carries the rail right to left (`is-driven`) until the last card meets the column edge. Tablets and phones swipe it natively with snap and it auto-advances a card every 4s while on screen (rewinding after the last; a touch, swipe or wheel pauses it for 8s; never with reduced motion), with no arrows. Desktop with reduced motion swipes too, with prev/next arrows (`is-scrollable`, components.js). 12 events, Oct 2026 to May 2027; past ones (by `data-end`) are removed. Photos: 960×1200 crops of the client's photos, credits in `assets/img/SOURCES.md`. Plan: `docs/plans/2026-11-07-conventions-scroll-rail.md`. Test: `tools/test/conventions.mjs` | done |
+| 5 | 4. HYDERABAD, YOUR WAY | `collection-a` (+`data-themes`) | **Card explorer**: 6 theme cards (Heritage, Culture, Cinema, Business, Wellness, Learning); hover/focus/tap brings a theme into the big left panel with a looping video, heading, hosted routes and a CTA; other cards dim. No serial numbers on the cards (Originals keep theirs). **Phones and tablets:** a segmented picker of six line icons (`.mn-themes__tabs`, sprite `i-theme-*`; 3×2 on phones, one row on tablets) replaces the card strip and drives the panel; the active tab turns dark gold with a gold wash and foot rule. Test: `tools/test/originals.mjs` | done |
 | 6 | 5. TRUSTED WITH HYDERABAD | `commission` | "Asli Hyderabad, *in numbers.*" Overlay editorial: slideshow of real Asli groups, a boxed card with a khatam jaali behind it (no border), figures that count up with a "+" landing | done (testimonials not yet) |
 | 7 | 6. PRIVATE ACCESS | `collector` | "Hyderabad, *behind closed doors.*" Teaser: two carved doors swing open onto a chandeliered durbar hall (live-site photo `assets/site-photos/tour-nizams-legacy-golconda.jpg`), then the line settles | done (the full table of 8 is not built) |
 | 8 | 7. ROOTED IN HYDERABAD | `city` | Split editorial "Four centuries of a city, *hosted by people who call it home.*" Image: golden-hour Golconda Durbar Hall rampart (`rooted-golconda.jpg`). The sideways ink sweep carries the **"400 years in one line"** skyline SVG (Golconda 1518 → Durgam Cheruvu 2020): seven landmark groups, each opening up (outline, details, then year and name) as the sweep carries it on screen, driven by its on-screen position so scrolling back closes it; on phones it is a band that draws once, landmark by landmark, while it glides | done |
@@ -111,6 +112,7 @@ css/header.css        header, dropdowns, mobile drawer
 css/preloader.css     the intro loader
 css/sections.css      every section, in page order, each under a numbered banner comment
 css/footer.css
+css/pages.css         inner pages only, one banner comment per template
 js/vendor/            gsap, ScrollTrigger, lenis (pinned versions, local)
 js/preloader.js       loader timeline; exposes window.mnPreloader {active, done}; dispatches 'mn:preloaded'
 js/components.js      UI behaviour with no scroll choreography: header, dropdowns, slideshows, hover videos,
@@ -120,7 +122,14 @@ js/motion.js          Lenis + all scroll choreography (gsap.matchMedia: desktop 
 js/cats-reveal.js     section 3 WebGL colour reveal
 server.js             static server with HTTP Range (needed for video)
 tools/                test harness + asset scripts (see tools/README.md)
+tools/build-pages.mjs writes the 59 inner pages from data/*.json; slices the header, sprite and footer out of index.html
+data/*.json           inner-page content, the source of truth (tours, themes, conventions, originals, services, offers, partners, private-access, gallery)
+tours/ experiences/ conventions/ originals/ services/ partners/ private-access/ gallery/ contact/ book-now/ 404.html
+                      GENERATED: edit data/ or the templates, then run `node tools/build-pages.mjs`. It deletes and rewrites these folders.
+assets/img/pages/     inner-page crops (hero 1920 + 1000, card 720x900, gallery full + thumb)
 ```
+
+**Inner pages.** Re-run the build after any change to the header, footer or `data/`; it exits 1 if an internal link, anchor or image on any page does not resolve. They load components.js and motion.js but no preloader. motion.js runs its homepage pins only when `body` lacks `.mn-pg`, and adds the hero arch opening, `[data-rise]` reveals and the route thread. Forms open WhatsApp with the request written out plus a `mailto:` fallback, so nothing is stored and the guest must press Send. `node tools/test/pages.mjs <base> <absOut>` checks every page at three sizes and the interactions.
 
 Script order matters: gsap, ScrollTrigger, lenis, then **preloader.js, components.js, motion.js**, then cats-reveal.js. components.js defines `window.mnArcade` before motion.js uses it. Anything that must wait for the loader awaits `window.mnPreloader.done`.
 
@@ -209,10 +218,10 @@ CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 192
 - 1rem = 10px (`html { font-size: 62.5% }`). Desktop is ≥1025px, tablet 750–1024px, phone ≤749px.
 - Class names are BEM with the `mn-` prefix. Comment density matches the surrounding code: short "why" comments, banner comments per section.
 - **Line endings:**
-  - `css/*.css` and `js/*.js` are **CRLF**; `index.html` is **LF**.
+  - All of `css/`, `js/` and `index.html` are **LF** (checked 7 Nov 2026; older notes said CRLF for CSS/JS).
   - When splicing with scripts, keep each file's style.
   - The Edit tool preserves line endings; Python writes need `newline=''` and explicit `\r\n`.
-- All links to inner pages (`/originals/...`, `/experiences/...`, `/tours/...`) are placeholders that 404 locally. `href="#"` links are made inert by components.js.
+- Inner pages exist and are generated (see section 4); `/tours` etc. resolve through `server.js` locally and Vercel in production. `href="#"` links are made inert by components.js.
 - The client's live-site paths are used where they exist (see LIVE-SITE-AUDIT.md §3 sitemap).
 
 ## 5. Design system
@@ -220,12 +229,12 @@ CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 192
 | Token | Value | Use |
 |---|---|---|
 | `--cream` | `#f4eee4` | page background |
-| `--ink` | `#2e3937` | text, dark UI (`--ink-70`, `--ink-45` for softer text) |
+| `--ink` | `#2a2420` (warm charcoal; was cool `#2e3937` before version 2) | text, dark UI (`--ink-70`, `--ink-45` for softer text) |
 | `--gold` | `#c59a5b` | Asli accent, rules, arches, jaali stroke |
 | `--gold-light` | `#d8b77d` | gold on dark backgrounds |
-| dark gold | `#a97835` | gold text on cream (readable): italics in headings, eyebrows, "Book now" |
+| `--gold-ink` | `#8a5f22` (4.9:1 on cream; was `#a97835`, 3.4:1) | gold text on cream (readable): italics in headings, eyebrows, "Book now" |
 | `--logo-*` (preloader) / `--rb-*` (base) | the Asli logo's rainbow letters | loader border, statement loops, used sparingly |
-| `--muted` | `#707c7a` | credits, small print |
+| `--muted` | `#72675d` (4.8:1 on cream) | credits, small print |
 
 - **Type:** Cormorant Garamond 300/400 for headings, with an *italic* second half in dark gold (for example "A little Hyderabad, *wherever you are.*"). Jost for UI and body. Uppercase labels use letter-spacing 0.14–0.2em. Section titles run about `clamp(3.8rem, 3.3vw, 6.4rem)`.
 - **Ease:** `--ease: cubic-bezier(.22, 1, .36, 1)`. GSAP uses `power2/3.out` for reveals and `expo.out` for ticks.
@@ -293,10 +302,10 @@ node tools/test/footer.mjs http://127.0.0.1:8655/ <ABS_OUT>
 
 1. **Written permission** from the 9 featured brands (logos and names) and the 3 named testimonial guests.
 2. **Brand list**: the client's wireframe named Anaganaga, Paista, Concu and Escape Estates; no official logos could be found (Paista and Escape Estates don't appear publicly; the only "Concu" found is Conçu, a cake boutique). The user approved swapping in Paradise, Karachi Bakery, Heartfulness and Shilparamam. The co-curated pairings follow the grid.
-3. **Instagram and other socials**: the real handles and URLs. `@aslihyderabad` is a placeholder and "Follow on Instagram" is inert; the footer's Instagram, Facebook, LinkedIn and YouTube icons are `href="#"` too (the live site lists no social accounts).
+3. **Instagram and other socials**: the real handles and URLs. `@aslihyderabad` is a placeholder. Until the handle exists, the reels link goes to `/gallery` (the Instagram link is in a comment beside it) and the footer's Instagram, Facebook, LinkedIn and YouTube icons are commented out (the live site lists no social accounts).
 4. **Real Asli reels** to replace the licensed stock (only the drone montage is Hyderabad footage).
 5. Prices for everything ("Price on request" for now).
 6. A clean hero drone master (watermark), and Hyderabad-shot footage for the explorers.
 7. A vector Asli logo.
-8. Inner pages: every link is a placeholder.
+8. Inner pages: built 9 Nov 2026 (99 in all). Every piece of placeholder copy is listed in `docs/CONTENT-TO-REPLACE.md`, generated by the build. Still needed: a lawyer's review of the draft Privacy and Terms, written consent before showing the 3 named Private Access guests (`show: false` in `data/private-access.json`), and confirmation of rights for the site photos (the service images look AI-generated).
 9. The wireframe author's note: launch with 4 Originals. The user chose 6; keep 6 unless told otherwise.

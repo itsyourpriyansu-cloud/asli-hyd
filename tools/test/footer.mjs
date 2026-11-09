@@ -49,7 +49,7 @@ for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
   const s = await b.ev(state);
   await b.shot(`footer-${tag}`);
   check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 3 && s.legal,`cols ${s.cols} contact ${s.contact}`);
-  check(`${tag} social icons shown`, s.social.join() === 'Instagram,Facebook,LinkedIn,YouTube,WhatsApp', s.social.join());
+  check(`${tag} social icons shown`, s.social.join() === 'WhatsApp', s.social.join()); // the other accounts return when the client supplies them
   if (w > 1024) check(`${tag} footer is one screen tall`, Math.abs(s.fh - s.vh) <= 2, `footer ${s.fh} / vh ${s.vh}`);
   check(`${tag} content clear of the buildings`, s.mainBottom <= s.builds, `content ends ${s.mainBottom}, buildings from ${s.builds}`);
   check(`${tag} cusped edge meets the CTA`, s.edgeGap === 0 && s.edgeH > 10, `gap ${s.edgeGap} edge ${s.edgeH}px`);

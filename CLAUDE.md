@@ -28,8 +28,8 @@ node server.js 8655     # http://127.0.0.1:8655  (Range support for video; use y
 
 ## Standing preferences
 
-- **No eyebrows or extra CTAs** unless the wireframe or the user asks; the user keeps removing them.
-- **Cream / ink / gold** (`#f4eee4` / `#2e3937` / `#c59a5b`, dark gold `#a97835` for text on cream). Cormorant Garamond headings with an *italic dark-gold second half*; Jost for UI. Ease `cubic-bezier(.22,1,.36,1)`.
+- **No eyebrows anywhere on the site** (all removed 7 Nov 2026), and no extra CTAs unless the wireframe or the user asks.
+- **Cream / ink / gold** (`#f4eee4` / `#2a2420` warm charcoal / `#c59a5b`, dark gold `--gold-ink` `#8a5f22` for text on cream, muted `#72675d`; all pass WCAG AA on cream). Cormorant Garamond headings with an *italic dark-gold second half*; Jost for UI. Ease `cubic-bezier(.22,1,.36,1)`.
 - Reuse the **khatam jaali** pattern and Mughal-arch / fine-gold-line motifs. Restrained and premium, with room to breathe.
 - **Real Hyderabad imagery, properly licensed.**
   - Use Wikimedia Commons (no NC/ND), Mixkit or Coverr.
@@ -47,6 +47,6 @@ node server.js 8655     # http://127.0.0.1:8655  (Range support for video; use y
   - `js/motion.js`: scroll choreography inside `gsap.matchMedia` blocks (≥1025px / ≤1024px / all), each pushing cleanups.
   - `prefers-reduced-motion` must still render everything complete.
 - **Match the surrounding code:** `mn-` BEM classes, short "why" comments, a banner comment per section in `css/sections.css`. 1rem = 10px.
-- **Line endings:** CSS/JS files are **CRLF**, `index.html` is **LF**. Preserve them when splicing with scripts.
-- Inner-page links (`/originals/…`, `/experiences/…`) are placeholders and 404 locally. That is expected.
+- **Line endings:** CSS, JS and `index.html` are all **LF**. Preserve that when splicing with scripts.
+- **Inner pages are generated.** Edit `data/*.json` or `tools/build-pages.mjs`, never the output folders (`tours/`, `experiences/`, `conventions/`, `originals/`, `services/`, `partners/`, `private-access/`, `gallery/`, `contact/`, `book-now/`, `privacy/`, `terms/`, `404.html`, `sitemap.xml`, `robots.txt`, `docs/CONTENT-TO-REPLACE.md`). Re-run `node tools/build-pages.mjs` after editing the header, footer or data: it rewrites those and fails on any broken link or `href="#"`. Placeholder copy carries `"draft"` in its data record, and real content goes in by replacing the text and deleting that line.
 - Scratch files and screenshots go in the session scratchpad, not the repo.

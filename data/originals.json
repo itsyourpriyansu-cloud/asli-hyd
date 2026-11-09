@@ -1,0 +1,218 @@
+[
+ {
+  "slug": "hyderabad-at-dawn",
+  "key": "dawn",
+  "name": "Hyderabad at Dawn",
+  "when": "Every Sunday",
+  "time": "6:30 AM – 9:30 AM",
+  "short": "Every Sunday · 6:30 AM",
+  "len": "3 hours",
+  "day": "Sunday",
+  "slot": "6:30 AM",
+  "tagline": "Wake up with Hyderabad. Stay for breakfast.",
+  "intro": "Experience Hyderabad before the city wakes up. An intimate early-morning journey through its streets, markets and everyday rituals, ending with an iconic local breakfast.",
+  "experience": [
+   "Early-morning city walk",
+   "Local markets and neighbourhoods",
+   "Morning stories",
+   "Irani chai",
+   "Iconic Hyderabadi breakfast"
+  ],
+  "best": [
+   "Visitors",
+   "Families",
+   "Photographers",
+   "Food lovers",
+   "Hyderabadis rediscovering their city"
+  ],
+  "includes": [
+   "Asli Hyderabad host",
+   "Curated route",
+   "Breakfast",
+   "Chai",
+   "Local tastings"
+  ],
+  "whereLabel": "Meeting point",
+  "where": "Shared after booking",
+  "cta": "Book this Sunday"
+ },
+ {
+  "slug": "welcome-hyderabad",
+  "key": "welcome",
+  "name": "Welcome Hyderabad",
+  "when": "Every Saturday",
+  "time": "11:00 AM – 2:00 PM",
+  "short": "Every Saturday · 11:00 AM",
+  "len": "3 hours",
+  "day": "Saturday",
+  "slot": "11:00 AM",
+  "tagline": "New to Hyderabad? Start here.",
+  "intro": "A warm introduction to Hyderabad around a beautifully curated Telugu table. Meet fellow visitors and newcomers, discover the city through food and conversation, and leave knowing what to explore next.",
+  "experience": [
+   "Hosted welcome",
+   "Hyderabad introduction",
+   "Telugu food experience",
+   "City stories",
+   "Conversations",
+   "Personal recommendations"
+  ],
+  "best": [
+   "First-time visitors",
+   "New residents",
+   "Business travellers",
+   "Conference delegates",
+   "Expats",
+   "Corporate teams"
+  ],
+  "includes": [
+   "Asli Hyderabad host",
+   "Curated Telugu meal",
+   "Welcome interaction",
+   "Hyderabad recommendations"
+  ],
+  "whereLabel": "Venue",
+  "where": "Selected Asli Hyderabad partner venue",
+  "cta": "Book this Saturday"
+ },
+ {
+  "slug": "hyderabad-after-dark",
+  "key": "after-dark",
+  "name": "Hyderabad After Dark",
+  "when": "Select Fridays",
+  "time": "7:00 PM – 10:30 PM",
+  "short": "Select Fridays · 7:00 PM",
+  "len": "3.5 hours",
+  "day": "Friday",
+  "slot": "7:00 PM",
+  "tagline": "See where Hyderabad goes after hours.",
+  "intro": "A hosted evening through contemporary Hyderabad: good food, interesting places, music, conversations and the city’s changing social scene.",
+  "experience": [
+   "Curated evening circuit",
+   "Food and drinks",
+   "Contemporary Hyderabad",
+   "Social spaces",
+   "Music and nightlife"
+  ],
+  "best": [
+   "Solo travellers",
+   "Couples",
+   "Young professionals",
+   "Business travellers",
+   "Conference delegates",
+   "New residents"
+  ],
+  "includes": [
+   "Asli Hyderabad host",
+   "Curated itinerary",
+   "Selected tastings and experiences"
+  ],
+  "whereLabel": "Meeting point",
+  "where": "Shared after booking",
+  "cta": "Book this Friday"
+ },
+ {
+  "slug": "the-hyderabad-table",
+  "key": "table",
+  "name": "The Hyderabad Table",
+  "when": "Monthly",
+  "time": "2–3 hours",
+  "short": "Monthly · Limited seats",
+  "len": "Limited seats",
+  "day": "Monthly",
+  "slot": "Limited seats",
+  "tagline": "One city. Many tables.",
+  "intro": "A signature Asli Hyderabad dining experience hosted at exceptional restaurants, heritage settings and interesting spaces across the city. Every edition brings together a place, a menu, a story and interesting people around one table. One edition could explore Deccani cuisine, another contemporary Telugu food, another the city’s Nizam heritage, and another Hyderabad through the eyes of a chef, artist, entrepreneur or cultural voice.",
+  "experience": [
+   "Changing venue",
+   "Curated menu",
+   "A Hyderabad story or theme",
+   "Hosted conversation",
+   "Limited-seat gathering"
+  ],
+  "best": [
+   "Food lovers",
+   "Visitors",
+   "Hyderabadis",
+   "Couples",
+   "Business travellers",
+   "Culture seekers"
+  ],
+  "includes": [
+   "Hosted experience",
+   "Curated meal",
+   "Storytelling and conversation"
+  ],
+  "whereLabel": "Next table",
+  "where": "Venue, theme and date announced for each edition",
+  "cta": "Book the next table"
+ },
+ {
+  "slug": "ramzan-nights",
+  "key": "ramzan",
+  "name": "Ramzan Nights",
+  "when": "Seasonal",
+  "time": "During Ramzan, after iftar",
+  "short": "Seasonal · During Ramzan",
+  "len": "Evenings",
+  "day": "Ramzan",
+  "slot": "After iftar",
+  "written": true,
+  "tagline": "Haleem, lights, and an Old City awake till dawn.",
+  "intro": "For one month the Old City keeps different hours. Walk Charminar’s night bazaar with a host who knows which haleem is worth the queue, taste the season’s specials, and see the lanes of Laad Bazaar lit up after iftar.",
+  "experience": [
+   "Charminar’s night bazaar",
+   "Haleem and Ramzan specials",
+   "The lanes of Laad Bazaar after iftar",
+   "Stories of the season"
+  ],
+  "best": [
+   "Food lovers",
+   "Photographers",
+   "Visitors",
+   "Hyderabadis rediscovering their city"
+  ],
+  "includes": [
+   "Asli Hyderabad host",
+   "Curated route",
+   "Tastings"
+  ],
+  "whereLabel": "Meeting point",
+  "where": "Shared after booking",
+  "cta": "Join a Ramzan night",
+  "draft": "Details expanded from the homepage copy"
+ },
+ {
+  "slug": "festival-hyderabad",
+  "key": "festival",
+  "name": "Festival Hyderabad",
+  "when": "Seasonal",
+  "time": "Bonalu and Bathukamma",
+  "short": "Seasonal · Bonalu & Bathukamma",
+  "len": "Festival days",
+  "day": "Festivals",
+  "slot": "Bonalu · Bathukamma",
+  "written": true,
+  "tagline": "Join the city when it celebrates.",
+  "intro": "Bonalu fills the Old City with processions and drums; Bathukamma fills the lakes with flowers. Join the city on its own festival days, with a host who can take you close, explain what you are seeing and bring you to the table afterwards.",
+  "experience": [
+   "Bonalu processions in the Old City",
+   "Bathukamma with Telangana families",
+   "Festival food and folk music"
+  ],
+  "best": [
+   "Culture seekers",
+   "Photographers",
+   "Families",
+   "Visitors"
+  ],
+  "includes": [
+   "Asli Hyderabad host",
+   "Curated route",
+   "Festival food"
+  ],
+  "whereLabel": "Dates",
+  "where": "Set by the festival calendar each year",
+  "cta": "See festival dates",
+  "draft": "Details expanded from the homepage copy"
+ }
+]

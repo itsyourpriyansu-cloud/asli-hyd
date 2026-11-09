@@ -29,8 +29,16 @@ const server = http.createServer((req, res) => {
   if (!file.startsWith(ROOT)) { res.writeHead(403).end(); return; }
   if (urlPath.endsWith('/')) file = path.join(file, 'index.html');
 
+  // Clean URLs, as on Vercel: /tours serves tours/index.html, unknown paths serve 404.html.
+  if (fs.existsSync(path.join(file, 'index.html'))) file = path.join(file, 'index.html');
+
   fs.stat(file, (err, stat) => {
-    if (err || !stat.isFile()) { res.writeHead(404, { 'Content-Type': 'text/plain' }).end('Not found'); return; }
+    if (err || !stat.isFile()) {
+      const notFound = path.join(ROOT, '404.html');
+      if (fs.existsSync(notFound)) res.writeHead(404, { 'Content-Type': TYPES['.html'] }).end(fs.readFileSync(notFound));
+      else res.writeHead(404, { 'Content-Type': 'text/plain' }).end('Not found');
+      return;
+    }
     const type = TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream';
     const range = req.headers.range;
 

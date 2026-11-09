@@ -1,0 +1,42 @@
+[
+ {
+  "name": "Badminton with Pullela Gopichand",
+  "line": "A private play session and interaction with one of India’s most celebrated badminton coaches.",
+  "show": false
+ },
+ {
+  "name": "Inside Vinita Pittie’s Haveli",
+  "line": "A private visit into the designer’s world of heritage, textiles, interiors, art and Deccani aesthetics.",
+  "show": false
+ },
+ {
+  "name": "Meet Thota Vaikuntam",
+  "line": "An intimate interaction with the celebrated artist and the stories behind his iconic Telangana-inspired works.",
+  "show": false
+ },
+ {
+  "name": "Meet Tollywood",
+  "line": "A private interaction with a leading actor, director, producer or filmmaker from Telugu cinema.",
+  "show": true
+ },
+ {
+  "name": "Inside Future City",
+  "line": "A privately curated look at Hyderabad’s ambitious next-generation city, its vision, planning and development.",
+  "show": true
+ },
+ {
+  "name": "Inside Genome Valley",
+  "line": "A specialist-led journey into Hyderabad’s globally significant pharma, biotech and life-sciences ecosystem.",
+  "show": true
+ },
+ {
+  "name": "Meet Hyderabad’s Founders",
+  "line": "Private conversations with entrepreneurs and business leaders building some of Hyderabad’s most interesting companies.",
+  "show": true
+ },
+ {
+  "name": "Coffee with an Insider",
+  "line": "One-to-one conversation with a carefully matched Hyderabad expert, from innovation and business to culture, design, food or the city itself.",
+  "show": true
+ }
+]

@@ -19,8 +19,12 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
+  // Inner pages (tools/build-pages.mjs) have none of the homepage's pins, and keep the browser's own back-button position.
+  var isHome = !document.body.classList.contains('mn-pg');
+  if (isHome) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }
 
   /* ---------- Lenis ---------- */
   if (window.Lenis) {
@@ -214,7 +218,7 @@
     var content = $('.mn-hero__content');
     if (!content) { root.classList.remove('is-loading'); return; }
     var parts = [];
-    $$('.mn-hero__eyebrow, .mn-hero__heading', content).forEach(function (el) {
+    $$('.mn-hero__heading', content).forEach(function (el) {
       parts = parts.concat(splitText(el, 'char'));
     });
     gsap.set(parts, { opacity: 0, filter: 'blur(8px)' });
@@ -269,40 +273,33 @@
     });
   })();
 
-  /* ---------- Conventions: each card rises in as it arrives; the heading's second line
-     joins it about halfway through, and leaves again on the way back (all sizes) ---------- */
+  /* ---------- Conventions: the Charminar and its arch draw themselves as the heading rises,
+     then the cards rise in one after another (all sizes) ---------- */
   (function conventionsIntro() {
     var conv = sec('conventions');
     if (!conv || conv.hidden) return;
-    // The reveal moves the inner link: the <li> carries the column parallax and the CSS dimming.
-    $$('.mn-conv__card', conv).forEach(function (card) {
-      gsap.set(card, { y: 60, autoAlpha: 0 });
-      // Refresh after the desktop pins above are measured, or the start lands too early.
-      ScrollTrigger.create({ trigger: card, start: 'top 92%', once: true, refreshPriority: -1, onEnter: function () {
-        gsap.to(card, { y: 0, autoAlpha: 1, duration: 1.2, ease: 'power3.out' });
-      } });
-    });
-    ScrollTrigger.create({ trigger: $('.mn-conv__stage', conv), start: '45% center', refreshPriority: -1, toggleClass: { targets: conv, className: 'is-more' } });
+    var head = $$('.mn-conv__head > *, .mn-conv__all', conv);
+    // The reveal moves the inner link, so the <li> keeps its snap position in the rail.
+    var cards = $$('.mn-conv__card', conv);
+    gsap.set(head, { y: 24, autoAlpha: 0 });
+    gsap.set(cards, { y: 60, autoAlpha: 0 });
+    // Refresh after the desktop pins above are measured, or the starts land too early.
+    ScrollTrigger.create({ trigger: conv, start: 'top 70%', once: true, refreshPriority: -1, onEnter: function () {
+      gsap.to(head, { y: 0, autoAlpha: 1, duration: 1, ease: 'power2.out', stagger: .1 });
+    } });
+    ScrollTrigger.create({ trigger: $('.mn-conv__rail', conv), start: 'top 92%', once: true, refreshPriority: -1, onEnter: function () {
+      // clearProps hands the transform back to CSS so the hover lift works afterwards.
+      gsap.to(cards, { y: 0, autoAlpha: 1, duration: 1.2, ease: 'power3.out', stagger: .1, clearProps: 'transform' });
+    } });
   })();
 
   /* ---------- Breakpoint-specific choreography ---------- */
   var mm = gsap.matchMedia();
 
-  /* Conventions, two columns (>=750px): the right column travels at its own speed, so the cards slide
-     past each other behind the floating heading. The matchMedia context reverts it below 750px. */
-  mm.add('(min-width: 750px)', function () {
-    var conv = sec('conventions');
-    if (!conv || conv.hidden) return;
-    gsap.fromTo($$('.mn-conv__item:nth-child(even)', conv), { y: 160 }, {
-      y: -160, ease: 'none',
-      scrollTrigger: { trigger: conv, start: 'top bottom', end: 'bottom top', scrub: true, refreshPriority: -1 }
-    });
-  });
-
-  mm.add('(min-width: 1025px)', function () {
+  mm.add(isHome ? '(min-width: 1025px)' : 'not all', function () {
     var cleanups = [];
     var S = {
-      hero: sec('hero'), statement: sec('statement'), cats: sec('cats'),
+      hero: sec('hero'), statement: sec('statement'), cats: sec('cats'), conv: sec('conventions'),
       colA: sec('collection-a'), commission: sec('commission'), collector: sec('collector'),
       city: sec('city'), spinner: sec('spinner'), colB: sec('collection-b'),
       materials: sec('materials'), worlds: sec('worlds')
@@ -362,6 +359,33 @@
         end: function () { return pageTop(S.cats) + Math.round(vh() * .55); },
         pin: true, pinSpacing: true, invalidateOnRefresh: true
       });
+    })();
+
+    /* Conventions: the one-screen section holds while the page scroll carries the card rail right to
+       left until the last card meets the column edge, with a short pause before and after (the
+       Quick Experiences pattern). Created here so it is measured after the Two Paths hold. */
+    (function () {
+      if (!S.conv || S.conv.hidden) return;
+      var rail = $('.mn-conv__rail', S.conv);
+      S.conv.classList.add('is-driven');
+      var dist = function () { return Math.max(rail.scrollWidth - rail.clientWidth, 0); };
+      var lead = function () { return Math.round(vh() * .12); };
+      var hold = ScrollTrigger.create({
+        trigger: S.conv, start: 'top top',
+        end: function () { return '+=' + (lead() * 2 + dist()); },
+        pin: true, pinSpacing: true, invalidateOnRefresh: true
+      });
+      gsap.fromTo(rail, { x: 0 }, {
+        x: function () { return -dist(); },
+        ease: 'none',
+        scrollTrigger: {
+          trigger: S.conv,
+          start: function () { return hold.start + lead(); },
+          end: function () { return hold.start + lead() + dist(); },
+          scrub: true, invalidateOnRefresh: true
+        }
+      });
+      cleanups.push(function () { S.conv.classList.remove('is-driven'); });
     })();
 
     /* Collections: masked rise-in, staggered cards. */
@@ -566,7 +590,7 @@
   });
 
   /* Tablet / phone: lighter parallax on the big media. */
-  mm.add('(max-width: 1024px)', function () {
+  mm.add(isHome ? '(max-width: 1024px)' : 'not all', function () {
     var cleanups = [];
     $$('.mn-ed__media').forEach(function (m) {
       gsap.set(m, { overflow: 'hidden' });
@@ -720,10 +744,11 @@
   /* Heritage: background parallax, intro stagger, timeline drawn milestone by milestone. */
   (function () {
     var wrap = sec('heritage');
+    if (!wrap) return;
     var box = $('.mn-heritage', wrap);
     parallax(box, $('.mn-heritage__img', wrap), 1.28, 12);
 
-    var intro = $$('.mn-heritage__eyebrow, .mn-heritage__heading, .mn-heritage__link', wrap);
+    var intro = $$('.mn-heritage__heading, .mn-heritage__link', wrap);
     gsap.set(intro, { y: 20, autoAlpha: 0 });
     once(function () { return box.getBoundingClientRect().top < vh() * .75; }, function () {
       gsap.to(intro, { y: 0, autoAlpha: 1, duration: 1, ease: 'power2.out', stagger: .12 });
@@ -790,6 +815,36 @@
       gsap.to(head, { y: 0, autoAlpha: 1, duration: 1, ease: 'power2.out', stagger: .1 });
       // clearProps hands the transform back to CSS so the hover lift works afterwards.
       gsap.to(tiles, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', stagger: { each: .07, grid: 'auto', from: 'start' }, delay: .2, clearProps: 'transform' });
+    });
+  })();
+
+  /* Inner pages: the hero opens out of its arch, content rises in, and the route thread draws with the scroll.
+     The CSS starts complete, so reduced motion (which returned above) and no-JS show the whole page. */
+  (function innerPages() {
+    if (isHome) return;
+    var hero = $('[data-hero]');
+    if (hero) {
+      $$('.mn-pg-hero__img, .mn-pg-hero__video', hero).forEach(function (layer) { parallax(hero, layer, 1.1, 4); });
+      gsap.from($('[data-hero-body]', hero).children, { y: 28, autoAlpha: 0, duration: 1.1, ease: 'power2.out', stagger: .12, delay: .55 });
+      if (root.classList.contains('mn-arch')) {
+        clearTimeout(window.__mnArchFailsafe);
+        gsap.to($('[data-hero-media]', hero), { '--arch': 5, duration: 1.7, ease: 'power3.inOut', onComplete: function () { root.classList.remove('mn-arch'); } });
+      }
+    }
+    var rising = $$('[data-rise], [data-rise-item]');
+    gsap.set(rising, { y: 32, autoAlpha: 0 });
+    ScrollTrigger.batch(rising, { start: 'top 92%', once: true, onEnter: function (batch) {
+      gsap.to(batch, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', stagger: .08, clearProps: 'transform,opacity,visibility' });
+    } });
+    $$('[data-route]').forEach(function (route) {
+      var line = $('[data-route-line]', route), stops = $$('[data-stop]', route);
+      route.classList.add('is-route-on');
+      if (stops[0]) stops[0].classList.add('is-lit');
+      gsap.set(line, { scaleY: 0 });
+      ScrollTrigger.create({ trigger: $('.mn-pg-route', route), start: 'top 72%', end: 'bottom 58%', scrub: .4, onUpdate: function (st) {
+        gsap.set(line, { scaleY: st.progress });
+        stops.forEach(function (stop, i) { stop.classList.toggle('is-lit', i === 0 || st.progress >= i / (stops.length - 1) - .02); });
+      } });
     });
   })();
 

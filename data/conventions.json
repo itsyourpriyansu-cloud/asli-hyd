@@ -1,0 +1,312 @@
+[
+ {
+  "slug": "gansid-international-congress-2026",
+  "name": "GANSID International Congress 2026",
+  "dates": "23–25 Oct 2026",
+  "start": "2026-10-23",
+  "end": "2026-10-25",
+  "venue": "HICC & Novotel, Hyderabad",
+  "card": "gansid-2026",
+  "desc": "The 4th International Congress on Sickle Cell and Other Inherited Blood Disorders brings clinicians, researchers and global health leaders to Hyderabad. Asli Hyderabad curates short city experiences around the congress schedule for visiting delegates.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ]
+ },
+ {
+  "slug": "apac-summit-2026",
+  "name": "APAC Summit 2026",
+  "dates": "28–30 Oct 2026",
+  "start": "2026-10-28",
+  "end": "2026-10-30",
+  "venue": "Hyderabad",
+  "card": "apac-summit-2026",
+  "desc": "Arriving in Hyderabad for the United Way Worldwide APAC Summit? Asli Hyderabad has curated pre- and post-summit experiences for delegates — from Charminar and the old city bazaars to Golconda, Falaknuma and Hyderabadi cuisine — so you can discover the real Hyderabad around your summit schedule.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ]
+ },
+ {
+  "slug": "nde-2026",
+  "name": "NDE 2026 & AeroNDT Symposium",
+  "dates": "15–17 Nov 2026",
+  "start": "2026-11-15",
+  "end": "2026-11-17",
+  "venue": "HITEX, Hyderabad",
+  "card": "gansid-2026",
+  "desc": "The non-destructive evaluation community meets in Hyderabad for its annual seminar and aerospace symposium. Asli Hyderabad curates short city experiences around the sessions for visiting engineers and researchers.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   300,
+   200
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ },
+ {
+  "slug": "avar-2026-cyber-security-conference",
+  "name": "AVAR 2026 Cyber Security Conference",
+  "dates": "02–04 Dec 2026",
+  "start": "2026-12-02",
+  "end": "2026-12-04",
+  "venue": "Hyderabad",
+  "card": "avar-2026",
+  "desc": "AVAR, Asia’s long-running international cyber security conference, comes to Hyderabad for its 29th edition. Asli Hyderabad curates evening and pre/post-conference city experiences for visiting researchers and CISOs.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ],
+  "logo": [
+   261,
+   200
+  ]
+ },
+ {
+  "slug": "telangana-rising-global-summit-2026",
+  "name": "Telangana Rising Global Summit 2026",
+  "dates": "07–09 Dec 2026",
+  "start": "2026-12-07",
+  "end": "2026-12-09",
+  "venue": "Bharat Future City, Hyderabad",
+  "card": "telangana-rising-2026",
+  "desc": "The Government of Telangana’s global investment summit, expected to draw international investors and industry leaders. Asli Hyderabad curates heritage, food and culture experiences for visiting delegations.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ],
+  "logo": [
+   212,
+   200
+  ]
+ },
+ {
+  "slug": "photonics-2026",
+  "name": "PHOTONICS 2026",
+  "dates": "09–13 Dec 2026",
+  "start": "2026-12-09",
+  "end": "2026-12-13",
+  "venue": "IIT Hyderabad",
+  "card": "photonics-2026",
+  "desc": "An international gathering on fibre optics and photonics, hosted at IIT Hyderabad. Asli Hyderabad curates city experiences for visiting researchers and their guests.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   352,
+   73
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ },
+ {
+  "slug": "structural-engineering-convention-2026",
+  "name": "Structural Engineering Convention 2026",
+  "dates": "20–23 Dec 2026",
+  "start": "2026-12-20",
+  "end": "2026-12-23",
+  "venue": "IIT Hyderabad",
+  "card": "sec-2026",
+  "desc": "Structural engineers and researchers from across India meet at IIT Hyderabad. In a city of Qutb Shahi domes and Nizam-era palaces, Asli Hyderabad curates experiences for delegates who want to see how it was all built.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   202,
+   200
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ },
+ {
+  "slug": "icca-global-summit-2027",
+  "name": "ICCA Global Summit 2027",
+  "dates": "10–14 Jan 2027",
+  "start": "2027-01-10",
+  "end": "2027-01-14",
+  "venue": "HITEX, Hyderabad",
+  "card": "icca-global-summit-2027",
+  "desc": "The biennial International Corrugated Case Association and World Containerboard Organisation Global Summit gathers industry leaders from around the world in Hyderabad. Asli Hyderabad curates city experiences for delegates and accompanying guests.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ],
+  "logo": [
+   249,
+   59
+  ]
+ },
+ {
+  "slug": "bioasia-2027",
+  "name": "BioAsia 2027",
+  "dates": "15–17 Feb 2027",
+  "start": "2027-02-15",
+  "end": "2027-02-17",
+  "venue": "HITEX, Hyderabad",
+  "card": "bioasia-2027",
+  "desc": "Asia’s leading life sciences and health-tech forum, hosted by the Government of Telangana, returns for its 24th edition with global pharma, biotech and technology leaders. Asli Hyderabad curates city experiences for international delegates.",
+  "written": false,
+  "tours": [
+   "hyderabad-by-night",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "old-hyderabad",
+   "statue-of-equality",
+   "the-hyderabad-sacred-journey",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-royal-hyderabad-heritage-trail"
+  ],
+  "logo": [
+   400,
+   196
+  ]
+ },
+ {
+  "slug": "ieee-apscon-2027",
+  "name": "IEEE APSCON 2027",
+  "dates": "15–17 Mar 2027",
+  "start": "2027-03-15",
+  "end": "2027-03-17",
+  "venue": "Hyderabad",
+  "card": "apscon-2027",
+  "desc": "The IEEE Applied Sensing Conference brings the sensors community to Hyderabad. Asli Hyderabad curates evening and pre- or post-conference experiences for visiting delegates.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   303,
+   200
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ },
+ {
+  "slug": "vaccines-world-summit-2027",
+  "name": "Vaccines World Summit 2027",
+  "dates": "17–18 Mar 2027",
+  "start": "2027-03-17",
+  "end": "2027-03-18",
+  "venue": "Hyderabad",
+  "card": "vaccines-world-summit-2027",
+  "desc": "Vaccine researchers and industry leaders gather in Hyderabad, one of the world’s great centres of vaccine manufacturing. Asli Hyderabad curates city experiences for international delegates.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   400,
+   105
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ },
+ {
+  "slug": "hyderabad-jewellery-pearl-gem-fair-2027",
+  "name": "Hyderabad Jewellery, Pearl & Gem Fair 2027",
+  "dates": "07–09 May 2027",
+  "start": "2027-05-07",
+  "end": "2027-05-09",
+  "venue": "HITEX, Hyderabad",
+  "card": "hjf-2027",
+  "desc": "The trade fair for jewellery, pearls and gems, in the City of Pearls. Asli Hyderabad curates city experiences for visiting exhibitors and buyers, including the bazaars where the trade began.",
+  "written": true,
+  "tours": [
+   "the-royal-hyderabad-heritage-trail",
+   "the-nizams-legacy-a-journey-through-425-years",
+   "the-ramoji-film-city-experience",
+   "the-hyderabad-sacred-journey",
+   "old-hyderabad",
+   "hyderabad-food-trail",
+   "hyderabad-through-its-crafts",
+   "statue-of-equality",
+   "hyderabad-by-night"
+  ],
+  "logo": [
+   114,
+   103
+  ],
+  "draft": "Description written from the organiser’s public listing"
+ }
+]

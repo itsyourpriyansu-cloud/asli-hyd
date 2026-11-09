@@ -1,0 +1,128 @@
+{
+ "privacy": {
+  "titleA": "Privacy",
+  "titleB": "Policy",
+  "updated": "9 November 2026",
+  "desc": "How Asli Hyderabad handles the information you share with us.",
+  "sections": [
+   {
+    "h": "Who we are",
+    "p": [
+     "Asli Hyderabad curates hosted experiences in and around Hyderabad, Telangana, India. In this policy, “we” means Asli Hyderabad."
+    ]
+   },
+   {
+    "h": "What we collect",
+    "p": [
+     "We only have what you choose to send us: usually your name, email address, phone number, travel dates, group size and the details of your request."
+    ]
+   },
+   {
+    "h": "How your enquiry reaches us",
+    "p": [
+     "The forms on this site do not store anything on the website. When you submit one, it opens WhatsApp with your request written out for you to send, and offers email as an alternative. Nothing reaches us until you send it, and WhatsApp and your email provider handle that message under their own terms."
+    ]
+   },
+   {
+    "h": "How we use it",
+    "p": [
+     "We use your information to reply to you, to plan and confirm your experience, and to stay in touch about that booking. We do not sell it."
+    ]
+   },
+   {
+    "h": "Who we share it with",
+    "p": [
+     "To deliver what you have asked for, we may share the necessary details with the hosts, drivers, venues and partners involved in your experience."
+    ]
+   },
+   {
+    "h": "Cookies and analytics",
+    "p": [
+     "This website does not use analytics or advertising trackers, and does not set tracking cookies. Our hosting provider may keep standard technical logs to run the site securely."
+    ]
+   },
+   {
+    "h": "Keeping and deleting your information",
+    "p": [
+     "We keep your information only as long as we need it for your booking and our records. You can ask us at any time what we hold about you, or ask us to correct or delete it."
+    ]
+   },
+   {
+    "h": "Contact us",
+    "p": [
+     "For any question about your information, write to sahana@aslihyd.in."
+    ]
+   },
+   {
+    "h": "Changes",
+    "p": [
+     "If this policy changes, we will update it here and change the date at the top."
+    ]
+   }
+  ],
+  "draft": "Needs a lawyer’s review"
+ },
+ "terms": {
+  "titleA": "Terms &",
+  "titleB": "Conditions",
+  "updated": "9 November 2026",
+  "desc": "The terms for using this website and enquiring with Asli Hyderabad.",
+  "sections": [
+   {
+    "h": "About this website",
+    "p": [
+     "This website describes the experiences and services offered by Asli Hyderabad. By using it, you agree to these terms."
+    ]
+   },
+   {
+    "h": "Enquiries are not bookings",
+    "p": [
+     "Sending a request through this site does not confirm a booking. A booking is confirmed only when our team confirms it to you directly."
+    ]
+   },
+   {
+    "h": "Prices",
+    "p": [
+     "Prices are shared on request. Your quotation sets out what is included and any further charges."
+    ]
+   },
+   {
+    "h": "Availability and changes",
+    "p": [
+     "Experiences depend on availability, permissions, venues, weather and the people involved. Details may change, and we will tell you if they do."
+    ]
+   },
+   {
+    "h": "Your booking",
+    "p": [
+     "The terms of a specific booking, including any cancellation terms, are set out in your confirmation."
+    ]
+   },
+   {
+    "h": "Conferences and events",
+    "p": [
+     "Asli Hyderabad is not the organiser of the conferences listed on this site. Dates and venues come from public listings and may change. Please check with the organiser."
+    ]
+   },
+   {
+    "h": "Partners and third parties",
+    "p": [
+     "Some experiences involve venues, brands and suppliers with their own rules and terms. Their names and logos belong to them."
+    ]
+   },
+   {
+    "h": "Content on this site",
+    "p": [
+     "Text and design on this site belong to Asli Hyderabad unless stated otherwise. Photographs and videos are credited on our photo credits page."
+    ]
+   },
+   {
+    "h": "Contact us",
+    "p": [
+     "For any question about these terms, write to sahana@aslihyd.in."
+    ]
+   }
+  ],
+  "draft": "Needs a lawyer’s review"
+ }
+}

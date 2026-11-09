@@ -108,31 +108,39 @@ The site already has placeholder photos in these slots. Save each generated imag
 
 ---
 
-# Section 3: "Two Paths" colourised prints
+# Section 3: "Two Paths" (Explore Hyderabad / Here for an Event)
 
-When you hover the "Explore Hyderabad" and "Here for an Event" tiles, a wavy spotlight shows the photo **in colour**. Clicking a tile floods the whole photo with colour. The originals are 1880s sepia prints by Raja Deen Dayal, so each one needs a colourised copy that **lines up pixel for pixel** with the original. Anything moved or redrawn shows up as a double edge inside the spotlight.
+**Morning and evening, one shoot.** Left: the Old City at first light, privately. Right: a palace courtyard at blue hour, set for a delegate dinner. Same lens and grade, so the pair reads as one story: *explore by day, celebrate by night.*
 
-| Tile | Original (attach this) | Save the colour copy as | Exact size |
-|---|---|---|---|
-| Explore Hyderabad | `assets/img/art-old-city.jpg` | `assets/img/art-old-city-color.jpg` | 2000 × 1434 |
-| Here for an Event | `assets/img/art-chowmahalla.jpg` | `assets/img/art-chowmahalla-color.jpg` | 1614 × 2000 |
+At rest each tile shows a warm sepia print; under the pointer a wavy spotlight reveals it **in colour**, and a click floods the whole tile. You only generate the **colour** image. The sepia copy is made from it with one command (below), so the two always line up pixel for pixel.
 
-Until a colour file exists, its tile behaves exactly as before: no spotlight, and a plain link.
+| Tile | Generate and save as | We derive |
+|---|---|---|
+| Explore Hyderabad | `assets/img/paths/explore-color.jpg` | `assets/img/paths/explore.jpg` |
+| Here for an Event | `assets/img/paths/event-color.jpg` | `assets/img/paths/event.jpg` |
 
 ## How to run these
 
-1. Attach the original photo to Gemini and use the matching prompt below. This is an **edit** of the attached image, not a new image.
-2. Export at the **exact pixel size** in the table, as JPEG at about quality 82, in sRGB.
-3. **Check the alignment:** in any editor, put the colour copy over the original at 50% opacity. There should be no doubled minarets, chandeliers or edges. If there are, regenerate. If Gemini keeps shifting the framing, use a dedicated colourisation tool instead (Palette.fm, or DeOldify), because those keep the geometry exactly.
+1. **Square 1:1, 2048×2048** (the tile crops from a tall phone frame to a wide desktop one). Export JPEG at about quality 82, sRGB.
+2. **Keep the subject in the centre:** inside the middle 70% of the width and 80% of the height.
+3. **Keep two zones quiet:** the **top fifth** (the white title sits top-left) and the **lower-right corner, about 40% × 28%** (the description and button card sit there).
+4. Use one Gemini chat for both images; once the first is right, attach it to the second and add: *"Match the lens, light quality, colour grade and mood of the attached image."*
+5. **Check before use:** the Charminar must have exactly four minarets and one great arch per face, and no scaffolding. Palace architecture must be symmetrical.
+6. Make the sepia copy (we do this when wiring the files):
+   `ffmpeg -nostdin -i explore-color.jpg -vf "colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131,eq=contrast=1.04:saturation=.85" -q:v 3 explore.jpg`
 
-## Base instruction (start every prompt with this)
+## Style block (paste in place of `[STYLE]`)
 
-> Colourise the attached black-and-white / sepia photograph realistically, as if it had been shot on modern colour film in the same moment. This is a restoration, not a reinterpretation: do not move, add, remove, crop, straighten, sharpen or redraw anything. Every edge, person, building and shadow must stay in exactly the same place, and the output must be the same size and framing as the input. Keep the original grain and softness. Natural, slightly warm daylight colour. No modern objects, text, borders or watermarks.
+> Editorial luxury travel photograph for a high-end Hyderabad, India, hosting brand, in the spirit of Aman and Condé Nast Traveller photography. Photorealistic, full-frame camera, 35mm lens, natural and practical light only, gentle depth of field. Restrained, rich colour: warm sandstone, ivory lime plaster, aged brass, deep green, soft indigo, with lifted shadows and fine film grain. Calm composition with generous negative space: the top fifth of the frame is clean sky or ceiling, and the lower-right corner is quiet and slightly darker. Square 1:1, 2048×2048. People are seen from behind or in profile at a distance; no recognisable faces.
 
-## Explore Hyderabad: Old City street to the Charminar (1880s)
+## Negative line (in place of `[NEGATIVE]`)
 
-> [BASE] Palette: the Charminar and its minarets in weathered cream lime plaster with soft grey stone shadows. The Mecca Masjid on the right in warm grey granite. A pale, hazy blue sky fading to warm cream at the horizon. Deep green trees and palms. A dusty ochre and sand-coloured street. Whitewashed shopfronts with faded teal and brown wooden shutters, and terracotta-red roof tiles. The people in white cotton, with touches of saffron, maroon and indigo turbans and shawls. Bullock carts in brown wood. Bright late-morning sun.
+> Avoid: text, letters, signage, logos, watermarks, scaffolding, construction, modern vehicles, plastic chairs, crowds, tourists posing, selfie sticks, HDR, oversaturation, harsh midday light, CGI look, distorted or asymmetric architecture, extra minarets, extra fingers.
 
-## Here for an Event: Drawing room, Chowmahalla Palace (1880s)
+## Explore Hyderabad: "The Old City, before it wakes"
 
-> [BASE] Palette: ivory and cream stucco walls and ceiling, with gilded mouldings in soft antique gold. Crystal chandeliers that stay clear and colourless, with warm candle-gold highlights. Heavy drapes in deep crimson and gold brocade, and sheer ivory curtains. A balcony railing in white and gold. Dark polished wood furniture with red and gold upholstery. A rich Persian carpet in madder red and indigo. Warm, soft daylight from the windows, with a gentle amber glow inside.
+> [STYLE] The Charminar in Hyderabad at first light, seen straight down a narrow, freshly swept lane of Laad Bazaar. The monument fills the upper-centre of the frame: four slender minarets, each with a small dome, and a great central arch, in weathered cream lime plaster glowing pale gold in low sunrise light, with soft mist around its base. Wooden shopfronts line both sides with shutters half open. On the left, a bangle seller arranges stacks of jewel-toned glass bangles under a warm bulb. In the middle distance a local host in a crisp white kurta walks with two guests in linen toward the monument, all seen from behind, small in the frame. A few pigeons lift off the stones. The lower-right foreground is a shaded shop step in soft shadow. Sky clean pale gold-blue. Quiet, privileged, the city just for you. [NEGATIVE]
+
+## Here for an Event: "The delegate dinner, at a palace"
+
+> [STYLE] The main courtyard of a Nizam-era palace in Hyderabad (in the style of Chowmahalla Palace) at blue hour. A white neoclassical façade with tall arched windows and fine stucco mouldings, lit warm from within, reflected in a long rectangular pool with a quiet fountain. Beside the pool, one long banquet table dressed in ivory linen, set for about twenty-four guests: brass candelabra with lit candles, low runners of marigold and white roses, crystal glassware catching the light. A handful of delegates in evening wear arrive along the pool's edge, seen from behind and in profile, small in the frame; one host in a cream sherwani welcomes them. Deep indigo sky across the top of the frame. The lower-right foreground is calm dark water and stone. Elegant, celebratory, unhurried. [NEGATIVE]

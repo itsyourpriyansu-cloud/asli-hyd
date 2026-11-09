@@ -147,6 +147,7 @@
     var still = wrap.querySelector('[data-theme-still]');
     var cards = Array.prototype.slice.call(wrap.querySelectorAll('.mn-card[data-theme]'));
     var states = Array.prototype.slice.call(wrap.querySelectorAll('[data-state]'));
+    var tabs = Array.prototype.slice.call(wrap.querySelectorAll('[data-theme-tab]'));
     var conn = navigator.connection || {};
     var noVideo = reduceMotion || conn.saveData === true;
     var inView = false;
@@ -170,6 +171,11 @@
         s.inert = !on;
       });
       cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
+      tabs.forEach(function (t) {
+        var on = t.dataset.themeTab === theme;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-pressed', String(on));
+      });
 
       if (noVideo) {
         still.src = card.querySelector('.mn-card__img').currentSrc || card.querySelector('.mn-card__img').src;
@@ -212,6 +218,14 @@
       });
     });
 
+    // Phones and tablets (section 4): the theme picker drives the panel through its (hidden) card.
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var card = cards.filter(function (c) { return c.dataset.theme === tab.dataset.themeTab; })[0];
+        if (card) activate(card);
+      });
+    });
+
     // Only play while the section is on screen.
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
@@ -223,9 +237,9 @@
     }
   });
 
-  /* ---------- Conventions cards (section 3b) ----------
-     Removes events past their data-end date and renumbers the rest. Cards are plain links;
-     hover/focus dimming is CSS. */
+  /* ---------- Conventions rail (section 3b) ----------
+     Removes events past their data-end date. The rail scrolls natively; the arrows appear only
+     when the cards overflow (is-scrollable) and step one card at a time. Cards are plain links. */
   (function () {
     var wrap = document.querySelector('[data-conventions]');
     if (!wrap) return;
@@ -239,7 +253,50 @@
       return false;
     });
     if (!live.length) { wrap.hidden = true; return; }
-    live.forEach(function (item, i) { item.querySelector('.mn-conv__num').textContent = (i < 9 ? '0' : '') + (i + 1); });
+
+    var rail = wrap.querySelector('.mn-conv__rail');
+    if (!rail) return; // /conventions uses the same past-event filter on a plain grid
+    var prev = wrap.querySelector('.mn-conv__nav--prev');
+    var next = wrap.querySelector('.mn-conv__nav--next');
+    function update() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      wrap.classList.toggle('is-scrollable', max > 1);
+      prev.disabled = rail.scrollLeft <= 1;
+      next.disabled = rail.scrollLeft >= max - 1;
+    }
+    function step(dir) {
+      var item = rail.querySelector('.mn-conv__item');
+      var by = item.offsetWidth + (parseFloat(getComputedStyle(rail).columnGap) || 0);
+      rail.scrollBy({ left: dir * by, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    update();
+
+    // Phones and tablets: the rail advances one card every few seconds while on screen, rewinding
+    // after the last; a touch or swipe pauses it for a while. Never on desktop (scroll-driven there)
+    // or with reduced motion.
+    if (reduceMotion) return;
+    var small = window.matchMedia('(max-width: 1024px)');
+    var onScreen = false;
+    var restAt = 0;
+    var pause = function () { restAt = Date.now() + 8000; };
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (t) {
+      rail.addEventListener(t, pause, { passive: true });
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; }, { threshold: .5 }).observe(rail);
+    }
+    setInterval(function () {
+      if (!small.matches || !onScreen || document.hidden || Date.now() < restAt) return;
+      var max = rail.scrollWidth - rail.clientWidth;
+      if (max <= 1) return;
+      if (rail.scrollLeft >= max - 2) rail.scrollTo({ left: 0, behavior: 'smooth' });
+      else step(1);
+    }, 4000);
   })();
 
   /* ---------- Steps: accordion on phones ---------- */
@@ -369,6 +426,7 @@
     var target = id && document.getElementById(id);
     if (!target) return;
     e.preventDefault();
+    if (target.hasAttribute('tabindex')) target.focus({ preventScroll: true }); // the skip link must move keyboard focus too
     if (window.mnLenis) window.mnLenis.scrollTo(target, { duration: 1.6 });
     else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
     if (history.replaceState) history.replaceState(null, '', '#' + id);
@@ -424,5 +482,117 @@
     });
     window.addEventListener('resize', function () { api.update(api.driver ? api.x : rail.scrollLeft); });
     api.update(0);
+  }
+
+  /* ---------- Inner pages: tour tabs ---------- */
+  document.querySelectorAll('[data-filter-root]').forEach(function (root) {
+    var buttons = root.querySelectorAll('[data-filter]');
+    var cards = root.querySelectorAll('[data-tour-themes]');
+    var status = root.querySelector('[data-filter-status]');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.dataset.filter, shown = 0;
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        cards.forEach(function (card) {
+          var on = key === 'all' || card.dataset.tourThemes.split(' ').indexOf(key) > -1;
+          card.hidden = !on;
+          if (!on) return;
+          shown++;
+          // A card still waiting for its scroll reveal has to show as soon as the filter brings it up.
+          card.style.opacity = card.style.visibility = card.style.transform = '';
+        });
+        status.textContent = shown + (shown === 1 ? ' tour' : ' tours') + ' shown';
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      });
+    });
+  });
+
+  /* ---------- Inner pages: gallery lightbox (native <dialog> traps focus and returns it) ---------- */
+  var lb = document.querySelector('[data-lb]');
+  if (lb) {
+    var shots = Array.prototype.slice.call(document.querySelectorAll('[data-full]'));
+    var lbImg = lb.querySelector('[data-lb-img]');
+    var lbCap = lb.querySelector('[data-lb-cap]');
+    var lbAt = 0;
+    var lbShow = function (i) {
+      lbAt = (i + shots.length) % shots.length;
+      lbImg.src = shots[lbAt].dataset.full;
+      lbImg.alt = lbCap.textContent = shots[lbAt].dataset.cap;
+    };
+    shots.forEach(function (shot, i) {
+      shot.addEventListener('click', function () {
+        lbShow(i);
+        lb.showModal();
+        if (window.mnLenis) window.mnLenis.stop();
+      });
+    });
+    lb.querySelector('[data-lb-close]').addEventListener('click', function () { lb.close(); });
+    lb.querySelector('[data-lb-prev]').addEventListener('click', function () { lbShow(lbAt - 1); });
+    lb.querySelector('[data-lb-next]').addEventListener('click', function () { lbShow(lbAt + 1); });
+    lb.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') lbShow(lbAt - 1);
+      if (e.key === 'ArrowRight') lbShow(lbAt + 1);
+    });
+    lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+    lb.addEventListener('close', function () { if (window.mnLenis) window.mnLenis.start(); });
+  }
+
+  /* ---------- Inner pages: looping hero video, only when the guest can afford it ---------- */
+  var pageVideo = document.querySelector('[data-hero-video]');
+  if (pageVideo && !reduceMotion && !(navigator.connection && navigator.connection.saveData)) {
+    pageVideo.src = pageVideo.dataset.src;
+    pageVideo.muted = true;
+    pageVideo.addEventListener('playing', function () { pageVideo.classList.add('is-on'); }, { once: true });
+    var pagePlay = pageVideo.play();
+    if (pagePlay && pagePlay.catch) pagePlay.catch(function () {});
+  }
+
+  /* ---------- Convention pages: once the event is over, say so ---------- */
+  document.querySelectorAll('[data-ended]').forEach(function (note) {
+    if (new Date(note.dataset.ended + 'T00:00:00') >= new Date(new Date().toDateString())) return;
+    note.hidden = false;
+    note.parentNode.querySelector('[data-tentative]').hidden = true;
+  });
+
+  /* ---------- Inner pages: enquiry forms send through WhatsApp, with an email fallback ---------- */
+  document.querySelectorAll('[data-enquiry]').forEach(function (form) {
+    var params = new URLSearchParams(location.search);
+    var picker = form.elements.experience;
+    var message = form.elements.message;
+    var sent = form.parentNode.querySelector('[data-form-sent]');
+    if (picker && params.get('experience')) {
+      picker.value = params.get('experience');
+      if (picker.selectedIndex < 0) picker.selectedIndex = 0; // an old or mistyped link falls back to "Help me choose"
+    }
+    if (message && params.get('topic')) message.value = params.get('topic');
+    if (form.elements.notes && params.get('option')) form.elements.notes.value = 'Option: ' + params.get('option');
+
+    // Fires only once the browser's own required/type validation has passed.
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var lines = [form.dataset.enquiry];
+      form.querySelectorAll('input, select, textarea').forEach(function (field) {
+        var value = field.tagName === 'SELECT' ? field.options[field.selectedIndex].text : field.value.trim();
+        if (value) lines.push(form.querySelector('label[for="' + field.id + '"]').textContent + ': ' + value);
+      });
+      var text = lines.join('\n');
+      var wa = 'https://wa.me/919392149872?text=' + encodeURIComponent(text);
+      sent.querySelector('[data-form-wa]').href = wa;
+      sent.querySelector('[data-form-mail]').href = 'mailto:sahana@aslihyd.in?subject=' + encodeURIComponent(form.dataset.enquiry) + '&body=' + encodeURIComponent(text);
+      window.open(wa, '_blank', 'noopener');
+      form.hidden = true;
+      sent.hidden = false;
+      sent.focus();
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+  });
+
+  /* ---------- Inner pages: the phone booking bar gets out of the footer's way ---------- */
+  var bookBar = document.querySelector('[data-bookbar]');
+  var pageFoot = document.querySelector('.mn-footer');
+  if (bookBar && pageFoot && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      bookBar.classList.toggle('is-away', entries[0].isIntersecting);
+    }).observe(pageFoot);
   }
 })();

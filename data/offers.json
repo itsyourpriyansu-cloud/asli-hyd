@@ -1,0 +1,1033 @@
+{
+ "cocurated": [
+  {
+   "num": "01",
+   "slug": "high-tea-hyderabad",
+   "name": "High Tea, Hyderabad",
+   "kind": "Luxury Hospitality",
+   "line": "An elegant Hyderabad-inspired high tea in one of the city’s finest luxury settings.",
+   "partner": "Taj Falaknuma Palace",
+   "logo": "taj-falaknuma",
+   "photo": "high-tea",
+   "about": [
+    "Tea, in this city, has always been an occasion. High Tea, Hyderabad brings together fine service, Hyderabadi flavours and one of the city’s finest luxury settings, with an Asli host at the table to tell you what you are looking at and what you are tasting.",
+    "It suits an unhurried afternoon, a celebration, or a first look at how Hyderabad has long entertained its guests."
+   ],
+   "steps": [
+    "Arrive and meet your Asli host",
+    "Settle in for the tea service",
+    "Savouries and sweets with a Hyderabadi accent",
+    "Stories of the setting, before you leave"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Reserved table",
+    "High tea service"
+   ],
+   "best": [
+    "Couples and celebrations",
+    "Visitors with a free afternoon",
+    "Conference delegates and their guests"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Share any dietary needs when you book.",
+    "Dress guidance is shared with your confirmation."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "02",
+   "slug": "an-evening-at-the-palace",
+   "name": "An Evening at the Palace",
+   "kind": "Heritage Hospitality",
+   "line": "Palace storytelling, architecture and a beautifully hosted tea or sundowner.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "Palaces are best met slowly, as the light goes. An Evening at the Palace pairs the stories and architecture of a heritage property with a beautifully hosted tea or sundowner.",
+    "Your host walks you through what the rooms remember, then leaves you time to sit with it."
+   ],
+   "steps": [
+    "Welcome at the palace",
+    "A hosted walk through its architecture",
+    "Stories of the people who lived here",
+    "Tea or a sundowner as the evening settles"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Hosted palace storytelling",
+    "Tea or sundowner service"
+   ],
+   "best": [
+    "Heritage lovers",
+    "Couples and small groups",
+    "Delegates looking for one memorable evening"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Access depends on the property and any events on the day.",
+    "Share any dietary needs when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "03",
+   "slug": "inside-hyderabad-design",
+   "name": "Inside Hyderabad Design",
+   "kind": "Boutique Hospitality",
+   "line": "A hosted encounter with distinctive architecture, interiors, design and the story behind the space.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "Some of Hyderabad’s best stories are told in stone, tile and timber. Inside Hyderabad Design is a hosted encounter with distinctive architecture and interiors, and with the thinking behind the space.",
+    "It is an experience for people who notice how a room is put together, and want to know why."
+   ],
+   "steps": [
+    "Meet your host at the property",
+    "Walk the architecture and interiors",
+    "Hear the story behind the space",
+    "Time to look closer and ask questions"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Hosted visit to the property",
+    "The story behind the design"
+   ],
+   "best": [
+    "Architects and designers",
+    "Design-minded travellers",
+    "Small private groups"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Photography depends on the property’s rules."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "04",
+   "slug": "the-great-hyderabad-tasting",
+   "name": "The Great Hyderabad Tasting",
+   "kind": "Iconic Hyderabad Dining",
+   "line": "A tasting flight of Hyderabad’s most iconic flavours, designed especially for first-time visitors.",
+   "partner": "Paradise",
+   "logo": "paradise",
+   "photo": "hyderabad-tasting",
+   "about": [
+    "Hyderabad’s reputation is built on a handful of unforgettable dishes. The Great Hyderabad Tasting brings them together as a tasting flight, designed especially for first-time visitors.",
+    "Your host explains what is on the plate, where it came from, and what to order for the rest of your stay."
+   ],
+   "steps": [
+    "Sit down with your Asli host",
+    "The tasting flight, course by course",
+    "The stories behind each flavour",
+    "Your list of what to eat next"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Tasting flight of iconic Hyderabadi flavours",
+    "Personal food recommendations"
+   ],
+   "best": [
+    "First-time visitors",
+    "Food lovers",
+    "Conference delegates short on time"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Share any dietary needs when you book.",
+    "Tell us if you would like a vegetarian tasting."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "05",
+   "slug": "a-telugu-table",
+   "name": "A Telugu Table",
+   "kind": "Contemporary Telugu Fine Dining",
+   "line": "A beautifully curated introduction to Telugu cuisine through a multi-course tasting.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "Telugu food deserves to be known for far more than its heat. A Telugu Table is a beautifully curated introduction to the cuisine through a multi-course tasting.",
+    "Each course comes with the context that makes it make sense: the region, the season and the home kitchens it comes from."
+   ],
+   "steps": [
+    "Welcome to the table",
+    "A multi-course Telugu tasting",
+    "The regions and rituals behind each course",
+    "A last course and recommendations"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Multi-course Telugu tasting",
+    "Stories of the cuisine"
+   ],
+   "best": [
+    "Food lovers",
+    "Visitors new to Telugu cuisine",
+    "Business hosts and their guests"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Share any dietary needs when you book.",
+    "The menu changes with the season and the venue."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "06",
+   "slug": "chai-time-hyderabad",
+   "name": "Chai Time, Hyderabad",
+   "kind": "Heritage Chai & Café Culture",
+   "line": "Irani chai, Osmania biscuits, café culture and the stories that made Hyderabad’s chai legendary.",
+   "partner": "Café Niloufer",
+   "logo": "niloufer",
+   "photo": "chai-time",
+   "about": [
+    "Hyderabad runs on Irani chai, and on the conversations that happen over it. Chai Time, Hyderabad sits you down with Osmania biscuits and the stories that made the city’s chai legendary.",
+    "It is short, warm and very local: the easiest way to understand how this city spends its time."
+   ],
+   "steps": [
+    "Meet your host at the café",
+    "Irani chai and Osmania biscuits",
+    "How café culture shaped the city",
+    "One more cup, if you have time"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Irani chai",
+    "Osmania biscuits"
+   ],
+   "best": [
+    "First-time visitors",
+    "Delegates between sessions",
+    "Anyone with an hour to spare"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Cafés are busy and informal: that is part of the experience."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "07",
+   "slug": "coffee-with-hyderabad",
+   "name": "Coffee with Hyderabad",
+   "kind": "Contemporary Café Culture",
+   "line": "Signature coffee, something sweet and an easy hosted introduction to contemporary Hyderabad.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "There is a younger Hyderabad too, and it meets over coffee. Coffee with Hyderabad is signature coffee, something sweet and an easy hosted introduction to the contemporary city.",
+    "Come with questions about where to go, what to see and who to meet, and leave with better answers than a search can give you."
+   ],
+   "steps": [
+    "Meet your host",
+    "Signature coffee and something sweet",
+    "An easy introduction to contemporary Hyderabad",
+    "Recommendations made for you"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Signature coffee",
+    "Something sweet"
+   ],
+   "best": [
+    "New residents",
+    "Solo travellers",
+    "Business travellers with a free morning"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Share any dietary needs when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "08",
+   "slug": "coffee-with-hyderabads-insiders",
+   "name": "Coffee with Hyderabad’s Insiders",
+   "kind": "Private Business & Members’ Club",
+   "line": "An intimate conversation with a founder, business leader or ecosystem voice.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "Every city has people who know how it really works. Coffee with Hyderabad’s Insiders is an intimate conversation with a founder, business leader or ecosystem voice.",
+    "We match the conversation to what you are curious about, so tell us what brought you to Hyderabad."
+   ],
+   "steps": [
+    "Tell us what you want to explore",
+    "We find the right conversation",
+    "Sit down together over coffee",
+    "Introductions and next steps, where they fit"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "A hosted conversation",
+    "Coffee"
+   ],
+   "best": [
+    "Founders and investors",
+    "Business delegations",
+    "Students of the city’s growth"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Each conversation depends on the guest’s availability.",
+    "Who you meet is confirmed before you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "09",
+   "slug": "hyderabad-sundowner",
+   "name": "Hyderabad Sundowner",
+   "kind": "After-Hours & Social",
+   "line": "A reserved social evening with a signature drink, bites, music and Hyderabad after hours.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "Hyderabad changes after six. Hyderabad Sundowner is a reserved social evening with a signature drink, bites, music and the city after hours.",
+    "It is an easy way to meet the city socially, especially if you are here alone or here for work."
+   ],
+   "steps": [
+    "Arrive as the light goes",
+    "A signature drink and bites",
+    "Music and conversation",
+    "Hyderabad after hours"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Reserved place",
+    "Signature drink",
+    "Bites"
+   ],
+   "best": [
+    "Solo travellers",
+    "Conference delegates",
+    "Friends and small groups"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Non-alcoholic options are available on request.",
+    "Share any dietary needs when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "10",
+   "slug": "the-hyderabad-pearl-experience",
+   "name": "The Hyderabad Pearl Experience",
+   "kind": "Fine Jewellery",
+   "line": "Discover pearls, understand quality and craftsmanship, see exceptional pieces and try them on.",
+   "partner": "Goyaz",
+   "logo": "goyaz",
+   "photo": "pearl-experience",
+   "about": [
+    "Hyderabad has been called the City of Pearls for good reason, but knowing a good pearl is a skill. The Hyderabad Pearl Experience lets you discover pearls, understand their quality and craftsmanship, see exceptional pieces and try them on.",
+    "You leave able to look at a strand and know what you are holding, whether or not you buy."
+   ],
+   "steps": [
+    "An introduction to Hyderabad’s pearls",
+    "How quality and craftsmanship are judged",
+    "See exceptional pieces up close",
+    "Try them on"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Guided pearl introduction",
+    "Time to see and try pieces"
+   ],
+   "best": [
+    "Jewellery lovers",
+    "Couples and celebrations",
+    "Visitors who want to buy with confidence"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "There is no obligation to buy, and purchases are paid for separately."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "11",
+   "slug": "drape-the-deccan",
+   "name": "Drape the Deccan",
+   "kind": "Fashion & Textiles",
+   "line": "Discover Hyderabad and Deccan textiles and styling, with a personal draping or styling experience.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "The Deccan’s textiles are made to be worn, not only admired. Drape the Deccan is a discovery of Hyderabad and Deccan textiles and styling, with a personal draping or styling experience.",
+    "Expect to touch the cloth, learn what makes each weave distinct, and see how it looks on you."
+   ],
+   "steps": [
+    "Meet the textiles",
+    "What makes each weave distinct",
+    "A personal draping or styling session",
+    "Photographs, if you would like them"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Textile introduction",
+    "Personal draping or styling"
+   ],
+   "best": [
+    "Textile lovers",
+    "Friends and bridal groups",
+    "Visitors looking for something to remember"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Purchases are paid for separately."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "12",
+   "slug": "made-in-hyderabad",
+   "name": "Made in Hyderabad",
+   "kind": "Craft & Living Heritage",
+   "line": "Meet a master maker, watch the craft come alive and make or personalise something to take home.",
+   "partner": "Shilparamam",
+   "logo": "shilparamam",
+   "photo": "made-in-hyderabad",
+   "about": [
+    "Crafts survive when people come close enough to care. Made in Hyderabad lets you meet a master maker, watch the craft come alive and make or personalise something to take home.",
+    "You see the skill up close, try it with your own hands and leave with a piece that has a story."
+   ],
+   "steps": [
+    "Meet the maker",
+    "Watch the craft come alive",
+    "Make or personalise your own piece",
+    "Take it home"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Time with a master maker",
+    "Materials for your piece"
+   ],
+   "best": [
+    "Families",
+    "Craft lovers",
+    "Corporate teams"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Which craft you meet depends on the day and the makers available."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "13",
+   "slug": "behind-the-screen",
+   "name": "Behind the Screen",
+   "kind": "Film & Entertainment",
+   "line": "Step inside Hyderabad’s film world through sets, production, cinema stories and behind-the-scenes access.",
+   "partner": "Ramoji Film City",
+   "logo": "ramoji",
+   "photo": "behind-the-screen",
+   "about": [
+    "Hyderabad makes a remarkable share of India’s cinema. Behind the Screen steps inside the city’s film world through sets, production, cinema stories and behind-the-scenes access.",
+    "It is built for people who watch the credits, and for anyone curious about how a film is really put together."
+   ],
+   "steps": [
+    "Arrive at the film world",
+    "Walk the sets",
+    "How production really works",
+    "Stories from behind the camera"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Behind-the-scenes visit",
+    "Cinema stories"
+   ],
+   "best": [
+    "Film lovers",
+    "Families",
+    "Students and creative teams"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "What you can see depends on the shooting schedule."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "14",
+   "slug": "a-day-in-the-deccan",
+   "name": "A Day in the Deccan",
+   "kind": "Countryside & Estate",
+   "line": "Escape the city for an estate experience with nature, food, a guided walk and a slower side of Hyderabad.",
+   "partner": "",
+   "logo": "",
+   "photo": "",
+   "about": [
+    "An hour from the traffic, the Deccan slows down. A Day in the Deccan is an escape to an estate, with nature, food, a guided walk and a slower side of Hyderabad.",
+    "There is nothing to rush towards: the point of the day is the pace of it."
+   ],
+   "steps": [
+    "Leave the city behind",
+    "A guided walk through the estate",
+    "A long, unhurried meal",
+    "Time to do very little"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Guided estate walk",
+    "Meal at the estate"
+   ],
+   "best": [
+    "Families",
+    "Couples",
+    "Anyone staying in the city a few days"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Share any dietary needs when you book.",
+    "Wear comfortable shoes for the walk."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "15",
+   "slug": "reset-in-hyderabad",
+   "name": "Reset in Hyderabad",
+   "kind": "Wellness",
+   "line": "A restorative session combining meditation, breathwork, yoga or mindfulness in a beautiful setting.",
+   "partner": "Heartfulness, Kanha",
+   "logo": "heartfulness",
+   "photo": "reset",
+   "about": [
+    "A busy trip needs a quiet hour. Reset in Hyderabad is a restorative session combining meditation, breathwork, yoga or mindfulness in a beautiful setting.",
+    "No experience is needed. Tell us how you would like to feel afterwards and the session is shaped around that."
+   ],
+   "steps": [
+    "Arrive and settle",
+    "A guided practice",
+    "Time in stillness",
+    "A gentle return to the day"
+   ],
+   "included": [
+    "Asli Hyderabad host",
+    "Guided session",
+    "A calm, beautiful setting"
+   ],
+   "best": [
+    "Conference delegates",
+    "Tired travellers",
+    "Teams and small groups"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "No experience is needed.",
+    "Wear something comfortable."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  }
+ ],
+ "quick": [
+  {
+   "num": "01",
+   "slug": "cheriyal-mask-making",
+   "name": "Cheriyal Mask Making",
+   "group": "workshops",
+   "len": "45–60 min",
+   "line": "Shape a mask from sawdust and tamarind paste, then paint it in the bold folk palette of Cheriyal’s scroll painters.",
+   "photo": "cheriyal",
+   "about": [
+    "Cheriyal’s scroll painters have told stories in vivid colour for generations, and their masks carry the same bold hand. In this workshop you shape a mask from sawdust and tamarind paste, then paint it in the Cheriyal palette.",
+    "It is messy in the right way, easy to enjoy at any skill level, and you take home what you make."
+   ],
+   "steps": [
+    "Meet the craft and its story",
+    "Shape your mask",
+    "Paint it in the Cheriyal palette",
+    "Take it home"
+   ],
+   "included": [
+    "Guided workshop",
+    "All materials",
+    "Your finished mask"
+   ],
+   "best": [
+    "Families",
+    "Corporate teams",
+    "Conference delegates"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "02",
+   "slug": "lac-bangle-making",
+   "name": "Lac Bangle Making",
+   "group": "workshops",
+   "len": "30–45 min",
+   "line": "Warm the lac over coals, roll it round and set it with glass stones, the way Laad Bazaar has made bangles for centuries.",
+   "photo": "lac-bangle",
+   "about": [
+    "Laad Bazaar has made lac bangles for centuries, and the method has barely changed. You warm the lac over coals, roll it round and set it with glass stones.",
+    "In under an hour you learn the craft behind the bangles you see in the old city, and you wear the result."
+   ],
+   "steps": [
+    "See how lac is warmed and worked",
+    "Roll your bangle",
+    "Set it with glass stones",
+    "Wear it out"
+   ],
+   "included": [
+    "Guided workshop",
+    "All materials",
+    "Your finished bangle"
+   ],
+   "best": [
+    "Friends and families",
+    "Hotel guests",
+    "Conference delegates"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "03",
+   "slug": "bidri-art-workshop",
+   "name": "Bidri Art Workshop",
+   "group": "workshops",
+   "len": "45–60 min",
+   "line": "Inlay fine silver wire into blackened metal, the Deccan’s own metalcraft, with a master craftsman beside you.",
+   "photo": "bidri",
+   "about": [
+    "Bidri is the Deccan’s own metalcraft: silver wire inlaid into blackened metal. With a master craftsman beside you, you try the inlay yourself and see why the work takes years to learn.",
+    "A short session gives you real respect for every Bidri piece you see after it."
+   ],
+   "steps": [
+    "The story of Bidri",
+    "Watch a master at work",
+    "Try the silver inlay",
+    "Your own small piece"
+   ],
+   "included": [
+    "Guided workshop",
+    "All materials",
+    "Time with a master craftsman"
+   ],
+   "best": [
+    "Craft lovers",
+    "Corporate teams",
+    "Design-minded visitors"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "04",
+   "slug": "pearl-jewellery-making",
+   "name": "Pearl Jewellery Making",
+   "group": "workshops",
+   "len": "30–45 min",
+   "line": "Sort, match and knot Hyderabad pearls into a strand of your own to take home.",
+   "photo": "pearl",
+   "about": [
+    "Hyderabad is the City of Pearls, and here you get your hands on them. You sort, match and knot Hyderabad pearls into a strand of your own.",
+    "It is calm, precise work, and a far better souvenir than one bought in a hurry."
+   ],
+   "steps": [
+    "Learn to sort and match pearls",
+    "Choose your strand",
+    "Knot it by hand",
+    "Take it home"
+   ],
+   "included": [
+    "Guided workshop",
+    "Pearls and materials",
+    "Your finished strand"
+   ],
+   "best": [
+    "Friends and couples",
+    "Hotel guests",
+    "Private celebrations"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "05",
+   "slug": "block-printing",
+   "name": "Block Printing",
+   "group": "workshops",
+   "len": "45–60 min",
+   "line": "Press carved wooden blocks and natural dyes onto cloth, and leave with a piece you printed yourself.",
+   "photo": "block-print",
+   "about": [
+    "A carved wooden block, a tray of natural dye and a steady hand are all it takes. You press your own pattern onto cloth, learning how repeat and rhythm make a textile.",
+    "You leave with a piece you printed yourself."
+   ],
+   "steps": [
+    "Choose your blocks",
+    "Mix and test the dye",
+    "Print your cloth",
+    "Take it home"
+   ],
+   "included": [
+    "Guided workshop",
+    "All materials",
+    "Your printed cloth"
+   ],
+   "best": [
+    "Families",
+    "Corporate teams",
+    "Textile lovers"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "06",
+   "slug": "pochampally-ikat-experience",
+   "name": "Pochampally Ikat Experience",
+   "group": "workshops",
+   "len": "30–45 min",
+   "line": "See how tie-dyed threads become Pochampally’s geometric ikat, then try a few passes on the loom.",
+   "photo": "ikat",
+   "about": [
+    "Pochampally’s geometric ikat is patterned before it is ever woven, in the tying and dyeing of the thread. This session shows how those threads become cloth, and lets you try a few passes on the loom.",
+    "Once you have seen it, you will never look at an ikat saree the same way."
+   ],
+   "steps": [
+    "How the threads are tied and dyed",
+    "See the pattern emerge",
+    "Try a few passes on the loom",
+    "Time for questions"
+   ],
+   "included": [
+    "Guided session",
+    "Hands-on time at the loom"
+   ],
+   "best": [
+    "Textile lovers",
+    "Students",
+    "Conference delegates"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "07",
+   "slug": "deccani-calligraphy",
+   "name": "Deccani Calligraphy",
+   "group": "workshops",
+   "len": "30–45 min",
+   "line": "Write your name in flowing nastaliq with a reed pen and ink, guided by a Hyderabad calligrapher.",
+   "photo": "calligraphy",
+   "about": [
+    "The Deccan has its own long love affair with the written word. With a reed pen and ink, and a Hyderabad calligrapher to guide you, you write your name in flowing nastaliq.",
+    "It is quiet, absorbing and over too soon."
+   ],
+   "steps": [
+    "The story of the script",
+    "Learn to hold the reed pen",
+    "Practise the strokes",
+    "Write your name"
+   ],
+   "included": [
+    "Guided workshop",
+    "Reed pen, ink and paper",
+    "Your finished calligraphy"
+   ],
+   "best": [
+    "Conference delegates",
+    "Hotel guests",
+    "Quiet minds"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "We can run this at your hotel, venue or event.",
+    "Group size is confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "08",
+   "slug": "telangana-folk-performance",
+   "name": "Telangana Folk Performance",
+   "group": "performances",
+   "len": "20–30 min",
+   "line": "Dappu drummers and folk dancers bring the energy of a Telangana village festival to your venue.",
+   "photo": "folk",
+   "about": [
+    "Dappu drummers and folk dancers bring the energy of a Telangana village festival to your venue. It is loud, joyful and impossible to watch sitting still.",
+    "Use it to open an event, to welcome guests, or to change the mood of a room in a moment."
+   ],
+   "steps": [
+    "Performers arrive and set up",
+    "The drums begin",
+    "Dancers take the floor",
+    "Guests are drawn in"
+   ],
+   "included": [
+    "Folk performers",
+    "Dappu drumming and dance"
+   ],
+   "best": [
+    "Conference openings",
+    "Corporate gatherings",
+    "Weddings and celebrations"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us about your venue, stage and sound.",
+    "Performer numbers are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "09",
+   "slug": "perini-dance",
+   "name": "Perini Dance",
+   "group": "performances",
+   "len": "20–30 min",
+   "line": "The warrior dance of the Kakatiya kings, performed to the drum by dancers in full ornament.",
+   "photo": "perini",
+   "about": [
+    "Perini is the warrior dance of the Kakatiya kings, once performed before battle. Dancers in full ornament move to the drum with startling force and precision.",
+    "In a short performance, your guests see a side of Telangana that few visitors ever do."
+   ],
+   "steps": [
+    "A short introduction to the form",
+    "The drum sets the pace",
+    "The dance builds",
+    "A closing moment with the dancers"
+   ],
+   "included": [
+    "Perini dancers",
+    "Drum accompaniment"
+   ],
+   "best": [
+    "Conference evenings",
+    "Hotel events",
+    "Cultural programmes"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us about your venue, stage and sound.",
+    "Performer numbers are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "10",
+   "slug": "oggu-katha",
+   "name": "Oggu Katha",
+   "group": "performances",
+   "len": "20–30 min",
+   "line": "Singers and drummers tell a Telangana folk epic in song, part ballad and part theatre.",
+   "photo": "oggu-katha",
+   "about": [
+    "Oggu Katha is storytelling at full volume: singers and drummers telling a Telangana folk epic in song, part ballad and part theatre.",
+    "It is a rare form to catch outside the villages that keep it alive, and easy to enjoy even if you do not know a word of Telugu."
+   ],
+   "steps": [
+    "The storytellers set the scene",
+    "Song and drum carry the tale",
+    "The epic reaches its peak",
+    "A few words about the tradition"
+   ],
+   "included": [
+    "Oggu Katha performers",
+    "A short introduction to the story"
+   ],
+   "best": [
+    "Cultural programmes",
+    "Conference evenings",
+    "Curious audiences"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us about your venue, stage and sound.",
+    "Performer numbers are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "11",
+   "slug": "deccan-music-sufi-evening",
+   "name": "Deccan Music / Sufi Evening",
+   "group": "performances",
+   "len": "45–60 min",
+   "line": "Qawwali and Deccani ghazal in an intimate setting, with harmonium, tabla and a hand-clapping chorus.",
+   "photo": "sufi",
+   "about": [
+    "Qawwali and Deccani ghazal belong in intimate rooms. Harmonium, tabla and a hand-clapping chorus turn an ordinary evening into something people talk about afterwards.",
+    "It suits a private gathering as easily as a formal dinner."
+   ],
+   "steps": [
+    "Guests settle in",
+    "The first ghazals",
+    "Qawwali builds with the chorus",
+    "A final, quieter piece"
+   ],
+   "included": [
+    "Musicians",
+    "Harmonium, tabla and chorus"
+   ],
+   "best": [
+    "Private dinners",
+    "Hotel evenings",
+    "Corporate hospitality"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us about your venue, stage and sound.",
+    "Performer numbers are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "12",
+   "slug": "hyderabad-pearl-bar",
+   "name": "Hyderabad Pearl Bar",
+   "group": "bars",
+   "len": "1–2 hours",
+   "line": "A pearl counter at your event: guests choose, match and string a piece with a Hyderabad pearl stringer.",
+   "photo": "pearl-bar",
+   "about": [
+    "A pearl counter, set up at your event. Guests choose, match and string a piece of their own with a Hyderabad pearl stringer guiding them.",
+    "It gives people something to do with their hands, something to talk about, and something to take home."
+   ],
+   "steps": [
+    "We set up the pearl counter",
+    "Guests choose and match",
+    "A stringer finishes each piece",
+    "Everyone leaves wearing one"
+   ],
+   "included": [
+    "Pearl stringer",
+    "Pearl counter set-up",
+    "Materials for guests"
+   ],
+   "best": [
+    "Conferences and exhibitions",
+    "Brand events",
+    "Weddings and celebrations"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us your venue and headcount.",
+    "Set-up needs are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "13",
+   "slug": "hyderabad-bangle-bar",
+   "name": "Hyderabad Bangle Bar",
+   "group": "bars",
+   "len": "1–2 hours",
+   "line": "Lac bangles set and sized to order, so every guest leaves wearing a little of Laad Bazaar.",
+   "photo": "bangle-bar",
+   "about": [
+    "Lac bangles set and sized to order, right at your event. Every guest leaves wearing a little of Laad Bazaar.",
+    "It works as a welcome, a gift or a talking point, and it photographs beautifully."
+   ],
+   "steps": [
+    "We set up the bangle bar",
+    "Guests choose colours and stones",
+    "Bangles set and sized to order",
+    "Worn straight away"
+   ],
+   "included": [
+    "Bangle makers",
+    "Bangle bar set-up",
+    "Materials for guests"
+   ],
+   "best": [
+    "Conferences and exhibitions",
+    "Brand events",
+    "Weddings and celebrations"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us your venue and headcount.",
+    "Set-up needs are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  },
+  {
+   "num": "14",
+   "slug": "deccan-craft-table",
+   "name": "Deccan Craft Table",
+   "group": "bars",
+   "len": "2–3 hours",
+   "line": "A long table of Deccan makers at your venue, with guests moving from craft to craft as the evening goes on.",
+   "photo": "craft-table",
+   "about": [
+    "A long table of Deccan makers at your venue, with guests moving from craft to craft as the evening goes on.",
+    "It turns a reception into something people take part in, and gives the makers a room that is paying attention."
+   ],
+   "steps": [
+    "Makers set up along the table",
+    "Guests arrive and wander",
+    "Try one craft, then another",
+    "Pieces to take home"
+   ],
+   "included": [
+    "Deccan makers",
+    "Craft table set-up",
+    "Materials for guests"
+   ],
+   "best": [
+    "Conference receptions",
+    "Corporate gatherings",
+    "Private celebrations"
+   ],
+   "good": [
+    "Date, timing and venue are confirmed when you book.",
+    "Tell us your venue and headcount.",
+    "Set-up needs are confirmed when you book."
+   ],
+   "draft": "Page copy written from the wireframe line"
+  }
+ ],
+ "quickWhere": [
+  "Hotels",
+  "Restaurants",
+  "Conferences",
+  "Events",
+  "Corporate gatherings",
+  "Private celebrations"
+ ]
+}

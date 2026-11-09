@@ -43,9 +43,28 @@ await b.ev(`window.scrollTo(0, ${await b.pageTop('[data-sec="collection-b"]')})`
 const rm = await b.ev(ST('collection-b'));
 check('reduced motion shows a still, no video', rm.still && !rm.playing && rm.video === '', rm);
 
-// Phone: tap-to-preview, then tap again to open
+// Section 4 on phones and tablets: the icon picker replaces the card strip and drives the panel.
+const TABS = `(()=>{const w=document.querySelector('[data-sec="collection-a"]');const t=[...w.querySelectorAll('.mn-themes__tab')];
+  return {shown:t.length===6&&t.every(x=>x.offsetWidth>0),rows:new Set(t.map(x=>Math.round(x.getBoundingClientRect().top))).size,
+    pressed:t.filter(x=>x.getAttribute('aria-pressed')==='true').map(x=>x.dataset.themeTab),gridHidden:!w.querySelector('.mn-collection__grid').offsetWidth,
+    nums:w.querySelectorAll('.mn-card__num').length}})()`;
+for (const [w, h, rows] of [[390, 844, 2], [768, 1024, 1]]) {
+  await b.load(w, h, { touch: true });
+  await b.ev(`window.scrollTo(0, ${await b.pageTop('[data-sec="collection-a"] .mn-themes__tabs')} - 120)`); await sleep(1500);
+  let t = await b.ev(TABS);
+  check(`${w}x${h} section 4: six icon tabs in ${rows} row(s), card strip hidden, no serial numbers`, t.shown && t.rows === rows && t.gridHidden && t.nums === 0, t);
+  for (const theme of ['culture', 'wellness']) {
+    const r = await b.ensureVisible(`[data-sec="collection-a"] [data-theme-tab="${theme}"]`, 0); await b.tap(r.cx, r.cy); await sleep(1600);
+    const s = await b.ev(ST('collection-a')); t = await b.ev(TABS);
+    check(`${w}x${h} section 4: tapping ${theme} shows it in the panel and marks only that tab`, s.state === theme && s.path === '/' && t.pressed.join() === theme && s.docW === s.vw, { s, t });
+  }
+  await b.shot(`collection-a-tabs-${w}`);
+}
+{ await b.load(1440, 900); const t = await b.ev(TABS); check('desktop section 4: no picker, cards shown, no serial numbers', !t.shown && !t.gridHidden && t.nums === 0, t); }
+
+// Originals on a phone: tap-to-preview, then tap again to open
 await b.load(390, 844, { touch: true });
-for (const sec of ['collection-a', 'collection-b']) {
+for (const sec of ['collection-b']) {
   await b.ev(`window.scrollTo(0, ${await b.pageTop(`[data-sec="${sec}"] .mn-collection__grid`)} - 200)`); await sleep(1500);
   let r = await b.ensureVisible(CARDS(sec), 0); await b.tap(r.cx, r.cy); await sleep(1800);
   const first = await b.ev(ST(sec));

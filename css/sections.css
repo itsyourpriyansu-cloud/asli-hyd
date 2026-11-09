@@ -42,13 +42,6 @@
   max-width: 92rem;
   color: var(--white);
 }
-.mn-hero__eyebrow {
-  font-size: 1.8rem;
-  line-height: 2.4rem;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-.mn-hero__eyebrow em { font-style: italic; text-transform: none; }
 /* Cormorant Garamond Light at the original sizes, always three left-aligned lines:
    "Experience" / "Asli = Real" / "Hyderabad", each kept on one line. */
 .mn-hero__heading {
@@ -167,7 +160,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, rgba(0,0,0,.66), rgba(0,0,0,.34) 18%, rgba(0,0,0,.1) 36%, transparent 52%),
+    linear-gradient(to top, rgba(0,0,0,.5), rgba(0,0,0,.24) 18%, rgba(0,0,0,.08) 36%, transparent 52%),
     linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.12) 22%, transparent 36%);
   pointer-events: none;
   transition: opacity .9s var(--ease);
@@ -183,21 +176,48 @@
   font-size: clamp(4rem, 4.1667vw, 8rem);
   line-height: .9;
 }
-/* Anchored above the link (which sits at top: 93.2%) so a longer line grows upward, not into it. */
-.mn-cats__desc {
+/* Line + CTA share a fine outlined glass card, bottom right; the glass carries legibility, not a shadow. */
+.mn-cats__card {
   position: absolute;
-  right: 1.786vw;
-  bottom: calc(6.8% + 1.6rem);
-  width: 21.6vw;
-  font-size: clamp(1.4rem, .9524vw, 1.7rem);
-  line-height: 1.5;
+  right: 3.6vw;
+  bottom: 5.6%;
+  width: clamp(30rem, 24vw, 38rem);
+  padding: 2.4rem 2.8rem 2rem;
+  border: 1px solid rgba(244, 238, 228, .32);
+  border-radius: .2rem;
+  background: rgba(20, 16, 14, .28);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  text-shadow: none;
+  transition: border-color .5s var(--ease);
 }
+.mn-cats__desc { font-size: clamp(1.4rem, .9524vw, 1.7rem); line-height: 1.5; color: rgba(244, 238, 228, .92); }
 .mn-cats__link {
-  position: absolute;
-  left: calc(100% - 23.4vw);
-  top: 93.2%;
-  font-size: clamp(1.4rem, .9524vw, 1.7rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.8rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(216, 183, 125, .45);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
   pointer-events: auto;
+  transition: border-color .5s var(--ease);
+}
+.mn-cats__link span { transition: transform .5s var(--ease); }
+.mn-cats__link:focus-visible { outline: none; }
+.mn-cats__card:has(.mn-cats__link:focus-visible) { outline: 2px solid var(--gold-light); outline-offset: .4rem; }
+.mn-cats__card:has(.mn-cats__link:focus-visible),
+.mn-cats__card:has(.mn-cats__link:focus-visible) .mn-cats__link { border-color: var(--gold-light); }
+.mn-cats__card:has(.mn-cats__link:focus-visible) .mn-cats__link span { transform: translateX(.4rem); }
+@media (hover: hover) {
+  .mn-cats__tile:hover .mn-cats__card,
+  .mn-cats__tile:hover .mn-cats__link { border-color: var(--gold-light); }
+  .mn-cats__tile:hover .mn-cats__link span { transform: translateX(.4rem); }
 }
 
 /* Desktop: statement and tiles each fill one screen so the grow-in lines up. */
@@ -227,23 +247,21 @@
 @media (max-width: 1024px) {
   .mn-cats__grid { grid-template-columns: 1fr; }
   .mn-cats__content { display: flex; flex-direction: column; justify-content: space-between; }
-  .mn-cats__title, .mn-cats__desc, .mn-cats__link { position: static; width: auto; }
-  .mn-cats__desc, .mn-cats__link { font-size: 1.6rem; }
-  .mn-cats__link { align-self: flex-start; }
+  .mn-cats__title, .mn-cats__card { position: static; width: auto; }
+  .mn-cats__card { margin-top: auto; }
+  .mn-cats__desc { font-size: 1.6rem; }
 }
 @media (min-width: 750px) and (max-width: 1024px) {
   .mn-cats__tile { aspect-ratio: 834 / 768; }
   .mn-cats__content { padding: 6rem 4rem 4rem 6rem; align-items: flex-end; }
   .mn-cats__title { align-self: stretch; font-size: 6.4rem; }
-  .mn-cats__desc { width: 36.3rem; margin-top: auto; margin-bottom: 1.2rem; }
-  .mn-cats__link { align-self: auto; width: 36.3rem; }
-  .mn-cats__link::after { right: auto; width: 7.6rem; }
+  .mn-cats__card { width: 36.3rem; }
 }
 @media (max-width: 749px) {
   .mn-cats__tile { aspect-ratio: 402 / 560; }
   .mn-cats__content { padding: 3.2rem 2rem; }
   .mn-cats__title { font-size: 4.8rem; }
-  .mn-cats__desc { margin-top: auto; margin-bottom: 1.2rem; }
+  .mn-cats__card { align-self: stretch; padding: 2rem 2.2rem 1.8rem; }
 }
 
 /* ==========================================================================
@@ -367,194 +385,223 @@
 }
 
 /* ==========================================================================
-   3b. Conventions: "a world of its own" (between section 3 and 4)
-   An ink band after Velaa's third section. The heading floats mid-screen (sticky,
-   in the same grid cell as the cards) while two offset columns of convention
-   cards scroll up behind it; motion.js moves the right column at its own speed
-   and brings in the second line part-way. Each card is one link. Hover/focus
-   dims the other cards and the heading so the card reads clearly. Tablets and
-   phones: the heading sits on top; phones get one column. Reduced motion shows everything at once.
+   3b. Conventions: a rail of event cards, one screen tall (between section 3 and 4)
+   Cream band. Heading left, the "All conventions" button right, then the rail,
+   which fills the rest of the screen, so the cards take their size from its height (2:3).
+   Desktop: the section holds while the page scroll carries the rail right to left
+   (motion.js adds is-driven). Smaller screens and reduced motion swipe it; with a
+   mouse and no driver, arrows show when it overflows (components.js). Each card is
+   one link: photo, date, name, venue and a quiet button that lights up on hover.
    ========================================================================== */
 .mn-conv {
   position: relative;
   z-index: 1;
-  overflow: clip;           /* not hidden: a scroll container would stop the sticky heading */
-  background: var(--ink);
-  color: var(--cream);
+  overflow: clip;
+  height: 100vh;
+  height: 100svh;
+  min-height: 56rem;
+  background: var(--cream);
+  color: var(--ink);
 }
-/* Khatam jaali (motifs.css) behind, faint, and kept to the edges (MOTIFS.md rule 3). */
+/* Khatam jaali (motifs.css) behind, at the Quick Experiences strength: an even texture across the band,
+   faded only at the top and bottom so there is no seam with the cream neighbours. */
 .mn-conv__bg {
-  --m-o: .08;
+  --m-o: .14;
   z-index: 0;
-  -webkit-mask: radial-gradient(ellipse 64% 60% at 50% 50%, transparent 50%, #000 100%);
-          mask: radial-gradient(ellipse 64% 60% at 50% 50%, transparent 50%, #000 100%);
+  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+          mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
 }
-/* Heading and cards share one cell, so the heading can float over the cards. */
+/* Row 1: heading | button. Row 2: the rail, taking the rest of the screen. */
 .mn-conv__stage {
+  --below-head: clamp(3.2rem, 6svh, 6.4rem); /* the breathing room between the heading and the cards */
   position: relative;
   display: grid;
-  max-width: 132rem;
-  padding-top: clamp(6.4rem, 6.7vw, 12rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: 4rem;
+  height: 100%;
+  padding-block: calc(var(--header-h) + clamp(.8rem, 1.2svh, 1.6rem)) clamp(2rem, 3svh, 3.6rem);
 }
-.mn-conv__head, .mn-conv__list { grid-area: 1 / 1; }
-.mn-conv__head {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-  height: 100vh;
-  text-align: center;
-  pointer-events: none;     /* never blocks a card under it */
-  text-shadow: 0 .1rem .6rem rgba(20, 26, 25, .35), 0 .2rem 3rem rgba(20, 26, 25, .7);
-  transition: opacity .6s var(--ease);
-}
-.mn-conv__title, .mn-conv__more {
+.mn-conv__head { grid-column: 1; grid-row: 1; align-self: end; padding-bottom: var(--below-head); }
+.mn-conv__title {
   margin: 0;
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(4.4rem, 4.4vw, 7.6rem);
-  line-height: 1.05;
+  font-size: clamp(3.6rem, min(3.6vw, 6.4svh), 6.4rem);
+  line-height: 1.04;
   letter-spacing: -.005em;
 }
-.mn-conv__title em, .mn-conv__more em { font-style: italic; color: var(--gold-light); }
 .mn-conv__more {
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateY(1.6rem);
-  transition: opacity 1s var(--ease), filter 1s var(--ease), transform 1s var(--ease);
+  margin: 1.2rem 0 0;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, min(1.6vw, 2.8svh), 2.4rem);
+  line-height: 1.3;
+  color: var(--ink-70);
 }
-.mn-conv.is-more .mn-conv__more { opacity: 1; filter: none; transform: none; }
+.mn-conv__title em, .mn-conv__more em { font-style: italic; color: var(--gold-ink); }
+/* Desktop: the title and the sub-line on one line each, so the rail (and the cards) get the height. */
+@media (min-width: 1025px) { .mn-conv__title br, .mn-conv__more br { display: none; } }
+/* The underline link (as "All tours" in section 5), level with the sub-line, right-aligned with the rail's edge. */
+.mn-conv__all { grid-column: 2; grid-row: 1; align-self: end; justify-self: end; margin-bottom: var(--below-head); color: var(--ink); }
 
-/* Two columns; the even cards start lower (relative top, so motion.js keeps transform for the parallax). */
-.mn-conv__list {
-  --drop: clamp(8rem, 9vw, 16rem);
+.mn-conv__railwrap {
+  --gap: 1.2rem;
+  position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(7.2rem, 7vw, 12rem) clamp(4.8rem, 6.7vw, 9.6rem);
-  margin: 0;
-  padding: 0 0 var(--drop);
-  list-style: none;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-height: 0;
 }
-.mn-conv__item { transition: opacity .6s var(--ease); }
-.mn-conv__item:nth-child(even) { position: relative; top: var(--drop); }
-.mn-conv__card { display: block; color: inherit; text-decoration: none; }
-.mn-conv__media { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; background: #26302e; }
+/* Cards take their width from the rail's height. Natively the rail scrolls with snap; driven, it
+   overflows to the screen edge and motion.js moves it. */
+.mn-conv__rail {
+  display: flex;
+  gap: var(--gap);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.mn-conv__rail::-webkit-scrollbar { display: none; }
+.mn-conv.is-driven .mn-conv__rail { overflow: visible; scroll-snap-type: none; }
+.mn-conv__item { flex: none; height: 100%; aspect-ratio: 2 / 3; scroll-snap-align: start; }
+
+.mn-conv__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+  border-radius: .2rem;
+  background: var(--ink);
+  color: var(--cream);
+  text-decoration: none;
+}
 .mn-conv__img {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(.82);   /* keeps the cream heading readable over bright skies */
-  transition: filter .8s var(--ease), transform 1.6s var(--ease);
+  transition: transform 1.6s var(--ease);
 }
-/* Fine gold inner frame that closes in on hover/focus. */
-.mn-conv__media::after {
+/* Soft ink at the top (for the white logo and date, even over pale skies) and the bottom (for the text); the photo stays the subject. */
+.mn-conv__card::after {
   content: "";
   position: absolute;
-  inset: 2.4rem;
-  border: 1px solid rgba(216, 183, 125, .85);
-  opacity: 0;
+  inset: 0;
+  background:
+    linear-gradient(rgba(22, 18, 15, .86), rgba(22, 18, 15, .68) 13%, rgba(22, 18, 15, 0) 34%),
+    linear-gradient(to top, rgba(22, 18, 15, .92) 0%, rgba(22, 18, 15, .74) 30%, rgba(22, 18, 15, 0) 58%);
   pointer-events: none;
-  transition: opacity .6s var(--ease), inset .8s var(--ease);
 }
-.mn-conv__cap {
+.mn-conv__top, .mn-conv__body { position: relative; z-index: 1; }
+.mn-conv__top {
   display: grid;
-  grid-template-columns: 4.8rem minmax(0, 1fr) auto;
-  column-gap: 1.6rem;
-  padding-top: 2rem;
-}
-.mn-conv__num {
-  padding-top: .8rem;
-  font-size: 1.3rem;
-  letter-spacing: .16em;
-  font-variant-numeric: tabular-nums;
-  color: var(--gold-light);
-}
-.mn-conv__name {
-  display: block;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(2.4rem, 1.9vw, 3.2rem);
-  line-height: 1.12;
-}
-.mn-conv__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .4rem 1.6rem;
-  margin-top: .8rem;
-  font-size: 1.2rem;
-  letter-spacing: .14em;
+  grid-template-columns: minmax(0, 1fr) auto;
+  justify-items: end;
+  gap: .4rem 1.2rem;
+  padding: 1.8rem 2rem;
+  font-size: 1.05rem;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(244, 238, 228, .62);
 }
+.mn-conv__date, .mn-conv__tag { grid-column: 2; }
 .mn-conv__tag { color: var(--gold-light); }
-.mn-conv__go {
-  width: 2.2rem;
-  height: 2.2rem;
-  margin-top: .6rem;
-  color: var(--gold-light);
-  transition: transform .5s var(--ease);
+.mn-conv__body { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; padding: 0 2rem 2rem; }
+/* White, top left, no plate, as on the Co-curated cards. The files are white artwork: a CSS filter would turn opaque logos into solid blocks. */
+.mn-conv__logo { grid-row: 1 / span 2; justify-self: start; display: block; width: 100%; max-width: 13rem; height: clamp(4.6rem, 3.9vw, 5.6rem); }
+.mn-conv__logo img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: left top; opacity: .94; }
+.mn-conv__name { font-family: var(--serif); font-size: clamp(1.9rem, 1.5vw, 2.3rem); line-height: 1.15; }
+.mn-conv__venue { display: inline-flex; align-items: center; gap: .5rem; font-size: 1.2rem; color: rgba(244, 238, 228, .78); }
+.mn-conv__pin { flex: none; width: 1.2rem; height: 1.2rem; color: var(--gold-light); }
+/* At rest the button is a faint outline; on hover/focus it lights up cream. */
+.mn-conv__btn {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  min-height: 3.8rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(244, 238, 228, .28);
+  border-radius: .2rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(244, 238, 228, .7);
+  transition: background-color .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease);
 }
-.mn-conv__foot { position: relative; padding: clamp(4.8rem, 4.4vw, 7.2rem) var(--gutter) clamp(8rem, 8.3vw, 12rem); text-align: center; }
-.mn-conv__all { color: var(--cream); }
-
-/* In focus: the card lifts to full brightness, its frame closes in; the rest and the heading step back. */
-.mn-conv__card:focus-visible { outline: 1px solid var(--gold-light); outline-offset: .8rem; }
-.mn-conv__card:focus-visible .mn-conv__img { filter: none; transform: scale(1.04); }
-.mn-conv__card:focus-visible .mn-conv__media::after { opacity: 1; inset: 1.2rem; }
-.mn-conv__card:focus-visible .mn-conv__go { transform: translate(.4rem, -.4rem); }
-.mn-conv__list:has(.mn-conv__card:focus-visible) .mn-conv__item:not(:has(:focus-visible)) { opacity: .4; }
-.mn-conv:has(.mn-conv__card:focus-visible) .mn-conv__head { opacity: .15; }
+.mn-conv__card:focus-visible { outline: 2px solid var(--gold-light); outline-offset: -.6rem; }
+.mn-conv__card:focus-visible .mn-conv__img { transform: scale(1.03); }
+.mn-conv__card:focus-visible .mn-conv__btn { border-color: var(--cream); background: var(--cream); color: var(--ink); }
 @media (hover: hover) {
-  .mn-conv__card:hover .mn-conv__img { filter: none; transform: scale(1.04); }
-  .mn-conv__card:hover .mn-conv__media::after { opacity: 1; inset: 1.2rem; }
-  .mn-conv__card:hover .mn-conv__go { transform: translate(.4rem, -.4rem); }
-  .mn-conv__list:has(.mn-conv__card:hover) .mn-conv__item:not(:hover) { opacity: .4; }
-  .mn-conv:has(.mn-conv__card:hover) .mn-conv__head { opacity: .15; }
+  .mn-conv__card:hover .mn-conv__img { transform: scale(1.03); }
+  .mn-conv__card:hover .mn-conv__btn { border-color: var(--cream); background: var(--cream); color: var(--ink); }
 }
 
-/* Tablets and phones: no hover to clear a floating heading off the captions, so it leads above the cards. */
+/* Prev/next: only when the rail overflows natively with a mouse (never while driven); hidden at each end. */
+.mn-conv__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: none;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-top: -2.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 .6rem 2rem rgba(42, 36, 32, .2);
+  cursor: pointer;
+  transition: opacity .4s var(--ease), background-color .4s var(--ease), color .4s var(--ease);
+}
+.mn-conv__nav svg { width: 1.8rem; height: 1.8rem; }
+.mn-conv__nav--prev { left: -2.2rem; }
+.mn-conv__nav--next { right: -2.2rem; }
+.mn-conv.is-scrollable .mn-conv__nav { display: grid; }
+.mn-conv.is-driven .mn-conv__nav { display: none; }
+.mn-conv__nav:disabled { opacity: 0; pointer-events: none; }
+.mn-conv__nav:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: .3rem; }
+@media (hover: hover) { .mn-conv__nav:hover { background: var(--ink); color: var(--cream); } }
+/* Phones and tablets (any pointer) auto-advance instead (components.js); touch screens never get arrows. */
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
+  .mn-conv.is-scrollable .mn-conv__nav { display: none; }
+}
+
+/* Smaller screens: the rail runs to the screen edges and snaps to the gutter. */
 @media (max-width: 1024px) {
-  .mn-conv__stage { display: block; padding-top: 8rem; }
-  .mn-conv__head { position: static; height: auto; align-items: flex-start; text-align: left; gap: 1.2rem; padding-bottom: 5.6rem; text-shadow: none; }
-  .mn-conv__more { font-size: 3.2rem; opacity: 1; filter: none; transform: none; }
-  .mn-conv__img { filter: none; }
-  .mn-conv__cap { grid-template-columns: 3.6rem minmax(0, 1fr) auto; column-gap: 1.2rem; }
+  .mn-conv__stage { column-gap: 2.4rem; }
+  .mn-conv__rail {
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
 }
-/* Phones: one column. */
+/* Phones: the heading full width, the button under it, then the rail. */
 @media (max-width: 749px) {
-  .mn-conv__stage { padding-top: 6.4rem; }
-  .mn-conv__head { padding-bottom: 4rem; }
-  .mn-conv__title { font-size: 4rem; }
-  .mn-conv__more { font-size: 2.6rem; }
-  .mn-conv__list { grid-template-columns: minmax(0, 1fr); row-gap: 4.8rem; padding-bottom: 0; }
-  .mn-conv__item:nth-child(even) { top: 0; }
-  .mn-conv__cap { padding-top: 1.6rem; }
-  .mn-conv__name { font-size: 2.4rem; }
-  .mn-conv__meta { flex-direction: column; gap: .2rem; font-size: 1.1rem; }
-  .mn-conv__foot { padding-block: 4.8rem 6.4rem; text-align: left; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mn-conv__more { opacity: 1; filter: none; transform: none; }
+  .mn-conv__stage { --below-head: 2.4rem; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); padding-top: calc(var(--header-h) + 1.6rem); }
+  .mn-conv__head { padding-bottom: 2rem; }
+  .mn-conv__title { font-size: 3.6rem; }
+  .mn-conv__more { margin-top: 1.2rem; font-size: 1.9rem; }
+  .mn-conv__all { grid-column: 1; grid-row: 2; justify-self: start; }
+  .mn-conv__railwrap { grid-row: 3; }
+  .mn-conv__item { max-width: 84%; }
 }
 
 /* ==========================================================================
    4. Hyderabad, Your Way: theme explorer (scoped to [data-themes])
    Hover/focus/tap a card -> its state shows in the big panel with a looping video.
    ========================================================================== */
-.mn-themes__eyebrow {
-  margin-bottom: 1.4rem;
-  font-size: 1.2rem;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: #a97835; /* darker Asli gold: readable on cream */
-}
 
 /* Panel: the stacked states share one grid cell, so the panel never jumps in height. */
 [data-themes] .mn-promo__scrim {
@@ -677,6 +724,57 @@
   [data-themes] .mn-promo__heading { font-size: 3.4rem; }
 }
 
+/* Theme picker (section 4, phones and tablets): a segmented row of six line icons replaces the card
+   strip; a tap brings the theme into the panel (components.js). Desktop keeps the cards. */
+.mn-themes__tabs { display: none; }
+@media (max-width: 1024px) {
+  .mn-themes__tabs {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-bottom: 2.4rem;
+    border-block: 1px solid var(--hairline);
+  }
+  .mn-themes__tabs + .mn-collection__layout .mn-collection__grid { display: none; }
+  .mn-themes__tab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem .4rem 1.8rem;
+    border: 0;
+    background: transparent;
+    font: 500 1.1rem/1 var(--sans);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-70);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color .4s var(--ease), background-color .4s var(--ease);
+  }
+  .mn-themes__tab + .mn-themes__tab { border-left: 1px solid var(--hairline); }
+  .mn-themes__icon { width: 2.6rem; height: 2.6rem; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+  /* Active: dark-gold label and icon, a faint gold wash and a gold rule along the foot. */
+  .mn-themes__tab::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform .5s var(--ease);
+  }
+  .mn-themes__tab.is-active { color: var(--gold-ink); background: rgba(197, 154, 91, .1); }
+  .mn-themes__tab.is-active::after { transform: scaleX(1); }
+  .mn-themes__tab:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: -2px; }
+}
+/* Phones: three by two, divided like the tablet row. */
+@media (max-width: 749px) {
+  .mn-themes__tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mn-themes__tab:nth-child(3n + 1) { border-left: 0; }
+  .mn-themes__tab:nth-child(n + 4) { border-top: 1px solid var(--hairline); }
+}
+
 /* ==========================================================================
    5–7, 10. Editorial blocks
    ========================================================================== */
@@ -741,7 +839,6 @@
   text-align: center;
 }
 .mn-ed__inner--left .mn-ed__content--boxed { margin-left: clamp(0rem, 3vw, 4.5rem); }
-.mn-ed__content--boxed .mn-ed__eyebrow { margin-bottom: 1.6rem; }
 .mn-ed__content--boxed .mn-ed__heading { font-size: clamp(3.4rem, 5.2vw, 5rem); line-height: 1.24; letter-spacing: 0; }
 .mn-ed__inner--left .mn-ed__content--boxed .mn-ed__heading em { display: block; }
 .mn-ed__content--boxed .mn-ed__body { margin-top: 4.9rem; font-size: 1.6rem; line-height: 1.5; }
@@ -797,19 +894,11 @@
 /* Centred statement with monogram */
 .mn-ed--mark .mn-ed__content { display: flex; flex-direction: column; align-items: center; max-width: 90rem; }
 .mn-ed--mark .mn-ed__heading { order: 1; font-size: 7rem; line-height: 7.4rem; letter-spacing: 0; }
-.mn-ed--mark .mn-ed__eyebrow {
-  order: 2;
-  margin-top: 1.6rem;
-  color: var(--white-80);
-  text-transform: uppercase;
-  letter-spacing: .15em;
-}
 .mn-ed__monogram { order: 3; display: inline-flex; margin-top: 2.3rem; }
 
-/* Private Access: eyebrow above, then heading, a quiet line and the request link. */
+/* Private Access: heading, a quiet line and the request link. */
 .mn-ed--access .mn-ed__scrim { background: radial-gradient(ellipse 70% 65% at 50% 50%, rgba(10,8,6,.62), rgba(10,8,6,.3) 75%); }
 .mn-ed--access .mn-ed__content { text-shadow: 0 1px 24px rgba(0,0,0,.4); }
-.mn-ed--access .mn-ed__eyebrow { order: 0; margin: 0 0 2.4rem; color: var(--gold-light); }
 .mn-ed--access .mn-ed__sub { order: 2; margin-top: 2rem; font-size: 1.7rem; letter-spacing: .02em; color: var(--white-80); }
 .mn-ed--access .mn-ed__link { order: 3; margin-top: 3.2rem; }
 
@@ -925,7 +1014,6 @@
 }
 .mn-ed--split.mn-ed--bottom .mn-ed__frame { justify-content: flex-end; padding-bottom: clamp(4.8rem, 5.42vw, 9.1rem); }
 .mn-ed--split .mn-ed__content { max-width: 63.8rem; color: var(--ink); }
-.mn-ed--split .mn-ed__eyebrow { margin-bottom: 2.4rem; }
 .mn-ed--split .mn-ed__heading { font-size: 7rem; line-height: 7.4rem; letter-spacing: 0; }
 .mn-ed--split .mn-ed__body { margin-top: 1.8rem; font-size: 1.6rem; line-height: 1.5; }
 
@@ -989,7 +1077,7 @@
 
 /* Section copy: the heading is longer than the template's, so it steps down a size. */
 .mn-ed--rooted .mn-ed__heading { font-size: clamp(4rem, 3.6vw, 6rem); line-height: 1.08; }
-.mn-ed--rooted .mn-ed__heading em { font-style: italic; color: #a97835; }
+.mn-ed--rooted .mn-ed__heading em { font-style: italic; color: var(--gold-ink); }
 
 @media (min-width: 1025px) {
   /* The band only shows on desktop when the sweep is not running (reduced motion). */
@@ -1052,7 +1140,6 @@
   .mn-ed--steps .mn-ed__inner { align-items: flex-start; padding: 2rem 0 5.6rem; }
   .mn-ed__content--boxed { padding: 2rem; }
   .mn-ed__content--boxed .mn-ed__heading { font-size: 3.2rem; line-height: 3.6rem; }
-  .mn-ed__content--boxed .mn-ed__eyebrow { margin-bottom: .8rem; }
   .mn-ed__content--boxed .mn-ed__body { margin-top: .8rem; font-size: 1.3rem; line-height: 2rem; }
   .mn-ed__content--boxed .mn-ed__btn { margin-top: 2rem; padding: 1rem 2rem; }
   .mn-ed--overlay { min-height: 84svh; }
@@ -1072,7 +1159,6 @@
   --img-h: clamp(26rem, 46svh, 46rem);
   --card-w: calc(var(--img-h) * .8);
   --gap: clamp(2.4rem, 2.6vw, 4.4rem);
-  --gold-ink: #a97835;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1235,7 +1321,7 @@
 .mn-arcade__link:hover .mn-arcade__go, .mn-arcade__link:focus-visible .mn-arcade__go { transform: none; opacity: 1; }
 
 /* How far along the rail you are. */
-.mn-arcade__progress { position: relative; height: 1px; margin: clamp(1.6rem, 3svh, 3.2rem) var(--gutter) 0; background: rgba(46, 57, 55, .14); }
+.mn-arcade__progress { position: relative; height: 1px; margin: clamp(1.6rem, 3svh, 3.2rem) var(--gutter) 0; background: rgba(42, 36, 32, .14); }
 .mn-arcade__progress::after { content: ""; position: absolute; inset: 0; background: var(--gold); transform: scaleX(var(--p, .4)); transform-origin: 0 50%; }
 
 /* Touch: no hover, so each card shows its description and Book now under the name. */
@@ -1276,7 +1362,7 @@
    Each guest has a backdrop, an arch portrait and a quote; the guests along the
    bottom are tabs whose gold hairline fills while their quote is up.
    ========================================================================== */
-.mn-ed--voices { --dur: 10s; --gold-ink: #a97835; }
+.mn-ed--voices { --dur: 10s; }
 /* Darker than the other overlays so long quotes and white names stay calm and legible. */
 .mn-ed--voices .mn-ed__scrim {
   background:
@@ -1471,7 +1557,6 @@
    in the corners (motion.js draws them in).
    ========================================================================== */
 .mn-brands {
-  --gold-ink: #a97835;
   position: relative;
   overflow: hidden;
   padding-block: clamp(9.6rem, 9vw, 14rem);
@@ -1501,12 +1586,18 @@
   flex-direction: column;
   align-items: center;
   padding: clamp(2.4rem, 2.2vw, 3.6rem) 1.6rem clamp(2rem, 2vw, 3rem);
-  border: 1px solid rgba(46, 57, 55, .1);
+  border: 1px solid rgba(42, 36, 32, .1);
   background: var(--white);
   text-align: center;
   transition: border-color .5s var(--ease), box-shadow .5s var(--ease), transform .5s var(--ease);
 }
-.mn-brand:hover { border-color: rgba(197, 154, 91, .55); box-shadow: 0 1.6rem 3.2rem rgba(46, 57, 55, .08); transform: translateY(-.4rem); }
+.mn-brand:hover { border-color: rgba(197, 154, 91, .55); box-shadow: 0 1.6rem 3.2rem rgba(42, 36, 32, .08); transform: translateY(-.4rem); }
+/* The link is on the name for screen readers; it stretches to fill the tile, so a click anywhere opens the brand's site. */
+.mn-brand { position: relative; }
+.mn-brand__a { color: inherit; text-decoration: none; }
+.mn-brand__a::after { content: ""; position: absolute; inset: 0; }
+.mn-brand__a:focus-visible { outline: none; }
+.mn-brand__a:focus-visible::after { outline: 2px solid var(--gold-ink); outline-offset: -.4rem; }
 .mn-brand__logo { position: relative; display: block; width: 100%; height: clamp(6rem, 5.6vw, 8.6rem); }
 /* Both versions are stacked and centred in the same box; each keeps its own proportions. */
 .mn-brand__logo img {
@@ -1547,7 +1638,7 @@
    Each card: photo, the partner's logo in white, the name; hover or focus brings up the line
    and "Book experience". Phones: a swipe rail with everything shown.
    ========================================================================== */
-.mn-cocur { --gold-ink: #a97835; padding-block: clamp(9.6rem, 9vw, 14rem); background: var(--cream); color: var(--ink); }
+.mn-cocur { padding-block: clamp(9.6rem, 9vw, 14rem); background: var(--cream); color: var(--ink); }
 .mn-cocur__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

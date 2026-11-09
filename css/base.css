@@ -3,17 +3,18 @@
    ========================================================================== */
 :root {
   --cream: #f4eee4;
-  --ink: #2e3937;
-  --ink-70: rgba(46, 57, 55, .72);
-  --ink-45: rgba(46, 57, 55, .45);
-  --hairline: rgba(46, 57, 55, .22);
-  --muted: #707c7a;
+  --ink: #2a2420;
+  --ink-70: rgba(42, 36, 32, .72);
+  --ink-45: rgba(42, 36, 32, .45);
+  --hairline: rgba(42, 36, 32, .22);
+  --muted: #72675d;
   --white: #fff;
   --white-80: rgba(255, 255, 255, .82);
   --tile: #f0eee9;
   --footer-bg: #f4eee4;
   --gold: #c59a5b;        /* Asli accent, from aslihyd.in */
   --gold-light: #d8b77d;
+  --gold-ink: #8a5f22;    /* gold for text on cream: 4.9:1, passes WCAG AA */
   /* Inlay stones (css/motifs.css): small set dots only, never fields of colour */
   --stone-lapis: #2c4a7e;
   --stone-carnelian: #b4532f;
@@ -115,14 +116,6 @@ html.is-loading .mn-hero__content { opacity: 0; }
 /* ==========================================================================
    Type pieces
    ========================================================================== */
-.mn-eyebrow {
-  font-family: var(--sans);
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: .02em;
-  color: var(--muted);
-}
 
 /* Underlined text link: line retracts to the right on hover, returns from the left. */
 .mn-ulink {
