@@ -410,14 +410,6 @@
     }
   }
 
-  /* ---------- Footer skyline: run the ambient loops (birds, lake, phone pan) only while it is on screen ---------- */
-  var foot = document.querySelector('.mn-footer');
-  if (foot && !reduceMotion && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      foot.classList.toggle('is-on', entries[0].isIntersecting);
-    }).observe(foot);
-  }
-
   /* ---------- In-page links (#co-curated, #quick-experiences, #private-access…) ----------
      Glide there with Lenis instead of a native jump that fights the smooth scroll and the pins. */
   document.addEventListener('click', function (e) {
@@ -625,5 +617,46 @@
     });
     barWatch.observe(pageFoot);
     document.querySelectorAll('.mn-pg-end, [data-hero], .mn-pg-port').forEach(function (el) { barWatch.observe(el); });
+  }
+
+  /* ---------- Floating contact (every page): the toggle opens Call, WhatsApp and the social buttons ----------
+     A social button appears only once its address is filled in here, so the page never shows an empty link. */
+  var CONTACT = { twitter: '', linkedin: '', youtube: '' };
+  var fab = document.querySelector('[data-fab]');
+  if (fab) {
+    var fabToggle = fab.querySelector('[data-fab-toggle]');
+    var fabStack = fab.querySelector('.mn-fab__stack');
+    var fabHide = fab.querySelector('[data-fab-hide]');
+    fab.querySelectorAll('[data-fab-link]').forEach(function (a) {
+      var url = CONTACT[a.dataset.fabLink];
+      if (url) { a.href = url; a.parentNode.hidden = false; }
+    });
+    var setFab = function (open, moveFocus) {
+      fab.classList.toggle('is-open', open);
+      fabToggle.setAttribute('aria-expanded', String(open));
+      fabToggle.setAttribute('aria-label', open ? 'Close contact options' : 'Open contact options');
+      fabStack.inert = fabHide.inert = !open; // closed buttons are invisible, so keep them out of tab order and screen readers
+      if (!moveFocus) return;
+      if (open) fabStack.querySelector('li:not([hidden]) a').focus();
+      else fabToggle.focus();
+    };
+    // detail 0 = keyboard activation: then focus moves into the list.
+    fabToggle.addEventListener('click', function (e) { setFab(!fab.classList.contains('is-open'), e.detail === 0); });
+    fabHide.addEventListener('click', function () { setFab(false, true); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && fab.classList.contains('is-open')) setFab(false, true);
+    });
+    document.addEventListener('click', function (e) {
+      if (fab.classList.contains('is-open') && !fab.contains(e.target)) setFab(false);
+    });
+    if (!reduceMotion) {
+      ((window.mnPreloader && window.mnPreloader.done) || Promise.resolve()).then(function () {
+        setTimeout(function () {
+          if (fab.classList.contains('is-open')) return;
+          fabToggle.classList.add('is-pulse');
+          fabToggle.addEventListener('animationend', function () { fabToggle.classList.remove('is-pulse'); }, { once: true });
+        }, 1500);
+      });
+    }
   }
 })();

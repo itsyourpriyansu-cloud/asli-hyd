@@ -245,34 +245,6 @@
     });
   })();
 
-  /* ---------- Statement: masked line-by-line reveal (all sizes) ---------- */
-  (function statementIntro() {
-    var block = $('.mn-statement__inner');
-    if (!block) return;
-    var tl = maskReveal(block, 'to bottom', 2.5, 8);
-    ScrollTrigger.create({ trigger: sec('statement'), start: 'top 75%', once: true, onEnter: function () { tl.play(); } });
-
-    // Letters ink in from faint to full as you scroll. Starts once the section has
-    // crossed the middle of the screen and finishes just before the desktop pin
-    // (statement 'top top') starts fading the text out again.
-    var text = $('.mn-statement__text', block);
-    if (!text) return;
-    var chars = splitText(text, 'char');
-    var STEP = .06;
-    var ink = gsap.timeline({
-      scrollTrigger: { trigger: sec('statement'), start: 'top 50%', end: 'top 8%', scrub: .6 }
-    });
-    ink.fromTo(chars, { opacity: .14 }, { opacity: 1, ease: 'none', stagger: STEP }, 0);
-    // Each coloured loop is drawn round its word, pen-like (slow start and finish), as the word inks.
-    $$('.mn-ring', text).forEach(function (ring) {
-      var own = chars.filter(function (c) { return ring.contains(c); });
-      if (!own.length) return;
-      var first = chars.indexOf(own[0]);
-      var last = chars.indexOf(own[own.length - 1]);
-      ink.fromTo(ring, { '--draw': 0 }, { '--draw': 1, ease: 'power1.inOut', duration: Math.max((last - first) * STEP, .3) + .5 }, first * STEP + .25);
-    });
-  })();
-
   /* ---------- Conventions: the Charminar and its arch draw themselves as the heading rises,
      then the cards rise in one after another (all sizes) ---------- */
   (function conventionsIntro() {
@@ -299,7 +271,7 @@
   mm.add(isHome ? '(min-width: 1025px)' : 'not all', function () {
     var cleanups = [];
     var S = {
-      hero: sec('hero'), statement: sec('statement'), cats: sec('cats'), conv: sec('conventions'),
+      hero: sec('hero'), conv: sec('conventions'),
       colA: sec('collection-a'), commission: sec('commission'), collector: sec('collector'),
       city: sec('city'), spinner: sec('spinner'), colB: sec('collection-b'),
       materials: sec('materials'), worlds: sec('worlds')
@@ -307,14 +279,13 @@
 
     // Stack order for the overlapping sections.
     gsap.set(S.hero, { zIndex: -1 });
-    gsap.set(S.statement, { zIndex: -1 });
     gsap.set(S.commission, { zIndex: 2 });
     gsap.set(S.collector, { zIndex: 3 });
     gsap.set(S.city, { zIndex: 4 });
     gsap.set(S.spinner, { zIndex: 5 });
     gsap.set(S.materials, { zIndex: 6 });
 
-    /* Hero: holds while the statement slides over it, drifting up and fading its title. */
+    /* Hero: holds while Hyderabad, Your Way slides over it, drifting up and fading its title. */
     (function () {
       var hero = $('.mn-hero', S.hero);
       gsap.timeline({
@@ -324,46 +295,9 @@
         .to($('.mn-hero__content', hero), { opacity: 0, filter: 'blur(8px)', ease: 'none', duration: .35 }, 0);
     })();
 
-    /* Statement holds; the category tiles grow out of it from 60% scale. */
-    (function () {
-      var cats = $('.mn-cats', S.cats);
-      var tiles = $$('.mn-cats__tile', cats);
-      var gap = function () { return Math.max(pageTop(S.cats) - pageTop(S.statement), 1); };
-      gsap.set(cats, { backgroundColor: 'transparent' });
-
-      var tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: S.statement, start: 'top top', end: function () { return '+=' + gap(); },
-          scrub: true, pin: true, pinSpacing: false, invalidateOnRefresh: true,
-          onUpdate: function (self) { cats.classList.toggle('is-armed', self.progress > .55); },
-          onLeave: function () { cats.classList.add('is-armed'); },
-          onEnterBack: function () { cats.classList.remove('is-armed'); }
-        }
-      });
-      // The y offset cancels the scroll so the grid grows in place, centred on the statement.
-      tl.fromTo(cats,
-        { y: function () { return -gap(); }, scale: .6, transformOrigin: function () { return '50% ' + S.statement.offsetHeight / 2 + 'px'; } },
-        { y: 0, scale: 1, ease: 'none', duration: 1 }, 0)
-        .fromTo(cats, { filter: 'blur(6px)' }, { filter: 'blur(0px)', ease: 'none', duration: .45 }, 0)
-        .fromTo(cats, { autoAlpha: 0 }, { autoAlpha: 1, ease: 'none', duration: .12 }, 0)
-        .fromTo($('.mn-statement__body', S.statement), { opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: 'blur(8px)', ease: 'none', duration: .45 }, 0);
-      if (tiles.length > 1) {
-        tl.fromTo(tiles[0], { autoAlpha: 0, scale: .85, transformOrigin: '100% 50%' }, { autoAlpha: 1, scale: 1, ease: 'none', duration: .55 }, .05)
-          .fromTo(tiles[1], { autoAlpha: 0, scale: .85, transformOrigin: '0% 50%' }, { autoAlpha: 1, scale: 1, ease: 'none', duration: .9 }, .1);
-      }
-
-      // Brief hold on the finished grid.
-      ScrollTrigger.create({
-        trigger: S.cats,
-        start: function () { return pageTop(S.cats); },
-        end: function () { return pageTop(S.cats) + Math.round(vh() * .55); },
-        pin: true, pinSpacing: true, invalidateOnRefresh: true
-      });
-    })();
-
     /* Conventions: the one-screen section holds while the page scroll carries the card rail right to
        left until the last card meets the column edge, with a short pause before and after (the
-       Quick Experiences pattern). Created here so it is measured after the Two Paths hold. */
+       Quick Experiences pattern). */
     (function () {
       if (!S.conv || S.conv.hidden) return;
       var rail = $('.mn-conv__rail', S.conv);
@@ -433,7 +367,7 @@
 
     /* Commission */
     (function () {
-      curtain(S.colA, S.commission, { holdPrev: true, pushPrev: $('.mn-collection', S.colA) });
+      curtain(null, S.commission, {});
       var box = boxReveal(S.commission);
       var steps = stepsReveal(S.commission);
       ScrollTrigger.create({ trigger: S.commission, start: 'top 30%', once: true, onEnter: function () { box && box.play(); } });
@@ -598,9 +532,6 @@
     });
     var heroMedia = $('.mn-hero__media');
     if (heroMedia) cleanups.push(parallax(heroMedia, $('video, img', heroMedia), 1.18, 8));
-    $$('.mn-cats__tile').forEach(function (tile) {
-      cleanups.push(parallax(tile, $('.mn-cats__img', tile), 1.18, 8));
-    });
     // Steps appear once their section is fully on screen.
     ['commission', 'materials'].forEach(function (name) {
       var wrap = sec(name);
@@ -767,36 +698,6 @@
       }
     });
     once(function () { return box.getBoundingClientRect().bottom <= vh() + 2; }, function () { seq.play(); });
-  })();
-
-  /* Footer: the inlay seam unrolls from the centre as the footer arrives. The skyline along its foot rises
-     tier by tier over the last stretch of scroll, from the moment it comes into view to the end of the page
-     (far moves most, so the city stands up in depth), then lights its lamps; scrolling back lowers it. */
-  (function () {
-    var foot = $('.mn-footer');
-    var scene = foot && $('.mn-footer__scene', foot);
-    if (!scene) return;
-    var inlay = $('.mn-footer__inlay', foot);
-    gsap.set(inlay, { clipPath: 'inset(0 50% 0 50%)' });
-    once(function () { return foot.getBoundingClientRect().top < vh() * .85; }, function () {
-      gsap.to(inlay, { clipPath: 'inset(0 0% 0 0%)', duration: 1.6, ease: 'power2.inOut' });
-    });
-
-    // y is in SVG user units here, so the rise is the same at every screen size.
-    var rise = gsap.timeline()
-      .fromTo($('.mn-footer__tier--far', foot), { y: 90 }, { y: 0, ease: 'none' }, 0)
-      .fromTo($('.mn-footer__tier--mid', foot), { y: 55 }, { y: 0, ease: 'none' }, 0)
-      .fromTo($('.mn-footer__tier--near', foot), { y: 25 }, { y: 0, ease: 'none' }, 0)
-      .fromTo($('.mn-footer__sun', foot), { y: 70 }, { y: 0, ease: 'none' }, 0);
-    ScrollTrigger.create({
-      trigger: scene,
-      start: 'top bottom',
-      endTrigger: foot,
-      end: 'bottom bottom',
-      scrub: .8,
-      animation: rise,
-      onUpdate: function (st) { foot.classList.toggle('is-lit', st.progress > .92); }
-    });
   })();
 
   /* Featured Brands (logos slot): the corner Charminar and Chowmahalla draw themselves, the copy rises,

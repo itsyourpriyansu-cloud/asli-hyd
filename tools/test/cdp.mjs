@@ -44,7 +44,11 @@ export async function launch({ out, port = 9350 } = {}) {
   });
   const send = (method, params = {}) => new Promise((r) => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
   // Evaluate an expression in the page; promises are awaited, values come back as JSON.
-  const ev = async (expr) => (await send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true })).result?.result?.value;
+  // CDP sends -0, NaN and ±Infinity as `unserializableValue` with no `value`; without this, Math.round(-0.3) read as undefined.
+  const ev = async (expr) => {
+    const r = (await send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true })).result?.result;
+    return r && 'unserializableValue' in r ? Number(r.unserializableValue) : r?.value;
+  };
   await send('Runtime.enable'); await send('Log.enable'); await send('Page.enable');
 
   const b = {

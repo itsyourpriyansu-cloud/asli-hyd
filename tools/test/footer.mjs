@@ -1,9 +1,7 @@
-// Footer, one screen tall, with "Hyderabad, at dusk" as its background: walk to the end of the page at desktop,
-// laptop and phone sizes and check the content is all there (logo, contact, social links, three link columns,
-// legal row and the design credit on the ground band), the desktop footer fits one viewport with the content clear of the
-// buildings, the inlay has unrolled, the three tiers have risen to rest, the lamps are lit, the ambient loops
-// run on screen, and nothing scrolls sideways. Scrolling back lowers the tiers.
-// Reduced motion: everything complete and still.
+// Footer, quiet and still: walk to the end of the page at desktop, laptop and phone sizes and check the content is
+// all there (logo, contact, social links, three link columns, legal row and the design credit), the WhatsApp link goes
+// to the old site's number in a new tab, the Phosphor icon draws, nothing in the footer animates, the skyline and inlay
+// are gone, the page ends on the footer and nothing scrolls sideways. Reduced motion shows the same footer.
 //
 //   node tools/test/footer.mjs http://127.0.0.1:8655/ C:/abs/out
 import { launch, sleep } from './cdp.mjs';
@@ -16,71 +14,91 @@ const check = (name, ok, info = '') => { results.push({ name, ok: !!ok, info });
 
 const state = `(()=>{
   const f = document.querySelector('.mn-footer'), q = (s) => f.querySelector(s);
-  const ty = (s) => { const t = q(s).transform.baseVal; return t.length ? t.consolidate().matrix.f : 0; };
-  const r = f.getBoundingClientRect(), sky = q('.mn-footer__scene').getBoundingClientRect(), edge = q('.mn-footer__edge').getBoundingClientRect();
-  const env = q('.mn-footer__envizon'), main = document.querySelector('main').getBoundingClientRect();
+  const env = q('.mn-footer__envizon'), r = f.getBoundingClientRect();
+  const all = [f, ...f.querySelectorAll('*')];
   return {
     logo: !!q('.mn-footer__logo img').naturalWidth, cols: f.querySelectorAll('.mn-footer__col-title').length,
     contact: f.querySelectorAll('.mn-footer__contact li').length, legal: !!q('.mn-footer__legal'),
-    social: [...f.querySelectorAll('.mn-footer__social a')].map((a) => a.getAttribute('aria-label') + (a.querySelector('svg').getBoundingClientRect().width > 10 ? '' : '!')),
-    fh: Math.round(r.height), mainBottom: Math.round(Math.max(...[...f.querySelectorAll('.mn-footer__brand > *, .mn-footer__cols ul')].map((e) => e.getBoundingClientRect().bottom))),
-    builds: Math.round(sky.top + sky.height * .37),
-    inlay: getComputedStyle(q('.mn-footer__inlay')).clipPath,
-    edgeGap: Math.round(r.top - main.bottom), edgeH: Math.round(edge.height),
-    far: ty('.mn-footer__tier--far'), mid: ty('.mn-footer__tier--mid'), near: ty('.mn-footer__tier--near'),
-    lit: f.classList.contains('is-lit'), on: f.classList.contains('is-on'),
-    lamp: +getComputedStyle(q('.mn-footer__lamps circle')).opacity,
-    bird: getComputedStyle(q('.mn-footer__bird')).animationPlayState, birdAnim: getComputedStyle(q('.mn-footer__bird')).animationName,
-    footBottom: Math.round(r.bottom), sky: { top: Math.round(sky.top), h: Math.round(sky.height) },
-    vw: innerWidth, vh: innerHeight, docW: document.documentElement.scrollWidth,
+    social: [...f.querySelectorAll('.mn-footer__social a')].map((a) => {
+      const box = a.querySelector('svg').getBoundingClientRect(), use = a.querySelector('use').getAttribute('href');
+      return { label: a.getAttribute('aria-label'), href: a.href, target: a.target, rel: a.rel, use, drawn: box.width > 10 && !!document.querySelector(use + ' path'), size: Math.round(a.getBoundingClientRect().height) };
+    }),
+    gone: ['.mn-footer__scene', '.mn-footer__inlay', '.mn-footer__edge', '.mn-footer__sky'].filter((s) => q(s)),
+    animated: all.filter((e) => getComputedStyle(e).animationName !== 'none').length + f.getAnimations({ subtree: true }).filter((a) => a.playState === 'running' && !(a instanceof CSSTransition)).length,
+    footBottom: Math.round(r.bottom), vw: innerWidth, vh: innerHeight, docW: document.documentElement.scrollWidth,
     env: { href: env.href, target: env.target, rel: env.rel, text: env.textContent.trim() },
-    band: (q('.mn-footer__scene').textContent + ' ' + q('.mn-footer__ground').textContent).replace(/\\s+/g, ' ').trim(),
+    row: q('.mn-footer__row').textContent.replace(/\\s+/g, ' ').trim(),
   };
 })()`;
+
+const verify = (tag, s) => {
+  check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 3 && s.legal, `cols ${s.cols} contact ${s.contact}`);
+  // Instagram and Facebook use @aslihyderabad (chosen by the user; the old site links neither).
+  const wa = s.social.find((x) => x.label === 'WhatsApp');
+  check(`${tag} social icons shown`, s.social.map((x) => x.label).join() === 'Instagram,Facebook,WhatsApp' && s.social.every((x) => x.drawn && x.size >= 44 && x.target === '_blank' && /noopener/.test(x.rel)), s.social.map((x) => x.label).join());
+  const ig = s.social.find((x) => x.label === "Instagram"), fb = s.social.find((x) => x.label === "Facebook");
+  check(`${tag} Instagram and Facebook open @aslihyderabad`, ig && ig.href === "https://www.instagram.com/aslihyderabad/" && fb && fb.href === "https://www.facebook.com/aslihyderabad", `${ig && ig.href} ${fb && fb.href}`);
+  check(`${tag} WhatsApp opens the Asli number in a new tab`, wa && wa.href === 'https://wa.me/919392149872' && wa.target === '_blank' && /noopener/.test(wa.rel), JSON.stringify(wa));
+  check(`${tag} Phosphor icon drawn, 44px ring`, wa && wa.use === '#i-ph-whatsapp' && wa.drawn && wa.size >= 44, wa && `${wa.use} ${wa.size}px`);
+  check(`${tag} skyline, inlay and edge removed`, s.gone.length === 0, s.gone.join());
+  check(`${tag} nothing in the footer animates`, s.animated === 0, `${s.animated} animated`);
+  check(`${tag} page ends on the footer`, Math.abs(s.footBottom - s.vh) <= 2, `bottom ${s.footBottom} / vh ${s.vh}`);
+  check(`${tag} no sideways scroll`, s.docW === s.vw, `docW ${s.docW} vw ${s.vw}`);
+  check(`${tag} Envizon credit`, s.env.href === 'https://envizonstudio.com/' && s.env.target === '_blank' && /noopener/.test(s.env.rel) && s.env.text === 'Design by Envizon', JSON.stringify(s.env));
+  check(`${tag} legal row and design credit`, s.row === '© 2026 Asli Hyderabad. All rights reserved.Privacy Policy · Terms & Conditions Design by Envizon', JSON.stringify(s.row));
+};
 
 const b = await launch({ out, port: 9363 });
 b.url = url;
 for (const [w, h] of [[1440, 900], [1280, 720], [390, 844]]) {
-  const touch = w <= 1024, tag = `${w}x${h}`;
-  await b.load(w, h, { touch });
-  const end = await b.ev('document.documentElement.scrollHeight - innerHeight');
-  await b.walkTo(end, 140, 30);
-  await sleep(3200);
-  const s = await b.ev(state);
+  const tag = `${w}x${h}`;
+  await b.load(w, h, { touch: w <= 1024 });
+  await b.walkTo(await b.ev('document.documentElement.scrollHeight - innerHeight'), 140, 30);
+  await sleep(2400);
+  verify(tag, await b.ev(state));
   await b.shot(`footer-${tag}`);
-  check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 3 && s.legal,`cols ${s.cols} contact ${s.contact}`);
-  check(`${tag} social icons shown`, s.social.join() === 'WhatsApp', s.social.join()); // the other accounts return when the client supplies them
-  if (w > 1024) check(`${tag} footer is one screen tall`, Math.abs(s.fh - s.vh) <= 2, `footer ${s.fh} / vh ${s.vh}`);
-  check(`${tag} content clear of the buildings`, s.mainBottom <= s.builds, `content ends ${s.mainBottom}, buildings from ${s.builds}`);
-  check(`${tag} cusped edge meets the CTA`, s.edgeGap === 0 && s.edgeH > 10, `gap ${s.edgeGap} edge ${s.edgeH}px`);
-  check(`${tag} inlay unrolled`, !/50%/.test(s.inlay), s.inlay);
-  check(`${tag} tiers at rest`, Math.abs(s.far) < 1 && Math.abs(s.mid) < 1 && Math.abs(s.near) < 1, `far ${s.far} mid ${s.mid} near ${s.near}`);
-  check(`${tag} lamps lit`, s.lit && s.lamp > .95, `is-lit ${s.lit}, lamp ${s.lamp}`);
-  check(`${tag} ambient running on screen`, s.on && s.bird === 'running', `${s.birdAnim} ${s.bird}`);
-  check(`${tag} skyline band on screen, page ends on it`, s.sky.top >= 0 && s.sky.top + s.sky.h < s.vh && Math.abs(s.footBottom - s.vh) <= 2, `sky ${JSON.stringify(s.sky)} bottom ${s.footBottom}`);
-  check(`${tag} no sideways scroll`, s.docW === s.vw, `docW ${s.docW} vw ${s.vw}`);
-  check(`${tag} Envizon credit`, s.env.href === 'https://envizonstudio.com/' && s.env.target === '_blank' && /noopener/.test(s.env.rel) && s.env.text === 'Design by Envizon', JSON.stringify(s.env));
-  check(`${tag} ground band: legal row and design credit`, s.band === '© 2026 Asli Hyderabad. All rights reserved.Privacy Policy · Terms & Conditions Design by Envizon', JSON.stringify(s.band));
-  // Scroll back: the scrubbed rise reverses and the lamps go out.
-  await b.walkTo(end - 420, 20, 30);
-  await sleep(1600);
-  const back = await b.ev(state);
-  check(`${tag} scrolling back lowers the city`, back.far > 20 && back.far > back.mid && back.mid > back.near && !back.lit, `far ${back.far.toFixed(1)} mid ${back.mid.toFixed(1)} near ${back.near.toFixed(1)} lit ${back.lit}`);
-  await b.shot(`footer-${tag}-back`);
 }
 check('console clean (sized runs)', b.logs.length === 0, b.logs.join(' | '));
 const logCount = b.logs.length;
 
-// Reduced motion: no motion.js; everything complete, nothing moves.
 await b.load(1440, 900, { reduce: true });
 await b.jump(await b.ev('document.documentElement.scrollHeight - innerHeight'));
 await sleep(1200);
-const r = await b.ev(state);
+verify('reduced', await b.ev(state));
 await b.shot('footer-1440x900-reduce');
-check('reduced: inlay complete', !/50%/.test(r.inlay), r.inlay);
-check('reduced: tiers in place, lamps lit', r.far === 0 && r.mid === 0 && r.near === 0 && r.lamp > .99, `far ${r.far} lamp ${r.lamp}`);
-check('reduced: no ambient animation', r.birdAnim === 'none' && !r.on, `${r.birdAnim} on=${r.on}`);
 check('console clean (reduced)', b.logs.length === logCount, b.logs.slice(logCount).join(' | '));
+
+// Floating contact widget: closed and out of reach at rest; opens to Call, WhatsApp, Instagram and Facebook (X, LinkedIn
+// and YouTube stay hidden until their address is set); Escape closes it; on an inner page it clears the phone booking bar.
+const fab = `(()=>{const f=document.querySelector('[data-fab]'),t=f.querySelector('[data-fab-toggle]'),r=t.getBoundingClientRect();
+  const shown=[...f.querySelectorAll('.mn-fab__item:not([hidden]) a')];
+  return {open:f.classList.contains('is-open'),exp:t.getAttribute('aria-expanded'),inert:f.querySelector('.mn-fab__stack').inert,
+    shown:shown.map(a=>a.getAttribute('aria-label')+'='+a.getAttribute('href')),hiddenN:f.querySelectorAll('.mn-fab__item[hidden]').length,
+    op:shown.map(a=>+getComputedStyle(a).opacity),focus:document.activeElement.getAttribute('aria-label'),
+    toggle:{r:Math.round(innerWidth-r.right),b:Math.round(innerHeight-r.bottom),s:Math.round(r.width)},vw:innerWidth,vh:innerHeight}})()`;
+const fabLog = b.logs.length;
+for (const [w, h] of [[1440, 900], [390, 844]]) {
+  const tag = `${w}x${h} widget`;
+  await b.load(w, h, { touch: w <= 1024 });
+  const c = await b.ev(fab);
+  check(`${tag}: closed at rest, out of the tab order`, !c.open && c.exp === 'false' && c.inert && c.op.every((o) => o === 0), JSON.stringify(c));
+  check(`${tag}: toggle sits bottom right, 44px or more`, c.toggle.r >= 16 && c.toggle.r <= 26 && c.toggle.b >= 16 && c.toggle.b <= 26 && c.toggle.s >= 44, JSON.stringify(c.toggle));
+  await b.ev(`document.querySelector('[data-fab-toggle]').click()`); await sleep(900);
+  const o = await b.ev(fab);
+  check(`${tag}: opens to Call, WhatsApp, Instagram and Facebook, keyboard focus moves in`, o.open && o.exp === 'true' && !o.inert && o.shown.join() === 'Call us=tel:+919392149872,WhatsApp=https://wa.me/919392149872,Instagram=https://www.instagram.com/aslihyderabad/,Facebook=https://www.facebook.com/aslihyderabad' && o.op.every((x) => x === 1) && o.focus === 'Call us', JSON.stringify(o));
+  check(`${tag}: social buttons without an address stay hidden`, o.hiddenN === 3, `${o.hiddenN} hidden`);
+  await b.shot(`fab-open-${w}x${h}`);
+  await b.ev(`document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))`); await sleep(700);
+  const e = await b.ev(fab);
+  check(`${tag}: Escape closes it and returns focus to the toggle`, !e.open && e.inert && e.focus === 'Open contact options', JSON.stringify(e));
+}
+await b.load(390, 844, { touch: true, url: new URL('/tours/old-hyderabad', url).href });
+await b.walkTo(1400, 40, 30); await sleep(1200);
+const lift = await b.ev(`(()=>{const bar=document.querySelector('[data-bookbar]'),t=document.querySelector('[data-fab-toggle]').getBoundingClientRect();
+  return {away:bar.classList.contains('is-away'),barTop:Math.round(bar.getBoundingClientRect().top),fabBottom:Math.round(t.bottom)}})()`);
+check('390x844 inner page: widget clears the booking bar', !lift.away && lift.fabBottom <= lift.barTop - 8, JSON.stringify(lift));
+await b.shot('fab-bookbar-390x844');
+check('console clean (widget)', b.logs.length === fabLog, b.logs.slice(fabLog).join(' | '));
 
 const failed = results.filter((x) => !x.ok).length;
 console.log(`\n${results.length - failed}/${results.length} passed`);
