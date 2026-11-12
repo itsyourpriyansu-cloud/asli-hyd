@@ -183,7 +183,7 @@ async function interactions() {
     ['/experiences/co-curated/high-tea-hyderabad', 'Book experience', '/book-now?experience=high-tea-hyderabad', '#unfolds'],
     ['/conventions/bioasia-2027', 'Plan my conference week', '/book-now?experience=bioasia-2027', '#week'],
     ['/originals/hyderabad-at-dawn', 'Book this Sunday', '/book-now?experience=hyderabad-at-dawn', '#schedule'],
-    ['/services/custom-hyderabad-itinerary', 'Plan now', '/book-now?experience=custom-hyderabad-itinerary', '#options'],
+    ['/services/custom-hyderabad-itinerary', 'Choose an option', '#options', ''], // the booking card and option cards carry the booking link
     ['/partners/ramoji', 'See the experience', '/experiences/co-curated/behind-the-screen', ''],
     ['/private-access', 'Request Access', '/contact?topic=Private%20Access%20request#enquire', '#encounters'],
   ]) {
