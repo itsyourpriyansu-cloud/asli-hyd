@@ -732,7 +732,10 @@
         gsap.to($('[data-hero-media]', hero), { '--arch': 5, duration: 1.7, ease: 'power3.inOut', onComplete: function () { root.classList.remove('mn-arch'); } });
       }
     }
-    var rising = $$('[data-rise], [data-rise-item]');
+    // Forms are the page's job on Book Now and Contact, so they never wait for a scroll reveal.
+    // ?review (used in the client's content-request links) shows everything at once, so a highlighted heading is never hidden.
+    var review = /[?&]review\b/.test(location.search);
+    var rising = review ? [] : $$('[data-rise], [data-rise-item]').filter(function (el) { return !el.closest('.mn-pg-formwrap'); });
     gsap.set(rising, { y: 32, autoAlpha: 0 });
     ScrollTrigger.batch(rising, { start: 'top 92%', once: true, onEnter: function (batch) {
       gsap.to(batch, { y: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', stagger: .08, clearProps: 'transform,opacity,visibility' });

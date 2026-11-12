@@ -7,7 +7,9 @@
     { "source": "/conventions/hyderabad-tech-summit-2026", "destination": "/conventions", "permanent": true },
     { "source": "/conventions/india-sustainability-conclave-2026", "destination": "/conventions", "permanent": true },
     { "source": "/conventions/world-pharma-summit-2026", "destination": "/conventions", "permanent": true },
-    { "source": "/partners/telugu-experiece", "destination": "/partners", "permanent": true }
+    { "source": "/partners/telugu-experiece", "destination": "/partners", "permanent": true },
+    { "source": "/about", "destination": "/", "permanent": false },
+    { "source": "/login", "destination": "/", "permanent": false }
   ],
   "headers": [
     {

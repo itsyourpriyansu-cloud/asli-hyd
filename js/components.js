@@ -586,13 +586,33 @@
       showSummary();
     }
 
-    // Fires only once the browser's own required/type validation has passed.
+    // Errors show under their own field (the form is novalidate), using the browser's localised message.
+    var dateMin = form.querySelector('[data-min-today]');
+    if (dateMin) {
+      var now = new Date();
+      dateMin.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10); // local date, not UTC
+    }
+    var showError = function (field) {
+      var err = document.getElementById(field.id + '-err');
+      var msg = field.validity.valid ? '' : field.validationMessage;
+      if (err) { err.textContent = msg; err.hidden = !msg; }
+      field.setAttribute('aria-invalid', String(!!msg));
+      return !msg;
+    };
+    form.querySelectorAll('input, select, textarea').forEach(function (field) {
+      field.addEventListener('input', function () { if (field.getAttribute('aria-invalid') === 'true') showError(field); });
+      field.addEventListener('blur', function () { if (form.classList.contains('was-checked')) showError(field); });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      form.classList.add('was-checked');
+      var bad = [].filter.call(form.querySelectorAll('input, select, textarea'), function (field) { return !showError(field); });
+      if (bad.length) { bad[0].focus(); return; }
       var lines = [form.dataset.enquiry];
       form.querySelectorAll('input, select, textarea').forEach(function (field) {
         var value = field.tagName === 'SELECT' ? field.options[field.selectedIndex].text : field.value.trim();
-        if (value) lines.push(form.querySelector('label[for="' + field.id + '"]').textContent + ': ' + value);
+        if (value) lines.push(form.querySelector('label[for="' + field.id + '"]').childNodes[0].textContent.trim() + ': ' + value); // label text without "(required)"
       });
       var text = lines.join('\n');
       var wa = 'https://wa.me/919392149872?text=' + encodeURIComponent(text);

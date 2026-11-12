@@ -51,6 +51,12 @@ const localize = (s) => s.replace(/\b(src|href)="assets\//g, '$1="/assets/')
 const SPRITE = localize(slice('<svg width="0" height="0" style="position:absolute" aria-hidden="true">', '</svg>'));
 const HEADER = localize(slice('<header class="mn-header is-overlay" data-header>', '</header>'));
 const FOOTER = localize(slice('<footer class="mn-footer">', '</footer>'));
+// "You are here" without a breadcrumb: the nav link for this page (or its nearest parent) gets aria-current.
+const NAV_HREFS = [...new Set([...HEADER.matchAll(/href="(\/[^"#?]+)"/g)].map((m) => m[1]))];
+function headerFor(path) {
+  const cur = NAV_HREFS.filter((h) => path === h || path.startsWith(h + '/')).sort((a, b) => b.length - a.length)[0];
+  return cur ? HEADER.replaceAll(`href="${cur}"`, `href="${cur}" aria-current="${cur === path ? 'page' : 'true'}"`) : HEADER;
+}
 const LIGHTBOX = `<dialog class="mn-pg-lb" data-lb aria-label="Photo viewer">
     <button type="button" class="mn-pg-lb__close" data-lb-close aria-label="Close">×</button>
     <button type="button" class="mn-pg-lb__nav mn-pg-lb__nav--prev" data-lb-prev aria-label="Previous photo">‹</button>
@@ -88,7 +94,7 @@ function page(path, { title, desc, og, cls = '', body }) {
 <body class="mn-pg ${cls}">
   <a class="mn-pg-skip" href="#main">Skip to content</a>
   ${SPRITE}
-  ${HEADER}
+  ${headerFor(path)}
   <main id="main" tabindex="-1">
 ${body}
   </main>
@@ -124,7 +130,6 @@ function hero({ title, sub = '', group, name, alt = '', video, poster, pos, tall
       </div>
     </section>`;
 }
-const crumbs = (...trail) => `    <nav class="mn-pg-crumbs" aria-label="Breadcrumb"><div class="mn-wrap"><ol role="list"><li><a href="/">Home</a></li>${trail.map(([n, h]) => `<li>${h ? `<a href="${h}">${esc(n)}</a>` : `<span aria-current="page">${esc(n)}</span>`}</li>`).join('')}</ol></div></nav>`;
 const whyBlock = (a, b, items) => `<section class="mn-pg-block">${head2(a, b)}<ul class="mn-pg-why" role="list">${items.map((x) => `<li data-rise-item><svg class="mn-m-sym mn-pg-why__sym" viewBox="0 0 40 32" aria-hidden="true" focusable="false"><use href="/assets/img/motifs.svg#m-lotus"/></svg><h3 class="mn-pg-why__h">${esc(x.h)}</h3><p>${esc(x.p)}</p></li>`).join('')}</ul></section>`;
 const after = (html) => `<div class="mn-pg-after" data-rise>${html}</div>`;
 const ulink = (label, href) => `<a class="mn-ulink" href="${href}">${esc(label)}</a>`;
@@ -185,11 +190,10 @@ const route = (a, b, stops, more = '', id = '') => `<section class="mn-pg-block"
             return `<li class="mn-pg-route__stop" data-stop><span class="mn-pg-route__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="mn-pg-route__body">${s.at ? `<span class="mn-pg-route__at">${esc(s.at)}</span>` : ''}<span class="mn-pg-route__name">${esc(s.name)}</span>${s.line ? `<span class="mn-pg-route__note">${esc(s.line)}</span>` : ''}</span></li>`;
           }).join('')}</ol></div>${more}
         </section>`;
-function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, related, relatedHead, allHref, allLabel, crumb, faqs, ask, closing }) {
+function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, related, relatedHead, allHref, allLabel, faqs, ask, closing }) {
   page(path, {
     title: it.name, desc: it.line, og: src,
     body: `${portraitHero({ title: halves(it.name), sub, src, alt: it.name, logo, cta: [bookLabel, book(it.slug)], link: ['How it unfolds', '#unfolds'] })}
-${crumbs(crumb, [it.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         ${facts(factRows)}
@@ -206,7 +210,7 @@ ${crumbs(crumb, [it.name])}
         </section>
         ${faqBlock(faqs, ask)}
       </div>
-      ${bookCard({ price: priceOf(it), meta: 'Hosted by Asli Hyderabad. Date, timing and venue confirmed when you book.', href: book(it.slug), label: bookLabel })}
+      ${bookCard({ price: priceOf(it), meta: 'Hosted by Asli Hyderabad.', name: it.name, href: book(it.slug), label: bookLabel })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2(relatedHead[0], relatedHead[1])}<a class="mn-ulink" href="${allHref}">${allLabel}</a></div>
@@ -222,9 +226,9 @@ function galleryGrid(items, { mosaic } = {}) {
   const shown = mosaic ? items.slice(0, 5) : items; // the mosaic is laid out for 3 to 5 photos
   return `<ul class="mn-pg-gal${mosaic ? ` mn-pg-gal--mosaic mn-pg-gal--n${shown.length}` : ''}" role="list">${shown.map((g, i) => `<li data-rise-item${g.tag ? ` data-tags="${g.tag}"` : ''}><button type="button" class="mn-pg-gal__btn" data-full="${g.src}" data-cap="${esc(g.cap)}"><img src="${mosaic && i === 0 ? g.src : g.thumb || g.src}" alt="${esc(g.cap)}" width="${g.w || 1000}" height="${g.h || 750}" loading="lazy" decoding="async"><span class="mn-pg-gal__cap">${esc(g.cap)}</span></button></li>`).join('')}</ul>`;
 }
-function bookCard({ price = PRICE, meta, href, label }) {
+function bookCard({ price = PRICE, meta, href, label, name = '' }) {
   return `<aside class="mn-pg-book" data-bookbar><div class="mn-pg-book__card">
-        <p class="mn-pg-book__price">${esc(price)}</p>
+        <div class="mn-pg-book__head">${name ? `<p class="mn-pg-book__name">${esc(name)}</p>` : ''}<p class="mn-pg-book__price">${esc(price)}</p></div>
         <p class="mn-pg-book__meta">${esc(meta)}</p>
         <a class="mn-pg-book__cta" href="${href}">${esc(label)} ${ARROW}</a>
       </div></aside>`;
@@ -256,7 +260,6 @@ for (const t of tours) {
   page(`/tours/${t.slug}`, {
     title: t.name, desc: t.summary, og: img('tours', t.slug + '.jpg'),
     body: `${hero({ title: halves(t.name), sub: t.tagline, group: 'tours', name: t.slug, alt: t.alt || t.name, pos: t.pos, cta: ['Book this tour', book(t.slug)], link: ['See the route', '#route'] })}
-${crumbs(['Tours', '/tours'], [t.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         ${facts([['Duration', t.duration], ['Format', t.format], ['Best time', t.bestTime], ['Group', `From ${t.minGuests} guest${t.minGuests > 1 ? 's' : ''}`]])}
@@ -271,14 +274,14 @@ ${crumbs(['Tours', '/tours'], [t.name])}
         <section class="mn-pg-block">${head2('Along', 'the way')}${galleryGrid(t.gallery, { mosaic: true })}${after(ulink('See the full gallery', '/gallery'))}</section>
         ${faqBlock([...t.faq, ...FAQ.tour], `Question about ${t.name}`)}
       </div>
-      ${bookCard({ price: priceOf(t), meta: `${t.duration} · per person, final availability confirmed by our team`, href: book(t.slug), label: 'Book this tour' })}
+      ${bookCard({ price: priceOf(t), meta: `${t.duration} · per person, final availability confirmed by our team`, href: book(t.slug), label: 'Book this tour', name: t.name })}
     </div>
 ${voice(tours.indexOf(t))}
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('You may', 'also like')}<a class="mn-ulink" href="/tours">All tours</a></div>
       <ul class="mn-pg-cards" role="list">${related.map(tourCard).join('')}</ul>
     </div></section>
-${endBand({ a: 'Want it', b: 'your way?', line: 'Keep this route, change a stop or start from scratch. Tell us your dates and we will shape it with you.' })}`,
+${endBand({ a: 'Want it', b: 'your way?', line: 'Keep this route, change a stop or start from scratch. Tell us your dates and we will shape it with you.', cta: ['Plan my Hyderabad', book(t.slug)] })}`,
   });
 }
 
@@ -303,11 +306,11 @@ const ccCard = (c) => archCard({ href: `/experiences/co-curated/${c.slug}`, src:
 for (const c of offers.cocurated) {
   experiencePage({
     path: `/experiences/co-curated/${c.slug}`, it: c, src: ccSrc(c), logo: c.logo, sub: c.line,
-    factRows: [['Format', c.kind], ...(c.partner ? [['With', c.partner]] : []), ['Timing', 'Confirmed when you book'], ['Price', priceOf(c)]],
+    factRows: [['Format', c.kind], ...(c.partner ? [['With', c.partner]] : []), ['Timing', 'Confirmed when you book']],
     bookLabel: 'Book experience', related: nextThree(offers.cocurated, c).map(ccCard),
     relatedHead: ['More small', 'experiences'], allHref: '/experiences/co-curated', allLabel: 'All 15 experiences',
-    crumb: ['Co-curated Experiences', '/experiences/co-curated'], faqs: FAQ.cocurated, ask: `Question about ${c.name}`,
-    closing: { a: 'Add it to', b: 'your stay.', line: 'Book it on its own, or let us weave it into a longer Hyderabad plan.', cta: ['Plan my Hyderabad', '/book-now'] },
+    faqs: FAQ.cocurated, ask: `Question about ${c.name}`,
+    closing: { a: 'Add it to', b: 'your stay.', line: 'Book it on its own, or let us weave it into a longer Hyderabad plan.', cta: ['Plan my Hyderabad', book(c.slug)] },
   });
 }
 const quickSrc = (q) => (q.photo ? `/assets/img/quick/${q.photo}.jpg` : img('quick', q.slug + '.jpg'));
@@ -330,11 +333,11 @@ for (const q of offers.quick) {
   const sameGroup = offers.quick.filter((x) => x.group === q.group);
   experiencePage({
     path: `/experiences/quick/${q.slug}`, it: q, src: quickSrc(q), sub: q.line,
-    factRows: [['Duration', q.len], ['Format', QUICK_FORMAT[q.group]], ['Price', priceOf(q)]],
+    factRows: [['Duration', q.len], ['Format', QUICK_FORMAT[q.group]]],
     bookLabel: 'Book now', where: offers.quickWhere, related: nextThree(sameGroup, q).map((x) => quickCard(x)),
     relatedHead: ['More quick', 'experiences'], allHref: '/experiences/quick', allLabel: 'All quick experiences',
-    crumb: ['Quick Experiences', '/experiences/quick'], faqs: FAQ.quick, ask: `Question about ${q.name}`,
-    closing: { a: 'Bring Hyderabad', b: 'to your event.', line: 'Tell us your venue, date and headcount, and we will shape the rest.', cta: ['Plan it with us', topic(`Quick Experience for an event: ${q.name}`)] },
+    faqs: FAQ.quick, ask: `Question about ${q.name}`,
+    closing: { a: 'Bring Hyderabad', b: 'to your event.', line: 'Tell us your venue, date and headcount, and we will shape the rest.', cta: ['Plan it with us', book(q.slug)] },
   });
 }
 
@@ -343,8 +346,7 @@ for (const t of themes) {
   const list = tours.filter((x) => x.themes.includes(t.slug));
   page(`/experiences/${t.slug}`, {
     title: `${t.name} Experiences`, desc: t.short, og: `/assets/video/themes/${t.slug}.jpg`,
-    body: `${hero({ title: `${esc(t.name)}<em>.</em>`, sub: t.tagline, video: `/assets/video/themes/${t.slug}.mp4`, poster: `/assets/video/themes/${t.slug}.jpg`, alt: t.short, cta: ['See the routes', '#routes'] })}
-${crumbs(['Tours', '/tours'], [t.name])}
+    body: `${hero({ title: `${esc(t.name)}<em>.</em>`, sub: t.tagline, video: `/assets/video/themes/${t.slug}.mp4`, poster: `/assets/video/themes/${t.slug}.jpg`, alt: t.short, cta: [list.length === 1 ? 'See the route' : 'See the routes', '#routes'] })}
     <section class="mn-pg-sec mn-pg-intro"><div class="mn-m-jaali mn-pg-intro__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-intro__in" data-rise>
       <h2 class="mn-pg-h2 mn-pg-h2--lg">${esc(t.headA)} <em>${esc(t.headB)}</em></h2>
       <p class="mn-pg-lead">${esc(t.intro)}</p>
@@ -395,11 +397,11 @@ for (const c of conventions) {
   page(`/conventions/${c.slug}`, {
     title: c.name, desc: `${c.dates}, ${c.venue}. Delegate experiences before, during and after the conference.`, og: img('conventions', c.slug + '.jpg'),
     body: `${hero({ title: halves(c.name), sub: `${c.dates} · ${c.venue}`, group: 'conventions', name: c.slug, alt: '', cta: ['Plan my conference week', book(c.slug), 'Plan a Hyderabad visit'], link: ['See the week', '#week'] })}
-${crumbs(['Conventions', '/conventions'], [c.name])}
     <section class="mn-pg-sec mn-pg-intro"><div class="mn-m-jaali mn-pg-intro__bg" aria-hidden="true"></div><div class="mn-wrap mn-pg-intro__in" data-rise>
       <p class="mn-pg-lead">${esc(c.desc)}</p>
       <p class="mn-pg-note" data-tentative>Tentative dates. ${DISCLAIMER}</p>
       <p class="mn-pg-note" data-ended="${c.end}" hidden>This event has ended. The plans below still work for any visit to Hyderabad.</p>
+      ${after(ulink('All conventions', '/conventions'))}
     </div></section>
     <section class="mn-pg-sec mn-pg-sec--flush"><div class="mn-wrap">
       ${head2('Picked for', 'your field', c.sector)}
@@ -434,7 +436,6 @@ for (const o of originals) {
   page(`/originals/${o.slug}`, {
     title: o.name, desc: `${o.tagline} ${o.intro}`.slice(0, 155), og: `/assets/video/originals/${o.key}.jpg`,
     body: `${hero({ title: halves(o.name), sub: o.tagline, video: `/assets/video/originals/${o.key}.mp4`, poster: `/assets/video/originals/${o.key}.jpg`, alt: o.name, cta: [o.cta, book(o.slug)], link: ['See the schedule', '#schedule'] })}
-${crumbs(['Asli Originals', '/originals'], [o.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         <p class="mn-pg-when" data-rise>${esc(o.when)} <em>${esc(o.time)}</em></p>
@@ -451,7 +452,7 @@ ${crumbs(['Asli Originals', '/originals'], [o.name])}
         ${whyBlock('Why only', 'here', o.why)}
         ${faqBlock(FAQ.original, `Question about ${o.name}`)}
       </div>
-      ${bookCard({ price: priceOf(o), meta: `${o.len} · per person`, href: book(o.slug), label: o.cta })}
+      ${bookCard({ price: priceOf(o), meta: `${o.len} · per person`, href: book(o.slug), label: o.cta, name: o.name })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('More', 'Originals')}<a class="mn-ulink" href="/originals">All Originals</a></div>
@@ -483,8 +484,7 @@ ${endBand({ a: 'One plan,', b: 'one point of contact.', line: 'Add what you need
 for (const s of services) {
   page(`/services/${s.slug}`, {
     title: s.name, desc: s.intro.slice(0, 155), og: img('services', s.slug + '.jpg'),
-    body: `${hero({ title: halves(s.name), sub: s.tagline, group: 'services', name: s.slug, alt: s.name, cta: [s.cta, book(s.slug)], link: ['See the options', '#options'] })}
-${crumbs(['Add-ons & Services', '/services'], [s.name])}
+    body: `${hero({ title: halves(s.name), sub: s.tagline, group: 'services', name: s.slug, alt: s.name, cta: ['Choose an option', '#options'] })}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         <section class="mn-pg-block mn-pg-block--first">${head2('About this', 'service')}<div class="mn-pg-prose mn-pg-prose--open" data-rise><p>${esc(s.intro)}</p></div></section>
@@ -499,13 +499,13 @@ ${crumbs(['Add-ons & Services', '/services'], [s.name])}
         <section class="mn-pg-block" data-rise><h2 class="mn-pg-h3">Arranged <em>separately</em></h2><ul class="mn-pg-list" role="list">${li(s.separate)}</ul></section>
         ${faqBlock([...s.faq, ...FAQ.service], `Question about ${s.name}`)}
       </div>
-      ${bookCard({ price: priceOf(s), meta: optionNames(s), href: book(s.slug), label: s.cta })}
+      ${bookCard({ price: priceOf(s), meta: optionNames(s), href: book(s.slug), label: s.cta, name: s.name })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('Goes well', 'with')}<a class="mn-ulink" href="/services">All services</a></div>
       <ol class="mn-pg-svc" role="list">${s.related.map((r, i) => svcRow(serviceBy[r], i)).join('')}</ol>
     </div></section>
-${endBand({ a: 'Add it to', b: 'your plan.', line: 'Tell us your dates and what you need, and we will put it all together.' })}`,
+${endBand({ a: 'Add it to', b: 'your plan.', line: 'Tell us your dates and what you need, and we will put it all together.', cta: ['Plan my Hyderabad', book(s.slug)] })}`,
   });
 }
 
@@ -531,23 +531,18 @@ for (const p of partners) {
   page(`/partners/${p.slug}`, {
     title: p.name, desc: p.about[0].slice(0, 155), og: p.photo,
     body: `${portraitHero({ title: halves(p.name), sub: p.cat, src: p.photo, alt: p.alt, logo: p.logo, cta: [cta.label, cta.href] })}
-${crumbs(['Featured Brands', '/partners'], [p.name])}
     <div class="mn-wrap mn-pg-split">
       <div class="mn-pg-split__main">
         ${facts([['Category', p.cat], ['Based in', p.where], ['With Asli', exp ? exp.name : cta.meta]])}
-        <section class="mn-pg-block">${head2('About', p.name)}<div class="mn-pg-prose" data-rise>${paras(p.about)}</div><p class="mn-pg-brandsite" data-rise><a class="mn-ulink" href="${p.url}" target="_blank" rel="noopener">Visit official website<span class="mn-sr"> (opens in a new tab)</span></a></p></section>
+        <section class="mn-pg-block">${head2('About', 'the brand')}<div class="mn-pg-prose" data-rise>${paras(p.about)}</div><p class="mn-pg-brandsite" data-rise><a class="mn-ulink" href="${p.url}" target="_blank" rel="noopener">Visit official website<span class="mn-sr"> (opens in a new tab)</span></a></p></section>
         ${exp ? `<section class="mn-pg-block">${head2('With', 'Asli Hyderabad')}<ul class="mn-pg-cards mn-pg-cards--one" role="list">${ccCard(exp)}</ul></section>` : ''}
       </div>
-      <aside class="mn-pg-book" data-bookbar><div class="mn-pg-book__card">
-        <p class="mn-pg-book__price mn-pg-book__price--text">${esc(cta.meta)}</p>
-        <a class="mn-pg-book__cta" href="${cta.href}">${esc(cta.label)} ${ARROW}</a>
-      </div></aside>
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('Keep', 'exploring')}<a class="mn-ulink" href="/partners">All featured brands</a></div>
       <ul class="mn-pg-cards" role="list">${p.tours.map((s) => tourCard(tourBy[s])).join('')}</ul>
     </div></section>
-${endBand()}`,
+${endBand({ cta: ['Plan my Hyderabad', exp ? book(exp.slug) : '/book-now'] })}`,
   });
 }
 page('/private-access', {
@@ -557,8 +552,8 @@ page('/private-access', {
       <ol class="mn-pg-access__list" role="list">${privateAccess.filter((p) => p.show).map((p, i) => `<li data-rise-item><span class="mn-pg-access__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><div><h2 class="mn-pg-h2">${halves(p.name)}</h2><p>${esc(p.line)}</p><p>${esc(p.more)}</p><p class="mn-pg-access__suits">Best for: ${esc(p.suits)}</p><a class="mn-ulink mn-pg-access__ask" href="${topic(`Private Access: ${p.name}`)}#enquire">Request this<span class="mn-sr">: ${esc(p.name)}</span></a></div></li>`).join('')}</ol>
       <div class="mn-pg-access__foot" data-rise>
         <p class="mn-pg-access__by">By request only</p>
-        <p>Every Private Access experience is individually curated and subject to host availability, permissions and confirmation. Including film and studio access, and documentary and editorial access.</p>
-        <a class="mn-btn mn-pg-access__cta" href="${topic('Private Access request')}#enquire">Request Access</a>
+        <p>Every Private Access experience is individually curated and subject to host availability, permissions and confirmation. Requests can include film and studio access, and documentary or editorial access.</p>
+        <a class="mn-pg-btn mn-pg-btn--gold mn-pg-access__cta" href="${topic('Private Access request')}#enquire">Request Access</a>
       </div>
     </div></section>
 ${howSteps('How access', 'works', HOW.access)}`,
@@ -575,7 +570,11 @@ ${endBand({ a: 'Be in', b: 'the next one.', line: 'Every photograph here began w
 });
 
 /* ---------- Forms ---------- */
-const field = (id, label, input, cls = '') => `<div class="mn-pg-field${cls}"><label for="${id}">${label}</label>${input}</div>`;
+// Required fields say so in the label, and each field has its own error line (filled by components.js), so nothing relies on browser bubbles.
+const field = (id, label, input, cls = '') => {
+  const req = / required\b/.test(input);
+  return `<div class="mn-pg-field${cls}"><label for="${id}">${label}${req ? ' <span class="mn-pg-req">(required)</span>' : ''}</label>${input.replace(/^<(input|select|textarea) /, `<$1 aria-describedby="${id}-err" `)}<p class="mn-pg-err" id="${id}-err" hidden></p></div>`;
+};
 const input = (id, type, extra = 'required') => `<input id="${id}" name="${id}" type="${type}" ${extra}>`;
 const SENT = `<div class="mn-pg-sent" data-form-sent hidden tabindex="-1"><p class="mn-pg-h3">WhatsApp has opened with <em>your request.</em></p><p>Press Send there to reach us. Prefer email? <a data-form-mail href="mailto:sahana@aslihyd.in">Send the same request by email</a>, or <a data-form-wa href="https://wa.me/919392149872" target="_blank" rel="noopener">open WhatsApp again</a>.</p></div>`;
 const CONTACT_ASIDE = `<ul class="mn-pg-contact" role="list">
@@ -596,15 +595,15 @@ page('/book-now', {
       <div><div data-rise><h2 class="mn-pg-h2">Dates <em>still open?</em></h2><p class="mn-pg-lead">Tell us what you have in mind and we will shape the days with you.</p>${CONTACT_ASIDE}</div>
         ${route('What happens', 'next', HOW.booking.map((x) => ({ name: x.h, line: x.p })))}</div>
       <div data-rise><aside class="mn-pg-summary" data-summary hidden aria-live="polite"><img data-summary-img alt="" width="720" height="900"><div><p class="mn-pg-summary__name" data-summary-name></p><p class="mn-pg-summary__meta" data-summary-meta></p></div></aside>
-        <form class="mn-pg-form" data-enquiry="Plan My Hyderabad request">
+        <form class="mn-pg-form" novalidate data-enquiry="Plan My Hyderabad request">
         ${field('experience', 'Experience', `<select id="experience" name="experience"><option value="">Help me choose</option>${EXPERIENCES}</select>`, ' mn-pg-field--full')}
         ${field('name', 'Your name', input('name', 'text', 'required autocomplete="name"'))}
         ${field('email', 'Email', input('email', 'email', 'required autocomplete="email"'))}
-        ${field('phone', 'Mobile', input('phone', 'tel', 'required autocomplete="tel"'))}
-        ${field('guests', 'Guests', `<select id="guests" name="guests" required>${['1', '2', '3', '4', '5', '6+'].map((n) => `<option>${n}</option>`).join('')}</select>`)}
-        ${field('date', 'Preferred date', input('date', 'date', ''))}
+        ${field('phone', 'Mobile (optional)', input('phone', 'tel', 'autocomplete="tel"'))}
+        ${field('guests', 'Guests', `<select id="guests" name="guests">${['1', '2', '3', '4', '5', '6+'].map((n) => `<option>${n}</option>`).join('')}</select>`)}
+        ${field('date', 'Preferred date', input('date', 'date', 'data-min-today'))}
         ${field('notes', 'Notes', '<textarea id="notes" name="notes" rows="4" placeholder="For events: your venue and headcount"></textarea>', ' mn-pg-field--full')}
-        <button class="mn-pg-submit" type="submit">Submit booking request ${ARROW}</button>
+        <button class="mn-pg-submit" type="submit">Send request on WhatsApp ${ARROW}</button>
       </form>${SENT}</div>
     </div></section>`,
 });
@@ -614,12 +613,12 @@ page('/contact', {
     <section class="mn-pg-sec mn-pg-sec--tight"><div class="mn-wrap"><ul class="mn-pg-optcards mn-pg-optcards--routes" role="list" data-rise>${[['Book an experience', 'Tours, Originals and small experiences.', '/book-now', 'Start'], ['Bring a delegation', 'Programmes around your conference.', `${topic('Delegation enquiry')}#enquire`, 'Enquire'], ['Partner with us', 'Brands, venues and makers.', `${topic('Partnership enquiry')}#enquire`, 'Enquire'], ['Press and more', 'Everything else.', `${topic('Press or other enquiry')}#enquire`, 'Enquire']].map(([n, l, h, go]) => `<li><a href="${h}"><span class="mn-pg-optcards__name">${n}</span><span class="mn-pg-optcards__line">${l}</span><span class="mn-pg-optcards__go">${go} ${ARROW}</span></a></li>`).join('')}</ul></div></section>
     <section class="mn-pg-sec mn-pg-sec--flush" id="enquire"><div class="mn-wrap mn-pg-formwrap">
       <div data-rise><h2 class="mn-pg-h2">Talk to <em>the Asli team.</em></h2><p class="mn-pg-lead">For destination experiences, partnerships and tailored Hyderabad programmes.</p>${CONTACT_ASIDE}</div>
-      <div data-rise><h2 class="mn-pg-h3">Send <em>an enquiry</em></h2><p class="mn-pg-para">We usually reply with the right next steps within one working day.</p><form class="mn-pg-form" data-enquiry="Website enquiry">
+      <div data-rise><h2 class="mn-pg-h3">Send <em>an enquiry</em></h2><p class="mn-pg-para">We usually reply with the right next steps within one working day.</p><form class="mn-pg-form" novalidate data-enquiry="Website enquiry">
         ${field('name', 'Your name', input('name', 'text', 'required autocomplete="name"'))}
         ${field('email', 'Email', input('email', 'email', 'required autocomplete="email"'))}
         ${field('phone', 'Mobile (optional)', input('phone', 'tel', 'autocomplete="tel"'), ' mn-pg-field--full')}
         ${field('message', 'Message', '<textarea id="message" name="message" rows="5" required></textarea>', ' mn-pg-field--full')}
-        <button class="mn-pg-submit" type="submit">Send enquiry ${ARROW}</button>
+        <button class="mn-pg-submit" type="submit">Send enquiry on WhatsApp ${ARROW}</button>
       </form>${SENT}</div>
     </div></section>
 ${faqSec(FAQ.contact)}`,
@@ -633,7 +632,7 @@ for (const [slug, l] of Object.entries(legal)) {
 }
 page('/404', {
   title: 'Page not found', desc: 'This lane does not go anywhere.', og: img('heroes', '404.jpg'),
-  body: `${hero({ title: 'This lane <em>doesn’t go anywhere.</em>', sub: 'The page you were looking for has moved, or never existed.', group: 'heroes', name: '404', alt: 'A busy bazaar street in Old Hyderabad', tall: true })}
+  body: `${hero({ title: 'This lane <em>doesn’t go anywhere.</em>', sub: 'The page you were looking for has moved, or never existed.', group: 'heroes', name: '404', alt: 'A busy bazaar street in Old Hyderabad', size: 'short' })}
     <section class="mn-pg-sec"><div class="mn-wrap mn-pg-lost" data-rise><a class="mn-ulink" href="/">Back to the homepage</a><a class="mn-ulink" href="/tours">See all tours</a><a class="mn-ulink" href="/experiences/co-curated">Small experiences</a><a class="mn-ulink" href="/contact">Contact us</a></div></section>`,
 });
 

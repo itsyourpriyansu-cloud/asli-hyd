@@ -34,7 +34,7 @@ const AUDIT = `(async () => {
     eyebrow: document.querySelectorAll('[class*="eyebrow"]').length,
     broken: [...document.images].filter((i) => i.getAttribute('src') && i.complete && !i.naturalWidth).map((i) => i.currentSrc || i.src),
     blankEm: [...document.querySelectorAll('main li, main p, main h2, main h3')].filter((e) => !e.textContent.trim() && !e.querySelector('img,svg,video') && !e.matches('[role="status"]') && !e.closest('[hidden]')).length,
-    smallTargets: [...document.querySelectorAll('main .mn-pg-tabs button, main .mn-pg-chips a, main .mn-pg-submit, main .mn-pg-book__cta, main .mn-pg-optcards a, main .mn-pg-btn, main .mn-pg-actions .mn-ulink, main .mn-pg-after .mn-ulink, main .mn-pg-crumbs a, main .mn-pg-faq summary, main .mn-pg-access__ask')].filter((e) => { const r = e.getBoundingClientRect(); return r.height && r.height < 43.9; }).map((e) => (e.className || e.tagName) + ' "' + e.textContent.trim().slice(0, 24) + '" ' + e.getBoundingClientRect().height),
+    smallTargets: [...document.querySelectorAll('main .mn-pg-tabs button, main .mn-pg-chips a, main .mn-pg-submit, main .mn-pg-book__cta, main .mn-pg-optcards a, main .mn-pg-btn, main .mn-pg-actions .mn-ulink, main .mn-pg-after .mn-ulink, main .mn-pg-headrow .mn-ulink, main .mn-pg-lost a, main .mn-pg-brandsite a, main .mn-pg-faq summary, main .mn-pg-access__ask')].filter((e) => { const r = e.getBoundingClientRect(); return r.height && r.height < 43.9; }).map((e) => (e.className || e.tagName) + ' "' + e.textContent.trim().slice(0, 24) + '" ' + e.getBoundingClientRect().height),
   };
 })()`;
 

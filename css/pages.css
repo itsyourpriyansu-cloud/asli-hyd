@@ -23,9 +23,11 @@
 .mn-pg-sec { position: relative; padding-block: clamp(7.2rem, 8.5vw, 13rem); }
 .mn-pg-sec--flush { padding-top: 0; }
 .mn-pg-sec--tint { background: #ece4d6; }
+.mn-pg:not(.mn-pg--ink) .mn-pg-sec--tint { --muted: #695e54; --gold-ink: #80571f; } /* AA on the tint: 5.0:1 and 5.04:1 */
 .mn-pg-head { margin-bottom: clamp(3.2rem, 3.6vw, 5.6rem); }
 .mn-pg-headrow { display: flex; align-items: flex-end; justify-content: space-between; gap: 2.4rem; }
 .mn-pg-headrow .mn-ulink { flex: none; margin-bottom: clamp(3.2rem, 3.6vw, 5.6rem); }
+.mn-pg-headrow .mn-ulink, .mn-pg-lost a, .mn-pg-brandsite a { display: inline-flex; align-items: center; min-height: 4.4rem; }
 
 /* ---------- Page hero: the photo opens out of a cusped arch on load (motion.js) ---------- */
 .mn-pg-hero { position: relative; display: flex; align-items: flex-end; min-height: min(84svh, 86rem); overflow: hidden; background: var(--ink); color: var(--white); }
@@ -72,16 +74,6 @@
 .mn-pg-actions .mn-ulink::after, .mn-pg-after .mn-ulink::after { bottom: 1rem; }
 .mn-pg-after { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 3.2rem; margin-top: 2.4rem; }
 .mn-pg-after .mn-pg-note { margin-top: 0; }
-
-/* ---------- Breadcrumb: below the hero, so it never reads as an eyebrow ---------- */
-.mn-pg-crumbs { border-bottom: 1px solid rgba(42, 36, 32, .1); font-size: 1.3rem; color: var(--muted); }
-.mn-pg-crumbs ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; }
-.mn-pg-crumbs li { display: flex; align-items: center; min-height: 4.8rem; }
-.mn-pg-crumbs li + li::before { content: "/"; margin-inline: 1rem; opacity: .5; }
-.mn-pg-crumbs a { display: inline-flex; align-items: center; min-height: 4.4rem; color: inherit; text-underline-offset: 3px; }
-.mn-pg-crumbs [aria-current] { color: var(--ink); }
-.mn-pg--ink .mn-pg-crumbs { border-color: rgba(244, 238, 228, .16); color: rgba(244, 238, 228, .7); }
-.mn-pg--ink .mn-pg-crumbs [aria-current] { color: var(--cream); }
 
 /* ---------- Why it's special ---------- */
 .mn-pg-why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3.2rem clamp(2.4rem, 3vw, 4.8rem); margin: 0; padding: 0; list-style: none; }
@@ -179,6 +171,7 @@
 
 /* ---------- Detail layout: content + sticky booking card ---------- */
 .mn-pg-split { display: grid; grid-template-columns: minmax(0, 1fr) 36rem; gap: clamp(4.8rem, 7vw, 12rem); align-items: start; padding-block: clamp(5.6rem, 6vw, 9.6rem) clamp(7.2rem, 8vw, 12rem); }
+.mn-pg-split:not(:has(.mn-pg-book)) { grid-template-columns: minmax(0, 1fr); } /* brand pages: no booking card, so no empty column */
 .mn-pg-block { margin-top: clamp(5.6rem, 6vw, 9.6rem); }
 .mn-pg-block--first { margin-top: 0; }
 .mn-pg-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4rem clamp(3.2rem, 4vw, 6.4rem); }
@@ -214,10 +207,11 @@
 .mn-pg-route__note { margin-top: .6rem; max-width: 56rem; font-size: 1.55rem; line-height: 1.55; color: var(--ink-70); }
 .mn-pg-route__num { display: grid; place-items: center; width: 4.4rem; height: 4.4rem; border: 1px solid var(--gold); border-radius: 50%; background: var(--cream); font-family: var(--serif); font-style: italic; font-size: 1.7rem; color: var(--gold-ink); }
 .mn-pg-route__name { font-family: var(--serif); font-size: clamp(2.2rem, 1.8vw, 2.8rem); line-height: 1.2; }
-.is-route-on .mn-pg-route__stop:not(.is-lit) { opacity: .4; }
+.is-route-on .mn-pg-route__stop:not(.is-lit) { opacity: .65; }
 
 .mn-pg-book { position: sticky; top: 10.4rem; z-index: 2; }
 .mn-pg-book__card { padding: 3.2rem; border: 1px solid rgba(197, 154, 91, .55); border-radius: .2rem; background: rgba(255, 255, 255, .5); }
+.mn-pg-book__name { display: none; }
 .mn-pg-book__price { font-family: var(--serif); font-size: 3.2rem; line-height: 1.1; }
 .mn-pg-book__price--text { font-size: 2.6rem; line-height: 1.2; }
 .mn-pg-book__meta { margin-top: .8rem; font-size: 1.4rem; line-height: 1.55; color: var(--muted); }
@@ -336,8 +330,7 @@
 .mn-pg--ink .mn-pg-h3 em { color: var(--gold-light); }
 .mn-pg--ink .mn-pg-week__stop > p { color: rgba(244, 238, 228, .78); }
 .mn-pg-access__by { margin-bottom: 1rem; font-family: var(--serif); font-size: 2.8rem; color: var(--cream); }
-.mn-pg-access__cta { min-height: 5.2rem; margin-top: 2.8rem; padding-inline: 3.2rem; color: var(--cream); }
-@media (hover: hover) { .mn-pg-access__cta:hover { background: var(--cream); color: var(--ink); } }
+.mn-pg-access__cta { margin-top: 2.8rem; }
 
 /* ---------- Forms ---------- */
 .mn-pg-sec--tight { padding-top: clamp(4rem, 4vw, 5.6rem); }
@@ -358,6 +351,9 @@
 .mn-pg-field label { display: block; margin-bottom: .8rem; font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .mn-pg-field input, .mn-pg-field select, .mn-pg-field textarea { display: block; width: 100%; min-height: 5.2rem; padding: 1.2rem 1.4rem; border: 1px solid var(--hairline); border-radius: .2rem; background: rgba(255, 255, 255, .55); color: var(--ink); font: 400 1.6rem/1.4 var(--sans); }
 .mn-pg-field textarea { resize: vertical; }
+.mn-pg-req { letter-spacing: .06em; text-transform: none; }
+.mn-pg-err { margin-top: .6rem; font-size: 1.3rem; line-height: 1.4; color: #9b2c1f; } /* 6.6:1 on cream */
+.mn-pg-field [aria-invalid="true"] { border-color: #9b2c1f; }
 .mn-pg-field :focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 1px; }
 .mn-pg-submit { display: flex; align-items: center; justify-content: space-between; min-height: 5.6rem; padding: 0 2.4rem; border: 0; border-radius: .2rem; background: var(--ink); color: var(--cream); font: 500 1.2rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background-color .4s var(--ease); }
 @media (hover: hover) { .mn-pg-submit:hover { background: var(--gold-ink); } }
@@ -394,6 +390,8 @@
   .mn-pg-book__card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1.6rem; padding: 1.2rem var(--gutter) calc(1.2rem + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid rgba(197, 154, 91, .55); border-radius: 0; background: var(--cream); }
   .mn-pg-book__price { font-size: 2.2rem; }
   .mn-pg-book__meta { display: none; }
+  .mn-pg-book__head { min-width: 0; }
+  .mn-pg-book__name { display: block; overflow: hidden; margin-bottom: .2rem; font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
   .mn-pg-book__cta { gap: 1.2rem; min-height: 4.8rem; margin: 0; padding: 0 1.8rem; }
 }
 

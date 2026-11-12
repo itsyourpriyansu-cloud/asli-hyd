@@ -60,6 +60,9 @@
   transition: opacity .3s var(--ease);
 }
 .mn-header__link:hover { opacity: .55; }
+/* Inner pages mark the current section (set by tools/build-pages.mjs), standing in for the removed breadcrumb. */
+.mn-header__link[aria-current], .mn-dd:has([aria-current]) > .mn-dd__btn { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: .6rem; }
+.mn-dd__link[aria-current], .mn-header__drawer-link[aria-current] { color: var(--gold-ink); }
 
 /* Logo: white over the hero, full colour once the bar turns solid or the drawer opens. */
 .mn-header__logo {
