@@ -48,7 +48,7 @@ These are the loops for the "Asli Hyderabad Originals" panel (the section-4 expl
 
 ---
 
-# Section 14 Reels (@aslihyderabad): Sources and Licences
+# Section 14 Reels (@aslihyd): Sources and Licences
 
 Eight 9:16 loops in `assets/video/reels/{name}.mp4`, each with a `{name}.jpg` poster: 608×1080 centre crops (scaled to 1080 high), 30 fps, H.264, no audio, `+faststart`, about 0.5–2 MB each. The first five reuse the section 4 and section 9 loops (already licensed above), cropped to portrait. The two Mixkit clips are new; they and the drone montage loop with the 1-second crossfade used everywhere on the site.
 
@@ -58,12 +58,20 @@ Eight 9:16 loops in `assets/video/reels/{name}.mp4`, each with a `{name}.jpg` po
 | Irani chai, poured right | `chai.mp4` | `originals/dawn.mp4` (Coverr: Making chai tea in India) | Coverr License |
 | Festival nights | `festival.mp4` | `originals/festival.mp4` (Coverr: Indian fire ceremony) | Coverr License |
 | Street food after dark | `street-food.mp4` | `originals/ramzan.mp4` (Coverr: Cooking street food) | Coverr License |
-| An offering of light | `offering.mp4` | `themes/culture.mp4` (Mixkit #50772) | Mixkit Stock Video Free License |
-| Dance in the old style | `dance.mp4` (7 s) | [Mixkit #50787: A young woman in traditional Indian attire performs a captivating dance](https://mixkit.co/free-stock-video/a-young-woman-in-traditional-indian-attire-performs-a-captivating-50787/) (from 2 s) | Mixkit Stock Video Free License |
-| Jewellery for the occasion | `jewellery.mp4` (7 s) | [Mixkit #50782: A woman using jewelry on her hand and face posing](https://mixkit.co/free-stock-video/a-woman-using-jewelry-on-her-hand-and-face-posing-50782/) (native vertical, from 8 s) | Mixkit Stock Video Free License |
 | Friends around the table | `friends.mp4` | `originals/welcome.mp4` (Coverr: Friends laughing in India) | Coverr License |
+| On stage, World Tourism Day 2026 | `wtd-awards.mp4` (0.8 MB, 20 s) | Client's own phone footage of the World Tourism Day 2026 award ceremony (WhatsApp video sent by the user, 16 Nov 2026), 7.5–27.5 s | Asli Hyderabad's own |
+| Asli at World Tourism Day | `wtd-ramoji.mp4` (2.3 MB, 50 s) | Client's own interview reel at World Tourism Day 2026 with Ramoji Film City shots and burned-in captions (WhatsApp video, 16 Nov 2026), full length so the captions read. Edited by Reachhouse (their watermark is in the frame) | Asli Hyderabad's own |
+| Moments from World Tourism Day | `wtd-moments.mp4` (1.6 MB, 22 s) | Client's own highlight reel of the same day (WhatsApp video, 16 Nov 2026), first 22 s (the closing white fade dropped). Reachhouse watermark in the frame | Asli Hyderabad's own |
+| Heritage, beyond the guidebook | `asli-heritage.mp4` (1.7 MB, 25 s) | Asli's own guest reel (WhatsApp video sent by the user, 16 Nov 2026), burned-in captions, Reachhouse watermark: guests at the Qutb Shahi Tombs, Golconda, Charminar and Laad Bazaar; first 25 s (the closing call-us card dropped) | Asli Hyderabad's own |
+| Business visits, hosted | `asli-business.mp4` (1.7 MB, 25 s) | Asli's own guest reel (WhatsApp video sent by the user, 16 Nov 2026), burned-in captions, Reachhouse watermark: a business visitor at Chowmahalla, Charminar and an Irani chai stop; first 25 s | Asli Hyderabad's own |
+| Shop like a local | `asli-shopping.mp4` (1.9 MB, 23.5 s) | Asli's own guest reel (WhatsApp video sent by the user, 16 Nov 2026), burned-in captions, Reachhouse watermark: a conference guest shopping boutiques and artisan bazaars; first 23.5 s | Asli Hyderabad's own |
+| The last mile, curated | `asli-last-mile.mp4` (2.4 MB, 54 s) | Asli's own guest reel (WhatsApp video sent by the user, 16 Nov 2026), burned-in captions, Reachhouse watermark: a host talks about Asli Hyderabad with a guest; full length so the captions read | Asli Hyderabad's own |
 
-**Authenticity:** only the montage was filmed in Hyderabad. The captions describe the moment, not a place, so none claims a location the footage isn't from. Real Asli reels should replace these.
+**16 Nov 2026 (later):** the four Coverr reels (chai, festival, street food, friends) gave way to four Asli guest reels (`asli-*`, same encode). Every reel is now Asli's own footage. The Coverr files stay: the shorts use them. Order: Hyderabad from above, On stage, Heritage, Business visits, Asli at World Tourism Day, Shop like a local, Moments, The last mile.
+
+**16 Nov 2026:** three of the Mixkit loops (offering, dance, jewellery) left the reels for Asli's own World Tourism Day 2026 clips (432×768, H.264, no audio, `+faststart`, CRF 30; posters `wtd-*.jpg`). The marquee order is now: Hyderabad from above, On stage, Irani chai, Festival nights, So we are Asli Hyderabad, Street food, Moments, Friends. `jewellery.mp4` stays: a short uses it. `offering.mp4` and `dance.mp4` are no longer used.
+
+**Authenticity:** every reel is Asli's own footage. The captions describe the moment, not a place, so none claims a location the footage isn't from. Real Asli reels should replace these.
 
 ---
 

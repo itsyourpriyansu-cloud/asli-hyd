@@ -256,7 +256,7 @@
   })();
 
   /* ---------- Featured Brands: the corner Charminar and Chowmahalla draw themselves, the copy rises,
-     then the nine tiles rise row by row ---------- */
+     then the tiles rise row by row ---------- */
   (function () {
     var wrap = sec('logos');
     if (!wrap) return;

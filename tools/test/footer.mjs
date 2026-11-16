@@ -33,11 +33,11 @@ const state = `(()=>{
 
 const verify = (tag, s) => {
   check(`${tag} footer content intact`, s.logo && s.cols === 3 && s.contact === 3 && s.legal, `cols ${s.cols} contact ${s.contact}`);
-  // Instagram and Facebook use @aslihyderabad (chosen by the user; the old site links neither).
+  // Instagram is @aslihyd (from the user, 16 Nov 2026); Facebook @aslihyderabad (chosen by the user).
   const wa = s.social.find((x) => x.label === 'WhatsApp');
   check(`${tag} social icons shown`, s.social.map((x) => x.label).join() === 'Instagram,Facebook,WhatsApp' && s.social.every((x) => x.drawn && x.size >= 44 && x.target === '_blank' && /noopener/.test(x.rel)), s.social.map((x) => x.label).join());
   const ig = s.social.find((x) => x.label === "Instagram"), fb = s.social.find((x) => x.label === "Facebook");
-  check(`${tag} Instagram and Facebook open @aslihyderabad`, ig && ig.href === "https://www.instagram.com/aslihyderabad/" && fb && fb.href === "https://www.facebook.com/aslihyderabad", `${ig && ig.href} ${fb && fb.href}`);
+  check(`${tag} Instagram opens @aslihyd, Facebook @aslihyderabad`, ig && ig.href === "https://www.instagram.com/aslihyd/" && fb && fb.href === "https://www.facebook.com/aslihyderabad", `${ig && ig.href} ${fb && fb.href}`);
   check(`${tag} WhatsApp opens the Asli number in a new tab`, wa && wa.href === 'https://wa.me/919392149872' && wa.target === '_blank' && /noopener/.test(wa.rel), JSON.stringify(wa));
   check(`${tag} Phosphor icon drawn, 44px ring`, wa && wa.use === '#i-ph-whatsapp' && wa.drawn && wa.size >= 44, wa && `${wa.use} ${wa.size}px`);
   check(`${tag} skyline, inlay and edge removed`, s.gone.length === 0, s.gone.join());
@@ -85,7 +85,7 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   check(`${tag}: toggle sits bottom right, 44px or more`, c.toggle.r >= 16 && c.toggle.r <= 26 && c.toggle.b >= 16 && c.toggle.b <= 26 && c.toggle.s >= 44, JSON.stringify(c.toggle));
   await b.ev(`document.querySelector('[data-fab-toggle]').click()`); await sleep(900);
   const o = await b.ev(fab);
-  check(`${tag}: opens to Call, WhatsApp, Instagram and Facebook, keyboard focus moves in`, o.open && o.exp === 'true' && !o.inert && o.shown.join() === 'Call us=tel:+919392149872,WhatsApp=https://wa.me/919392149872,Instagram=https://www.instagram.com/aslihyderabad/,Facebook=https://www.facebook.com/aslihyderabad' && o.op.every((x) => x === 1) && o.focus === 'Call us', JSON.stringify(o));
+  check(`${tag}: opens to Call, WhatsApp, Instagram and Facebook, keyboard focus moves in`, o.open && o.exp === 'true' && !o.inert && o.shown.join() === 'Call us=tel:+919392149872,WhatsApp=https://wa.me/919392149872,Instagram=https://www.instagram.com/aslihyd/,Facebook=https://www.facebook.com/aslihyderabad' && o.op.every((x) => x === 1) && o.focus === 'Call us', JSON.stringify(o));
   check(`${tag}: social buttons without an address stay hidden`, o.hiddenN === 3, `${o.hiddenN} hidden`);
   await b.shot(`fab-open-${w}x${h}`);
   await b.ev(`document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))`); await sleep(700);

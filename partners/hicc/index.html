@@ -90,6 +90,7 @@
           <span></span><span></span><span></span>
         </button>
         <nav class="mn-header__nav" aria-label="Primary">
+          <a class="mn-header__link" href="/">Home</a>
           <div class="mn-dd" data-dropdown>
             <button type="button" class="mn-header__link mn-dd__btn" aria-expanded="false"
               aria-controls="dd-experiences">
@@ -140,6 +141,7 @@
               <a class="mn-dd__link" href="/book-now">Plan My Hyderabad</a>
               <a class="mn-dd__link" href="/services">Add-ons &amp; Services</a>
               <a class="mn-dd__link" href="/services/custom-hyderabad-itinerary">Custom Itinerary</a>
+              <a class="mn-dd__link" href="/faq">FAQs</a>
               <a class="mn-dd__link" href="/contact">Contact Us</a>
             </div>
           </div>
@@ -156,6 +158,7 @@
 
     <div class="mn-header__drawer" id="mn-drawer" aria-hidden="true">
       <nav class="mn-header__drawer-inner" aria-label="Mobile">
+        <a class="mn-header__drawer-link" href="/">Home</a>
         <div class="mn-header__drawer-group">
           <a class="mn-header__drawer-link" href="/tours">Experiences</a>
           <div class="mn-header__drawer-sub">
@@ -176,6 +179,7 @@
         <a class="mn-header__drawer-link" href="/book-now">Plan My Hyderabad</a>
         <a class="mn-header__drawer-link" href="/services">Add-ons &amp; Services</a>
         <a class="mn-header__drawer-link" href="/gallery">Gallery</a>
+        <a class="mn-header__drawer-link" href="/faq">FAQs</a>
         <a class="mn-header__drawer-link" href="/contact">Contact</a>
         <span class="mn-header__drawer-rule"></span>
         <p class="mn-header__drawer-meta">
@@ -248,8 +252,8 @@
           <li><span class="mn-footer__a">Hyderabad, Telangana, India</span></li>
         </ul>
         <ul class="mn-footer__social" role="list" aria-label="Asli Hyderabad elsewhere">
-          <!-- Instagram and Facebook: @aslihyderabad, chosen by the user on 11 Nov; the old site links neither, so confirm the handles with the client. -->
-          <li><a class="mn-footer__icon" href="https://www.instagram.com/aslihyderabad/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-ph-instagram"/></svg></a></li>
+          <!-- Instagram: @aslihyd (from the user, 16 Nov 2026). Facebook: @aslihyderabad (chosen 11 Nov), still to be confirmed with the client. -->
+          <li><a class="mn-footer__icon" href="https://www.instagram.com/aslihyd/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-ph-instagram"/></svg></a></li>
           <li><a class="mn-footer__icon" href="https://www.facebook.com/aslihyderabad" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-ph-facebook"/></svg></a></li>
           <li><a class="mn-footer__icon" href="https://wa.me/919392149872" target="_blank" rel="noopener" aria-label="WhatsApp"><svg aria-hidden="true"><use href="#i-ph-whatsapp"/></svg></a></li>
         </ul>
@@ -285,6 +289,7 @@
               <li><a class="mn-footer__a" href="/services">Add-ons &amp; Services</a></li>
               <li><a class="mn-footer__a" href="/services/custom-hyderabad-itinerary">Custom Itinerary</a></li>
               <li><a class="mn-footer__a" href="/gallery">Gallery</a></li>
+              <li><a class="mn-footer__a" href="/faq">FAQs</a></li>
               <li><a class="mn-footer__a" href="/contact">Contact Us</a></li>
             </ul>
           </div>
@@ -299,14 +304,14 @@
     </div>
   </div>
   <!-- Floating contact (fixed bottom right; it lives in the footer only so every page shares it). Call and WhatsApp
-     are Asli's own number from the old site. Instagram and Facebook use the same @aslihyderabad addresses as the footer
+     are Asli's own number from the old site. Instagram (@aslihyd) and Facebook use the same addresses as the footer
      icons above (change both when the client sends the real links). X, LinkedIn and YouTube stay off the page until
      their address is set in CONTACT in js/components.js. -->
   <div class="mn-fab" data-fab>
     <ul class="mn-fab__stack" id="mn-fab-stack" role="list" aria-label="Contact Asli Hyderabad" inert>
       <li class="mn-fab__item"><a class="mn-fab__link" href="tel:+919392149872" aria-label="Call us"><svg aria-hidden="true"><use href="#i-ph-phone"/></svg></a><span class="mn-fab__tip" aria-hidden="true">Call us</span></li>
       <li class="mn-fab__item"><a class="mn-fab__link" href="https://wa.me/919392149872" target="_blank" rel="noopener" aria-label="WhatsApp"><svg aria-hidden="true"><use href="#i-ph-whatsapp"/></svg></a><span class="mn-fab__tip" aria-hidden="true">WhatsApp</span></li>
-      <li class="mn-fab__item"><a class="mn-fab__link" href="https://www.instagram.com/aslihyderabad/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-ph-instagram"/></svg></a><span class="mn-fab__tip" aria-hidden="true">Instagram</span></li>
+      <li class="mn-fab__item"><a class="mn-fab__link" href="https://www.instagram.com/aslihyd/" target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-ph-instagram"/></svg></a><span class="mn-fab__tip" aria-hidden="true">Instagram</span></li>
       <li class="mn-fab__item"><a class="mn-fab__link" href="https://www.facebook.com/aslihyderabad" target="_blank" rel="noopener" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-ph-facebook"/></svg></a><span class="mn-fab__tip" aria-hidden="true">Facebook</span></li>
       <li class="mn-fab__item" hidden><a class="mn-fab__link" data-fab-link="twitter" target="_blank" rel="noopener" aria-label="X"><svg aria-hidden="true"><use href="#i-ph-x-logo"/></svg></a><span class="mn-fab__tip" aria-hidden="true">X</span></li>
       <li class="mn-fab__item" hidden><a class="mn-fab__link" data-fab-link="linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-ph-linkedin"/></svg></a><span class="mn-fab__tip" aria-hidden="true">LinkedIn</span></li>

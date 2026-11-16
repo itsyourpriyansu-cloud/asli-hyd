@@ -1,5 +1,5 @@
 // Checks for the closing sections and the page-wide fixes that came with them:
-//   9 Featured Brands (data-sec="logos"), 12 @aslihyderabad reels ("social"), 13 Your Hyderabad starts here
+//   9 Featured Brands (data-sec="logos"), 12 @aslihyd reels ("social"), 13 Your Hyderabad starts here
 //   ("heritage"), the in-page anchors and credits.html. The v3 shorts ("worlds") are covered by home.mjs.
 //
 //   node tools/test/finale.mjs <url> <absOutDir>

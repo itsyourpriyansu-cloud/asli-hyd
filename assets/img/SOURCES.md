@@ -64,6 +64,7 @@ Each logo comes from the brand's own official website, as published there. Two v
 | brands/taj-falaknuma(-ink).png | tajhotels.com header logo (`/en-in/taj-logo-mob-header.svg`) | The Indian Hotels Company Ltd (Taj) |
 | brands/niloufer(-ink).png | cafeniloufer.com header logo | ABR Cafe & Bakers Pvt Ltd (Café Niloufer) |
 | brands/goyaz(-ink).png | goyazjewellery.com (`/assets/images/goyaz-logo.png`) | Goyaz Jewellery Pvt Ltd |
+| brands/anaganaga(-ink).svg | anaganaga.kitchen header emblem (`/wp-content/uploads/2026/09/anaganaga-logo-white-01.svg`), white fill recoloured to ink #2a2420 and the brand red #DE271F from their stylesheet. Since 16 Nov 2026 the only brand on the homepage | Anaganaga |
 | brands/ramoji(-ink).png | ramojifilmcity.com (Ramoji Film City logo) | Ramoji Film City |
 | brands/paradise(-ink).png | paradisefoodcourt.in (`/images/logo.png`) | Paradise Food Court |
 | brands/hicc(-ink).png | hicc.com (`hicc-new-color-logo.svg`; "Managed by Accor" line cropped) | Hyderabad International Convention Centre |

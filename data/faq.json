@@ -39,6 +39,22 @@
       { "q": "Is my request booked once I send it?", "a": "No. It starts a conversation. Nothing is booked until our team has confirmed the details with you." }
     ]
   },
+  "general": {
+    "intro": "From Deccani heritage and celebrated food to crafts, cinema and the city of today, Hyderabad has many sides to discover. Here are the answers guests ask for most as they choose, plan and book.",
+    "items": [
+      { "q": "What can I experience with Asli Hyderabad?", "a": "Hyderabad through its heritage, culture, food, crafts, cinema, business, wellness and learning. Walk its historic landmarks, meet local makers, taste Deccani food, or meet the people and places shaping the modern city.", "link": ["Explore all experiences","/tours"] },
+      { "q": "Which experiences can I choose from?", "a": "Curated journeys such as Royal Hyderabad, Old Hyderabad, Hyderabad on a Plate, Pochampally Weaves, Inside Ramoji and HITEC Hyderabad, across six themes: Heritage, Culture, Cinema, Business, Wellness and Learning.", "link": ["See the tours","/tours"] },
+      { "q": "I only have a few hours in Hyderabad. Can you help me plan?", "a": "Yes. A few hours, half a day, a full day or several days: we will suggest experiences that fit. The plan depends on your interests, where you start from, travel time and what you would like to include." },
+      { "q": "Can I book a single experience, or do I need a package?", "a": "Either. Enquire about one experience or choose a curated package. If you have several interests or places in mind, we can bring them together into one custom itinerary.", "link": ["Custom itinerary","/services/custom-hyderabad-itinerary"] },
+      { "q": "Can you tailor an experience to my interests?", "a": "Yes. Tell us what you enjoy, what you would like to discover and who you are travelling with. We will shape it around your interests, schedule, group size and occasion, subject to availability." },
+      { "q": "Is it private or in a group? Will someone be with us?", "a": "Depending on the experience, choose private, small-group or group. You may be hosted by a destination host, a local guide, a storyteller, an artist or a subject specialist. We confirm the format and your host before you book." },
+      { "q": "Is transport included?", "a": "Your choice. Pick a package with transport, or one without if you have your own vehicle. We share both options and their prices before you book." },
+      { "q": "What does the price include?", "a": "It depends on the experience and package. It can cover transport, hosting, guided visits, entry tickets, meals, refreshments and activity charges. We confirm what is included, what is not and any extra costs before you book." },
+      { "q": "I am in Hyderabad for a conference or business trip. Can you plan around my schedule?", "a": "Yes. We plan for business travellers, conference delegates, corporate teams and institutional groups: before your event, between meetings or after the last session.", "link": ["Experiences for conventions","/conventions"] },
+      { "q": "How do I enquire and book?", "a": "Browse the experiences and pick one, or send us your dates, group size and needs. We will come back with options, availability and pricing. Your booking is confirmed once we have agreed the details with you.", "link": ["Plan My Hyderabad","/book-now"] },
+      { "q": "Can I add personal services?", "a": "Yes. Add personal shopping, private transport, photography, airport assistance or other bespoke arrangements. Add-ons depend on availability and may cost extra.", "link": ["Explore add-on services","/services"] }
+    ]
+  },
   "how": {
     "tours": [
       { "h": "Choose a route", "p": "Pick a tour as it stands, or tell us what to change." },

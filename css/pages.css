@@ -94,6 +94,8 @@
 .mn-pg-faq details[open] summary::after { transform: rotate(0); }
 .mn-pg-faq summary:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
 .mn-pg-faq p { max-width: 68rem; padding-bottom: 2.4rem; font-size: 1.6rem; line-height: 1.65; color: var(--ink-70); }
+.mn-pg-faq p:has(+ .mn-pg-faq__more) { padding-bottom: 1.4rem; }
+.mn-pg-faq p.mn-pg-faq__more { font-size: 1.5rem; }   /* the answer's one link (the /faq page) */
 
 /* ---------- Numbers from the homepage ---------- */
 .mn-pg-proof { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3.2rem; margin: clamp(4.8rem, 5vw, 7.2rem) 0 0; padding-top: clamp(3.2rem, 3.6vw, 4.8rem); border-top: 1px solid rgba(197, 154, 91, .55); }

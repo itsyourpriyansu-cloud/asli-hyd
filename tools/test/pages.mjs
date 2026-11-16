@@ -252,7 +252,7 @@ async function interactions() {
 
   // Homepage card goes to the right place.
   await go('/');
-  ok(await b.ev(`[...document.querySelectorAll('.mn-brand__a')].filter((a) => /^https:\\/\\//.test(a.getAttribute('href')) && a.target === '_blank' && a.rel.includes('noopener')).length`) === 9, 'homepage: 9 brand tiles open official sites');
+  ok(await b.ev(`[...document.querySelectorAll('.mn-brand__a')].filter((a) => /^https:\\/\\//.test(a.getAttribute('href')) && a.target === '_blank' && a.rel.includes('noopener')).length`) === 1, 'homepage: the brand tile (Anaganaga) opens its official site');
   ok(await b.ev(`document.querySelectorAll('.mn-arcade__link[href="#"], .mn-short__link[href="#"], .mn-tour__link[href="#"], .mn-way[href="#"]').length`) === 0, 'homepage: no inert cards');
 
   // Phone: bar hides over the footer; drawer opens.

@@ -12,7 +12,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const data = (n) => JSON.parse(rd(join(ROOT, 'data', n + '.json'), 'utf8'));
 const tours = data('tours'), themes = data('themes'), conventions = data('conventions'), originals = data('originals');
 const services = data('services'), offers = data('offers'), partners = data('partners'), privateAccess = data('private-access');
-const gallery = data('gallery'), legal = data('legal'), proof = data('proof'), { faq: FAQ, how: HOW, logistics: LOGISTICS } = data('faq');
+const gallery = data('gallery'), legal = data('legal'), proof = data('proof'), { faq: FAQ, general: GENERAL_FAQ, how: HOW, logistics: LOGISTICS } = data('faq');
 const tourBy = Object.fromEntries(tours.map((t) => [t.slug, t]));
 
 const SITE = 'https://aslihyd.in';
@@ -43,7 +43,8 @@ function slice(a, b) {
   if (i < 0 || j < 0) throw new Error('index.html: cannot find ' + a);
   return home.slice(i, j + b.length);
 }
-const localize = (s) => s.replace(/\b(src|href)="assets\//g, '$1="/assets/')
+const localize = (s) => s.replaceAll(' aria-current="page"', '')   // the home page marks Home; inner pages mark their own link
+  .replace(/\b(src|href)="assets\//g, '$1="/assets/')
   .replace(/href="#co-curated"/g, 'href="/experiences/co-curated"')
   .replace(/href="#quick-experiences"/g, 'href="/experiences/quick"')
   .replace(/href="#private-access"/g, 'href="/private-access"')
@@ -618,6 +619,13 @@ page('/book-now', {
         <button class="mn-pg-submit" type="submit">Send request on WhatsApp ${ARROW}</button>
       </form>${SENT}</div>
     </div></section>`,
+});
+// The general FAQ (16 Nov 2026, the client's questions with edited copy): each answer may end on one link.
+page('/faq', {
+  title: 'Frequently asked questions', desc: 'Planning your Hyderabad experience? Answers on choosing, planning and booking with Asli Hyderabad.', og: img('heroes', 'tours.jpg'),
+  body: `${hero({ title: 'Frequently asked <em>questions.</em>', sub: 'Planning your Hyderabad experience? Start here.', group: 'heroes', name: 'tours', alt: 'Guests with an Asli Hyderabad host at a Hyderabad landmark', size: 'mid' })}
+    <section class="mn-pg-sec"><div class="mn-wrap mn-pg-narrow"><section class="mn-pg-block">${head2('Good', 'to know', GENERAL_FAQ.intro)}<div class="mn-pg-faq" data-rise>${GENERAL_FAQ.items.map((x) => `<details><summary>${esc(x.q)}</summary><p>${esc(x.a)}</p>${x.link ? `<p class="mn-pg-faq__more"><a class="mn-ulink" href="${x.link[1]}">${esc(x.link[0])}</a></p>` : ''}</details>`).join('')}</div>${after(ulink('Ask us something else', topic('A question')))}</section></div></section>
+${endBand({ a: 'Come for what brings you to Hyderabad.', b: 'Stay for what you discover.', line: 'Let us help you experience the city beyond the expected.', cta: ['Explore experiences', '/tours'] })}`,
 });
 page('/contact', {
   title: 'Contact', desc: 'Tell us what you have in mind: an experience, a conference programme or a private group visit.', og: img('heroes', 'contact.jpg'),

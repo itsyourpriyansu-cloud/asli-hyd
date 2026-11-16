@@ -135,13 +135,22 @@
       var p = video.play();
       if (p && p.catch) p.catch(function () {});
     };
+    // Cards scrolling under a resting cursor fire mouseenter; loading a clip then stalls the scroll.
+    // So hover waits until the page has been still for a moment before it starts the clip.
+    var lastScroll = 0;
+    window.addEventListener('scroll', function () { lastScroll = Date.now(); }, { passive: true });
     document.querySelectorAll('[data-preview]').forEach(function (host) {
       var video = host.querySelector('video');
       if (!video) return;
+      var timer;
+      var settle = function () {
+        var wait = 220 - (Date.now() - lastScroll);
+        timer = wait > 0 ? setTimeout(settle, wait) : (preview(video), null);
+      };
       video.addEventListener('playing', function () { host.classList.add('is-playing'); });
       video.addEventListener('pause', function () { host.classList.remove('is-playing'); });
-      host.addEventListener('mouseenter', function () { if (canHover.matches) preview(video); });
-      host.addEventListener('mouseleave', function () { video.pause(); });
+      host.addEventListener('mouseenter', function () { if (canHover.matches) { clearTimeout(timer); settle(); } });
+      host.addEventListener('mouseleave', function () { clearTimeout(timer); video.pause(); });
       host.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) preview(video); });
       host.addEventListener('focusout', function () { video.pause(); });
     });
@@ -440,7 +449,7 @@
     }
   });
 
-  /* ---------- Reels marquee (@aslihyderabad) ----------
+  /* ---------- Reels marquee (@aslihyd) ----------
      The set is cloned once so the CSS marquee loops seamlessly (clones hidden from assistive tech).
      A reel plays only while it is on screen; with reduced motion or data-saver the posters stay. */
   var reels = document.querySelector('[data-reels]');
