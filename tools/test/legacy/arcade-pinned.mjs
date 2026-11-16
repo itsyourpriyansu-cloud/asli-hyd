@@ -6,7 +6,7 @@
 // scroll carries the rail to card 10 and the group underline follows; hover reveals the description and Book now;
 // the group buttons and keyboard focus scroll to their card; the page carries on to the Originals afterwards.
 // Reduced motion: the rail scrolls natively. Phone/tablet: native swipe, descriptions shown, no horizontal scroll.
-import { launch, sleep } from './cdp.mjs';
+import { launch, sleep } from '../cdp.mjs';
 
 const [url, out] = process.argv.slice(2);
 const results = [];

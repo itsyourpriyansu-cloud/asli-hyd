@@ -125,7 +125,7 @@ async function interactions() {
   // Experience card -> detail page -> Book carries the right experience.
   await go('/');
   ok(await b.ev(`document.querySelectorAll('.mn-arcade__link[href^="/experiences/quick/"]').length`) === 10, 'homepage: 10 quick cards open their pages');
-  ok(await b.ev(`document.querySelectorAll('.mn-cc__link[href^="/experiences/co-curated/"]').length`) === 7, 'homepage: 7 co-curated cards open their pages');
+  ok(await b.ev(`document.querySelectorAll('.mn-short__link[href^="/experiences/co-curated/"]').length`) === 7, 'homepage: 7 co-curated shorts open their pages');
   await go('/experiences/co-curated');
   ok(await b.ev(`document.querySelector('.mn-cc__link').getAttribute('href')`) === '/experiences/co-curated/high-tea-hyderabad', 'list card opens the detail page');
   await go('/experiences/co-curated/high-tea-hyderabad');
@@ -253,7 +253,7 @@ async function interactions() {
   // Homepage card goes to the right place.
   await go('/');
   ok(await b.ev(`[...document.querySelectorAll('.mn-brand__a')].filter((a) => /^https:\\/\\//.test(a.getAttribute('href')) && a.target === '_blank' && a.rel.includes('noopener')).length`) === 9, 'homepage: 9 brand tiles open official sites');
-  ok(await b.ev(`document.querySelectorAll('.mn-arcade__link[href="#"], .mn-cc__link[href="#"]').length`) === 0, 'homepage: no inert cards');
+  ok(await b.ev(`document.querySelectorAll('.mn-arcade__link[href="#"], .mn-short__link[href="#"], .mn-tour__link[href="#"], .mn-way[href="#"]').length`) === 0, 'homepage: no inert cards');
 
   // Phone: bar hides over the footer; drawer opens.
   await go('/tours/old-hyderabad', 390, 844, { touch: true });

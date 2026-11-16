@@ -96,7 +96,7 @@
 .mn-pg-faq p { max-width: 68rem; padding-bottom: 2.4rem; font-size: 1.6rem; line-height: 1.65; color: var(--ink-70); }
 
 /* ---------- Numbers from the homepage ---------- */
-.mn-pg-proof { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3.2rem; margin: clamp(4.8rem, 5vw, 7.2rem) 0 0; padding-top: clamp(3.2rem, 3.6vw, 4.8rem); border-top: 1px solid rgba(197, 154, 91, .55); }
+.mn-pg-proof { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3.2rem; margin: clamp(4.8rem, 5vw, 7.2rem) 0 0; padding-top: clamp(3.2rem, 3.6vw, 4.8rem); border-top: 1px solid rgba(197, 154, 91, .55); }
 .mn-pg-proof div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: .6rem; }
 .mn-pg-proof dd { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(4.4rem, 4.2vw, 6.4rem); line-height: 1; color: var(--gold-ink); }
 .mn-pg-proof dt { font-size: 1.4rem; line-height: 1.45; color: var(--ink-70); }
@@ -211,10 +211,32 @@
 
 .mn-pg-book { position: sticky; top: 10.4rem; z-index: 2; }
 .mn-pg-book__card { padding: 3.2rem; border: 1px solid rgba(197, 154, 91, .55); border-radius: .2rem; background: rgba(255, 255, 255, .5); }
-.mn-pg-book__name { display: none; }
+/* At a glance (as on the old site): name, price, then the key facts as a small spec table with gold
+   icons, up to four inclusions, the action and a one-line note. The bar on smaller screens keeps
+   only name, price and action; the page's own facts strip shows there instead. */
+.mn-pg-book__name { margin-bottom: .8rem; font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .mn-pg-book__price { font-family: var(--serif); font-size: 3.2rem; line-height: 1.1; }
 .mn-pg-book__price--text { font-size: 2.6rem; line-height: 1.2; }
-.mn-pg-book__meta { margin-top: .8rem; font-size: 1.4rem; line-height: 1.55; color: var(--muted); }
+.mn-pg-book__ic { flex: none; width: 1.8rem; height: 1.8rem; color: var(--gold-ink); }
+.mn-pg-book__facts { margin: 2.2rem 0 0; padding: 0; border-top: 1px solid var(--hairline); }
+.mn-pg-book__facts > div { display: grid; grid-template-columns: 1.8rem 9.4rem minmax(0, 1fr); align-items: center; gap: 1.2rem; padding: 1.1rem 0; border-bottom: 1px solid rgba(42, 36, 32, .08); }
+.mn-pg-book__facts dt { font-size: 1.05rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.mn-pg-book__facts dd { margin: 0; font-size: 1.45rem; line-height: 1.4; color: var(--ink); }
+.mn-pg-book__incl { margin-top: 2.2rem; }
+.mn-pg-book__inclhead { font-size: 1.05rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.mn-pg-book__incl ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.mn-pg-book__incl li { display: flex; gap: .9rem; padding: .4rem 0; font-size: 1.35rem; line-height: 1.45; color: var(--ink-70); }
+.mn-pg-book__incl .mn-pg-book__ic { width: 1.4rem; height: 1.4rem; margin-top: .2rem; }
+.mn-pg-book__meta { margin-top: 1.2rem; font-size: 1.25rem; line-height: 1.5; color: var(--muted); }
+@media (min-width: 1025px) {
+  /* The card carries the facts on desktop, so the strip in the main column would only repeat them. */
+  .mn-pg-split:has(.mn-pg-book__facts) > .mn-pg-split__main > .mn-pg-facts { display: none; }
+  .mn-pg-split:has(.mn-pg-book__facts) > .mn-pg-split__main > .mn-pg-facts + .mn-pg-block { margin-top: 0; }
+}
+@media (min-width: 1025px) and (max-height: 820px) {
+  .mn-pg-book { top: 8.8rem; }
+  .mn-pg-book__incl { display: none; }   /* short screens: keep the whole card, CTA included, in view */
+}
 .mn-pg-book__cta { display: flex; align-items: center; justify-content: space-between; min-height: 5.2rem; margin-top: 2.4rem; padding: 0 2rem; border-radius: .2rem; background: var(--ink); color: var(--cream); font-size: 1.2rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: background-color .4s var(--ease); }
 .mn-pg-book__cta span { transition: transform .5s var(--ease); }
 @media (hover: hover) { .mn-pg-book__cta:hover { background: var(--gold-ink); } .mn-pg-book__cta:hover span { transform: translateX(.4rem); } }
@@ -389,7 +411,7 @@
   .mn-pg-book.is-away { transform: translateY(110%); }
   .mn-pg-book__card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1.6rem; padding: 1.2rem var(--gutter) calc(1.2rem + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid rgba(197, 154, 91, .55); border-radius: 0; background: var(--cream); }
   .mn-pg-book__price { font-size: 2.2rem; }
-  .mn-pg-book__meta { display: none; }
+  .mn-pg-book__meta, .mn-pg-book__facts, .mn-pg-book__incl { display: none; }
   .mn-pg-book__head { min-width: 0; }
   .mn-pg-book__name { display: block; overflow: hidden; margin-bottom: .2rem; font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
   .mn-pg-book__cta { gap: 1.2rem; min-height: 4.8rem; margin: 0; padding: 0 1.8rem; }

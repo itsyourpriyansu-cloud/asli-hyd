@@ -85,11 +85,11 @@ Each logo comes from the brand's own official website, as published there. Two v
 | co-curated/made-in-hyderabad.jpg | [Shilparamam 5, Hyderabad, Telangana 13.jpg](https://commons.wikimedia.org/wiki/File:Shilparamam_5,_Hyderabad,_Telangana_13.jpg) | A.Murali | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | co-curated/reset.jpg | [Kanha Shanti Vanam, Hyderabad 03.jpg](https://commons.wikimedia.org/wiki/File:Kanha_Shanti_Vanam,_Hyderabad_03.jpg) | A.Murali | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
-## Your Hyderabad starts here (section 15)
+## Your Hyderabad starts here (section 13)
 
 | File | Source | Author | Licence | Changes |
 |---|---|---|---|---|
-| cta-taramati.jpg | [Taramati Baradari (night).JPG](https://commons.wikimedia.org/wiki/File:Taramati_Baradari_(night).JPG) | ujjwal | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | Resized to 2400 px, saturation lowered, warmer |
+| cta-qutb-shahi.jpg | [Majestic Dome of Qutb Shahi Tombs at Dusk.jpg](https://commons.wikimedia.org/wiki/File:Majestic_Dome_of_Qutb_Shahi_Tombs_at_Dusk.jpg) | Shiva16pixels | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | 4:5 portrait crop of the dome, 1200×1500, saturation slightly lowered, warmer |
 
 ## Inner pages
 

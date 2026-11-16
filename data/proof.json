@@ -1,9 +1,10 @@
 {
   "numbers": [
-    { "n": 45, "label": "Conferences & events supported" },
-    { "n": 275, "label": "Curated destination experiences delivered" },
     { "n": 30, "label": "Experience partners & local businesses" },
-    { "n": 55, "label": "Cities & countries represented" }
+    { "n": 275, "label": "Curated destination experiences delivered" },
+    { "n": 15, "label": "Hotels & hospitality partners" },
+    { "n": 35, "label": "Corporate & institutional clients" },
+    { "n": 20, "label": "Licensed tour leaders & local experts" }
   ],
   "quotes": [
     {

@@ -66,7 +66,7 @@
       header.classList.remove('is-hidden');
       toggle.setAttribute('aria-expanded', String(open));
       drawer.setAttribute('aria-hidden', String(!open));
-      if (window.mnLenis) open ? window.mnLenis.stop() : window.mnLenis.start();
+      document.documentElement.classList.toggle('is-locked', open);
     };
     toggle.addEventListener('click', function () {
       setDrawer(!header.classList.contains('is-open'));
@@ -124,122 +124,67 @@
     }, Number(show.dataset.interval) || 4500);
   });
 
-  /* ---------- Hover-to-play preview videos ---------- */
-  function hoverVideo(hostSelector, videoSelector) {
-    document.querySelectorAll(hostSelector).forEach(function (host) {
-      var video = host.querySelector(videoSelector);
-      if (!video) return;
-      host.addEventListener('mouseenter', function () {
-        if (!canHover.matches || window.innerWidth <= 1024) return;
-        var p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      });
-      host.addEventListener('mouseleave', function () { video.pause(); });
-    });
-  }
-  // The theme panel (section 4) runs its own video, so it is left out here.
-  hoverVideo('.mn-promo:not([data-theme-panel])', '.mn-promo__video');
-
-  /* ---------- Theme explorer (section 4, and the Originals in section 9): a card brings its theme into the big panel ---------- */
-  document.querySelectorAll('[data-themes]').forEach(function (wrap) {
-    var panel = wrap.querySelector('[data-theme-panel]');
-    var video = wrap.querySelector('[data-theme-video]');
-    var still = wrap.querySelector('[data-theme-still]');
-    var cards = Array.prototype.slice.call(wrap.querySelectorAll('.mn-card[data-theme]'));
-    var states = Array.prototype.slice.call(wrap.querySelectorAll('[data-state]'));
-    var tabs = Array.prototype.slice.call(wrap.querySelectorAll('[data-theme-tab]'));
-    var conn = navigator.connection || {};
-    var noVideo = reduceMotion || conn.saveData === true;
-    var inView = false;
-    var current = null;
-    var intent;
-
-    var play = function () {
-      if (!inView || !panel.classList.contains('is-playing')) return;
+  /* ---------- Preview clips: a muted loop on the 6-ways windows and the shorts ----------
+     [data-preview] plays while hovered or keyboard-focused (mouse screens). [data-preview="auto"] (the shorts)
+     also plays on touch screens while it is mostly on screen. The clip loads on first use (data-src);
+     reduced motion and data-saver keep the still image. */
+  var conn = navigator.connection || {};
+  if (!reduceMotion && conn.saveData !== true) {
+    var preview = function (video) {
+      if (!video.getAttribute('src') && video.dataset.src) video.src = video.dataset.src;
       var p = video.play();
       if (p && p.catch) p.catch(function () {});
     };
-
-    var activate = function (card) {
-      var theme = card.dataset.theme;
-      if (theme === current) return;
-      current = theme;
-      states.forEach(function (s) {
-        var on = s.dataset.state === theme;
-        s.classList.toggle('is-current', on);
-        s.setAttribute('aria-hidden', String(!on));
-        s.inert = !on;
-      });
-      cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
-      tabs.forEach(function (t) {
-        var on = t.dataset.themeTab === theme;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-pressed', String(on));
-      });
-
-      if (noVideo) {
-        still.src = card.querySelector('.mn-card__img').currentSrc || card.querySelector('.mn-card__img').src;
-        panel.classList.add('has-still');
-        return;
-      }
-      // Swap the clip only when this theme uses a different one; the poster covers the load gap.
-      var src = card.dataset.video;
-      if (src && video.getAttribute('src') !== src) {
-        if (card.dataset.poster) video.poster = card.dataset.poster;
-        // Optional focal point, since the tall desktop panel crops landscape clips hard.
-        video.style.objectPosition = card.dataset.videoPos || '';
-        video.setAttribute('src', src);
-        video.load();
-      }
-      panel.classList.add('is-playing');
-      play();
-    };
-
-    cards.forEach(function (card) {
-      // Desktop: short hover intent so sweeping across the grid doesn't flicker the panel.
-      card.addEventListener('mouseenter', function () {
-        if (!canHover.matches) return;
-        clearTimeout(intent);
-        intent = setTimeout(function () { activate(card); }, 120);
-      });
-      card.addEventListener('mouseleave', function () { clearTimeout(intent); });
-      // Keyboard focus only: a tap also focuses the link, and activating there would make the
-      // click below see the card as already active and follow the link on the first tap.
-      card.addEventListener('focus', function () { if (card.matches(':focus-visible')) activate(card); });
-      // Touch: first tap previews the theme in the panel, a second tap opens its page.
-      card.addEventListener('click', function (e) {
-        if (canHover.matches || card.classList.contains('is-active')) return;
-        e.preventDefault();
-        activate(card);
-        if (panel.getBoundingClientRect().top < 0) {
-          if (window.mnLenis) window.mnLenis.scrollTo(panel, { offset: -80 });
-          else panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+    document.querySelectorAll('[data-preview]').forEach(function (host) {
+      var video = host.querySelector('video');
+      if (!video) return;
+      video.addEventListener('playing', function () { host.classList.add('is-playing'); });
+      video.addEventListener('pause', function () { host.classList.remove('is-playing'); });
+      host.addEventListener('mouseenter', function () { if (canHover.matches) preview(video); });
+      host.addEventListener('mouseleave', function () { video.pause(); });
+      host.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) preview(video); });
+      host.addEventListener('focusout', function () { video.pause(); });
     });
-
-    // Phones and tablets (section 4): the theme picker drives the panel through its (hidden) card.
-    tabs.forEach(function (tab) {
-      tab.addEventListener('click', function () {
-        var card = cards.filter(function (c) { return c.dataset.theme === tab.dataset.themeTab; })[0];
-        if (card) activate(card);
-      });
-    });
-
-    // Only play while the section is on screen.
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        inView = entries[0].isIntersecting;
-        if (inView) play(); else video.pause();
-      }, { threshold: .15 }).observe(wrap);
-    } else {
-      inView = true;
+    if (!canHover.matches && 'IntersectionObserver' in window) {
+      var autoIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) preview(e.target); else e.target.pause(); });
+      }, { threshold: .6 });
+      document.querySelectorAll('[data-preview="auto"] video').forEach(function (v) { autoIO.observe(v); });
     }
+  }
+
+  /* ---------- Swipe rails with arrows (conventions, Featured Tours on phones, Quick Experiences, shorts) ----------
+     The rail scrolls natively (swipe, trackpad, keyboard). The arrows show only while the items overflow
+     (is-scrollable on root), step one item at a time and disable at each end. A filter (mn:filtered) rewinds it. */
+  function initRail(root, rail, itemSel, prev, next) {
+    var update = function () {
+      var max = rail.scrollWidth - rail.clientWidth;
+      root.classList.toggle('is-scrollable', max > 1);
+      if (prev) prev.disabled = rail.scrollLeft <= 1;
+      if (next) next.disabled = rail.scrollLeft >= max - 1;
+    };
+    var step = function (dir) {
+      var items = rail.querySelectorAll(itemSel + ':not([hidden])');
+      if (!items.length) return;
+      var by = items[1] ? items[1].offsetLeft - items[0].offsetLeft : items[0].offsetWidth;
+      rail.scrollBy({ left: dir * by, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    if (prev) prev.addEventListener('click', function () { step(-1); });
+    if (next) next.addEventListener('click', function () { step(1); });
+    rail.addEventListener('scroll', update, { passive: true });
+    document.addEventListener('mn:filtered', function (e) { if (e.target.contains(rail)) { rail.scrollLeft = 0; update(); } });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    update();
+    return { step: step, update: update };
+  }
+  document.querySelectorAll('[data-rail]').forEach(function (root) {
+    initRail(root, root.querySelector('[data-rail-track]'), root.dataset.rail,
+      root.querySelector('[data-rail-prev]'), root.querySelector('[data-rail-next]'));
   });
 
-  /* ---------- Conventions rail (section 3b) ----------
-     Removes events past their data-end date. The rail scrolls natively; the arrows appear only
-     when the cards overflow (is-scrollable) and step one card at a time. Cards are plain links. */
+  /* ---------- Conventions rail (section 4) ----------
+     Removes events past their data-end date, then runs as a swipe rail (initRail). Cards are plain links. */
   (function () {
     var wrap = document.querySelector('[data-conventions]');
     if (!wrap) return;
@@ -256,29 +201,10 @@
 
     var rail = wrap.querySelector('.mn-conv__rail');
     if (!rail) return; // /conventions uses the same past-event filter on a plain grid
-    var prev = wrap.querySelector('.mn-conv__nav--prev');
-    var next = wrap.querySelector('.mn-conv__nav--next');
-    function update() {
-      var max = rail.scrollWidth - rail.clientWidth;
-      wrap.classList.toggle('is-scrollable', max > 1);
-      prev.disabled = rail.scrollLeft <= 1;
-      next.disabled = rail.scrollLeft >= max - 1;
-    }
-    function step(dir) {
-      var item = rail.querySelector('.mn-conv__item');
-      var by = item.offsetWidth + (parseFloat(getComputedStyle(rail).columnGap) || 0);
-      rail.scrollBy({ left: dir * by, behavior: reduceMotion ? 'auto' : 'smooth' });
-    }
-    prev.addEventListener('click', function () { step(-1); });
-    next.addEventListener('click', function () { step(1); });
-    rail.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    window.addEventListener('load', update);
-    update();
+    var nav = initRail(wrap, rail, '.mn-conv__item', wrap.querySelector('.mn-conv__nav--prev'), wrap.querySelector('.mn-conv__nav--next'));
 
     // Phones and tablets: the rail advances one card every few seconds while on screen, rewinding
-    // after the last; a touch or swipe pauses it for a while. Never on desktop (scroll-driven there)
-    // or with reduced motion.
+    // after the last; a touch or swipe pauses it for a while. Never on desktop (arrows there) or with reduced motion.
     if (reduceMotion) return;
     var small = window.matchMedia('(max-width: 1024px)');
     var onScreen = false;
@@ -295,8 +221,141 @@
       var max = rail.scrollWidth - rail.clientWidth;
       if (max <= 1) return;
       if (rail.scrollLeft >= max - 2) rail.scrollTo({ left: 0, behavior: 'smooth' });
-      else step(1);
+      else nav.step(1);
     }, 4000);
+  })();
+
+  /* ---------- Events calendar ("Find your event", section 4) ----------
+     Built from the upcoming event cards in the rail (past ones were removed just above), so the events live in one place.
+     The month grid marks event days; picking a day narrows the list, the search looks across every month, and the type
+     boxes filter both. A native modal <dialog> keeps focus inside, closes on Esc and hands focus back to the button. */
+  (function () {
+    var dlg = document.getElementById('mn-finder');
+    var opener = document.querySelector('[data-finder-open]');
+    if (!dlg || !opener) return;
+    if (!dlg.showModal) { opener.hidden = true; return; }
+    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var TYPE = { conference: 'Conference', exhibition: 'Exhibition', summit: 'Summit' };
+    var $ = function (sel) { return dlg.querySelector(sel); };
+    var day = function (iso) { var p = iso.split('-'); return new Date(+p[0], p[1] - 1, +p[2]); };
+    var el = function (tag, cls, text) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+    var events = Array.prototype.slice.call(document.querySelectorAll('[data-conventions] .mn-conv__item')).map(function (li) {
+      var time = li.querySelector('time');
+      return {
+        start: day(time.getAttribute('datetime')), end: day(li.dataset.end), dates: time.textContent,
+        name: li.querySelector('.mn-conv__name').textContent, venue: li.querySelector('.mn-conv__venue').textContent.trim(),
+        img: li.querySelector('.mn-conv__img').getAttribute('src'), href: li.querySelector('.mn-conv__card').getAttribute('href'),
+        type: TYPE[li.dataset.type] ? li.dataset.type : 'conference'
+      };
+    }).sort(function (a, b) { return a.start - b.start; });
+    if (!events.length) { opener.hidden = true; return; }
+
+    var label = $('[data-finder-label]'), days = $('[data-finder-days]'), list = $('[data-finder-list]');
+    var heading = $('[data-finder-heading]'), status = $('[data-finder-status]'), search = $('[data-finder-q]');
+    var boxes = Array.prototype.slice.call(dlg.querySelectorAll('[data-finder-type]'));
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var y = events[0].start.getFullYear(), m = events[0].start.getMonth(), picked = null;
+    document.querySelector('[data-finder-month]').textContent = MONTHS[m].slice(0, 3) + ' ' + y;
+    // Only offer the types that have events.
+    boxes.forEach(function (b) { b.closest('label').hidden = !events.some(function (e) { return e.type === b.value; }); });
+
+    var shown = function () {
+      var on = boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
+      return events.filter(function (e) { return on.indexOf(e.type) > -1; });
+    };
+    var covers = function (e, d) { return e.start <= d && d <= e.end; };
+    var inMonth = function (e, yy, mm) { return e.start <= new Date(yy, mm + 1, 0) && e.end >= new Date(yy, mm, 1); };
+    var goMonth = function (yy, mm) { var d = new Date(yy, mm, 1); y = d.getFullYear(); m = d.getMonth(); picked = null; render(); };
+
+    function drawDays() {
+      label.textContent = MONTHS[m] + ' ' + y;
+      days.textContent = '';
+      var lead = new Date(y, m, 1).getDay(), count = new Date(y, m + 1, 0).getDate(), evs = shown();
+      for (var i = 0; i < lead; i++) days.appendChild(el('span', 'mn-finder__day is-blank'));
+      for (var d = 1; d <= count; d++) {
+        var date = new Date(y, m, d);
+        var n = evs.filter(function (e) { return covers(e, date); }).length;
+        var cell = el(n ? 'button' : 'span', 'mn-finder__day', String(d));
+        if (+date === +today) cell.classList.add('is-today');
+        if (n) {
+          var on = !!picked && +picked === +date;
+          cell.type = 'button';
+          cell.classList.add('has-event');
+          cell.classList.toggle('is-picked', on);
+          cell.setAttribute('aria-pressed', String(on));
+          cell.setAttribute('aria-label', d + ' ' + MONTHS[m] + ', ' + n + (n === 1 ? ' event' : ' events'));
+          cell.addEventListener('click', pick(date));
+        }
+        days.appendChild(cell);
+      }
+    }
+    function pick(date) {
+      return function () { picked = picked && +picked === +date ? null : date; render(); };
+    }
+
+    function row(e) {
+      var li = el('li', 'mn-finder__row'), a = el('a', 'mn-finder__link');
+      a.href = e.href;
+      var img = el('img', 'mn-finder__img');
+      img.src = e.img; img.alt = ''; img.width = 240; img.height = 300; img.loading = 'lazy'; img.decoding = 'async';
+      var info = el('span', 'mn-finder__info');
+      info.appendChild(el('span', 'mn-finder__date', e.dates));
+      info.appendChild(el('span', 'mn-finder__name', e.name));
+      var meta = el('span', 'mn-finder__meta');
+      meta.appendChild(el('span', 'mn-finder__venue', e.venue));
+      meta.appendChild(el('span', 'mn-finder__type', TYPE[e.type]));
+      info.appendChild(meta);
+      var go = el('span', 'mn-finder__go', 'Explore ');
+      go.appendChild(el('span', '', '→')).setAttribute('aria-hidden', 'true');
+      a.appendChild(img); a.appendChild(info); a.appendChild(go);
+      li.appendChild(a);
+      return li;
+    }
+
+    function drawList() {
+      var raw = search.value.trim(), term = raw.toLowerCase();
+      var evs = shown().filter(function (e) {
+        if (term) return (e.name + ' ' + e.venue + ' ' + TYPE[e.type]).toLowerCase().indexOf(term) > -1;
+        return picked ? covers(e, picked) : inMonth(e, y, m);
+      });
+      heading.textContent = term ? 'Results for “' + raw + '”'
+        : picked ? picked.getDate() + ' ' + MONTHS[m] + ' ' + y : MONTHS[m] + ' ' + y;
+      list.textContent = '';
+      evs.forEach(function (e) { list.appendChild(row(e)); });
+      status.textContent = evs.length + (evs.length === 1 ? ' event' : ' events') + ' shown';
+      if (evs.length) return;
+      // Empty: say so, and offer the next event as the one way forward.
+      var li = el('li', 'mn-finder__empty');
+      li.appendChild(el('p', '', term ? 'No events match “' + raw + '”.' : 'Nothing on in ' + MONTHS[m] + ' ' + y + '.'));
+      var after = term ? null : shown().filter(function (e) { return e.start > new Date(y, m + 1, 0); })[0];
+      if (after) {
+        var next = el('button', 'mn-ulink mn-finder__next', 'Next: ' + after.name + ', ' + after.dates);
+        next.type = 'button';
+        next.addEventListener('click', function () { goMonth(after.start.getFullYear(), after.start.getMonth()); });
+        li.appendChild(next);
+      }
+      list.appendChild(li);
+    }
+
+    function render() { drawDays(); drawList(); }
+
+    $('[data-finder-prev]').addEventListener('click', function () { goMonth(y, m - 1); });
+    $('[data-finder-next]').addEventListener('click', function () { goMonth(y, m + 1); });
+    search.addEventListener('input', drawList);
+    boxes.forEach(function (b) { b.addEventListener('change', render); });
+    opener.addEventListener('click', function () {
+      render();
+      dlg.showModal();
+      document.documentElement.classList.add('is-locked');
+    });
+    $('[data-finder-close]').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () { document.documentElement.classList.remove('is-locked'); });
   })();
 
   /* ---------- Steps: accordion on phones ---------- */
@@ -340,8 +399,7 @@
         select(i);
         // Small screens: portrait and quote sit above the tabs; bring them back if they have scrolled away.
         if (window.innerWidth <= 1024 && portrait && card && card.getBoundingClientRect().top < 0) {
-          if (window.mnLenis) window.mnLenis.scrollTo(portrait, { offset: -88 });
-          else portrait.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          portrait.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
         }
       });
       tab.addEventListener('keydown', function (e) {
@@ -411,7 +469,7 @@
   }
 
   /* ---------- In-page links (#co-curated, #quick-experiences, #private-access…) ----------
-     Glide there with Lenis instead of a native jump that fights the smooth scroll and the pins. */
+     A smooth native glide (an instant jump with reduced motion); scroll-margin-top keeps the target clear of the header. */
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#"]');
     var id = a && a.getAttribute('href').slice(1);
@@ -419,15 +477,13 @@
     if (!target) return;
     e.preventDefault();
     if (target.hasAttribute('tabindex')) target.focus({ preventScroll: true }); // the skip link must move keyboard focus too
-    if (window.mnLenis) window.mnLenis.scrollTo(target, { duration: 1.6 });
-    else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
     if (history.replaceState) history.replaceState(null, '', '#' + id);
   });
 
   /* ---------- Quick Experiences: the arcade rail ----------
-     The rail scrolls natively on phones, tablets and with reduced motion. On desktop motion.js moves the
-     track with the page scroll and sets api.driver, so "go to a card" scrolls the page instead. Either
-     way update(x) keeps the gold progress line and the group buttons in step with the rail. */
+     The rail scrolls natively at every size (arrows on mouse screens, see initRail). update(x) keeps the
+     gold progress line and the group buttons in step with the rail. */
   var arcade = document.querySelector('[data-arcade]');
   if (arcade) initArcade(arcade);
 
@@ -436,7 +492,7 @@
     var track = root.querySelector('.mn-arcade__track');
     var cards = Array.prototype.slice.call(root.querySelectorAll('.mn-arcade__card'));
     var groups = Array.prototype.slice.call(root.querySelectorAll('[data-arcade-go]'));
-    var api = window.mnArcade = { driver: null, x: 0 };
+    var api = window.mnArcade = { x: 0 };
     var offsetOf = function (card) { return card.offsetLeft - cards[0].offsetLeft; };
     var max = function () { return Math.max(track.offsetWidth - rail.clientWidth, 0); };
 
@@ -453,9 +509,7 @@
       });
     };
     api.goTo = function (card) {
-      var to = Math.min(offsetOf(card), max());
-      if (api.driver) api.driver(to);
-      else rail.scrollTo({ left: to, behavior: reduceMotion ? 'auto' : 'smooth' });
+      rail.scrollTo({ left: Math.min(offsetOf(card), max()), behavior: reduceMotion ? 'auto' : 'smooth' });
     };
 
     groups.forEach(function (g) {
@@ -464,19 +518,12 @@
         if (first) api.goTo(first);
       });
     });
-    rail.addEventListener('scroll', function () { if (!api.driver) api.update(rail.scrollLeft); }, { passive: true });
-    // Desktop: tabbing to a card off to the side scrolls the page until it is in the rail's view.
-    root.addEventListener('focusin', function (e) {
-      var card = api.driver && e.target.closest && e.target.closest('.mn-arcade__card');
-      if (!card) return;
-      var o = offsetOf(card);
-      if (o < api.x || o + card.offsetWidth > api.x + rail.clientWidth - cards[0].offsetLeft) api.goTo(card);
-    });
-    window.addEventListener('resize', function () { api.update(api.driver ? api.x : rail.scrollLeft); });
+    rail.addEventListener('scroll', function () { api.update(rail.scrollLeft); }, { passive: true });
+    window.addEventListener('resize', function () { api.update(rail.scrollLeft); });
     api.update(0);
   }
 
-  /* ---------- Inner pages: tour tabs ---------- */
+  /* ---------- Filter tabs: tours (homepage and /tours), partners on the shorts, gallery ---------- */
   document.querySelectorAll('[data-filter-root]').forEach(function (root) {
     var buttons = root.querySelectorAll('[data-filter]');
     var cards = root.querySelectorAll('[data-tags]');
@@ -495,9 +542,37 @@
           card.style.opacity = card.style.visibility = card.style.transform = '';
         });
         status.textContent = shown + ' ' + noun + (shown === 1 ? '' : 's') + ' shown';
+        root.dispatchEvent(new Event('mn:filtered', { bubbles: true }));
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
       });
     });
+  });
+
+  /* ---------- Featured Tours: two rows on desktop; "View more tours" shows the rest ----------
+     Marks every shown card past the eighth .is-extra (CSS hides those at desktop widths only) and
+     recounts after each filter. Once opened it stays open; focus moves to the first new card. */
+  document.querySelectorAll('[data-more]').forEach(function (btn) {
+    var grid = document.getElementById(btn.getAttribute('aria-controls'));
+    var root = btn.closest('[data-filter-root]') || grid.parentNode;
+    var LIMIT = 8, open = false;
+    function apply() {
+      var n = 0;
+      grid.querySelectorAll('[data-tags]').forEach(function (card) {
+        card.classList.toggle('is-extra', !open && !card.hidden && ++n > LIMIT);
+      });
+      btn.parentNode.classList.toggle('is-on', !open && n > LIMIT);
+    }
+    btn.addEventListener('click', function () {
+      var extra = grid.querySelectorAll('.is-extra');
+      open = true;
+      btn.setAttribute('aria-expanded', 'true');
+      extra.forEach(function (card) { card.style.opacity = card.style.visibility = card.style.transform = ''; });
+      apply();
+      if (extra[0]) extra[0].querySelector('a').focus({ preventScroll: true });
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+    root.addEventListener('mn:filtered', apply);
+    apply();
   });
 
   /* ---------- Inner pages: gallery lightbox (native <dialog> traps focus and returns it) ---------- */
@@ -518,7 +593,7 @@
         lbSet = shots.filter(function (s) { return !s.closest('[hidden]'); }); // the arrows stay inside the current filter
         lbShow(lbSet.indexOf(shot));
         lb.showModal();
-        if (window.mnLenis) window.mnLenis.stop();
+        document.documentElement.classList.add('is-locked');
       });
     });
     lb.querySelector('[data-lb-close]').addEventListener('click', function () { lb.close(); });
@@ -529,7 +604,7 @@
       if (e.key === 'ArrowRight') lbShow(lbAt + 1);
     });
     lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
-    lb.addEventListener('close', function () { if (window.mnLenis) window.mnLenis.start(); });
+    lb.addEventListener('close', function () { document.documentElement.classList.remove('is-locked'); });
   }
 
   /* ---------- Inner pages: looping hero video, only when the guest can afford it ---------- */

@@ -1,6 +1,6 @@
 # Asli Hyderabad homepage: instructions for Claude
 
-A single-page homepage for **Asli Hyderabad** (aslihyd.in), built section by section on a GSAP/Lenis template ("Maison Nomen", hence the `mn-` classes). Plain HTML/CSS/JS, no build step.
+A single-page homepage for **Asli Hyderabad** (aslihyd.in), built section by section on a GSAP template ("Maison Nomen", hence the `mn-` classes). Plain HTML/CSS/JS, no build step, native scroll (no Lenis since v3, 16 Nov 2026).
 
 **Before any work, read [`docs/PROJECT-CONTEXT.md`](docs/PROJECT-CONTEXT.md).** It has the section map, the code architecture, the design system, asset sources and licensing, the testing workflow, gotchas and the backlog. Content briefs: [`WIREFRAME-CONTENT.md`](WIREFRAME-CONTENT.md) (the client's wireframe) and [`LIVE-SITE-AUDIT.md`](LIVE-SITE-AUDIT.md) (the live site's data).
 
@@ -41,10 +41,10 @@ node server.js 8655     # http://127.0.0.1:8655  (Range support for video; use y
 
 ## Code rules
 
-- **`data-sec` names drive `js/motion.js`** (pins, curtains, sideways wipes). Replace a section's content inside its existing `<section data-sec="…">`. Some slots keep old names: Quick Experiences is `data-sec="spinner"`, Originals is `collection-b`, Numbers is `commission`, Private Access is `collector`, Testimonials is `materials`, Featured Brands is `logos`, Co-curated is `worlds`, Reels is `social`, the closing CTA is `heritage`.
+- **`data-sec` names drive `js/motion.js`** (one-shot reveals; nothing pins or wipes since v3). Replace a section's content inside its existing `<section data-sec="…">`. Some slots keep old names: 6 ways is `collection-a`, Featured Tours is `tours` (new in v3), Numbers is `commission`, Private Access is `collector`, Quick Experiences is `spinner`, Featured Brands is `logos`, the Asli Originals / Curated Experiences shorts are `worlds` (`id="co-curated"`), Testimonials is `materials`, Reels is `social`, the closing CTA is `heritage`. `collection-b` (the Originals explorer) is gone.
 - **Where code goes:**
   - `js/components.js`: UI behaviour.
-  - `js/motion.js`: scroll choreography inside `gsap.matchMedia` blocks (≥1025px / ≤1024px / all), each pushing cleanups.
+  - `js/motion.js`: one-shot scroll reveals on native scroll; size-specific blocks use `gsap.matchMedia` and push cleanups. Don't bring back pins or a smooth-scroll library (the client asked for lighter scrolling).
   - `prefers-reduced-motion` must still render everything complete.
 - **Match the surrounding code:** `mn-` BEM classes, short "why" comments, a banner comment per section in `css/sections.css`. 1rem = 10px.
 - **Line endings:** CSS, JS and `index.html` are all **LF**. Preserve that when splicing with scripts.

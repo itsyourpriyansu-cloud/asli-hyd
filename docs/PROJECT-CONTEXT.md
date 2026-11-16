@@ -9,7 +9,7 @@ Last updated: 27 Oct 2026, after the motif kit and the footer's skyline band (se
 ## 1. What this is
 
 - **Client:** Asli Hyderabad (aslihyd.in). It is a Hyderabad hosting company: curated tours, conference-delegate programmes, signature "Originals", private access to people and places, short cultural experiences. Contact on the site: Sahana, sahana@aslihyd.in, +91 93921 49872.
-- **This repo:** a single-page **homepage** prototype in plain HTML/CSS/JS with GSAP 3.12.5 + ScrollTrigger and Lenis 1.1.13, all local (no CDN). It began as a luxury-embroidery template called **"Maison Nomen"**, and every `mn-` class name comes from it. We are re-skinning it **section by section**, keeping its motion system.
+- **This repo:** a single-page **homepage** prototype in plain HTML/CSS/JS with GSAP 3.12.5 + ScrollTrigger, all local (no CDN), on **native scroll** (Lenis and the pinned, stacked sections were removed in v3, 16 Nov 2026, at the client's request for lighter movement between sections). It began as a luxury-embroidery template called **"Maison Nomen"**, and every `mn-` class name comes from it. We are re-skinning it **section by section**.
 - **Sources of truth for content:**
   - [`WIREFRAME-CONTENT.md`](../WIREFRAME-CONTENT.md): everything in the client's wireframe PDF (15 homepage sections, tables, copy, open questions). It is the **brief**.
   - [`LIVE-SITE-AUDIT.md`](../LIVE-SITE-AUDIT.md): a crawl of the live aslihyd.in (tours, conventions, themes, services, numbers, testimonials, photo inventory, logo).
@@ -49,7 +49,7 @@ The user directs the build one section at a time, usually with a screenshot plus
 
 ### Standing preferences (learned from feedback)
 
-- **No eyebrows anywhere, minimal CTAs.** On 7 Nov 2026 the user removed every eyebrow on the site (`.mn-eyebrow` and the per-section eyebrow rules are deleted; `tools/test/conventions.mjs` fails if any `[class*="eyebrow"]` returns). Do not add an eyebrow, kicker or second CTA.
+- **No eyebrows anywhere, minimal CTAs.** On 7 Nov 2026 the user removed every eyebrow on the site (`.mn-eyebrow` and the per-section eyebrow rules are deleted; `tools/test/home.mjs` fails if any `[class*="eyebrow"]` returns). Do not add an eyebrow, kicker or second CTA.
 - **Premium, Hyderabadi, editorial.**
   - Use the cream/ink/gold system.
   - Use Cormorant Garamond for display and Jost for UI.
@@ -67,24 +67,24 @@ The user directs the build one section at a time, usually with a screenshot plus
 
 ## 3. Section map
 
-`data-sec` names are **load-bearing**: `js/motion.js` pins, stacks and wipes sections by these names. Replace a section's *content*, keep its `<section data-sec="…">` wrapper, and update the one selector in motion.js if the inner root class changes.
+`data-sec` names are **load-bearing**: `js/motion.js` finds each section's one-shot reveals by these names (since v3 nothing pins, stacks or wipes). Replace a section's *content*, keep its `<section data-sec="…">` wrapper, and update the selector in motion.js if the inner root class changes. The v3 order and brief: [`plans/2026-11-16-client-feedback-v3.md`](plans/2026-11-16-client-feedback-v3.md).
 
 | Visible # | Code comment | `data-sec` | Content now | Status |
 |---|---|---|---|---|
 | — | loader | `#mn-pre` | Intro loader: 5 Hyderabad images open one by one inside a logo-colour border; "Hyderabad is *Regal / Crafted / Inventive / Serene / Welcoming*"; cream background with a drifting gold jaali; morphs into the hero | done |
 | 1 | 1. HERO | `hero` | Drone video, "Experience **Asli = Real** Hyderabad" set in Cormorant Garamond Light, always three left-aligned lines ("Experience" / "Asli = Real" / "Hyderabad"), 96px on desktop, 80px tablet, min(72px, 15vw) phone; dark overlay + bottom gradient, **no CTA, no eyebrow** | done |
-| 2 | 2. HYDERABAD, YOUR WAY | `collection-a` (+`data-themes`) | **Card explorer** (moved up to follow the hero, 11 Nov; it slides over the held hero): 6 theme cards (Heritage, Culture, Cinema, Business, Wellness, Learning); hover/focus/tap brings a theme into the big left panel with a looping video, heading, hosted routes and a CTA; other cards dim. No serial numbers on the cards (Originals keep theirs). **Phones and tablets:** a segmented picker of six line icons (`.mn-themes__tabs`, sprite `i-theme-*`; 3×2 on phones, one row on tablets) replaces the card strip and drives the panel; the active tab turns dark gold with a gold wash and foot rule. Test: `tools/test/originals.mjs` | done |
-| 3 | 3. CONVENTIONS | `conventions` | **One-screen scroll rail** (version 2, 7 Nov; the Velaa ink band and the first card rail are retired). The section is exactly 100svh: a cream band with the khatam jaali (`.mn-m-jaali`, 14% as behind Quick Experiences) across it, faded only at the top and bottom. Header left, no eyebrow: "In Hyderabad / for a *Convention?*", "Find your event. *Discover Hyderabad around it.*" (each on one line on desktop). Right, level with the sub-line: the underline link "All conventions" (`.mn-ulink`, as "All tours" in section 5); on phones it sits under the heading. **No art** (the user removed the Charminar and the arch on 7 Nov). `--below-head` (about 54px at 900 tall) is the room between the heading and the cards. The rail fills the rest of the screen, so the 2:3 cards take their size from its height (about 416×624 at 1440×900, 315×472 at 1280×720), 1.2rem apart. Each card is one link: photo, a small date and a "Tentative" tag at the top, then name, pin + venue and a faint outline "Explore Convention →" button that turns cream only on hover/focus. **No serial numbers, no pill.** Desktop: motion.js pins the section and the page scroll carries the rail right to left (`is-driven`) until the last card meets the column edge. Tablets and phones swipe it natively with snap and it auto-advances a card every 4s while on screen (rewinding after the last; a touch, swipe or wheel pauses it for 8s; never with reduced motion), with no arrows. Desktop with reduced motion swipes too, with prev/next arrows (`is-scrollable`, components.js). 12 events, Oct 2026 to May 2027; past ones (by `data-end`) are removed. Photos: 960×1200 crops of the client's photos, credits in `assets/img/SOURCES.md`. Plan: `docs/plans/2026-11-07-conventions-scroll-rail.md`. Test: `tools/test/conventions.mjs` | done |
-| 4 | 5. TRUSTED WITH HYDERABAD | `commission` | "Asli Hyderabad, *in numbers.*" Overlay editorial: slideshow of real Asli groups, a boxed card with a khatam jaali behind it (no border), figures that count up with a "+" landing | done (testimonials not yet) |
-| 5 | 6. PRIVATE ACCESS | `collector` | "Hyderabad, *behind closed doors.*" Teaser: two carved doors swing open onto a chandeliered durbar hall (live-site photo `assets/site-photos/tour-nizams-legacy-golconda.jpg`), then the line settles | done (the full table of 8 is not built) |
-| 6 | 7. ROOTED IN HYDERABAD | `city` | Split editorial "Four centuries of a city, *hosted by people who call it home.*" Images: a crossfade of Qutb Shahi Tombs, Charminar and HITEC City at dusk (`rooted-qutb-shahi/charminar/hitec-city.jpg`), framed 4:5 on phones and square on tablets. The sideways ink sweep carries the **"400 years in one line"** skyline SVG (Golconda 1518 → Durgam Cheruvu 2020): seven landmark groups, each opening up (outline, details, then year and name) as the sweep carries it on screen, driven by its on-screen position so scrolling back closes it; on phones it is a band that draws once, landmark by landmark, while it glides | done |
-| 7 | 8. QUICK EXPERIENCES | `spinner` (old name kept) | "A little Hyderabad, *wherever you are.*" **Arcade rail**: the 10 experiences as arch-topped photo cards in one rail, with buttons for Workshops (01–06) and Performances (07–10). On desktop the section holds and the page scroll carries the rail sideways; on phones, tablets and with reduced motion the rail swipes natively. Hover or focus shows the description and swaps the duration for Book now. The earlier list + arch version was retired on 26 Oct (copy in `docs/backups/quick-experiences-v1/`) | done |
-| 8 | 9. ASLI HYDERABAD ORIGINALS | `collection-b` (+`data-themes`) | "Only in Hyderabad. Only with Asli." The section 4 explorer **mirrored** (panel right): Hyderabad at Dawn, Welcome Hyderabad, Hyderabad After Dark, The Hyderabad Table, + Ramzan Nights, Festival Hyderabad (two seasonal ones the user asked for) | done |
-| 9 | 10. TRUSTED WITH HYDERABAD | `materials` (old name kept) | "Asli Hyderabad, *in their words.*" The 4 live-site testimonials (verbatim). Per guest: a Hyderabad backdrop tied to their story, a toned portrait in a gold Mughal arch, and the quote in the boxed card; the 4 guests along the bottom are tabs whose gold hairline is a 10 s auto-advance timer (pauses on hover/focus/off screen) | done |
-| 10 | 12. FEATURED BRANDS | `logos` (moved up, old name kept) | "Featured brands *of Hyderabad.*" Copy left, a 3×3 grid of white tiles right: official logo (ink at rest, brand colours on hover), name, gold rule, italic category. Faint Charminar and Chowmahalla line drawings in the corners draw themselves. Taj Falaknuma, Café Niloufer, Goyaz, Ramoji, HICC are the wireframe's; Paradise, Heartfulness, Karachi Bakery, Shilparamam replace four wireframe names whose logos could not be sourced (the user chose this) | done (brand permissions needed) |
-| 11 | 13. CO-CURATED EXPERIENCES | `worlds` (`id="co-curated"`) | "Small experiences. *Big memories.*" A bento grid (5 cols × 2 rows, High Tea is 2×2): 7 of the wireframe's 15 signature experiences, each paired with a brand from section 12 (white partner logo top-left). Hover or focus shows the line and "Book experience"; phones get a swipe rail with everything shown | done |
-| 12 | 14. @ASLIHYDERABAD REELS | `social` | Eight 9:16 muted loops in a CSS marquee (cloned once by components.js); only on-screen reels play; marquee pauses on hover/focus; reduced motion or data-saver: posters, no marquee. The handle is a placeholder | done (handle + real reels to come) |
-| 13 | 15. YOUR HYDERABAD STARTS HERE | `heritage` (moved last, `id="plan"`) | Closing CTA over Taramati Baradari lit at night: heading, "Plan My Hyderabad", contact line, and a 3-step timeline (Tell us your dates · We shape the days · We host you) | done |
+| 2 | 2. 6 WAYS TO EXPERIENCE HYDERABAD | `collection-a` | v3 (client: "simple, near-vertical windows"): "6 ways to *experience Hyderabad.*" + "All tours". Six tall arch-topped windows (`.mn-way`, soft border-radius arch with an inset gold hairline), one per theme, each one link to `/experiences/<theme>`. Hover or keyboard focus plays the theme loop (`[data-preview]`) and brings up the line and "Explore"; touch shows the line. 6 in a row desktop, 3×2 tablet, 2×3 phone. The old card explorer (`[data-themes]`) is gone. Test: `tools/test/home.mjs` | done |
+| 3 | 3. FEATURED TOURS | `tours` (new) | v3: "Featured *tours.*" + "All tours". Theme tabs (`.mn-tabs.mn-tabs--icons`, `[data-filter-root]`): centred pills, each with its `i-theme-*` glyph. Then the 12 most booked tours (the wireframe's 13 minus Young Innovators) as small arch cards (`.mn-tour`, reusing `.mn-arcade__media/__arch`), four to a row, three on tablets; phones a swipe rail about 1.4 cards wide. **Desktop shows two rows (8)**; the **"View more tours"** button (`[data-more]`, components.js) opens the rest, recounts after each filter and moves focus to the first new card. Card: theme tag on the photo, name, the core line with a pin, a hairline, then the duration with a clock against "Explore". Images `assets/img/pages/tours/<slug>-card.jpg` | done |
+| 4 | 4. CONVENTIONS | `conventions` | One-screen card rail (2:3 cards sized from the rail's height), heading left, no eyebrow. v3: no pin; the rail swipes at every size (arrows on mouse screens, auto-advance on phones). The old "All conventions" link is now the **"Find your event \| Nov 2026"** pill (`.mn-conv__find`), which opens the **events calendar**, a native `<dialog id="mn-finder">` built from the rail cards by components.js: month grid with event dots, today ringed, the picked day gold; type checkboxes (from each card's `data-type`: conference / exhibition / summit; only types with events show); search across all months; rows with thumbnail, date, name, venue, type, Explore; an empty month offers the next event. Phones: a full-screen sheet that scrolls as one column, compact month, type chips in one row, pinned close button. Past events (by `data-end`) are removed. Test: `tools/test/home.mjs` | done |
+| 5 | 5. ASLI HYDERABAD IN NUMBERS | `commission` (`id="trusted"`) | v3 ("no need to waste an entire page"): a slim cream band, "Asli Hyderabad in numbers" and five figures between fine gold rules, counting up once: 30+ experience partners & local businesses, 275+ curated destination experiences, 15+ hotels & hospitality partners, 35+ corporate & institutional clients, 20+ licensed tour leaders & local experts (client's reference image; also in `data/proof.json`). Phones 2+2+1 | done |
+| 6 | 6. PRIVATE ACCESS | `collector` | "Hyderabad, *behind closed doors.*" v3.1: full bleed, edge to edge, one screen tall (max 100rem); nothing slides over it (the client saw it "clubbed and overlapping" before). Doors swing open once onto the durbar hall. Placeholder until the client sends the content | done (client content to come) |
+| 7 | 7. ROOTED IN HYDERABAD | `city` | Editorial pair inside the container (v3.1): the crossfade of Qutb Shahi Tombs, Charminar, HITEC City in a 4:5 frame with a gold hairline offset behind it, and "Four centuries of a city, *hosted by people who call it home.*" centred beside it (gold rule, body, link); phones stack copy over photo. Above it the ink band "Four centuries, *one city.*" (centred) with the **"400 years in one line"** skyline, which draws once, landmark by landmark, at every size (it glides sideways on smaller screens). Each landmark has a **pin**: a dotted leader from the ground to a gold diamond on the axis at its `data-x`, year and name below. v3.1 redrew the Hussain Sagar Buddha (rock, plinth, lotus, robed figure) and HITEC City (Cyber Towers between two towers) | done |
+| 8 | 8. QUICK EXPERIENCES | `spinner` (old name kept) | "A little Hyderabad, *wherever you are.*" **Arcade rail** of the 10 experiences as arch cards with Workshops / Performances buttons. v3: a native swipe rail at every size with prev/next arrows (`.mn-railbtns`) on mouse screens; arches draw once. The earlier list version is in `docs/backups/quick-experiences-v1/` | done |
+| 9 | 9. FEATURED BRANDS | `logos` (old name kept) | "Featured brands *of Hyderabad.*" Copy left, a 3×3 grid of white tiles right: official logo (ink at rest, brand colours on hover), name, gold rule, italic category; faint Charminar and Chowmahalla drawings. Taj Falaknuma, Café Niloufer, Goyaz, Ramoji, HICC are the wireframe's; Paradise, Heartfulness, Karachi Bakery, Shilparamam replace four whose logos could not be sourced (the user chose this). Unchanged in v3 | done (brand permissions needed) |
+| 10 | 10. ASLI ORIGINALS / CURATED EXPERIENCES WITH PARTNERS | `worlds` (`id="co-curated"`) | v3 (replaces both the Originals explorer and the co-curated bento): "Asli Originals / *Curated Experiences with Partners*" + "View all experiences". A row of 13 9:16 **shorts** (`.mn-short`): 7 co-curated experiences with their partner's white logo, 6 Originals tagged "An Asli Original", alternating. The bar above: partner logo chips that filter the row (`[data-filter-root]`, "All" and "Asli Originals" too) and rail arrows on mouse screens. A card with a clip previews it on hover, or on touch while on screen (`[data-preview="auto"]`); 9 have clips (`assets/video/shorts/` + five reels), 4 show their photo. About 5 visible desktop, 2.2 on phones | done (client's own shorts to come) |
+| 11 | 11. TESTIMONIALS | `materials` (old name kept) | v3: a real section heading above the stage, "Asli Hyderabad, *in their words.*" (moved out of the card; v3.1 centred, `.mn-head--center`, on the loader's khatam jaali with a cream glow, `.mn-voices__pattern`), and the section now follows the shorts. The 4 live-site testimonials (verbatim): a backdrop per guest, a toned portrait in a gold Mughal arch, the quote in the boxed card; the guests along the bottom are tabs whose gold hairline is a 10 s timer | done |
+| 12 | 12. @ASLIHYDERABAD REELS | `social` | Eight 9:16 muted loops in a CSS marquee (cloned once by components.js); only on-screen reels play; pauses on hover/focus; reduced motion or data-saver: posters, no marquee. Kept as its own section in v3 (user's choice). The handle is a placeholder | done (handle + real reels to come) |
+| 13 | 13. YOUR HYDERABAD STARTS HERE | `heritage` (`id="plan"`) | v3 (client: a cleaner image, the text must read): an editorial split on cream. Left: "Your Hyderabad *starts here.*", one line, "Plan My Hyderabad", then the 3-step timeline and the contact line. Right: a Qutb Shahi tomb (`assets/img/cta-qutb-shahi.jpg`, Commons CC BY 4.0) in the Mughal arch, jaali behind it. Stacked on tablets and phones | done |
 | — | footer | `.mn-footer` | **Quiet and still** (11 Nov; the skyline, inlay seam and cusped edge were removed at the user's request, old version on branch `v1`). Cream: brand column (logo, line, phone, email, place, social icons) and 3 link columns, then a fine gold rule over the legal row (legal + Privacy/Terms left, **Design by Envizon** right). Social icons are **Phosphor Icons, light weight** (MIT), inlined in the sprite as `i-ph-instagram/facebook/whatsapp`. WhatsApp goes to `wa.me/919392149872` (the old site's only social link). Instagram and Facebook go to `@aslihyderabad` (instagram.com/aslihyderabad, facebook.com/aslihyderabad): the user chose these unverified handles on 11 Nov, so confirm them with the client. Test: `tools/test/footer.mjs` | done (confirm the @aslihyderabad handles) |
 | — | floating contact | `[data-fab]` (inside the footer markup so every page shares it) | Fixed bottom right on every page (11 Nov, from the user's widget code, re-styled): an ink toggle with a gold ring opens a column of cream rings with cream labels, filling gold on hover; one soft gold pulse after load. **Call** (`tel:+919392149872`), **WhatsApp** (`wa.me/919392149872`), **Instagram** and **Facebook** are shown; Instagram and Facebook use the footer's `@aslihyderabad` addresses until the client sends the real links (change them in both places in `index.html`). X, LinkedIn and YouTube are in the markup but stay `hidden` until their URL is set in `CONTACT` in `js/components.js`. Escape, outside click and the Hide button close it; closed buttons are `inert`. Lifts above the inner-page phone booking bar (`:has`). Icons: Phosphor light in the sprite. Test: `tools/test/footer.mjs` | done (real Instagram/Facebook links to come) |
 | — | header | `[data-header]` | Asli logo, Experiences + Plan dropdowns, links; transparent over the hero, frosted after scroll | done |
@@ -95,11 +95,11 @@ The wireframe has 15 sections (see WIREFRAME-CONTENT.md §1). Built differently 
 
 | Wireframe section | Status |
 |---|---|
-| 03 Featured Tours | Not a section of its own; tours are surfaced as routes in section 5's panel. 13 tours ready in §4 |
+| 03 Featured Tours | Built in v3 (section 3), 12 of the 13 |
 | 08a Add-ons | Not built (8 live services, §9.1); linked from the header and footer |
 | 09 Experience Asli: In Pictures | Covered by the reels (section 14) |
 | 10 Private Access | The teaser (section 7) is built; the full table of 8 needs the named people's consent |
-| 11 Health & Wellbeing | Not built (title only in the wireframe); Wellness lives in section 5 and the Reset card in section 13 |
+| 11 Health & Wellbeing | Not built (title only in the wireframe); Wellness is one of the 6 ways and the Reset short in section 10 |
 
 ## 4. Code architecture
 
@@ -112,12 +112,13 @@ css/preloader.css     the intro loader
 css/sections.css      every section, in page order, each under a numbered banner comment
 css/footer.css
 css/pages.css         inner pages only, one banner comment per template
-js/vendor/            gsap, ScrollTrigger, lenis (pinned versions, local)
+js/vendor/            gsap, ScrollTrigger (pinned versions, local)
 js/preloader.js       loader timeline; exposes window.mnPreloader {active, done}; dispatches 'mn:preloaded'
-js/components.js      UI behaviour with no scroll choreography: header, dropdowns, slideshows, hover videos,
-                      card explorer ([data-themes], both instances), conventions past-event filter,
-                      steps accordion, marquee, Quick Experiences rail (window.mnArcade {update, goTo, driver})
-js/motion.js          Lenis + all scroll choreography (gsap.matchMedia: desktop >=1025px / <=1024px / all sizes)
+js/components.js      UI behaviour: header, dropdowns, slideshows, preview clips ([data-preview]), swipe rails
+                      (initRail / [data-rail]), conventions past-event filter + auto-advance, the events calendar
+                      (#mn-finder), filter tabs ([data-filter-root]), steps accordion, marquee, Quick Experiences
+                      rail (window.mnArcade {update, goTo})
+js/motion.js          one-shot scroll reveals on native scroll (no pins, no smooth-scroll library)
 server.js             static server with HTTP Range (needed for video)
 tools/                test harness + asset scripts (see tools/README.md)
 tools/build-pages.mjs writes the 59 inner pages from data/*.json; slices the header, sprite and footer out of index.html
@@ -127,63 +128,37 @@ tours/ experiences/ conventions/ originals/ services/ partners/ private-access/ 
 assets/img/pages/     inner-page crops (hero 1920 + 1000, card 720x900, gallery full + thumb)
 ```
 
-**Inner pages.** Re-run the build after any change to the header, footer or `data/`; it exits 1 if an internal link, anchor or image on any page does not resolve, if a template prints `undefined`, or if a page has no closing band (Private Access, Book Now, Contact, Privacy, Terms and 404 are exempt). Page blocks are small functions in `tools/build-pages.mjs`: `hero` (sizes `mid`, `short`; `cta`, `link`), `whyBlock`, `route` (stops may be `{ at, name, line }`), `galleryGrid` (`mosaic`), `faqBlock`/`faqSec` (native `<details>`), `howSteps`, `proofStrip`, `voice`, `endBand`. CTA rule: one solid button per screen, any second action an underline link. Shared copy lives in `data/faq.json` (questions, How it works steps, delegate logistics); the homepage numbers and the 4 verbatim guest quotes are repeated in `data/proof.json`, so change them in both places. Plan: `docs/plans/2026-11-09-inner-pages-ux.md`. They load components.js and motion.js but no preloader. motion.js runs its homepage pins only when `body` lacks `.mn-pg`, and adds the hero arch opening, `[data-rise]` reveals and the route thread. Forms open WhatsApp with the request written out plus a `mailto:` fallback, so nothing is stored and the guest must press Send. `node tools/test/pages.mjs <base> <absOut>` checks every page at three sizes and the interactions.
+**Inner pages.** Re-run the build after any change to the header, footer or `data/`; it exits 1 if an internal link, anchor or image on any page does not resolve, if a template prints `undefined`, or if a page has no closing band (Private Access, Book Now, Contact, Privacy, Terms and 404 are exempt). Page blocks are small functions in `tools/build-pages.mjs`: `hero` (sizes `mid`, `short`; `cta`, `link`), `whyBlock`, `route` (stops may be `{ at, name, line }`), `galleryGrid` (`mosaic`), `faqBlock`/`faqSec` (native `<details>`), `howSteps`, `proofStrip`, `voice`, `endBand`. CTA rule: one solid button per screen, any second action an underline link. Shared copy lives in `data/faq.json` (questions, How it works steps, delegate logistics); the homepage numbers (five since v3) and the 4 verbatim guest quotes are repeated in `data/proof.json`, so change them in both places. Plan: `docs/plans/2026-11-09-inner-pages-ux.md`. They load components.js and motion.js but no preloader. motion.js runs its homepage reveals only when `body` lacks `.mn-pg`, and adds the hero arch opening, `[data-rise]` reveals and the route thread. Forms open WhatsApp with the request written out plus a `mailto:` fallback, so nothing is stored and the guest must press Send. `node tools/test/pages.mjs <base> <absOut>` checks every page at three sizes and the interactions.
 
-Script order matters: gsap, ScrollTrigger, lenis, then **preloader.js, components.js, motion.js**. components.js defines `window.mnArcade` before motion.js uses it. Anything that must wait for the loader awaits `window.mnPreloader.done`.
+Script order matters: gsap, ScrollTrigger, then **preloader.js, components.js, motion.js**. components.js defines `window.mnArcade` before motion.js uses it. Anything that must wait for the loader awaits `window.mnPreloader.done`.
 
 ### motion.js essentials
 
-Desktop (`mm.add('(min-width: 1025px)')`) builds the stacked sequence:
-- Sections pin, and the next one slides over as a **curtain**.
-- Editorial sections **wipe in sideways** (city, then spinner).
-- **Collections** rise in through a mask while their cards stagger.
+v3 (16 Nov 2026) rewrote it for native scroll: **no Lenis, no pins, curtains, wipes or z-index stack**. Every effect runs once as its content arrives, the same at every screen size:
+- the hero headline char sweep after the loader;
+- `[data-rise]` / `[data-rise-item]`: one `ScrollTrigger.batch` lifts section heads and card lists in as they reach 92% of the viewport (skipped with `?review`; clears its inline styles afterwards so CSS hover transforms still work);
+- the numbers strip counts up and each "+" lands; the Private Access doors open; the skyline draws (and glides on smaller screens); the Quick Experiences and Featured Tours arches draw; the brand drawings; the testimonial arch and tabs; the CTA timeline;
+- inner pages: hero parallax and arch, route thread.
 
-Helpers, all in motion.js:
+Helpers: `sec(name)`, `once(test, fn)` (runs `fn` the first time `test` passes while scrolling), `inView(el, at)`, `parallax` (inner pages), `splitText(el)`. Blocks that differ by size still use `gsap.matchMedia` and push their cleanups. With `prefers-reduced-motion`, motion.js exits early: everything must render complete and usable with no JS motion; components check `reduceMotion` too (no preview clips, no Ken Burns, no auto-advance).
 
-| Helper | What it does |
-|---|---|
-| `sec(name)` | Gets a section by `data-sec` |
-| `pageTop(el)`, `settleAt(el)` | Measure where a section sits and where it settles |
-| `once(test, fn)` | Runs `fn` the first time `test` passes while scrolling |
-| `riseDriven(el, tl, onProgress)` | Drives a paused timeline from 0 to 1 as `el`'s top rises from the viewport bottom to its top |
-| `curtain(prevWrap, wrap, opts)` | The curtain rise |
-| `dwell(wrap, next, extra, onEnter, spacing)` | Pins a section for a hold |
-| `parallax(holder, layer, scale, amp)` | Parallax inside a frame |
-| `maskReveal(el, dir, dur, blur)` | Mask-and-blur reveal |
-| `splitText(el, 'char'/'word')` | Splits text for per-letter animation |
-| `boxReveal`, `stepsReveal` | Card and steps reveals |
-
-Each matchMedia block pushes cleanup functions; keep that pattern so resizing across 1024px works.
-
-The **stack order** is set with `gsap.set(S.x, {zIndex})` near the top of the desktop block. The **wipe chain** is `dwell(S.city, S.spinner, .25)`, then the spinner wipe plus its hold (a pin as long as the rail's travel, with the track scrubbed sideways), then `curtain(S.colB, S.materials, …)`.
-
-Mobile (`max-width: 1024px`): lighter parallax, steps reveals, the skyline band draws once, the Quick Experiences arches draw once in view. With `prefers-reduced-motion`, motion.js exits early: everything must render complete and usable with no JS motion. Components check `reduceMotion` too (still images instead of video, no Ken Burns).
+Scroll lock: `html.is-locked { overflow: hidden }` (base.css) under the mobile drawer, the lightbox and the events calendar. In-page anchors use `scrollIntoView` (smooth unless reduced motion) and land on the section top, since the header hides on the way down.
 
 ### Reusable patterns
 
-**Card explorer** (`[data-themes]`, sections 4 and 9).
+**Section head** (`.mn-head`, v3): `h2.mn-head__title` (serif, italic gold-ink `em` second half, `.mn-head__slash` for "A / B") left, one `.mn-ulink` right; it wraps under the title on phones. Used by 6 ways, Featured Tours, the shorts and the testimonials.
 
-Markup:
-- `.mn-collection__layout` (add `--right` to put the panel on the right);
-- the panel: `.mn-promo[data-theme-panel]`, containing:
-  - a slideshow;
-  - `img[data-theme-still]`;
-  - `video[data-theme-video]`;
-  - one `.mn-themes__state[data-state]` per card plus `intro`;
-- the cards: `.mn-card[data-theme][data-video][data-video-pos][data-poster]`, each with two images (the main image and an `--alt` hover image).
+**Filter tabs** (`[data-filter-root]`, components.js): buttons with `data-filter` and `aria-pressed`, cards with `data-tags`, a `[data-filter-status]` live region ("N tours shown"; the noun comes from `data-filter-noun`). It hides cards with `hidden` and dispatches a bubbling `mn:filtered`. Styled as `.mn-tab` / `.mn-chip` on the homepage (same look as the inner pages' `.mn-pg-tabs`).
 
-Behaviour (components.js):
-- hover activates a card after a 120ms intent delay;
-- keyboard focus activates only with `:focus-visible`, because a tap also focuses;
-- on touch, the first tap previews and scrolls the panel into view; the second tap follows the link;
-- video plays only while the section is on screen;
-- reduced motion or data-saver shows the still image instead of video.
+**Swipe rails** (`[data-rail=".item"]` root, `[data-rail-track]`, optional `[data-rail-prev]` / `[data-rail-next]`, components.js `initRail`): toggles `is-scrollable` on the root, disables the arrows at each end, steps one visible item, resets on `mn:filtered`. `.mn-railbtns` / `.mn-railbtn` only show with a mouse and while the rail overflows. Used by Featured Tours (phones), Quick Experiences and the shorts; the conventions rail uses the same function with its own arrows.
 
-CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 1920×1080, about 9 s seamless loops, about 3 MB.
+**Preview clips** (`[data-preview]` on a link that contains a `video[data-src]`): hover or keyboard focus sets the `src` and plays; the host gets `is-playing` while it plays (CSS fades the video in over the photo). `[data-preview="auto"]` also plays while on screen on touch devices. Never with reduced motion or data-saver.
+
+**Events calendar** (`#mn-finder`, components.js IIFE): reads the conventions rail cards (`time[datetime]`, `data-end`, name, venue, image, link, `data-type`), so the events live in one place. Opens with `showModal()` + `is-locked`; Esc, the close button and a backdrop click close it and hand focus back.
 
 **Quick Experiences, the arcade rail** (`[data-arcade]`, `.mn-arcade`):
 - an `ol.mn-arcade__track` of 10 `.mn-arcade__card`s (`data-group` = `workshops` / `performances`), each one link: arch photo (Mughal arch mask), description, number, name, and a foot where Book now replaces the duration on hover;
-- `.mn-arcade__rail` scrolls natively; on desktop motion.js adds `is-driven`, pins the section and scrubs the track's `x`, and sets `window.mnArcade.driver` so `goTo(card)` scrolls the page instead of the rail;
+- `.mn-arcade__rail` scrolls natively at every size (v3), with the `.mn-railbtns` arrows; `goTo(card)` scrolls the rail;
 - `mnArcade.update(x)` sets `--p` (the gold progress line) and underlines the group of the card at the left edge;
 - touch devices (`hover: none` / `pointer: coarse`) show the description and Book now under each card instead of on hover.
 
@@ -197,17 +172,19 @@ CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 192
 
 **Featured Brands** (`.mn-brands`, in the `logos` slot): each `.mn-brand` tile stacks `img.mn-brand__ink` and `img.mn-brand__colour` in `.mn-brand__logo` (absolute, centred, each keeps its proportions); hover swaps their opacity. Logo files: `assets/img/brands/{name}.png` + `{name}-ink.png`, made per logo (silhouette, darkness-based or custom) because the sources differ. The tile reveal clears its transform afterwards so the CSS hover lift still works.
 
-**Co-curated bento** (`.mn-cocur`, `worlds` slot): `ul.mn-cocur__grid` (5 columns) of `li.mn-cc` 4:5 cards, the first `.mn-cc--hero` spanning 2×2. Partner logos reuse the brand ink PNGs, turned white with `filter: brightness(0) invert(1)`. Photos in `assets/img/co-curated/` (1000×1250 hero, 720×900 others).
+**Shorts** (`.mn-shorts`, `worlds` slot): `ul.mn-shorts__rail` of `li.mn-short[data-tags]`, each `a.mn-short__link` (9:16) with `img.mn-short__img` (720×900 photo), optional `video.mn-short__video[data-src]` + `.mn-short__play`, then `.mn-short__partner` (brand ink PNG turned white with `filter: brightness(0) invert(1)`) or `.mn-short__tag` "An Asli Original", and the name + "with …" line. Clips: 608×1080, 30 fps, H.264, no audio, `+faststart`. The **`.mn-cc` card** is kept in sections.css for the inner pages' offer grids.
 
 **Reels marquee** (`[data-reels]`, `social` slot): `ul.mn-social__track` of `li.mn-reel` (9:16, `video` with `preload="none"` + poster). Items carry `margin-right` (not `gap`) so the clone + `translateX(-50%)` loop has no jump. An IntersectionObserver plays and pauses each video. Clips in `assets/video/reels/` (608×1080).
 
-**In-page anchors**: components.js turns any `a[href="#id"]` click into `mnLenis.scrollTo(target)`; the mobile drawer closes itself (and restarts Lenis) first.
+**In-page anchors**: components.js turns any `a[href="#id"]` click into `scrollIntoView`; the mobile drawer closes itself (and unlocks the page) first.
 
 **Motif kit** (`css/motifs.css`, sprite `assets/img/motifs.svg`, rules and per-section proposals in [`MOTIFS.md`](MOTIFS.md), specimen `docs/motifs.html`): inlay and bead borders, a cusped edge, vine / lattice / jaali fills, a cusped-arch mask and `<symbol>`s (cusped and ogee arches, niche, lotus, tendril, paisley, rosette, sprig, stitch). Geometry comes from `tools/assets/motifs.mjs`; the footer skyline from `tools/assets/footer-skyline.mjs --splice index.html`. Only the footer uses it so far; apply it to other sections one at a time when the user names them.
 
 **Credits page**: `credits.html` is generated by `tools/assets/credits.py` from the three SOURCES files (headings and tables only). Re-run it after any credit change.
 
-**Editorial blocks** (`.mn-ed`, with modifiers `--overlay`, `--split`, `--fixed`, `--bottom`, `--dark`, `--numbers`, `--rooted`) with `.mn-ed__media` / `.mn-ed__frame` / `.mn-ed__content`. Used by sections 6–8 and the template's Materials.
+**Inner-page booking card** (`bookCard` in `tools/build-pages.mjs`, `.mn-pg-book`): name, price, a spec table of key facts with gold icons (`rows: [label, value, sprite id]`; tours: Duration, Time, Format, Min. guests, Available, as on the old site; Originals: When, Timing, Length/Note, meeting point; experiences: their fact rows + Available; services: Options, Available), up to four inclusions (`incl`, hidden on desktop screens under 820px tall), the CTA and a one-line note. On desktop the main column's `.mn-pg-facts` strip is hidden as a repeat; on tablets and phones the card is the bottom bar (name, price, CTA) and the strip shows.
+
+**Editorial blocks** (`.mn-ed`, with modifiers `--overlay`, `--split`, `--fixed`, `--bottom`, `--dark`, `--numbers`, `--rooted`) with `.mn-ed__media` / `.mn-ed__frame` / `.mn-ed__content`. Used by Private Access, Rooted and the testimonials.
 
 **Khatam jaali**: copy the exact SVG data-URI (gold `%23c59a5b` stroke, 64px tile) from `.mn-arcade::before` or the numbers card in sections.css. Use it at low opacity with a radial mask.
 
@@ -262,23 +239,26 @@ CSS is scoped under `[data-themes]`. Card images are **720×840**. Clips are 192
   - The hero/heritage drone footage carries an **@Drone_Venkat** watermark; it needs permission or a clean master.
   - The stock clips are Indian or neutral footage, but not filmed in Hyderabad.
   - The section 4 card images have Gemini prompts for replacement.
-- The `assets/video/spinner-*.mp4` files and the `collection-b/` images are unused leftovers of the template. Keep them unless the user asks to delete them.
+- Unused leftovers, kept until the user asks to delete them: `assets/video/spinner-*.mp4` and the `collection-b/` images (template); since v3 also `assets/img/cta-taramati.jpg` (old CTA), the numbers slideshow images, and the Originals explorer's 1920×1080 loops in `assets/video/originals/` (the shorts use 608×1080 cuts of two of them).
 
 ## 7. Checking work
 
 ```
 node server.js 8655                                  # your own port; never stop a server you did not start
 node tools/test/shot.mjs http://127.0.0.1:8655/ <ABS_OUT> <data-sec> 1440x900 1280x720 390x844
-node tools/test/originals.mjs http://127.0.0.1:8655/ <ABS_OUT>
-node tools/test/arcade.mjs http://127.0.0.1:8655/ <ABS_OUT>
+node tools/test/home.mjs http://127.0.0.1:8655/ <ABS_OUT>      # v3 order, 6 ways, tours, calendar, numbers, shorts, phone
+node tools/test/hero.mjs http://127.0.0.1:8655/ <ABS_OUT>
 node tools/test/skyline.mjs http://127.0.0.1:8655/ <ABS_OUT>
 node tools/test/finale.mjs http://127.0.0.1:8655/ <ABS_OUT>
 node tools/test/voices.mjs http://127.0.0.1:8655/ <ABS_OUT>
 node tools/test/footer.mjs http://127.0.0.1:8655/ <ABS_OUT>
+node tools/test/pages.mjs http://127.0.0.1:8655/ <ABS_OUT>     # every inner page, slow (about 10 min)
 ```
 
+Suites for retired versions (the pinned conventions rail and arcade, the card explorers) are in `tools/test/legacy/`.
+
 - Write a focused suite on `tools/test/cdp.mjs` for any new interaction. Cover desktop hover/keyboard, the phone tap flow, reduced motion, `docW === vw` (no horizontal scroll) and a clean console.
-- Re-run the suites for neighbouring sections, because sections are chained: city → spinner → collection-b → materials.
+- Sections no longer chain (v3), but shared components do: after changing `.mn-head`, the filter tabs, `initRail` or `[data-preview]`, re-run `home.mjs` and look at every instance.
 - Put temporary files and screenshots in the session scratchpad, not the repo.
 - `node --check js/*.js` after JS edits.
 
@@ -293,15 +273,17 @@ node tools/test/footer.mjs http://127.0.0.1:8655/ <ABS_OUT>
 - Use Python with `-I` on anything that reads downloaded files. Windows long paths broke a venv once: put venvs under `%TEMP%`.
 - Chrome needs an absolute `--user-data-dir`. Relative output paths silently fail to launch.
 - Headless hover tests need the element **inside the viewport**. Touch emulation sticks for the rest of that browser session.
-- **Section 4's tap-to-preview was broken on Android** (focus fired before click). It is now fixed for both explorers by activating on `:focus-visible` only. Keep that.
-- In the city section on desktop, the image panel starts translated (`y: -vh`) inside the wipe. Measure the **section** top to know when it has landed.
+- **Keyboard previews activate on `:focus-visible` only** (a tap also focuses; on Android that fired before the click in the old explorers). `[data-preview]` keeps that rule.
+- A border-radius in % on an inset `::after` follows the inset box, so the 6 ways hairline arch keeps the window's shape at every size.
+- The header hides while scrolling down, so a `scroll-margin-top` for it would leave a strip of the previous section showing: anchors land at the section top.
 
 ## 9. Open items to raise with the user or client
 
 1. **Written permission** from the 9 featured brands (logos and names) and the 3 named testimonial guests.
 2. **Brand list**: the client's wireframe named Anaganaga, Paista, Concu and Escape Estates; no official logos could be found (Paista and Escape Estates don't appear publicly; the only "Concu" found is Conçu, a cake boutique). The user approved swapping in Paradise, Karachi Bakery, Heartfulness and Shilparamam. The co-curated pairings follow the grid.
 3. **Instagram and other socials**: the real handles and URLs. `@aslihyderabad` is a placeholder. Until the handle exists, the reels link goes to `/gallery` (the Instagram link is in a comment beside it) and the footer's Instagram, Facebook, LinkedIn and YouTube icons are commented out (the live site lists no social accounts).
-4. **Real Asli reels** to replace the licensed stock (only the drone montage is Hyderabad footage).
+4. **Real Asli reels and shorts** to replace the licensed stock (only the drone montage is Hyderabad footage). Five reel clips also appear in the shorts row until then.
+4a. **Private Access content** (the client said they will send it) and the **hero video master** (ask: 1920×1080 or larger, 10–20 s seamless loop, no watermark, about 8 MB or less as H.264; optional 1080×1920 cut for phones; the current file is 1280×720, 12.7 s, 5.9 MB, with the @Drone_Venkat watermark).
 5. Prices for everything ("Price on request" for now).
 6. A clean hero drone master (watermark), and Hyderabad-shot footage for the explorers.
 7. A vector Asli logo.

@@ -79,11 +79,10 @@ img, video, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 button, input { font: inherit; color: inherit; }
 
-/* Lenis */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
+/* Native scroll (no smooth-scroll library since v3). html.is-locked holds the page still under the mobile
+   drawer and the modal dialogs. In-page jumps land on the section top: the header hides on the way down. */
+html.is-locked { overflow: hidden; }
+.mn-header__drawer, .mn-finder__panel { overscroll-behavior: contain; }
 
 /* Keep the hero text hidden until the char sweep is ready (avoids a flash). */
 html.is-loading .mn-hero__content { opacity: 0; }
@@ -137,8 +136,7 @@ html.is-loading .mn-hero__content { opacity: 0; }
   transition: transform .5s var(--ease);
 }
 @media (hover: hover) and (min-width: 750px) {
-  .mn-ulink:hover::after,
-  .mn-promo:hover .mn-promo__link::after {
+  .mn-ulink:hover::after {
     transform: scaleX(0);
     transform-origin: right center;
   }

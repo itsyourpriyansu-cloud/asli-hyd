@@ -5,7 +5,7 @@
 // phones swipe the rail (no arrows); reduced motion swipes too, with arrows for a mouse; no sideways page scroll; clean console.
 //
 //   node tools/test/conventions.mjs http://127.0.0.1:8655/ C:/abs/out
-import { launch, sleep } from './cdp.mjs';
+import { launch, sleep } from '../cdp.mjs';
 
 const [url, out] = process.argv.slice(2);
 if (!url || !out) { console.log('usage: node tools/test/conventions.mjs <url> <absOutDir>'); process.exit(1); }

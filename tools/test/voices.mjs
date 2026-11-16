@@ -30,7 +30,8 @@ const synced = (s, i) => s.tab === i && s.quote === i && s.face === i && s.bg ==
 async function desktop(b, w, h, full) {
   await b.load(w, h);
   // Walk a little past the landing (the guests reveal as it settles), then measure at the landing.
-  const top = await b.pageTop('[data-sec="materials"]');
+  // v3: the section heading sits above on cream; the photo stage below it is what has to fit one screen.
+  const top = await b.pageTop('[data-sec="materials"] .mn-ed--voices');
   await b.walkTo(top + 60, 120, 30);
   await b.hover(5, h - 5);
   await sleep(1200);
@@ -84,7 +85,7 @@ await b.walkTo(await b.pageTop('[data-sec="materials"]'), 80, 30); await sleep(1
 await b.shot('voices-phone-top');
 const r = await b.ensureVisible(tab(3)); await b.tap(r.cx, r.cy); await sleep(2000);
 const m = await b.ev(S);
-check('phone: tap selects guest 3 and brings the portrait back into view', synced(m, 2) && m.portrait.top >= 60 && m.portrait.top < 200, m);
+check('phone: tap selects guest 3 and brings the portrait back into view', synced(m, 2) && m.portrait.top >= 60 && m.portrait.bottom <= m.vh, m);
 check('phone: no horizontal scroll', m.docW === m.vw, m);
 await b.shot('voices-phone-tap');
 await b.ensureVisible(tab(4)); await sleep(1200); await b.shot('voices-phone-tabs');

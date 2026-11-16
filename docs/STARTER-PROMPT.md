@@ -69,6 +69,6 @@ What's left to build against the wireframe, and what do you recommend for the ne
 - **Visible section 5** = "Hyderabad, Your Way" (the six-theme card explorer). **Visible 10** = "Asli Hyderabad Originals", the same explorer mirrored.
 - Quick Experiences lives in `data-sec="spinner"`. Keep that name; motion.js depends on it.
 - Sections 11–15 (Materials, Worlds, Heritage, Social, Partners) are still the template.
-- The tests live in `tools/test/`. `originals.mjs`, `arcade.mjs` and `voices.mjs` should all print all PASS.
+- The tests live in `tools/test/`. `home.mjs`, `skyline.mjs`, `voices.mjs`, `finale.mjs`, `hero.mjs` and `footer.mjs` should all print all PASS.
 
 If any of these comes back wrong, point it to `docs/PROJECT-CONTEXT.md` §3.

@@ -102,7 +102,6 @@ ${FOOTER}
   ${body.includes('data-full=') ? LIGHTBOX : ''}
   <script src="/js/vendor/gsap.min.js"></script>
   <script src="/js/vendor/ScrollTrigger.min.js"></script>
-  <script src="/js/vendor/lenis.min.js"></script>
   <script src="/js/components.js"></script>
   <script src="/js/motion.js"></script>
 </body>
@@ -210,7 +209,7 @@ function experiencePage({ path, it, src, logo, sub, factRows, bookLabel, where, 
         </section>
         ${faqBlock(faqs, ask)}
       </div>
-      ${bookCard({ price: priceOf(it), meta: 'Hosted by Asli Hyderabad.', name: it.name, href: book(it.slug), label: bookLabel })}
+      ${bookCard({ price: priceOf(it), meta: 'Hosted by Asli Hyderabad. Final timing confirmed by our team.', name: it.name, href: book(it.slug), label: bookLabel, rows: [...factRows, AVAILABLE], incl: it.included })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2(relatedHead[0], relatedHead[1])}<a class="mn-ulink" href="${allHref}">${allLabel}</a></div>
@@ -226,11 +225,17 @@ function galleryGrid(items, { mosaic } = {}) {
   const shown = mosaic ? items.slice(0, 5) : items; // the mosaic is laid out for 3 to 5 photos
   return `<ul class="mn-pg-gal${mosaic ? ` mn-pg-gal--mosaic mn-pg-gal--n${shown.length}` : ''}" role="list">${shown.map((g, i) => `<li data-rise-item${g.tag ? ` data-tags="${g.tag}"` : ''}><button type="button" class="mn-pg-gal__btn" data-full="${g.src}" data-cap="${esc(g.cap)}"><img src="${mosaic && i === 0 ? g.src : g.thumb || g.src}" alt="${esc(g.cap)}" width="${g.w || 1000}" height="${g.h || 750}" loading="lazy" decoding="async"><span class="mn-pg-gal__cap">${esc(g.cap)}</span></button></li>`).join('')}</ul>`;
 }
-function bookCard({ price = PRICE, meta, href, label, name = '' }) {
+// The at-a-glance card beside the page (desktop) and the bottom bar (tablet, phone): name, price, the key
+// facts with icons, up to four inclusions, the action and a short note. rows: [label, value, sprite id].
+const AVAILABLE = ['Available', 'On request', 'i-cal'];
+function bookCard({ price = PRICE, meta, href, label, name = '', rows = [], incl = [], inclHead = 'Included' }) {
+  const ic = (id) => `<svg class="mn-pg-book__ic" aria-hidden="true"><use href="#${id}"/></svg>`;
   return `<aside class="mn-pg-book" data-bookbar><div class="mn-pg-book__card">
         <div class="mn-pg-book__head">${name ? `<p class="mn-pg-book__name">${esc(name)}</p>` : ''}<p class="mn-pg-book__price">${esc(price)}</p></div>
-        <p class="mn-pg-book__meta">${esc(meta)}</p>
+        ${rows.length ? `<dl class="mn-pg-book__facts">${rows.filter((r) => r[1]).map(([k, v, i]) => `<div>${ic(i)}<dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
+        ${incl.length ? `<div class="mn-pg-book__incl"><p class="mn-pg-book__inclhead">${esc(inclHead)}</p><ul role="list">${incl.slice(0, 4).map((x) => `<li>${ic('i-check')}${esc(x)}</li>`).join('')}</ul></div>` : ''}
         <a class="mn-pg-book__cta" href="${href}">${esc(label)} ${ARROW}</a>
+        <p class="mn-pg-book__meta">${esc(meta)}</p>
       </div></aside>`;
 }
 const CHIPS = ['Accommodation', 'Airport & Transport', 'Medical Assistance', 'Wellness', 'Private & Group', 'Other Requests'];
@@ -274,7 +279,9 @@ for (const t of tours) {
         <section class="mn-pg-block">${head2('Along', 'the way')}${galleryGrid(t.gallery, { mosaic: true })}${after(ulink('See the full gallery', '/gallery'))}</section>
         ${faqBlock([...t.faq, ...FAQ.tour], `Question about ${t.name}`)}
       </div>
-      ${bookCard({ price: priceOf(t), meta: `${t.duration} · per person, final availability confirmed by our team`, href: book(t.slug), label: 'Book this tour', name: t.name })}
+      ${bookCard({ price: priceOf(t), meta: 'Per person. Final availability confirmed by our team.', href: book(t.slug), label: 'Book this tour', name: t.name,
+    rows: [['Duration', t.duration, 'i-clock'], ['Time', t.bestTime, 'i-sun'], ['Format', t.format, 'i-users'], ['Min. guests', String(t.minGuests), 'i-user'], AVAILABLE],
+    incl: t.included })}
     </div>
 ${voice(tours.indexOf(t))}
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
@@ -306,7 +313,7 @@ const ccCard = (c) => archCard({ href: `/experiences/co-curated/${c.slug}`, src:
 for (const c of offers.cocurated) {
   experiencePage({
     path: `/experiences/co-curated/${c.slug}`, it: c, src: ccSrc(c), logo: c.logo, sub: c.line,
-    factRows: [['Format', c.kind], ...(c.partner ? [['With', c.partner]] : []), ['Timing', 'Confirmed when you book']],
+    factRows: [['Format', c.kind, 'i-list'], ...(c.partner ? [['With', c.partner, 'i-star']] : []), ['Timing', 'Confirmed when you book', 'i-clock']],
     bookLabel: 'Book experience', related: nextThree(offers.cocurated, c).map(ccCard),
     relatedHead: ['More small', 'experiences'], allHref: '/experiences/co-curated', allLabel: 'All 15 experiences',
     faqs: FAQ.cocurated, ask: `Question about ${c.name}`,
@@ -333,7 +340,7 @@ for (const q of offers.quick) {
   const sameGroup = offers.quick.filter((x) => x.group === q.group);
   experiencePage({
     path: `/experiences/quick/${q.slug}`, it: q, src: quickSrc(q), sub: q.line,
-    factRows: [['Duration', q.len], ['Format', QUICK_FORMAT[q.group]]],
+    factRows: [['Duration', q.len, 'i-clock'], ['Format', QUICK_FORMAT[q.group], 'i-list'], ['Where', 'At your venue', 'i-place']],
     bookLabel: 'Book now', where: offers.quickWhere, related: nextThree(sameGroup, q).map((x) => quickCard(x)),
     relatedHead: ['More quick', 'experiences'], allHref: '/experiences/quick', allLabel: 'All quick experiences',
     faqs: FAQ.quick, ask: `Question about ${q.name}`,
@@ -452,7 +459,10 @@ for (const o of originals) {
         ${whyBlock('Why only', 'here', o.why)}
         ${faqBlock(FAQ.original, `Question about ${o.name}`)}
       </div>
-      ${bookCard({ price: priceOf(o), meta: `${o.len} · per person`, href: book(o.slug), label: o.cta, name: o.name })}
+      ${bookCard({ price: priceOf(o), meta: 'Per person. Limited places on each date.', href: book(o.slug), label: o.cta, name: o.name,
+    // len is a duration for most Originals but a note for some ("Limited seats", "Evenings").
+    rows: [['When', o.when, 'i-cal'], ['Timing', o.time, 'i-sun'], [/\d.*(hour|min)/.test(o.len) ? 'Length' : 'Note', o.len, 'i-clock'], [o.whereLabel || 'Where', o.where, 'i-place']],
+    incl: o.includes })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('More', 'Originals')}<a class="mn-ulink" href="/originals">All Originals</a></div>
@@ -499,7 +509,9 @@ for (const s of services) {
         <section class="mn-pg-block" data-rise><h2 class="mn-pg-h3">Arranged <em>separately</em></h2><ul class="mn-pg-list" role="list">${li(s.separate)}</ul></section>
         ${faqBlock([...s.faq, ...FAQ.service], `Question about ${s.name}`)}
       </div>
-      ${bookCard({ price: priceOf(s), meta: optionNames(s), href: book(s.slug), label: s.cta, name: s.name })}
+      ${bookCard({ price: priceOf(s), meta: 'Quoted for your dates. Arranged by our team.', href: book(s.slug), label: s.cta, name: s.name,
+    rows: [['Options', optionNames(s), 'i-list'], AVAILABLE],
+    incl: s.confirmed, inclHead: 'Confirmed before booking' })}
     </div>
     <section class="mn-pg-sec mn-pg-sec--tint"><div class="mn-wrap">
       <div class="mn-pg-headrow">${head2('Goes well', 'with')}<a class="mn-ulink" href="/services">All services</a></div>

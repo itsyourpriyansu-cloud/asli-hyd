@@ -4,7 +4,7 @@
 //
 // Desktop 1440x900 and 1280x720: as the ink sweep crosses, the landmarks open strictly left to right (outline,
 // details, then year and name), each one only once it is on screen, and all seven are open before the panel
-// leaves; scrolling back closes them again. Phone: the band draws once, every landmark opens and the strip
+// leaves; since v3 (no pins) they draw once and stay drawn when you scroll back. Phone: the band draws once, every landmark opens and the strip
 // glides to the bridge; no horizontal scroll. Reduced motion: everything drawn from the start.
 import { launch, sleep } from './cdp.mjs';
 
@@ -46,7 +46,7 @@ async function desktop(b, w, h) {
   await b.shot(`skyline-${w}x${h}-open`);
   await b.walkTo(top - h + Math.round(h * .2), 20, 30); await sleep(400);
   const back = await b.ev(S);
-  check(`${w}x${h}: scrolling back closes the landmarks again`, back.marks.slice(-3).every((m) => m.draw === 0 && m.label === 0), back);
+  check(`${w}x${h}: scrolling back leaves the line drawn (draw once)`, back.marks.every((m) => m.draw === 1 && m.label === 1), back);
 }
 
 let b = await launch({ out, port: 9368 }); b.url = url;

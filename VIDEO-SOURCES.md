@@ -67,6 +67,21 @@ Eight 9:16 loops in `assets/video/reels/{name}.mp4`, each with a `{name}.jpg` po
 
 ---
 
+# Section 10 Shorts (Asli Originals / Curated Experiences with Partners): Sources and Licences
+
+Four new 9:16 loops in `assets/video/shorts/{name}.mp4`, each with a `{name}.jpg` poster: 608×1080 centre crops (scaled to 1080 high), 30 fps, H.264, no audio, `+faststart`. All are cut from loops already licensed above. Five more shorts reuse the section 14 reels (`chai`, `friends`, `jewellery`, `street-food`, `festival`), so those clips appear in both rows until the client sends its own shorts.
+
+| Short | File | Source | Licence |
+|---|---|---|---|
+| Hyderabad After Dark | `after-dark.mp4` | `originals/after-dark.mp4` | as listed under section 9 |
+| The Hyderabad Table | `table.mp4` | `originals/table.mp4` | as listed under section 9 |
+| Behind the Screen (Ramoji) | `behind-the-screen.mp4` | `themes/cinema.mp4` | as listed under section 4 |
+| Reset (Heartfulness) | `reset.mp4` | `themes/wellness.mp4` | as listed under section 4 |
+
+**Authenticity:** stock placeholders; the partner cards show footage that suits the experience, not footage of the partner's venue.
+
+---
+
 # Section 1 Hero Video: Source
 
 | Slot | File | Source | Licence |

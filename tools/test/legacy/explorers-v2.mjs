@@ -5,7 +5,7 @@
 //
 // Desktop: hovering each card shows its state in the panel and plays its clip; section 4 stays independent.
 // Reduced motion: a still image instead of video. Phone: first tap previews, second tap follows the link.
-import { launch, sleep } from './cdp.mjs';
+import { launch, sleep } from '../cdp.mjs';
 
 const [url, out] = process.argv.slice(2);
 const results = [];

@@ -71,133 +71,252 @@
 }
 
 /* ==========================================================================
-   4 + 9. Collection showcase
+   Shared v3 pieces: section head, filter tabs, rail arrows
+   The head: title left, one quiet link right (it drops under the title when space runs out).
+   Tabs match the inner pages' filter buttons. Rail arrows belong to initRail (components.js):
+   shown only with a mouse and only while the rail overflows; disabled at each end.
    ========================================================================== */
-.mn-collection {
-  padding-top: var(--pad-top, 100px);
-  padding-bottom: var(--pad-bottom, 100px);
-  background: var(--cream);
+.mn-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem 4rem;
+  margin-bottom: clamp(3.2rem, 3.6vw, 5.6rem);
 }
-.mn-collection__head { margin-bottom: 3.8rem; text-align: center; }
-.mn-collection__title {
-  margin-bottom: 1.5rem;
+.mn-head__title {
+  max-width: 24ch;
   font-family: var(--serif);
-  font-weight: 400;
-  font-size: 3.4rem;
-  line-height: 1;
-  letter-spacing: .01em;
+  font-weight: 300;
+  font-size: clamp(3.8rem, 3.3vw, 6.4rem);
+  line-height: 1.04;
+  letter-spacing: -.005em;
+  text-wrap: balance;
 }
-.mn-collection__layout {
-  display: grid;
-  grid-template-columns: 530fr 1065fr;
-  gap: 6px;
-  align-items: stretch;
-}
-.mn-collection__layout--right { grid-template-columns: 1065fr 530fr; }
-.mn-collection__layout--right .mn-promo { order: 2; }
+.mn-head__title em { font-style: italic; color: var(--gold-ink); }
+.mn-head__slash { font-weight: 300; color: var(--gold); }
+.mn-head > .mn-ulink { flex: none; margin-bottom: .6rem; }
+.mn-head--center { justify-content: center; text-align: center; }
+.mn-head--center .mn-head__title { margin-inline: auto; }
 
-.mn-promo {
-  position: relative;
-  display: block;
-  min-height: 42rem;
-  overflow: hidden;
-  isolation: isolate;
-  color: var(--white);
-  text-decoration: none;
-}
-.mn-promo__media { position: absolute; inset: 0; z-index: 0; }
-.mn-promo__media img { transition: transform 1.4s var(--ease); }
-.mn-promo:hover .mn-promo__media img { transform: scale(1.04); }
-.mn-promo__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .5s var(--ease);
-}
-@media (hover: hover) { .mn-promo:hover .mn-promo__video { opacity: 1; } }
-.mn-promo__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6), transparent 32%); }
-.mn-promo__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  padding: 4rem 4rem 3rem;
-}
-.mn-promo__heading { font-family: var(--serif); font-weight: 300; font-size: 5rem; line-height: 1; }
-.mn-promo__link { align-self: flex-start; margin-top: 1.5rem; }
-
-.mn-collection__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-
-.mn-card {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  background: var(--tile);
+.mn-tabs { display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: clamp(2.8rem, 3vw, 4.4rem); }
+.mn-tab, .mn-chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4.4rem;
+  padding: 0 2rem;
+  border: 1px solid var(--hairline);
+  border-radius: .2rem;
+  background: none;
   color: var(--ink);
-  text-decoration: none;
+  font: 500 1.2rem/1 var(--sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
 }
-.mn-card__media { position: relative; display: grid; aspect-ratio: 351 / 410; overflow: hidden; background: var(--tile); }
-.mn-card__img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s var(--ease); }
-.mn-card__img--alt { opacity: 0; }
-.mn-card:hover .mn-card__img--alt, .mn-card:focus-visible .mn-card__img--alt { opacity: 1; }
-.mn-card:hover .mn-card__img:not(.mn-card__img--alt), .mn-card:focus-visible .mn-card__img:not(.mn-card__img--alt) { opacity: 0; }
-.mn-card__info {
-  position: absolute;
-  top: 1.7rem;
-  left: 2.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: .2rem;
-  opacity: 0;
-  transform: translateY(-.4rem);
-  pointer-events: none;
-  transition: opacity .4s var(--ease), transform .4s var(--ease);
-}
-.mn-card:hover .mn-card__info, .mn-card:focus-visible .mn-card__info { opacity: 1; transform: none; }
-.mn-card__title { font-size: 1.6rem; line-height: 2.4rem; }
-.mn-card__type { font-size: 1.4rem; line-height: 2.4rem; }
+.mn-tab[aria-pressed="true"], .mn-chip[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--cream); }
+.mn-tab:focus-visible, .mn-chip:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+@media (hover: hover) { .mn-tab:hover, .mn-chip:hover { border-color: var(--gold-ink); } }
+/* Icon tabs (Featured Tours): a centred row of pills, each led by its theme glyph in gold. */
+.mn-tabs--icons { justify-content: center; gap: 1rem; }
+.mn-tabs--icons .mn-tab { gap: .9rem; min-height: 4.6rem; padding: 0 2.2rem 0 1.6rem; border-color: rgba(42, 36, 32, .16); border-radius: 99rem; background: rgba(255, 255, 255, .4); letter-spacing: .1em; }
+.mn-tab__ic { flex: none; width: 1.8rem; height: 1.8rem; color: var(--gold-ink); transition: color .4s var(--ease); }
+.mn-tabs--icons .mn-tab[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); }
+.mn-tabs--icons .mn-tab[aria-pressed="true"] .mn-tab__ic { color: var(--gold-light); }
 
-@media (max-width: 1024px) {
-  .mn-collection__layout, .mn-collection__layout--right { grid-template-columns: 1fr; margin-inline: calc(50% - 50vw); }
-  .mn-collection__layout--right .mn-promo { order: 0; }
-  .mn-promo { min-height: 0; aspect-ratio: 834 / 512; }
-  .mn-promo__heading { font-size: 4.8rem; }
-  .mn-promo__link { margin-top: .6rem; }
-  .mn-collection__head { margin-bottom: 4rem; }
-  .mn-collection__title { font-size: 3.2rem; margin-bottom: 1.2rem; }
-  .mn-collection__grid {
-    display: flex;
+.mn-railbtns { display: none; flex: none; gap: .8rem; }
+[data-rail].is-scrollable .mn-railbtns { display: flex; }
+@media (hover: none), (pointer: coarse) { [data-rail].is-scrollable .mn-railbtns { display: none; } }
+.mn-railbtn {
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: opacity .4s var(--ease), background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+}
+.mn-railbtn svg { width: 1.8rem; height: 1.8rem; }
+.mn-railbtn:disabled { opacity: .3; cursor: default; }
+.mn-railbtn:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+@media (hover: hover) { .mn-railbtn:not(:disabled):hover { border-color: var(--ink); background: var(--ink); color: var(--cream); } }
+
+@media (max-width: 749px) {
+  .mn-head { margin-bottom: 2.8rem; }
+  .mn-head__title { font-size: clamp(3.4rem, 9.6vw, 4.4rem); }
+  /* One swipeable row of tabs instead of three wrapped lines. */
+  .mn-tabs {
+    flex-wrap: nowrap;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: .3rem var(--gutter);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
-  .mn-collection__grid::-webkit-scrollbar { display: none; }
-  .mn-card { flex: 0 0 auto; width: 35rem; scroll-snap-align: start; }
-  .mn-card__info { opacity: 1; transform: none; top: 2.4rem; left: 2.4rem; right: 2.4rem; }
-}
-@media (min-width: 750px) and (max-width: 1024px) {
-  .mn-collection { padding-block: 10.4rem; }
-}
-@media (max-width: 749px) {
-  .mn-collection { padding-block: 7.2rem; }
-  .mn-promo { aspect-ratio: 402 / 512; }
-  .mn-card { width: 87vw; max-width: 35rem; }
+  .mn-tabs::-webkit-scrollbar { display: none; }
+  .mn-tabs--icons { justify-content: flex-start; }   /* centred + overflowing would clip the first tab */
 }
 
 /* ==========================================================================
-   3b. Conventions: a rail of event cards, one screen tall (between section 3 and 4)
-   Cream band. Heading left, the "All conventions" button right, then the rail,
-   which fills the rest of the screen, so the cards take their size from its height (2:3).
-   Desktop: the section holds while the page scroll carries the rail right to left
-   (motion.js adds is-driven). Smaller screens and reduced motion swipe it; with a
-   mouse and no driver, arrows show when it overflows (components.js). Each card is
-   one link: photo, date, name, venue and a quiet button that lights up on hover.
+   2. 6 ways to experience Hyderabad (in the collection-a slot)
+   Six tall arch-topped windows in one row, each one link to its theme page. At rest: the photo and the
+   name. Hover or keyboard focus plays the theme's loop ([data-preview], components.js; .is-playing fades
+   it in) and brings up the line and "Explore". Touch screens show the line all the time.
+   Tablet 3 x 2, phone 2 x 3 so all six fit about one screen.
+   ========================================================================== */
+.mn-ways { padding-block: clamp(8rem, 8vw, 12rem) clamp(4.8rem, 5vw, 8rem); background: var(--cream); color: var(--ink); }
+.mn-ways__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(1.2rem, 1.2vw, 2rem); }
+/* The window: a soft arch (50% across, a fifth of the height down), a gold hairline set inside it. */
+.mn-way {
+  --arch: 50% 50% .2rem .2rem / 20% 20% .2rem .2rem;
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 2;
+  overflow: hidden;
+  border-radius: var(--arch);
+  background: var(--ink);
+  color: var(--white);
+  text-decoration: none;
+  isolation: isolate;
+}
+.mn-way__media { position: absolute; inset: 0; }
+.mn-way__img, .mn-way__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mn-way__img { transition: transform 1.4s var(--ease); }
+.mn-way__video { opacity: 0; transition: opacity .6s var(--ease); }
+.mn-way.is-playing .mn-way__video { opacity: 1; }
+.mn-way::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(18, 15, 12, .82), rgba(18, 15, 12, .3) 40%, rgba(18, 15, 12, 0) 62%);
+  pointer-events: none;
+}
+.mn-way::after {
+  content: "";
+  position: absolute;
+  inset: .8rem;
+  z-index: 1;
+  border: 1px solid rgba(216, 183, 125, .55);
+  border-radius: var(--arch);
+  pointer-events: none;
+  transition: border-color .5s var(--ease);
+}
+.mn-way__body { position: absolute; z-index: 2; left: 2rem; right: 2rem; bottom: 2.4rem; display: flex; flex-direction: column; }
+.mn-way__name { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 1.8vw, 2.8rem); line-height: 1.1; }
+.mn-way__line, .mn-way__go { display: block; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s var(--ease), opacity .5s var(--ease), margin .6s var(--ease); }
+.mn-way__line { font-size: 1.35rem; line-height: 1.45; color: rgba(255, 255, 255, .88); }
+.mn-way__go { font-size: 1.05rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-light); }
+.mn-way:hover .mn-way__img, .mn-way:focus-visible .mn-way__img { transform: scale(1.04); }
+.mn-way:hover::after, .mn-way:focus-visible::after { border-color: var(--gold-light); }
+.mn-way:hover .mn-way__line, .mn-way:focus-visible .mn-way__line { max-height: 6rem; margin-top: .8rem; opacity: 1; }
+.mn-way:hover .mn-way__go, .mn-way:focus-visible .mn-way__go { max-height: 3rem; margin-top: 1.2rem; opacity: 1; }
+.mn-way:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; }
+@media (hover: none), (pointer: coarse) {
+  .mn-way__line { max-height: 6rem; margin-top: .6rem; opacity: 1; }
+  .mn-way:hover .mn-way__img { transform: none; }
+}
+@media (max-width: 1024px) {
+  .mn-ways__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mn-way { aspect-ratio: 3 / 4.2; }
+}
+@media (max-width: 749px) {
+  .mn-ways { padding-block: 7.2rem 4rem; }
+  .mn-ways__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+  .mn-way { --arch: 50% 50% .2rem .2rem / 22% 22% .2rem .2rem; aspect-ratio: 3 / 4; }
+  .mn-way::after { inset: .6rem; }
+  .mn-way__body { left: 1.4rem; right: 1.4rem; bottom: 1.4rem; }
+  .mn-way__name { font-size: 2rem; }
+  .mn-way__line { font-size: 1.2rem; }
+}
+
+/* ==========================================================================
+   3. Featured Tours (new data-sec="tours")
+   The twelve most booked tours: theme tabs ([data-filter-root]), then small arch cards four to a row,
+   reusing the Quick Experiences arch (.mn-arcade__media / __arch). Each card is one link: photo, name,
+   the core line and the duration. Tablet three to a row; phones one swipe rail, about 1.4 cards wide.
+   Card reading order: theme tag on the photo, name, where it goes (pin), then a hairline and the
+   duration (clock) against "Explore". Desktop shows two rows; "View more tours" (components.js) adds the rest.
+   ========================================================================== */
+.mn-tours { padding-block: clamp(4.8rem, 5vw, 8rem) clamp(8rem, 8vw, 12rem); background: var(--cream); color: var(--ink); }
+.mn-tours__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4rem, 4vw, 6.4rem) clamp(2rem, 2.4vw, 4rem); margin: 0; padding: 0; list-style: none; }
+.mn-tour[hidden] { display: none; }
+.mn-tour__link { display: flex; flex-direction: column; height: 100%; color: inherit; text-decoration: none; }
+.mn-tour__frame { position: relative; display: block; aspect-ratio: 5 / 6; }
+.mn-tour__name { margin-top: 1.8rem; font-family: var(--serif); font-weight: 400; font-size: clamp(2.1rem, 1.6vw, 2.6rem); line-height: 1.15; }
+.mn-tour__tag {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: .7rem 1.3rem .6rem;
+  border-radius: 99rem;
+  background: rgba(244, 238, 228, .94);
+  color: var(--ink);
+  font: 500 1rem/1 var(--sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.mn-tour__ic { flex: none; width: 1.5rem; height: 1.5rem; color: var(--gold-ink); }
+.mn-tour__line { display: flex; gap: .7rem; margin: .8rem 0 2rem; font-size: 1.35rem; line-height: 1.5; color: var(--muted); }
+.mn-tour__line .mn-tour__ic { margin-top: .2rem; }
+.mn-tour__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: auto;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 1.1rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.mn-tour__dur { display: inline-flex; align-items: center; gap: .7rem; font-weight: 500; color: var(--ink); }
+.mn-tour__go { flex: none; font-weight: 500; color: var(--gold-ink); transition: transform .5s var(--ease); }
+.mn-tours__more { display: none; justify-content: center; margin-top: clamp(4.8rem, 5vw, 7.2rem); }
+@media (min-width: 1025px) {
+  .mn-tour.is-extra { display: none; }
+  .mn-tours__more.is-on { display: flex; }
+}
+.mn-tour__link:hover .mn-arcade__img, .mn-tour__link:focus-visible .mn-arcade__img { transform: scale(1.05); }
+.mn-tour__link:hover .mn-arcade__arch path, .mn-tour__link:focus-visible .mn-arcade__arch path { opacity: 1; }
+.mn-tour__link:hover .mn-tour__go, .mn-tour__link:focus-visible .mn-tour__go { transform: translateX(.4rem); }
+.mn-tour__link:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: .6rem; }
+@media (max-width: 1024px) {
+  .mn-tours__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 749px) {
+  .mn-tours { padding-block: 4rem 7.2rem; }
+  .mn-tours__grid {
+    display: flex;
+    gap: 1.6rem;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) .4rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .mn-tours__grid::-webkit-scrollbar { display: none; }
+  .mn-tour { flex: 0 0 66vw; scroll-snap-align: start; }
+}
+
+/* ==========================================================================
+   4. Conventions: a rail of event cards, one screen tall
+   Cream band. Heading left, the "Find your event" button right (it opens the events calendar, 4b),
+   then the rail, which fills the rest of the screen, so the cards take their size from its height (2:3).
+   It swipes at every size; with a mouse, arrows show when it overflows (initRail, components.js).
+   Each card is one link: photo, date, name, venue and a quiet button that lights up on hover.
    ========================================================================== */
 .mn-conv {
   position: relative;
@@ -247,8 +366,40 @@
 .mn-conv__title em, .mn-conv__more em { font-style: italic; color: var(--gold-ink); }
 /* Desktop: the title and the sub-line on one line each, so the rail (and the cards) get the height. */
 @media (min-width: 1025px) { .mn-conv__title br, .mn-conv__more br { display: none; } }
-/* The underline link (as "All tours" in section 5), level with the sub-line, right-aligned with the rail's edge. */
-.mn-conv__all { grid-column: 2; grid-row: 1; align-self: end; justify-self: end; margin-bottom: var(--below-head); color: var(--ink); }
+/* "Find your event": a two-part pill, dark gold with the label, cream with the month of the next event. */
+.mn-conv__find {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: end;
+  display: inline-flex;
+  align-items: stretch;
+  min-height: 4.8rem;
+  margin-bottom: var(--below-head);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--gold-ink);
+  border-radius: 99rem;
+  background: var(--cream);
+  color: var(--ink);
+  font: 500 1.2rem/1 var(--sans);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 .8rem 2.4rem rgba(42, 36, 32, .08);
+  transition: box-shadow .4s var(--ease);
+}
+.mn-conv__find-main, .mn-conv__find-month { display: inline-flex; align-items: center; gap: 1rem; padding: 0 2rem; transition: background-color .4s var(--ease); }
+.mn-conv__find-main { background: var(--gold-ink); color: var(--cream); }
+.mn-conv__find-ic { flex: none; width: 1.8rem; height: 1.8rem; }
+.mn-conv__find-month .mn-conv__find-ic { color: var(--gold-ink); }
+.mn-conv__find-chev { flex: none; width: 1rem; height: .6rem; color: var(--gold-ink); }
+.mn-conv__find:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; }
+@media (hover: hover) {
+  .mn-conv__find:hover { box-shadow: 0 1.2rem 3.2rem rgba(42, 36, 32, .16); }
+  .mn-conv__find:hover .mn-conv__find-main { background: var(--ink); }
+}
 
 .mn-conv__railwrap {
   --gap: 1.2rem;
@@ -258,8 +409,7 @@
   grid-row: 2;
   min-height: 0;
 }
-/* Cards take their width from the rail's height. Natively the rail scrolls with snap; driven, it
-   overflows to the screen edge and motion.js moves it. */
+/* Cards take their width from the rail's height; the rail scrolls with snap. */
 .mn-conv__rail {
   display: flex;
   gap: var(--gap);
@@ -273,7 +423,6 @@
   scrollbar-width: none;
 }
 .mn-conv__rail::-webkit-scrollbar { display: none; }
-.mn-conv.is-driven .mn-conv__rail { overflow: visible; scroll-snap-type: none; }
 .mn-conv__item { flex: none; height: 100%; aspect-ratio: 2 / 3; scroll-snap-align: start; }
 
 .mn-conv__card {
@@ -352,7 +501,7 @@
   .mn-conv__card:hover .mn-conv__btn { border-color: var(--cream); background: var(--cream); color: var(--ink); }
 }
 
-/* Prev/next: only when the rail overflows natively with a mouse (never while driven); hidden at each end. */
+/* Prev/next: only when the rail overflows, with a mouse; hidden at each end. */
 .mn-conv__nav {
   position: absolute;
   top: 50%;
@@ -375,7 +524,6 @@
 .mn-conv__nav--prev { left: -2.2rem; }
 .mn-conv__nav--next { right: -2.2rem; }
 .mn-conv.is-scrollable .mn-conv__nav { display: grid; }
-.mn-conv.is-driven .mn-conv__nav { display: none; }
 .mn-conv__nav:disabled { opacity: 0; pointer-events: none; }
 .mn-conv__nav:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: .3rem; }
 @media (hover: hover) { .mn-conv__nav:hover { background: var(--ink); color: var(--cream); } }
@@ -399,190 +547,206 @@
   .mn-conv__head { padding-bottom: 2rem; }
   .mn-conv__title { font-size: 3.6rem; }
   .mn-conv__more { margin-top: 1.2rem; font-size: 1.9rem; }
-  .mn-conv__all { grid-column: 1; grid-row: 2; justify-self: start; }
+  .mn-conv__find { grid-column: 1; grid-row: 2; justify-self: stretch; }
+  .mn-conv__find-main { flex: 1; justify-content: center; }
   .mn-conv__railwrap { grid-row: 3; }
   .mn-conv__item { max-width: 84%; }
 }
 
 /* ==========================================================================
-   4. Hyderabad, Your Way: theme explorer (scoped to [data-themes])
-   Hover/focus/tap a card -> its state shows in the big panel with a looping video.
+   4b. Events calendar: the "Find your event" dialog (a native <dialog>, filled by components.js)
+   Desktop and tablet: a centred two-column panel, the month grid and type filters on the left,
+   the search and the events on the right. Phones: a full-screen sheet that scrolls as one column,
+   calendar on top, the type filters as chips, the list below; the close button stays pinned.
    ========================================================================== */
-
-/* Panel: the stacked states share one grid cell, so the panel never jumps in height. */
-[data-themes] .mn-promo__scrim {
-  background: linear-gradient(to top, rgba(0,0,0,.74), rgba(0,0,0,.36) 46%, rgba(0,0,0,.08) 78%, transparent);
+.mn-finder {
+  width: min(112rem, calc(100vw - 4.8rem));
+  max-width: none;
+  height: min(76rem, calc(100svh - 4.8rem));
+  max-height: none;
+  padding: 0;
+  border: 0;
+  border-radius: .4rem;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 3rem 8rem rgba(20, 16, 12, .35);
 }
-.mn-themes__still,
-[data-themes] .mn-promo__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity .6s var(--ease);
-}
-[data-themes] .mn-promo.has-still .mn-themes__still,
-[data-themes] .mn-promo.is-playing .mn-promo__video { opacity: 1; }
-/* The template fades the promo video in on hover; here only an active theme shows it. */
-[data-themes] .mn-promo:not(.is-playing) .mn-promo__video { opacity: 0; }
+.mn-finder::backdrop { background: rgba(26, 21, 17, .62); }
+.mn-finder[open] { animation: mn-finder-in .5s var(--ease); }
+@keyframes mn-finder-in { from { opacity: 0; transform: translateY(1.6rem); } }
+.mn-finder__panel { display: grid; grid-template-columns: 34rem minmax(0, 1fr); height: 100%; }
 
-/* Grid overrides the template's flex column; reset its justify-content: flex-end, which would act horizontally here. */
-.mn-themes__states { display: grid; grid-template-columns: minmax(0, 1fr); align-content: end; justify-content: stretch; }
-.mn-themes__state {
-  grid-area: 1 / 1;
-  align-self: end;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(1.2rem);
-  transition: opacity .45s var(--ease), transform .45s var(--ease), visibility .45s;
+.mn-finder__side {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  min-height: 0;
+  padding: 3.2rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--hairline);
+  background: #ede5d8;
 }
-.mn-themes__state.is-current { opacity: 1; visibility: visible; transform: none; }
+.mn-finder__brand { display: flex; align-items: flex-start; gap: 1.4rem; }
+.mn-finder__brand-ic { flex: none; width: 3.2rem; height: 3.2rem; color: var(--gold-ink); }
+.mn-finder__title { font-family: var(--serif); font-weight: 400; font-size: 2.6rem; line-height: 1.1; }
+.mn-finder__title em { font-style: italic; color: var(--gold-ink); }
+.mn-finder__sub { margin-top: .6rem; font-size: 1.2rem; letter-spacing: .06em; color: var(--muted); }
 
-.mn-themes__routes { margin-top: 2.6rem; }
-.mn-themes__routes li + li { margin-top: .6rem; }
-/* Routes are links in section 4; the Originals list what the evening holds as plain text (span). */
-.mn-themes__routes a,
-.mn-themes__routes span {
+.mn-finder__nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+.mn-finder__label { font-family: var(--serif); font-size: 2.2rem; line-height: 1; }
+.mn-finder__step, .mn-finder__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+}
+.mn-finder__step svg { width: 1.8rem; height: 1.8rem; }
+.mn-finder__close { width: 4.4rem; height: 4.4rem; }
+.mn-finder__close svg { width: 2rem; height: 2rem; }
+@media (hover: hover) { .mn-finder__step:hover, .mn-finder__close:hover { border-color: var(--ink); background: var(--ink); color: var(--cream); } }
+.mn-finder__wk, .mn-finder__days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .4rem; }
+.mn-finder__wk { margin-bottom: .6rem; font-size: 1.1rem; font-weight: 500; letter-spacing: .1em; text-align: center; color: var(--muted); }
+.mn-finder__day {
   position: relative;
-  padding-left: 2.2rem;
-  font-size: 1.4rem;
-  letter-spacing: .04em;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font: 400 1.4rem/1 var(--sans);
+  color: var(--muted);
+}
+.mn-finder__day.is-blank { visibility: hidden; }
+.mn-finder__day.is-today { box-shadow: inset 0 0 0 1px var(--ink-45); }
+/* Event days: ink, with a gold dot under the number; the picked day fills dark gold. */
+.mn-finder__day.has-event { font-weight: 500; color: var(--ink); cursor: pointer; transition: background-color .3s var(--ease), color .3s var(--ease); }
+.mn-finder__day.has-event::after { content: ""; position: absolute; left: 50%; bottom: 16%; width: .4rem; height: .4rem; margin-left: -.2rem; border-radius: 50%; background: var(--gold-ink); }
+@media (hover: hover) { .mn-finder__day.has-event:hover { background: rgba(197, 154, 91, .2); } }
+.mn-finder__day.is-picked, .mn-finder__day.is-picked:hover { background: var(--gold-ink); color: var(--cream); }
+.mn-finder__day.is-picked::after { background: var(--cream); }
+
+.mn-finder__filters { margin: 0; padding: 0; border: 0; }
+.mn-finder__chips { display: flex; flex-direction: column; gap: .2rem; }
+.mn-finder__filters legend { margin-bottom: 1rem; padding: 0; font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.mn-finder__filters label { display: flex; align-items: center; gap: 1.2rem; min-height: 4rem; font-size: 1.4rem; cursor: pointer; }
+.mn-finder__filters label[hidden] { display: none; }
+.mn-finder__filters input { flex: none; width: 1.8rem; height: 1.8rem; margin: 0; accent-color: var(--gold-ink); cursor: pointer; }
+
+.mn-finder__main { display: flex; flex-direction: column; min-height: 0; padding: 3.2rem 3.6rem 2.8rem; }
+.mn-finder__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 32rem) auto; align-items: center; gap: 2rem; }
+/* Title over the month (or the search being shown): a long search term never leaves a stray divider. */
+.mn-finder__head { display: flex; flex-direction: column; gap: .2rem; min-width: 0; font-family: var(--serif); font-size: 2.6rem; line-height: 1.15; }
+.mn-finder__head-sub { overflow: hidden; font-style: italic; text-overflow: ellipsis; white-space: nowrap; color: var(--gold-ink); }
+.mn-finder__search {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4.4rem;
+  padding: 0 1.6rem;
+  border: 1px solid var(--hairline);
+  border-radius: 99rem;
+  background: #fbf8f3;
+  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.mn-finder__search svg { flex: none; width: 1.8rem; height: 1.8rem; color: var(--muted); }
+.mn-finder__search input { flex: 1; min-width: 0; padding: 0; border: 0; outline: 0; background: none; font-size: 1.4rem; }
+.mn-finder__search input::placeholder { color: var(--muted); opacity: 1; }
+.mn-finder__search:focus-within { border-color: var(--gold-ink); box-shadow: 0 0 0 3px rgba(138, 95, 34, .16); }
+
+.mn-finder__list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-height: 0;
+  margin: 2.4rem -1rem 0;
+  padding: .4rem 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+.mn-finder__link {
+  display: grid;
+  grid-template-columns: 8.8rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.2rem 2rem 1.2rem 1.2rem;
+  border: 1px solid var(--hairline);
+  border-radius: .3rem;
+  background: #fbf8f3;
+  color: inherit;
   text-decoration: none;
-  transition: color .3s var(--ease);
+  transition: border-color .4s var(--ease), box-shadow .4s var(--ease);
 }
-.mn-themes__routes a::before,
-.mn-themes__routes span::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 50%;
-  width: 1.2rem; height: 1px;
-  background: var(--gold-light);
-}
-.mn-themes__routes a:hover { color: var(--gold-light); }
-.mn-themes__cta { gap: .8rem; min-height: 4.4rem; margin-top: 2.8rem; padding: 0 2.2rem; color: var(--white); }
-.mn-themes__cta::after { content: "\2192"; letter-spacing: 0; transition: transform .3s var(--ease); }
-.mn-themes__cta:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
-.mn-themes__cta:hover::after { transform: translateX(.3rem); }
-
-/* Cards: labels always visible (people scan six names), over a soft bottom fade. */
-[data-themes] .mn-card__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.58), rgba(0,0,0,.12) 38%, transparent 55%);
-  pointer-events: none;
-}
-[data-themes] .mn-card__info {
-  top: auto;
-  bottom: 2.2rem;
-  left: 2.2rem;
-  right: 2.2rem;
-  z-index: 1;
-  gap: .4rem;
-  color: var(--white);
-  opacity: 1;
-  transform: none;
-}
-.mn-card__num { font-size: 1.1rem; letter-spacing: .2em; color: var(--gold-light); }
-[data-themes] .mn-card__title { font-family: var(--serif); font-weight: 400; font-size: 2.8rem; line-height: 1.1; }
-[data-themes] .mn-card__type { font-size: 1.3rem; line-height: 1.5; color: var(--white-80); }
-/* Active theme: a thin gold rule along the card's foot. */
-[data-themes] .mn-card::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 3px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform .5s var(--ease);
-}
-[data-themes] .mn-card.is-active::after { transform: scaleX(1); }
-
-/* Focus: while one card is hovered (or keyboard-focused), the other five dim back.
-   Keyed on a hovered card, not the grid, so crossing the gaps never flashes all six dark. */
-[data-themes] .mn-card__media { transition: filter .5s var(--ease); }
-[data-themes] .mn-card__info { transition: opacity .5s var(--ease), transform .4s var(--ease); }
-@media (hover: hover) and (pointer: fine) {
-  [data-themes] .mn-collection__grid:has(.mn-card:hover) .mn-card:not(:hover) .mn-card__media { filter: brightness(.42) saturate(.55); }
-  [data-themes] .mn-collection__grid:has(.mn-card:hover) .mn-card:not(:hover) .mn-card__info { opacity: .45; }
-}
-[data-themes] .mn-collection__grid:has(.mn-card:focus-visible) .mn-card:not(:focus-visible) .mn-card__media { filter: brightness(.42) saturate(.55); }
-[data-themes] .mn-collection__grid:has(.mn-card:focus-visible) .mn-card:not(:focus-visible) .mn-card__info { opacity: .45; }
-@media (prefers-reduced-motion: reduce) {
-  [data-themes] .mn-card__media, [data-themes] .mn-card__info { transition: none; }
-}
-/* Desktop: rows stretch to the panel's height, so let each image fill its card (no cream strip below). */
-@media (min-width: 1025px) {
-  [data-themes] .mn-collection__grid { grid-auto-rows: 1fr; }
-  [data-themes] .mn-card__media { width: 100%; height: 100%; aspect-ratio: auto; min-height: 30rem; }
-}
+.mn-finder__img { width: 8.8rem; height: 8.8rem; border-radius: .2rem; object-fit: cover; }
+.mn-finder__info { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; min-width: 0; }
+.mn-finder__date { padding: .5rem 1rem; border-radius: 99rem; background: rgba(138, 95, 34, .1); font-size: 1.1rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-ink); }
+.mn-finder__name { font-family: var(--serif); font-size: 2.2rem; line-height: 1.15; }
+.mn-finder__meta { display: flex; flex-wrap: wrap; gap: .2rem 1.6rem; font-size: 1.3rem; color: var(--muted); }
+.mn-finder__type { font-size: 1.05rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; line-height: 1.9rem; }
+.mn-finder__go { font-size: 1.1rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; color: var(--gold-ink); }
+@media (hover: hover) { .mn-finder__link:hover { border-color: var(--gold-ink); box-shadow: 0 1rem 2.4rem rgba(42, 36, 32, .08); } }
+.mn-finder__link:focus-visible, .mn-finder__day:focus-visible, .mn-finder__step:focus-visible, .mn-finder__close:focus-visible, .mn-finder__next:focus-visible, .mn-finder__all:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+.mn-finder__filters input:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+.mn-finder__empty { padding: 5.6rem 2rem; text-align: center; }
+.mn-finder__empty p { font-family: var(--serif); font-size: 2.4rem; line-height: 1.2; }
+.mn-finder__next { margin-top: 1.6rem; padding: 0; border: 0; background: none; color: var(--gold-ink); font-size: 1.4rem; line-height: 1.6; text-decoration: underline 1px; text-underline-offset: .4rem; cursor: pointer; }
+.mn-finder__next::after { display: none; }
+.mn-finder__all { align-self: flex-start; margin-top: 2rem; font-size: 1.4rem; }
 
 @media (max-width: 1024px) {
-  [data-themes] .mn-promo { aspect-ratio: auto; min-height: 56rem; }
-  [data-themes] .mn-promo__heading { font-size: 4rem; }
+  .mn-finder__panel { grid-template-columns: 30rem minmax(0, 1fr); }
+  .mn-finder__side { padding: 2.8rem 2.4rem; }
+  .mn-finder__main { padding: 2.8rem 2.8rem 2.4rem; }
+  .mn-finder__top { grid-template-columns: minmax(0, 1fr) auto; }
+  .mn-finder__search { grid-column: 1 / -1; grid-row: 2; }
 }
+/* Phones: a full-screen sheet; the panel scrolls as one column and the close button stays pinned. */
 @media (max-width: 749px) {
-  [data-themes] .mn-promo { min-height: 54rem; }
-  [data-themes] .mn-promo__content { padding: 3.2rem 2rem 2.8rem; }
-  [data-themes] .mn-promo__heading { font-size: 3.4rem; }
-}
-
-/* Theme picker (section 4, phones and tablets): a segmented row of six line icons replaces the card
-   strip; a tap brings the theme into the panel (components.js). Desktop keeps the cards. */
-.mn-themes__tabs { display: none; }
-@media (max-width: 1024px) {
-  .mn-themes__tabs {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    margin-bottom: 2.4rem;
-    border-block: 1px solid var(--hairline);
-  }
-  .mn-themes__tabs + .mn-collection__layout .mn-collection__grid { display: none; }
-  .mn-themes__tab {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 2rem .4rem 1.8rem;
-    border: 0;
-    background: transparent;
-    font: 500 1.1rem/1 var(--sans);
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--ink-70);
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: color .4s var(--ease), background-color .4s var(--ease);
-  }
-  .mn-themes__tab + .mn-themes__tab { border-left: 1px solid var(--hairline); }
-  .mn-themes__icon { width: 2.6rem; height: 2.6rem; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-  /* Active: dark-gold label and icon, a faint gold wash and a gold rule along the foot. */
-  .mn-themes__tab::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -1px;
-    height: 2px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transition: transform .5s var(--ease);
-  }
-  .mn-themes__tab.is-active { color: var(--gold-ink); background: rgba(197, 154, 91, .1); }
-  .mn-themes__tab.is-active::after { transform: scaleX(1); }
-  .mn-themes__tab:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: -2px; }
-}
-/* Phones: three by two, divided like the tablet row. */
-@media (max-width: 749px) {
-  .mn-themes__tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .mn-themes__tab:nth-child(3n + 1) { border-left: 0; }
-  .mn-themes__tab:nth-child(n + 4) { border-top: 1px solid var(--hairline); }
+  .mn-finder { width: 100%; height: 100%; border-radius: 0; }
+  .mn-finder[open] { animation-name: mn-finder-fade; }
+  @keyframes mn-finder-fade { from { opacity: 0; } }
+  .mn-finder__panel { display: block; overflow-y: auto; overscroll-behavior: contain; }
+  .mn-finder__side { gap: 2.4rem; padding: 2rem 2rem 2.4rem; overflow: visible; border-right: 0; border-bottom: 1px solid var(--hairline); }
+  .mn-finder__brand { padding-right: 5.6rem; }
+  .mn-finder__brand-ic { display: none; }
+  .mn-finder__title { font-size: 2.4rem; }
+  .mn-finder__sub { display: none; }
+  /* A compact month (short rows) and one swipeable row of type chips, so the events start sooner. */
+  .mn-finder__cal { width: min(100%, 36rem); margin-inline: auto; }
+  .mn-finder__nav { margin-bottom: 1rem; }
+  .mn-finder__day { aspect-ratio: auto; width: 4rem; height: 4rem; justify-self: center; }
+  .mn-finder__filters { display: block; }
+  .mn-finder__filters legend { margin-bottom: .8rem; }
+  .mn-finder__chips { display: flex; flex-direction: row; gap: .8rem; margin-inline: -2rem; padding: 0 2rem; overflow-x: auto; scrollbar-width: none; }
+  .mn-finder__chips::-webkit-scrollbar { display: none; }
+  .mn-finder__filters label { flex: none; min-height: 4rem; padding: 0 1.4rem; gap: .8rem; border: 1px solid var(--hairline); border-radius: 99rem; font-size: 1.3rem; white-space: nowrap; }
+  .mn-finder__main { padding: 2.4rem 2rem 3.2rem; }
+  .mn-finder__top { grid-template-columns: minmax(0, 1fr); }
+  .mn-finder__search { grid-column: 1; }
+  .mn-finder__head { font-size: 2.2rem; }
+  .mn-finder__head-sub { white-space: normal; }
+  .mn-finder__close { position: fixed; top: 1.2rem; right: 1.2rem; z-index: 2; background: var(--cream); box-shadow: 0 .4rem 1.6rem rgba(42, 36, 32, .16); }
+  .mn-finder__list { margin: 2rem 0 0; padding: 0; overflow: visible; }
+  .mn-finder__link { grid-template-columns: 6.4rem minmax(0, 1fr); gap: 1.4rem; padding: 1rem; }
+  .mn-finder__img { width: 6.4rem; height: 6.4rem; }
+  .mn-finder__name { font-size: 1.9rem; }
+  .mn-finder__go { display: none; }
 }
 
 /* ==========================================================================
-   5–7, 10. Editorial blocks
+   Editorial blocks (Private Access, Rooted, testimonials)
    ========================================================================== */
 .mn-ed { position: relative; background: var(--cream); }
 .mn-ed__img {
@@ -649,53 +813,6 @@
 .mn-ed__inner--left .mn-ed__content--boxed .mn-ed__heading em { display: block; }
 .mn-ed__content--boxed .mn-ed__body { margin-top: 4.9rem; font-size: 1.6rem; line-height: 1.5; }
 .mn-ed__content--boxed .mn-ed__btn { margin-top: 5.9rem; }
-
-/* Trusted with Hyderabad: card with three supporting figures, four headline figures along the bottom. */
-/* Heading in Asli gold, the italic half in ink. */
-.mn-ed--numbers .mn-ed__content--boxed .mn-ed__heading { color: var(--gold); }
-.mn-ed--numbers .mn-ed__content--boxed .mn-ed__heading em { color: var(--ink); }
-
-/* Mughal jaali behind the card: an eight-pointed khatam star lattice (as on Mughal and
-   Qutb Shahi screens and inlay), in fine gold line. Faded out behind the copy so it frames
-   the text instead of competing with it. */
-.mn-ed--numbers .mn-ed__content--boxed { position: relative; isolation: isolate; }
-.mn-ed--numbers .mn-ed__content--boxed::before {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  z-index: -1;
-  inset: 0;
-  opacity: .55;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
-  -webkit-mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 0%, rgba(0,0,0,.08) 45%, #000 100%);
-          mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 0%, rgba(0,0,0,.08) 45%, #000 100%);
-}
-.mn-fig {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  padding-left: 2.4rem;
-  border-left: 1px solid rgba(255, 255, 255, .32);
-  text-shadow: 0 1px 20px rgba(0, 0, 0, .35);
-}
-.mn-fig__num {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(5.6rem, 5.6vw, 9.6rem);
-  line-height: .9;
-  letter-spacing: -.01em;
-  color: var(--gold-light);
-  font-variant-numeric: lining-nums tabular-nums;
-}
-.mn-fig__num [data-count] { display: inline-block; text-align: right; color: var(--white); }
-.mn-fig__plus { display: inline-block; }
-.mn-fig__label { max-width: 24rem; font-size: 1.5rem; line-height: 1.4; color: var(--white-80); }
-@media (max-width: 749px) {
-  .mn-ed__steps.mn-ed__figs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.8rem 1.6rem; }
-  .mn-fig { padding-left: 1.4rem; gap: .8rem; }
-  .mn-fig__num { font-size: 4.8rem; }
-  .mn-fig__label { font-size: 1.3rem; }
-}
 
 /* Centred statement with monogram */
 .mn-ed--mark .mn-ed__content { display: flex; flex-direction: column; align-items: center; max-width: 90rem; }
@@ -824,10 +941,54 @@
 .mn-ed--split .mn-ed__body { margin-top: 1.8rem; font-size: 1.6rem; line-height: 1.5; }
 
 /* ==========================================================================
+   5. Asli Hyderabad in numbers (in the commission slot)
+   v3: one slim band, not a screen (client, 16 Nov). The heading, then five figures between fine gold
+   rules; motion.js counts them up once. Phones: 2 + 2 + 1.
+   ========================================================================== */
+.mn-nums { padding-block: clamp(5.6rem, 5.6vw, 8.8rem) clamp(4rem, 4vw, 6.4rem); background: var(--cream); color: var(--ink); }
+.mn-nums__title { margin-bottom: clamp(2.4rem, 2.4vw, 3.6rem); font-family: var(--serif); font-weight: 300; font-size: clamp(2.8rem, 2.2vw, 3.6rem); line-height: 1.1; text-align: center; }
+.mn-nums__row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; border-block: 1px solid rgba(197, 154, 91, .55); }
+.mn-fig { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: clamp(2.4rem, 2.6vw, 3.6rem) 1.6rem; text-align: center; }
+.mn-fig + .mn-fig { border-left: 1px solid rgba(197, 154, 91, .55); }
+.mn-fig__num {
+  order: -1;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(4.4rem, 4vw, 6.4rem);
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.mn-fig__plus { color: var(--gold-ink); }
+.mn-fig__label { max-width: 21rem; font-size: 1.15rem; font-weight: 500; line-height: 1.5; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 749px) {
+  .mn-nums { padding-block: 5.6rem 3.2rem; }
+  .mn-nums__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mn-fig { padding: 2.4rem 1.2rem; }
+  .mn-fig + .mn-fig { border-left: 0; }
+  .mn-fig:nth-child(even) { border-left: 1px solid rgba(197, 154, 91, .55); }
+  .mn-fig:nth-child(n + 3) { border-top: 1px solid rgba(197, 154, 91, .55); }
+  .mn-fig:last-child { grid-column: 1 / -1; }
+  .mn-fig__num { font-size: 4.4rem; }
+  .mn-fig__label { font-size: 1.05rem; }
+}
+
+/* ==========================================================================
+   6. Private Access (in the collector slot)
+   v3.1: full bleed, edge to edge, one screen tall; nothing slides over it any more (the old overlap
+   read as "clubbed"). The doors open once when it comes into view.
+   ========================================================================== */
+.mn-sec[data-sec="collector"] { background: var(--ink); }
+.mn-sec[data-sec="collector"] .mn-ed--access { height: 100svh; max-height: 100rem; min-height: 56rem; aspect-ratio: auto; overflow: hidden; }
+@media (max-width: 749px) {
+  .mn-sec[data-sec="collector"] .mn-ed--access { height: 88svh; min-height: 52rem; }
+}
+
+/* ==========================================================================
    7. Rooted in Hyderabad: "400 years in one line"
-   Desktop: motion.js moves .mn-skyline into the sideways sweep (.mn-sweep) and opens each
-   landmark as the sweep carries it on screen. Smaller screens: an ink band at the top of the
-   section that draws itself once. No JS motion: everything shown, fully drawn.
+   An ink band at the top of the section that draws itself once (motion.js); smaller screens let it
+   glide sideways while it draws. No JS motion: everything shown, fully drawn.
    ========================================================================== */
 .mn-skyline {
   --line: var(--gold);
@@ -845,48 +1006,30 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat;
   pointer-events: none;
 }
-.mn-skyline__caption { position: relative; font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 2.2vw, 3.6rem); line-height: 1.1; color: var(--white); }
+.mn-skyline__caption { position: relative; font-family: var(--serif); font-weight: 300; font-size: clamp(3rem, 2.8vw, 4.4rem); line-height: 1.1; text-align: center; color: var(--white); }
 .mn-skyline__caption em { font-style: italic; color: var(--gold-light); }
-.mn-skyline__svg { position: relative; display: block; width: 100%; max-width: 110rem; height: auto; margin: 3.2rem auto 0; overflow: visible; }
+.mn-skyline__svg { position: relative; display: block; width: 100%; max-width: 116rem; height: auto; margin: 4rem auto 0; overflow: visible; }
 /* Stroke widths are SVG units, not non-scaling-stroke: Chrome measures a non-scaling stroke's dashes in
    screen pixels, which broke the pathLength="1" draw. --sw is set per context so the line lands near 1.5px. */
 .mn-skyline { --sw: 1.5; }
 .mn-skyline__line { fill: none; stroke: var(--line); stroke-width: var(--sw); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .mn-skyline__detail { stroke-width: calc(var(--sw) * .7); }
-/* Timeline under the skyline: a hairline axis, a gold tick per landmark, the year as the
+/* Timeline under the skyline: a hairline axis, a pin per landmark (a dotted leader from the ground to a
+   gold diamond on the axis, both at the landmark's centre), the year as the
    primary read (serif, gold) and the place as the secondary one (small caps).
    Sizes are SVG user units; each context below sets them so on screen the year lands
    around 16px and the name around 10.5px. Vertical spacing lives in the markup as em
-   offsets: tick -> year baseline 1.3em, year -> name 2em, name lines 1.3em. */
+   offsets: axis -> year baseline 1.3em, year -> name 2em, name lines 1.3em. */
 .mn-skyline { --year: 16px; --name: 10.5px; }
 .mn-skyline__axis { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: calc(var(--sw) * .7); stroke-dasharray: 1; stroke-dashoffset: 0; }
-.mn-skyline__dot { fill: var(--gold); }   /* rectangular tick on the axis */
+.mn-skyline__lead { fill: none; stroke: var(--gold); stroke-width: calc(var(--sw) * .6); stroke-linecap: round; stroke-dasharray: .1 3; opacity: .85; }
+.mn-skyline__pin { fill: var(--gold); stroke: var(--ink); stroke-width: 2.4; paint-order: stroke; }   /* ink halo cuts the axis */
 .mn-skyline__label text { text-anchor: middle; }
 .mn-skyline__year { font-family: var(--serif); font-weight: 400; font-size: var(--year); letter-spacing: .02em; fill: var(--gold-light); }
 .mn-skyline__name { font-family: var(--sans); font-weight: 500; font-size: var(--name); letter-spacing: .06em; text-transform: uppercase; fill: var(--white-80); }
 
-/* Inside the desktop sweep: fills the panel, centred vertically. */
-.mn-sweep { background: var(--ink); overflow: hidden; }
-.mn-sweep .mn-skyline {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: transparent;
-}
-.mn-sweep .mn-skyline__svg { margin-top: 4rem; }
-.mn-sweep .mn-skyline__caption { font-size: clamp(3.2rem, 2.8vw, 4.4rem); }
-.mn-sweep .mn-skyline { --year: 26px; --name: 16px; --sw: 2.3; padding: 0 5%; }
-/* Narrow desktops: the panel is smaller, so the type steps up to stay at timeline scale. */
-@media (min-width: 1025px) and (max-width: 1300px) { .mn-sweep .mn-skyline { --year: 30px; --name: 17.5px; --sw: 2.4; padding: 0 2%; } }
-
-/* Section copy: the heading is longer than the template's, so it steps down a size. */
-.mn-ed--rooted .mn-ed__heading { font-size: clamp(4rem, 3.6vw, 6rem); line-height: 1.08; }
-.mn-ed--rooted .mn-ed__heading em { font-style: italic; color: var(--gold-ink); }
-
 @media (min-width: 1025px) {
-  /* The band only shows on desktop when the sweep is not running (reduced motion). */
+  /* Desktop: more room around the line. */
   .mn-sec[data-sec="city"] > .mn-skyline { padding-block: 6.4rem 5.6rem; }
 }
 /* Smaller screens: keep the labels readable by giving the line a real width and letting the
@@ -903,7 +1046,7 @@
   .mn-skyline__svg { margin-top: 2.4rem; }
 }
 
-/* Desktop: these sections fill the viewport so the stacked transitions line up. */
+/* Desktop: the split and overlay blocks fill the viewport. */
 @media (min-width: 1025px) {
   .mn-ed { min-height: 100svh; }
   .mn-ed--fixed { height: 100svh; aspect-ratio: auto !important; }
@@ -958,19 +1101,41 @@
   .mn-ed--split .mn-ed__body { margin-top: 3rem; font-size: 1.4rem; line-height: 2.2rem; }
 }
 
-/* Rooted in Hyderabad: the heading always breaks after "city,". Stacked layouts show the photos at a
-   framed ratio, because a full-screen slot crops each building down to a sliver. */
-.mn-ed--rooted .mn-ed__heading em { display: block; text-wrap: balance; }
-@media (min-width: 750px) and (max-width: 1024px) {
-  .mn-ed--rooted.mn-ed--fixed .mn-ed__media { aspect-ratio: 1; }
-  .mn-ed--rooted .mn-ed__frame { padding: 8rem 7.2rem 6.4rem; }
-  .mn-ed--rooted .mn-ed__heading { font-size: 5.6rem; line-height: 1.08; }
+/* Rooted in Hyderabad (v3.1): a calm editorial pair inside the container instead of a full-screen split.
+   The slideshow sits in a 4:5 frame with a gold hairline offset behind it; the copy is centred beside it,
+   a short gold rule between heading and body. The heading always breaks after "city,". */
+.mn-ed.mn-ed--rooted {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(4.8rem, 8vw, 14rem);
+  max-width: var(--container);
+  min-height: 0;
+  margin-inline: auto;
+  padding: clamp(8.8rem, 9vw, 12.8rem) var(--gutter) clamp(9.6rem, 10vw, 13.6rem);
+}
+.mn-ed--rooted .mn-ed__media { aspect-ratio: 4 / 5; overflow: visible; }
+.mn-ed--rooted .mn-ed__media::before { content: ""; position: absolute; inset: 1.6rem -1.6rem -1.6rem 1.6rem; border: 1px solid var(--gold); pointer-events: none; }
+.mn-ed--rooted .mn-slideshow { overflow: hidden; }
+.mn-ed--rooted .mn-ed__frame { padding: 0; }
+.mn-ed--rooted .mn-ed__content { max-width: 54rem; }
+.mn-ed--rooted .mn-ed__heading { font-size: clamp(4rem, 3.4vw, 5.6rem); line-height: 1.08; letter-spacing: -.005em; text-wrap: balance; }
+.mn-ed--rooted .mn-ed__heading em { display: block; font-style: italic; color: var(--gold-ink); text-wrap: balance; }
+.mn-ed--rooted .mn-ed__body { max-width: 46ch; margin-top: 2.8rem; font-size: 1.6rem; line-height: 1.7; color: var(--muted); }
+.mn-ed--rooted .mn-ed__body::before { content: ""; display: block; width: 4.8rem; height: 1px; margin-bottom: 2.8rem; background: var(--gold); }
+.mn-ed--rooted .mn-ed__link { margin-top: 3.2rem; }
+@media (max-width: 1024px) {
+  .mn-ed.mn-ed--rooted { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5.6rem; padding-block: 9.6rem 10.4rem; }
+  .mn-ed--rooted .mn-ed__frame { order: 0; padding: 0; }
+  .mn-ed--rooted .mn-ed__heading { font-size: 4.4rem; }
 }
 @media (max-width: 749px) {
-  .mn-ed--rooted.mn-ed--fixed .mn-ed__media { height: auto; aspect-ratio: 4 / 5; }
-  .mn-ed--rooted .mn-ed__frame { padding: 5.6rem 2rem 4rem; }
-  .mn-ed--rooted .mn-ed__heading { font-size: clamp(2.6rem, 9.6vw, 4.2rem); line-height: 1.12; }
-  .mn-ed--rooted .mn-ed__body { margin-top: 2rem; }
+  .mn-ed.mn-ed--rooted { grid-template-columns: 1fr; gap: 4.8rem; padding: 7.2rem 2rem 8rem; }
+  .mn-ed--rooted .mn-ed__frame { order: -1; }
+  .mn-ed--rooted .mn-ed__media { margin-right: 1rem; }
+  .mn-ed--rooted .mn-ed__media::before { inset: 1rem -1rem -1rem 1rem; }
+  .mn-ed--rooted .mn-ed__heading { font-size: clamp(3rem, 9.6vw, 4.2rem); line-height: 1.12; }
+  .mn-ed--rooted .mn-ed__body { margin-top: 2.4rem; font-size: 1.5rem; }
+  .mn-ed--rooted .mn-ed__body::before { margin-bottom: 2.4rem; }
 }
 
 /* ==========================================================================
@@ -983,9 +1148,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100svh;
-  min-height: 64rem;
-  padding: calc(var(--header-h) + clamp(1.2rem, 2.6svh, 3.6rem)) 0 clamp(2.4rem, 4svh, 4.8rem);
+  padding: clamp(8rem, 8vw, 12rem) 0 clamp(6.4rem, 7vw, 9.6rem);
   /* clip, not hidden: focusing an off-screen card must not scroll the section sideways. */
   overflow: clip;
   isolation: isolate;
@@ -1006,6 +1169,8 @@
 }
 
 .mn-arcade__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 3.2rem; padding-inline: var(--gutter); }
+/* The group buttons and the rail arrows sit together on the right. */
+.mn-arcade__head .mn-arcade__groups { margin-left: auto; }
 .mn-arcade__title {
   font-family: var(--serif);
   font-weight: 300;
@@ -1047,7 +1212,7 @@
 .mn-arcade__group:focus-visible { outline: 1px solid var(--gold); outline-offset: .6rem; }
 .mn-arcade__count { margin-left: .4rem; font-family: var(--serif); font-size: 1.5rem; font-style: italic; letter-spacing: 0; color: var(--gold-ink); }
 
-/* Rail: scrolls natively (phones, tablets, reduced motion); on desktop motion.js moves the track instead. */
+/* Rail: scrolls natively at every size, with snap. */
 .mn-arcade__rail {
   flex: 1 1 auto;
   display: flex;
@@ -1061,7 +1226,6 @@
   scrollbar-width: none;
 }
 .mn-arcade__rail::-webkit-scrollbar { display: none; }
-.mn-arcade__rail.is-driven { overflow: visible; scroll-snap-type: none; }
 .mn-arcade__track { display: flex; gap: var(--gap); width: max-content; margin: 0; padding: 1.2rem var(--gutter); list-style: none; }
 .mn-arcade__card { flex: 0 0 var(--card-w); width: var(--card-w); scroll-snap-align: start; }
 .mn-arcade__link { position: relative; display: block; color: inherit; text-decoration: none; }
@@ -1157,7 +1321,7 @@
   .mn-arcade__link:hover .mn-arcade__meta { transform: none; opacity: 1; }
   .mn-arcade__link:hover .mn-arcade__desc { transform: none; }
 }
-/* Large touch screens (tablets in landscape) get the desktop hold; shorter photos leave room for the text. */
+/* Large touch screens (tablets in landscape): shorter photos leave room for the text shown under them. */
 @media (min-width: 1025px) and (hover: none), (min-width: 1025px) and (pointer: coarse) {
   .mn-arcade { --img-h: clamp(24rem, 36svh, 40rem); }
 }
@@ -1165,11 +1329,10 @@
   .mn-arcade {
     --card-w: clamp(24rem, 36vw, 34rem);
     --img-h: calc(var(--card-w) * 1.25);
-    height: auto;
-    min-height: 0;
     padding: 9.6rem 0 6.4rem;
   }
   .mn-arcade__head { flex-direction: column; align-items: flex-start; gap: 2.4rem; }
+  .mn-arcade__head .mn-arcade__groups { margin-left: 0; }
   .mn-arcade__rail { margin-top: 3.2rem; align-items: flex-start; }
 }
 @media (max-width: 749px) {
@@ -1179,10 +1342,19 @@
 }
 
 /* ==========================================================================
-   10. Trusted with Hyderabad: testimonials (in the materials slot)
-   Each guest has a backdrop, an arch portrait and a quote; the guests along the
+   11. Asli Hyderabad, in their words: testimonials (in the materials slot)
+   v3: the section heading sits above on cream (.mn-voices__head), so it no longer runs into the section
+   before it. Each guest has a backdrop, an arch portrait and a quote; the guests along the
    bottom are tabs whose gold hairline fills while their quote is up.
    ========================================================================== */
+.mn-voices__head { position: relative; padding-block: clamp(8rem, 8vw, 12rem) clamp(6.4rem, 6vw, 9.6rem); overflow: hidden; background: var(--cream); color: var(--ink); }
+.mn-voices__head .mn-wrap { position: relative; }
+.mn-voices__head .mn-head { margin-bottom: 0; }
+/* The loader's khatam lattice, still here; a cream glow keeps the title clear and the edges fade out. */
+.mn-voices__pattern { position: absolute; inset: 0; pointer-events: none; }
+.mn-voices__pattern::before, .mn-voices__pattern::after { content: ""; position: absolute; inset: 0; }
+.mn-voices__pattern::before { opacity: .22; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c59a5b' stroke-width='.8'%3E%3Cg id='s'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.5'/%3E%3C/g%3E%3Cuse href='%23s' x='-32' y='-32'/%3E%3Cuse href='%23s' x='32' y='-32'/%3E%3Cuse href='%23s' x='-32' y='32'/%3E%3Cuse href='%23s' x='32' y='32'/%3E%3Cpath d='M32 -6 38 0 32 6 26 0Z M32 58 38 64 32 70 26 64Z M-6 32 0 26 6 32 0 38Z M58 32 64 26 70 32 64 38Z'/%3E%3Cpath d='M32 15V6M32 49V58M15 32H6M49 32H58M44 44 52 52M20 20 12 12M44 20 52 12M20 44 12 52'/%3E%3C/g%3E%3C/svg%3E") center / 64px 64px repeat; }
+.mn-voices__pattern::after { background: radial-gradient(ellipse 42% 60% at 50% 55%, var(--cream) 0%, rgba(244, 238, 228, .7) 55%, rgba(244, 238, 228, 0) 100%); }
 .mn-ed--voices { --dur: 10s; }
 /* Darker than the other overlays so long quotes and white names stay calm and legible. */
 .mn-ed--voices .mn-ed__scrim {
@@ -1206,7 +1378,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(3.2rem, 4vw, 8rem);
-  padding: clamp(8.8rem, 11vh, 12rem) 0 clamp(2.8rem, 4.4vh, 5.6rem);
+  padding: clamp(4.8rem, 7vh, 8rem) 0 clamp(2.8rem, 4.4vh, 5.6rem);
 }
 
 /* Portrait in the same Mughal arch as Quick Experiences: gold hairline outside, photo 12 units in. */
@@ -1248,7 +1420,7 @@
   padding: clamp(3.2rem, 3.4vw, 5.2rem);
   text-align: left;
 }
-/* The khatam jaali of the numbers card, faint in the top corner behind the heading. */
+/* The khatam jaali, faint in the top corner behind the quote mark. */
 .mn-voices__card::before {
   content: "";
   position: absolute;
@@ -1260,10 +1432,8 @@
   -webkit-mask: radial-gradient(circle at 100% 0, #000 0, rgba(0,0,0,.35) 16rem, transparent 30rem);
           mask: radial-gradient(circle at 100% 0, #000 0, rgba(0,0,0,.35) 16rem, transparent 30rem);
 }
-.mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: clamp(3.4rem, 3vw, 4.4rem); line-height: 1.1; }
-.mn-voices__card .mn-ed__heading em { display: block; color: var(--gold-ink); }
 /* All quotes share one grid cell, so the card keeps the tallest one's height and never jumps. */
-.mn-ed--voices .mn-voices__quotes { display: grid; margin-top: clamp(2.4rem, 3.4vh, 3.6rem); font-size: inherit; line-height: inherit; }
+.mn-ed--voices .mn-voices__quotes { display: grid; margin-top: 0; font-size: inherit; line-height: inherit; }
 .mn-voices__mark { grid-area: 1 / 1; width: 3.4rem; height: 2.55rem; fill: var(--gold); }
 .mn-voices__quote {
   grid-area: 2 / 1;
@@ -1337,10 +1507,8 @@
 
 /* Short desktop screens: tighten the card so it and the guests fit one viewport. */
 @media (min-width: 1025px) and (max-height: 820px) {
-  .mn-ed--voices .mn-voices__stage { padding: 10.4rem 0 2.4rem; }
+  .mn-ed--voices .mn-voices__stage { padding: 4rem 0 2.4rem; }
   .mn-ed--voices .mn-voices__card { padding: 2.8rem 3.6rem; }
-  .mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: 3.2rem; }
-  .mn-ed--voices .mn-voices__quotes { margin-top: 1.6rem; }
   .mn-voices__quote blockquote { margin-top: 1rem; font-size: 1.7rem; line-height: 1.42; }
   .mn-voices__quote figcaption { margin-top: 1.4rem; }
   .mn-voices__quote figcaption::before { margin-bottom: 1rem; }
@@ -1349,17 +1517,18 @@
 }
 @media (max-width: 1024px) {
   .mn-ed--voices.mn-ed--steps { min-height: 0; aspect-ratio: auto; }
-  .mn-ed--voices .mn-voices__stage { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0; padding: 9.6rem 0 4.8rem; }
+  .mn-ed--voices .mn-voices__stage { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0; padding: 4.8rem 0; }
   .mn-voices__portrait { position: relative; z-index: 2; width: min(56vw, 36rem); height: auto; }
   /* The card tucks up under the arch's foot. */
   .mn-ed--voices .mn-voices__card { width: min(100%, 64rem); margin-top: -6rem; padding: 9.2rem 4rem 4rem; }
   .mn-ed__steps.mn-voices__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem 3.2rem; }
 }
 @media (max-width: 749px) {
-  .mn-ed--voices .mn-voices__stage { padding: 4.8rem 0 4rem; }
+  .mn-voices__head { padding-block: 7.2rem 5.6rem; }
+  .mn-voices__pattern::after { background: radial-gradient(ellipse 70% 55% at 50% 55%, var(--cream) 0%, rgba(244, 238, 228, .6) 60%, rgba(244, 238, 228, 0) 100%); }
+  .mn-ed--voices .mn-voices__stage { padding: 4rem 0; }
   .mn-voices__portrait { width: min(64vw, 28rem); }
   .mn-ed--voices .mn-voices__card { margin-top: -4.8rem; padding: 7.2rem 2.4rem 2.8rem; }
-  .mn-ed--voices .mn-voices__card .mn-ed__heading { font-size: 3.2rem; line-height: 1.12; }
   .mn-voices__quote blockquote { font-size: 1.8rem; }
   .mn-ed__steps.mn-voices__list { gap: 2.4rem 1.6rem; }
   .mn-voices__tab { grid-template-columns: minmax(0, 1fr); align-content: start; align-items: start; gap: 1.2rem; padding-top: 1.6rem; }
@@ -1372,7 +1541,7 @@
 }
 
 /* ==========================================================================
-   12. Featured Brands of Hyderabad (in the logos slot)
+   9. Featured Brands of Hyderabad (in the logos slot)
    Copy on the left, a 3x3 grid of white tiles on the right. Logos rest in ink so the nine read as
    one set, and show their own colours on hover. Charminar and Chowmahalla line drawings sit faint
    in the corners (motion.js draws them in).
@@ -1454,26 +1623,90 @@
 }
 
 /* ==========================================================================
-   13. Co-curated Experiences (in the worlds slot)
-   A bento grid: High Tea spans two columns and two rows, the other six fill 3x2 beside it.
-   Each card: photo, the partner's logo in white, the name; hover or focus brings up the line
-   and "Book experience". Phones: a swipe rail with everything shown.
+   10. Asli Originals / Curated Experiences with Partners (in the worlds slot, id="co-curated")
+   One row of 9:16 shorts. The bar above holds the partner filter (logo chips, [data-filter-root]) and,
+   with a mouse, the rail arrows (initRail). A card plays its muted clip on hover, or on touch screens
+   while it is on screen ([data-preview], .is-playing). About five cards show on desktop, two and a bit
+   on phones; the row swipes with snap at every size.
    ========================================================================== */
-.mn-cocur { padding-block: clamp(9.6rem, 9vw, 14rem); background: var(--cream); color: var(--ink); }
-.mn-cocur__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 2rem 6rem;
-  margin-bottom: clamp(4rem, 4.4vw, 6.4rem);
+.mn-shorts { padding-block: clamp(8rem, 8vw, 12rem); background: var(--cream); color: var(--ink); }
+.mn-shorts__bar { display: flex; align-items: center; justify-content: space-between; gap: 2.4rem; margin-bottom: clamp(2.4rem, 2.6vw, 4rem); }
+.mn-chips { display: flex; gap: .8rem; min-width: 0; margin: -.3rem; padding: .3rem; overflow-x: auto; scrollbar-width: none; }
+.mn-chips::-webkit-scrollbar { display: none; }
+/* The long title breaks after the slash: Asli Originals / then the partners line. */
+.mn-shorts .mn-head__title { max-width: none; }
+.mn-shorts .mn-head__title em { display: block; }
+.mn-chip--logo { padding: 0 1.6rem; }
+.mn-chip--logo img { width: auto; height: 2.6rem; max-width: 9rem; object-fit: contain; transition: opacity .4s var(--ease), filter .4s var(--ease); }
+.mn-chip--logo[aria-pressed="true"] img { filter: brightness(0) invert(1); opacity: 1; }
+
+.mn-shorts__rail {
+  --gap: clamp(1rem, 1vw, 1.6rem);
+  display: flex;
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
-.mn-cocur__title { font-family: var(--serif); font-weight: 300; font-size: clamp(3.8rem, 3.3vw, 6.4rem); line-height: 1.04; letter-spacing: -.005em; }
-.mn-cocur__title em { font-style: italic; color: var(--gold-ink); }
-.mn-cocur__intro { grid-column: 1; max-width: 58rem; font-size: 1.5rem; line-height: 2.4rem; color: var(--ink-70); }
-.mn-cocur__link { grid-column: 2; grid-row: 1 / span 2; align-self: end; justify-self: end; white-space: nowrap; }
-.mn-cocur__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(.8rem, .8vw, 1.2rem); margin: 0; padding: 0; list-style: none; }
+.mn-shorts__rail::-webkit-scrollbar { display: none; }
+.mn-short { flex: 0 0 calc((100% - 4 * var(--gap)) / 5); scroll-snap-align: start; }
+.mn-short[hidden] { display: none; }
+.mn-short__link { position: relative; display: block; aspect-ratio: 9 / 16; overflow: hidden; border-radius: .4rem; background: var(--ink); color: var(--white); text-decoration: none; isolation: isolate; }
+.mn-short__img, .mn-short__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mn-short__img { transition: transform 1.4s var(--ease); }
+.mn-short__video { opacity: 0; transition: opacity .6s var(--ease); }
+.mn-short__link.is-playing .mn-short__video { opacity: 1; }
+/* Shade at the foot for the name and a lighter one at the top for the logo. */
+.mn-short__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(18, 15, 12, .86), rgba(18, 15, 12, .2) 42%, rgba(18, 15, 12, 0) 60%),
+    linear-gradient(to bottom, rgba(18, 15, 12, .5), rgba(18, 15, 12, 0) 26%);
+  pointer-events: none;
+}
+.mn-short__partner, .mn-short__tag, .mn-short__play, .mn-short__body { position: absolute; z-index: 2; }
+.mn-short__partner { top: 1.6rem; left: 1.6rem; display: flex; align-items: center; height: 2.6rem; }
+.mn-short__partner img { width: auto; height: 100%; max-width: 11rem; object-fit: contain; filter: brightness(0) invert(1); opacity: .94; }
+.mn-short__tag { top: 1.6rem; left: 1.6rem; padding: .6rem 1rem; border: 1px solid rgba(216, 183, 125, .7); border-radius: 99rem; font-size: 1rem; font-weight: 500; line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-light); }
+.mn-short__play { top: 1.4rem; right: 1.4rem; display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 50%; background: rgba(18, 15, 12, .4); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .4); transition: opacity .4s var(--ease); }
+.mn-short__play svg { width: 1.4rem; height: 1.4rem; margin-left: .2rem; fill: var(--white); }
+.mn-short__link.is-playing .mn-short__play { opacity: 0; }
+.mn-short__body { left: 1.6rem; right: 1.6rem; bottom: 1.8rem; display: flex; flex-direction: column; gap: .6rem; }
+.mn-short__name { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 1.6vw, 2.4rem); line-height: 1.15; }
+.mn-short__with { font-size: 1.05rem; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
+@media (hover: hover) { .mn-short__link:hover .mn-short__img { transform: scale(1.04); } }
+.mn-short__link:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; }
+@media (max-width: 1024px) {
+  .mn-short { flex-basis: 30%; }
+  .mn-shorts__bar, .mn-shorts__rail { margin-inline: calc(var(--gutter) * -1); }
+  .mn-chips { margin: -.3rem 0; padding: .3rem var(--gutter); }
+  .mn-shorts__rail { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+}
+@media (max-width: 749px) {
+  .mn-shorts { padding-block: 7.2rem; }
+  .mn-short { flex-basis: 44vw; }
+  .mn-short__partner, .mn-short__tag { top: 1.2rem; left: 1.2rem; }
+  .mn-short__partner { height: 2.2rem; }
+  .mn-short__partner img { max-width: 8.4rem; }
+  .mn-short__tag { padding: .5rem .8rem; font-size: .9rem; letter-spacing: .1em; }
+  .mn-short__play { top: 1.1rem; right: 1.1rem; width: 2.8rem; height: 2.8rem; }
+  .mn-short__body { left: 1.2rem; right: 1.2rem; bottom: 1.4rem; }
+  .mn-short__name { font-size: 1.8rem; }
+  .mn-short__with { font-size: .95rem; letter-spacing: .1em; }
+}
+
+/* ==========================================================================
+   Co-curated cards (the offer grids on the inner pages, tools/build-pages.mjs; layout in pages.css)
+   Photo, the partner's logo in white, the name; hover or focus brings up the line and "Explore".
+   ========================================================================== */
 .mn-cc { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--ink); }
-.mn-cc--hero { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
 .mn-cc__link { position: absolute; inset: 0; display: block; color: var(--white); text-decoration: none; }
 .mn-cc__link:focus-visible { outline: 1px solid var(--gold-light); outline-offset: -.8rem; }
 .mn-cc__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
@@ -1488,11 +1721,9 @@
 }
 .mn-cc__partner { position: absolute; z-index: 1; top: clamp(1.6rem, 1.5vw, 2.4rem); left: clamp(1.6rem, 1.5vw, 2.4rem); display: flex; align-items: center; height: clamp(2.4rem, 2.2vw, 3.4rem); }
 .mn-cc__partner img { width: auto; height: 100%; max-width: 13rem; object-fit: contain; filter: brightness(0) invert(1); opacity: .94; }
-.mn-cc--hero .mn-cc__partner { height: clamp(3.8rem, 3.4vw, 5.4rem); }
 .mn-cc__body { position: absolute; z-index: 1; left: clamp(1.6rem, 1.5vw, 2.4rem); right: clamp(1.6rem, 1.5vw, 2.4rem); bottom: clamp(1.6rem, 1.5vw, 2.4rem); display: flex; flex-direction: column; }
 .mn-cc__num { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--gold-light); }
 .mn-cc__name { margin-top: .4rem; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 1.55vw, 2.6rem); line-height: 1.12; }
-.mn-cc--hero .mn-cc__name { font-size: clamp(3rem, 2.6vw, 4.4rem); }
 .mn-cc__with { margin-top: .6rem; font-size: 1.05rem; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
 .mn-cc__more { display: block; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s var(--ease), opacity .5s var(--ease); }
 .mn-cc__line { display: block; margin-top: 1.2rem; font-size: 1.4rem; line-height: 2rem; color: rgba(255, 255, 255, .9); }
@@ -1503,43 +1734,12 @@
 .mn-cc__link:hover::before, .mn-cc__link:focus-visible::before { opacity: 1; }
 .mn-cc__body, .mn-cc__partner { z-index: 2; }
 .mn-cc__link:hover .mn-cc__more, .mn-cc__link:focus-visible .mn-cc__more { max-height: 16rem; opacity: 1; }
-/* The big card has room: its line is always shown. */
-.mn-cc--hero .mn-cc__more { max-height: 16rem; opacity: 1; }
-.mn-cc--hero .mn-cc__line { max-width: 40rem; font-size: 1.6rem; line-height: 2.4rem; }
-
 @media (hover: none), (pointer: coarse) {
   .mn-cc__more { max-height: 16rem; opacity: 1; }
 }
-@media (max-width: 1024px) {
-  .mn-cocur__head { grid-template-columns: minmax(0, 1fr); }
-  .mn-cocur__link { grid-column: 1; grid-row: auto; justify-self: start; }
-}
-@media (min-width: 750px) and (max-width: 1024px) {
-  .mn-cocur__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mn-cc--hero { grid-row: auto; aspect-ratio: 16 / 10; }
-}
-@media (max-width: 749px) {
-  .mn-cocur { padding-block: 7.2rem; }
-  .mn-cocur__title { font-size: 4.4rem; }
-  /* A swipe rail: each card about three quarters of the screen wide, snapping to the gutter. */
-  .mn-cocur__grid {
-    display: flex;
-    gap: 1.2rem;
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--gutter);
-    scrollbar-width: none;
-  }
-  .mn-cocur__grid::-webkit-scrollbar { display: none; }
-  .mn-cc, .mn-cc--hero { flex: 0 0 76vw; aspect-ratio: 4 / 5; scroll-snap-align: start; }
-  .mn-cc--hero .mn-cc__name { font-size: 3rem; }
-  .mn-cc--hero .mn-cc__line { font-size: 1.4rem; line-height: 2rem; }
-}
 
 /* ==========================================================================
-   14. @aslihyderabad reels (in the social slot)
+   12. @aslihyderabad reels (in the social slot)
    Eight 9:16 muted loops in a marquee (cloned once by components.js for a seamless loop; items
    carry their own right margin so -50% lands exactly). Only the reels on screen play.
    ========================================================================== */
@@ -1585,68 +1785,51 @@
 }
 
 /* ==========================================================================
-   15. Your Hyderabad starts here (in the heritage slot)
-   Full-bleed Taramati Baradari at night, the heading and Plan My Hyderabad centred, contact
-   details and the three planning steps along the foot (motion.js draws the steps in turn).
+   13. Your Hyderabad starts here (in the heritage slot)
+   v3 editorial split on cream (client: a cleaner image, and the text must read). The heading, a line
+   and Plan My Hyderabad on the left; a Qutb Shahi tomb in the Mughal arch on the right; the
+   three planning steps and the contact line under the copy (motion.js draws the steps in turn).
+   Stacked on tablets and phones: copy, photo, steps.
    ========================================================================== */
-.mn-heritage {
-  position: relative;
-  display: flex;
-  aspect-ratio: 1680 / 940;
-  min-height: 64rem;
-  color: var(--white);
-  isolation: isolate;
-  overflow: hidden;
+.mn-heritage { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(8rem, 8vw, 12rem); background: var(--cream); color: var(--ink); }
+/* The jaali sits behind the photo side only, so the copy stays on plain cream. */
+.mn-heritage__bg {
+  --m-o: .14;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(90deg, transparent 38%, #000 78%);
+          mask-image: linear-gradient(90deg, transparent 38%, #000 78%);
 }
-.mn-heritage__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #120e0b; }
-.mn-heritage__img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
-/* A dark pool behind the heading: the lit arches are bright, and the gold italic must still read. */
-.mn-heritage__scrim { position: absolute; inset: 0; background: radial-gradient(ellipse 46% 30% at 50% 47%, rgba(14, 11, 9, .72), rgba(14, 11, 9, .2) 100%), rgba(14, 11, 9, .3); }
-.mn-heritage__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(14, 11, 9, .78), rgba(14, 11, 9, 0) 34%), linear-gradient(to bottom, rgba(14, 11, 9, .55), rgba(14, 11, 9, 0) 30%); }
-.mn-heritage__frame {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-block: clamp(4.8rem, 6vw, 8rem);
-}
-.mn-heritage__intro {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
+.mn-heritage__in {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  grid-template-rows: 1fr auto;
   align-items: center;
-  justify-content: center;
-  gap: 2.4rem;
-  text-align: center;
+  column-gap: clamp(4.8rem, 7vw, 12rem);
 }
-.mn-heritage__heading {
-  max-width: 80rem;
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(4.8rem, 5vw, 8rem);
-  line-height: 1.04;
-  text-wrap: balance;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, .35);
-}
-.mn-heritage__heading em { font-style: italic; color: var(--gold-light); }
-.mn-heritage__foot { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 6rem; }
-.mn-heritage__body { font-size: 1.5rem; line-height: 2.4rem; color: rgba(255, 255, 255, .85); }
-.mn-heritage__body a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .35); transition: border-color .3s var(--ease), color .3s var(--ease); }
-.mn-heritage__body a:hover { color: var(--white); border-color: var(--gold-light); }
+.mn-heritage__intro { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 2.4rem; }
+.mn-heritage__heading { font-family: var(--serif); font-weight: 300; font-size: clamp(4.8rem, 5vw, 8rem); line-height: 1.04; letter-spacing: -.005em; }
+.mn-heritage__heading em { display: block; font-style: italic; color: var(--gold-ink); }
+.mn-heritage__lead { max-width: 46rem; font-size: 1.7rem; line-height: 1.6; color: var(--ink-70); }
+.mn-heritage__link { min-height: 4.8rem; margin-top: .8rem; padding: 0 2.8rem; }
+.mn-heritage__link:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; }
+.mn-heritage__media { grid-column: 2; grid-row: 1 / span 2; }
+.mn-heritage__frame { position: relative; display: block; width: min(100%, 52rem); aspect-ratio: 4 / 5; margin-left: auto; }
+.mn-heritage__foot { grid-column: 1; grid-row: 2; display: flex; flex-direction: column; gap: 3.2rem; margin-top: clamp(4.8rem, 6vw, 8rem); }
+.mn-heritage__body { font-size: 1.5rem; line-height: 2.4rem; color: var(--ink-70); }
+.mn-heritage__body a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--hairline); transition: border-color .3s var(--ease); }
+.mn-heritage__body a:hover { border-color: var(--gold-ink); }
 
 .mn-timeline {
   position: relative;
   display: flex;
   align-items: flex-start;
   width: 100%;
-  max-width: 65.3rem;
+  max-width: 52rem;
   min-height: 8.5rem;
-  margin-left: auto;
 }
 .mn-timeline__mile { position: relative; flex: 0 0 1.2rem; }
-.mn-timeline__dot { display: block; width: 1.2rem; height: 1.2rem; border: 1px solid var(--gold-light); border-radius: 50%; }
-.mn-timeline__line { flex: 1 1 auto; height: 1px; margin-top: .55rem; background: rgba(255, 255, 255, .6); }
+.mn-timeline__dot { display: block; width: 1.2rem; height: 1.2rem; border: 1px solid var(--gold-ink); border-radius: 50%; }
+.mn-timeline__line { flex: 1 1 auto; height: 1px; margin-top: .55rem; background: var(--ink-45); }
 .mn-timeline__cap {
   position: absolute;
   top: 2.5rem;
@@ -1656,23 +1839,28 @@
   width: max-content;
   max-width: 16rem;
 }
-.mn-timeline__year { font-family: var(--serif); font-size: 2.2rem; font-style: italic; line-height: 1; color: var(--gold-light); }
+.mn-timeline__year { font-family: var(--serif); font-size: 2.2rem; font-style: italic; line-height: 1; color: var(--gold-ink); }
 .mn-timeline__label { margin-top: .6rem; font-size: 1.3rem; line-height: 2rem; white-space: nowrap; }
 /* Captions sit under their dot: centred in the middle, right-aligned at the end so nothing runs off the edge. */
 .mn-timeline__mile:not(:first-child):not(:last-child) .mn-timeline__cap { left: 50%; transform: translateX(-50%); align-items: center; text-align: center; }
 .mn-timeline__mile:last-child .mn-timeline__cap { left: auto; right: 0; align-items: flex-end; text-align: right; }
 
 @media (max-width: 1024px) {
-  .mn-heritage { aspect-ratio: auto; min-height: 88svh; }
-  .mn-heritage__frame { padding: 6.4rem 7.2rem 5.6rem; }
+  .mn-heritage__bg { -webkit-mask-image: linear-gradient(transparent 30%, #000 70%); mask-image: linear-gradient(transparent 30%, #000 70%); }
+  .mn-heritage__in { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .mn-heritage__intro, .mn-heritage__media, .mn-heritage__foot { grid-column: 1; grid-row: auto; }
+  .mn-heritage__media { margin-top: 5.6rem; }
+  .mn-heritage__frame { width: min(100%, 44rem); margin-inline: auto; }
+  .mn-heritage__foot { margin-top: 5.6rem; }
   .mn-heritage__heading { font-size: 6.4rem; }
-  .mn-heritage__foot { grid-template-columns: 1fr; gap: 3.2rem; }
-  .mn-heritage__body { text-align: center; }
-  .mn-timeline { margin: 0 auto; }
 }
 @media (max-width: 749px) {
-  .mn-heritage__frame { padding-inline: 2rem; }
-  .mn-heritage__heading { font-size: 4.8rem; line-height: 1.1; }
+  .mn-heritage { padding-block: 7.2rem; }
+  .mn-heritage__heading { font-size: clamp(4rem, 11vw, 4.8rem); line-height: 1.08; }
+  .mn-heritage__lead { font-size: 1.6rem; }
+  .mn-heritage__link { align-self: stretch; }
+  .mn-heritage__media, .mn-heritage__foot { margin-top: 4.8rem; }
+  .mn-heritage__frame { width: min(100%, 32rem); }
   .mn-heritage__body { font-size: 1.4rem; }
   .mn-timeline { max-width: none; min-height: 6.8rem; }
   .mn-timeline__cap { top: 2rem; }
